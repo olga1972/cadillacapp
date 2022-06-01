@@ -1,166 +1,84 @@
-
-// part 'user.g.dart';
 import 'dart:convert';
-import 'package:form_builder_image_picker/form_builder_image_picker.dart';
+import 'package:flutter/services.dart';
+import 'package:http/http.dart' as http;
+
+
+class UsersList {
+  List<User>? users;
+  UsersList({required this.users});
+
+  factory UsersList.fromJson(Map<String, dynamic> json) {
+    // if (json['users'] != null) {
+      var usersJson = json['users'] as List;
+      List<User> usersList = usersJson.map((i) => User.fromJson(i)).toList();
+
+      return UsersList(
+        users: usersList,
+      );
+    //}
+
+      // users = <Users>[];
+      // json['users'].forEach((v) {
+      //   users!.add(new Users.fromJson(v));
+      // });
+    }
+  }
+
+  // Map<String, dynamic> toJson() {
+  //   final Map<String, dynamic> data = new Map<String, dynamic>();
+  //   if (this.users != null) {
+  //     data['users'] = this.users!.map((v) => v.toJson()).toList();
+  //   }
+  //   return data;
+  // }
+//}
+
 
 class User {
-  final String? userId;
-  final String? email;
-  final String? phone;
-  final String? login;
-  final String? password;
-  final String? photo;
-  final String? username;
-  final String? birthday;
-  final String? phone2;
-  final String? car;
-  // final List<String>? cars;
-  final String? address;
+  late final String userId;
+  late final String phone;
+  late final String email;
+  late final String username;
+  late final String birthday;
 
-  User(
-      {this.userId,
-        this.email,
-        this.phone,
-        this.login,
-        this.password,
-        this.photo,
-        this.username,
-        this.birthday,
-        this.phone2,
-        this.car,
-        // this.cars,
-        this.address});
+  User({
+    required this.userId,
+    required this.phone,
+    required this.email,
+    required this.username,
+    required this.birthday
+  });
 
-  factory User.fromJson(Map<String, dynamic> jsonData) {
+  factory User.fromJson(Map<String, dynamic> json) {
     return User(
-        userId: jsonData['userId'],
-        email: jsonData['email'],
-        phone: jsonData['phone'],
-        login: jsonData['login'],
-        password: jsonData['password'],
-        photo: jsonData['photo'],
-        username: jsonData['username'],
-        birthday: jsonData['birthday'],
-        phone2: jsonData['phone2'],
-        car: jsonData['car'],
-        // cars: jsonData['cars'],
-        address: jsonData['address'],
+        userId: json['userId'] as String,
+        phone: json['phone'] as String,
+        email: json['email'] as String,
+        username: json['username'] as String,
+        birthday: json['birthday'] as String,
     );
 
   }
 
-  @override
-  String toString() => 'UserId: $userId, Phone: $phone, Email: $email';
+  Future<UsersList> getUsersList() async {
+    // const url = 'https://about.google/static/data/locations.json';
+    const url = 'http://localhost/test/users_list.php';
+    final response = await http.get(Uri.parse(url));
 
-  // Map<String, dynamic> toJson() {
-  //   final Map<String, dynamic> data = new Map<String, dynamic>();
-  //   data['userId'] = this.userId;
-  //   data['email'] = this.email;
-  //   data['phone'] = this.phone;
-  //   data['login'] = this.login;
-  //   data['password'] = this.password;
-  //   if (this.photo != null) {
-  //     data['photo'] = this.photo!.toJson();
-  //   }
-  //   data['name'] = this.name;
-  //   data['birthday'] = this.birthday;
-  //   data['phone2'] = this.phone2;
-  //   data['car'] = this.car;
-  //   data['address'] = this.address;
-  //   return data;
-  // }
+    if(response.statusCode == 200) {
+      return UsersList.fromJson(json.decode(response.body));
+    } else {
+      throw Exception('Error: ${response.reasonPhrase}');
+    }
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['userId'] = this.userId;
+    data['phone'] = this.phone;
+    data['email'] = this.email;
+    data['username'] = this.username;
+    data['birthday'] = this.birthday;
+    return data;
+  }
 }
-
-// class XFile {
-//     XFileImage? photo1;
-//
-// }
-//
-class ApiImage {
-  final String imageUrl;
-  final String id;
-  ApiImage({
-    required this.imageUrl,
-    required this.id,
-  });
-}
-
-// class Cars {
-//   String? photo1;
-//   String? photo2;
-//   String? photo3;
-//
-//
-//   Cars({this.photo1, this.photo2, this.photo3});
-//
-//   Cars.fromJson(Map<String, dynamic> json) {
-//     photo1 = json['photo1'];
-//     photo2 = json['photo2'];
-//     photo3 = json['photo3'];
-//   }
-//
-//   Map<String, dynamic> toJson() {
-//     final Map<String, dynamic> data = new Map<String, dynamic>();
-//     data['photo1'] = this.photo1;
-//     data['photo2'] = this.photo2;
-//     data['photo3'] = this.photo2;
-//     return data;
-//   }
-// }
-//
-// class User {
-//
-//   late dynamic userId;
-//   late dynamic name;
-//   late dynamic login;
-//   late dynamic birthday;
-//   late dynamic email;
-//   late dynamic password;
-//   late dynamic phone;
-//   late dynamic type;
-//   late dynamic car;
-//   late final dynamic token;
-//   late final dynamic renewalToken;
-//   late final dynamic photo;
-//   late final dynamic cars;
-//
-//   User({
-//     this.userId = '5555',
-//     this.name = 'ivan',
-//     this.login = 'ivan@mail.ru"',
-//     this.birthday = '19.04.1972',
-//     this.email = 'ivan@mail.ru"',
-//     this.phone = '123456789',
-//     this.password = '123',
-//     this.type = 'text',
-//     this.car = 'cadillac',
-//     this.token = '123',
-//     this.renewalToken = '123456',
-//     this.photo = 'assets/images/avatar.png',
-//     this.cars = const [ 'assets/images/cadillac-eldorado.png',
-//       "assets/images/cadillac-escalada.png",
-//       "assets/images/cadillac-orange.png",
-//     ],
-//   });
-//
-//
-//   factory User.fromJson(Map<String, dynamic> responseData) {
-//     return User(
-//         userId: responseData['userId'],
-//         name: responseData['name'],
-//         login: responseData['login'],
-//         birthday: responseData['birthday'],
-//         email: responseData['email'],
-//         phone: responseData['phone'],
-//         password: responseData['password'],
-//         type: responseData['type'],
-//         token: responseData['access_token'],
-//         renewalToken: responseData['renewal_token'],
-//         photo: responseData['photo'],
-//         cars: responseData['cars'],
-//     );
-//   }
-//
-//   @override
-//   String toString() => 'Phone: $phone, Email: $email';
-// }

@@ -7,7 +7,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
 import 'package:path_provider/path_provider.dart';
+// import 'package:dio/dio.dart';
+// import 'package:dio_cookie_manager/dio_cookie_manager.dart';
+// import 'package:cookie_jar/cookie_jar.dart';
 
+//import 'package:requests/requests.dart';
 // import 'package:hive/hive.dart';
 
 
@@ -47,7 +51,7 @@ import 'package:cadillac/common/theme_helper.dart';
 
 import 'package:cadillac/pages/account.dart';
 
-import 'package:cadillac/models/user.dart';
+import 'package:cadillac/models/user2.dart';
 //import 'package:cadillac/models/users.dart';
 import 'dart:developer';
 import 'package:flutter/services.dart';
@@ -136,16 +140,16 @@ class RegistrationPage extends StatelessWidget {
       //initialRoute: '/home',
 
       routes: {
-        '/home': (context) => const Home(),
+        '/home': (context) => Home(),
         // '/home': (context) => RegistrationPage(),
-        '/account': (context) => Account(currentUser: currentUser),
+        '/account': (context) => Account(userId: userId),
           // '/members': (context) => Members(),
           // '/news': (context) => const News(),
           '/shop': (context) => const Shop(),
           '/partners': (context) => Partners(),
           '/contacts': (context) => Contacts(),
-          '/success_payment': (context) => SuccessPayment(currentUser: currentUser),
-
+          // '/success_payment': (context) => SuccessPayment(currentUser: currentUser),
+        '/success_payment': (context) => SuccessPayment(userId: userId)
       },
       home: Scaffold(
         body: Center (
@@ -330,25 +334,27 @@ class RegistrationPage extends StatelessWidget {
 
                                           _formKey.currentState?.save();
                                           //User user = User(name: 'Konstantin', age: 34);
-                                          final user = User(email: email, phone :phone);
+                                          var uuid = const Uuid();
+                                          var userId = uuid.v1();
+
+                                          final user = User(userId: userId, email: email, phone :phone);
                                           //startLogin();
 
-                                          // var uuid = const Uuid();
-                                          // id = uuid.v1();
-                                          //currentUser = addUser(user);
+
+                                          currentUser = addUser(user);
                                           //newUser = addUser();
-                                          //print(currentUser);
-                                          addUser(user);
+                                          //print(currentUser.getUser());
+                                      //addUser(user);
                                           debugPrint('after addUser registr');
-                                          // print('id: $id');
+                                          print('userId: $userId');
 
                                           // Navigator.of(context).pop();
                                           Navigator.pushReplacement(
                                               context, MaterialPageRoute(
                                             builder: (context) =>
-                                            // SuccessPayment(),
-                                            SuccessPayment(
-                                                currentUser: user),
+                                            SuccessPayment(userId: userId)
+                                            // SuccessPayment(
+                                            //     currentUser: user),
                                           )
                                           );
 
@@ -445,33 +451,41 @@ class RegistrationPage extends StatelessWidget {
   }
 
   addUser(User user) async {
+    // var uuid = const Uuid();
+    // var id = uuid.v1();
     print('func addUser registr');
-    print(user.email);
+    // print(id);
     dynamic phone = user.phone;
     dynamic email = user.email;
-    // late dynamic userId ='yyyyy';
+    dynamic userId = user.userId;
+
 
     String apiurl = "http://localhost/test/create.php";
     // var response = await http.post(Uri.parse(apiurl),body:{'userId': userId,'phone': phone,'email': email});
     var response = await http.post(Uri.parse(apiurl), headers: {'Accept':'application/json, charset=utf-8',"Access-Control-Allow-Origin": "*",
-    "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS"}, body:{'phone': phone,'email': email});
+    "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS"}, body:{'userId': userId, 'phone': phone,'email': email});
+
+
     // final response = await http.post(Uri.parse(apiurl));
 
     print('after response registr');
+
     //print(User.fromJson(jsonDecode(response.body)));
 
     if(response.statusCode == 200){
         print('success registr code');
+
         // var uuid = const Uuid();
-        // id = uuid.v1();
+        // var id = uuid.v1();
         print(response.statusCode);
 
         print('response.body registr');
         print(response);
-        print(response.body); // пустая стрка в консоли вне зависимости от передачи боди)
+        //print(response.body); // пустая стрка в консоли вне зависимости от передачи боди)
         // currentUser = json.decode(response);
         // print(currentUser);
         print('after json.decode registr');
+
         return response.body;
         //return User.fromJson(currentUser); // error
         //return User.fromJson(jsonDecode(response.body));

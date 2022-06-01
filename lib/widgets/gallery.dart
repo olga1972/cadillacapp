@@ -11,7 +11,7 @@ import 'package:card_swiper/card_swiper.dart';
 // void main() => runApp(Gallery());
 
 
-import '../../models/user.dart';
+import '../../models/user2.dart';
 
 
 class Gallery extends StatelessWidget {

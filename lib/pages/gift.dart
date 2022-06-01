@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -11,18 +12,23 @@ class Gift extends StatelessWidget {
 Widget build(BuildContext context) {
 
   return MaterialApp(
-
+    theme: ThemeData(scaffoldBackgroundColor: const Color(0xFF181c33)),
+    title: 'Cadillac',
     debugShowCheckedModeBanner: false,
     home: Scaffold(
-      backgroundColor: Colors.transparent,
+      // backgroundColor: Colors.transparent,
       body: Center (
         child: Container (
-          width: 284,
+          width: 320,
 
           child: Column (
             mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
+              Container(
+                width: 320,
+                margin: EdgeInsets.only(top: 15, right: 34),
+              ),
               Align (
                 alignment: Alignment.topRight,
                 child: IconButton(
@@ -31,16 +37,25 @@ Widget build(BuildContext context) {
                       semanticsLabel: 'Icon close',
                       height: 16.0,
                       color: Colors.white),
-                  onPressed: () { Scaffold.of(context).openDrawer(); },
-                  tooltip: MaterialLocalizations.of(context).openAppDrawerTooltip,
+                  onPressed: () {
+                    Navigator.pop(context);
+                    },
+                  // tooltip: MaterialLocalizations.of(context).openAppDrawerTooltip,
                 ),
               ),
-             SvgPicture.network(
-                'assets/images/gift.svg',
-                semanticsLabel: 'Icon gift',
-                height: 22.0,
-                color: Colors.white,
+             Container(
+               width: 284,
+               margin: EdgeInsets.only(bottom: 200),
              ),
+              Container (
+                  margin: const EdgeInsets.only(bottom: 15),
+                  child: SvgPicture.network(
+                  'assets/images/gift.svg',
+                  semanticsLabel: 'Icon gift',
+                  height: 22.0,
+                  color: Colors.white,
+               )
+              ),
 
               const TitlePage(title: ' с днем рождения'),
 
@@ -72,12 +87,16 @@ Widget build(BuildContext context) {
                           height: 1.7, //line-height : font-size
                         )
                     ),
-                    SvgPicture.network(
-                      'assets/images/gift.svg',
-                      semanticsLabel: 'Icon gift',
-                      height: 23.0,
-                      color: Colors.white,
-                    ),
+                    Container(
+                      margin: const EdgeInsets.only(right: 15),
+                      child: SvgPicture.network(
+                        'assets/images/logo-text.svg',
+                        semanticsLabel: 'Icon logo-text',
+                        height: 23.0,
+                        color: Colors.white,
+                      ),
+                    )
+
                   ],
                 )
               ),
@@ -86,7 +105,7 @@ Widget build(BuildContext context) {
                 child: Image(
                   // width: 96,
                   // height: 96,
-                  image: NetworkImage('assets/images/notebook.png'),
+                  image: NetworkImage('assets/images/notebook-gift.png'),
                   fit: BoxFit.fill,
                 ),
               )

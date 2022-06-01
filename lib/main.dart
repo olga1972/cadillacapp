@@ -25,6 +25,8 @@ import 'dart:convert';
 import 'dart:async';
 
 import '../env.dart';
+// import '../models/user2.dart';
+// import '../models/users.dart';
 import '../models/user.dart';
 import '../utils/app_url.dart';
 // import './details.dart';
@@ -49,7 +51,9 @@ class MyApp extends StatelessWidget {
   //final currentUser;
 
   MyApp({Key? key,}) : super(key: key);
-  final currentUser = User(email: 'olga.sadyreva@mail.ru', phone: '9221238853', username: 'Olga');
+  final currentUser = User(email: 'olga.sadyreva@mail.ru', phone: '9221238853', username: 'Olga', birthday: '19.04.1972', userId: '1111');
+
+  get userId => null;
   //get currentUser => null;
 
 
@@ -69,10 +73,11 @@ class MyApp extends StatelessWidget {
       routes: {
         //'/': (context) => RegistrationPage(),
         //'/home': (context) => SuccessPayment(),
-        '/home': (context) => RegistrationPage(),
+        // '/home': (context) => RegistrationPage(),
+        '/home': (context) => Shop(),
         // '/home': (context) => Account(),
         // '/home': (context) => Home(),
-        '/account': (context) => Account(currentUser: currentUser),
+        '/account': (context) => Account(userId: userId),
         '/members': (context) => Members(),
         '/news': (context) => News(),
         '/shop': (context) => Shop(),
@@ -138,22 +143,22 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
 
-  // late Future<UsersList> usersList;
+  late Future<UsersList> usersList;
 
   @override
   void initState() {
-    print('initstate');
+    print('init state');
     super.initState();
 
-    // usersList = getUsersList();
-    // print("usersList: ${getUsersList()}");
+    var usersList = getUsersList();
+    print("usersList: ${getUsersList()}");
   }
 
   @override
   Widget build(BuildContext context) {
 
     return Scaffold(
-        body:Home(),
+        // body:Home(),
         // body: Text('2Став владельцем Cadillac, \nвы не просто приобретаете \nавтомобиль класса-люкс, \nвы вступаете в элитное сообщество, единомышленников, объединённых общими ценностями и интересами.'.toUpperCase(),
         //   style:const TextStyle (
         //     fontSize: 14.0,
@@ -165,32 +170,46 @@ class _MyHomePageState extends State<MyHomePage> {
         //   textAlign: TextAlign.center,
         //   softWrap: true,
         // ),
-      drawer: const NavDrawer(),
-        //body: FutureBuilder<UsersList>(
-        //   future: usersList,
-        //   builder: (context, snapshot) {
-        //     print(snapshot.data);
-        //     if (snapshot.hasData) {
-              // return ListView.builder(
-              //     itemCount: snapshot.data?.users.length,
-              //     itemBuilder: (context, index) {
-              //       return Card(
-              //         child: ListTile(
-              //           // title: Text('${snapshot.data?.users[index].email}'),
-              //           title: Text('users'),
-              //         ),
-              //       );
-              //     }
-              // );
-          //   } else if (snapshot.hasError) {
-          //     return const Text('Error');
-          //   }
-          //   return const Center(child: CircularProgressIndicator());
-          // },
 
-        //)
+        body: FutureBuilder<UsersList>(
+          future: usersList,
+          builder: (context, snapshot) {
+            print(snapshot.data);
+            if (snapshot.hasData) {
+              return ListView.builder(
+                  itemCount: snapshot.data?.users?.length,
+                  itemBuilder: (context, index) {
+                    return Card(
+                      child: ListTile(
+                        // title: Text('${snapshot.data?.users[index].email}'),
+                        title: Text('users'),
+                      ),
+                    );
+                  }
+              );
+            } else if (snapshot.hasError) {
+              return const Text('Error');
+            }
+            return const Center(child: CircularProgressIndicator());
+          },
+
+        ),
+
+        drawer: NavDrawer(),
 
     );
+  }
+
+  Future<UsersList> getUsersList() async {
+    // const url = 'https://about.google/static/data/locations.json';
+    const url = 'http://localhost/test/users_list.php';
+    final response = await http.get(Uri.parse(url));
+
+    if(response.statusCode == 200) {
+      return UsersList.fromJson(json.decode(response.body));
+    } else {
+      throw Exception('Error: ${response.reasonPhrase}');
+    }
   }
 
   // Future<UsersList> getUsersList() async {

@@ -3,7 +3,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:form_builder_image_picker/form_builder_image_picker.dart';
 
 
-import '../models/user.dart';
+import '../models/user2.dart';
 
 
 class uploadImage extends StatelessWidget {

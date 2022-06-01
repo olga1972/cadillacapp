@@ -28,7 +28,7 @@ class Members extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         // initialRoute: '/home',
         routes: {
-          '/home': (context) => const Home(),
+          '/home': (context) => Home(),
           // '/account': (context) => Account(),
           // '/members': (context) => Members(),
           // '/news': (context) => const News(),
@@ -155,7 +155,7 @@ class Members extends StatelessWidget {
               )
           ),
 
-          drawer: const NavDrawer(),
+          drawer: NavDrawer(),
         )
     );
   }

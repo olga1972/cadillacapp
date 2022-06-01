@@ -214,7 +214,7 @@ class Contacts extends StatelessWidget {
                 )
               ),
             ),
-            drawer: const NavDrawer(),
+            drawer: NavDrawer(),
           )
     );
   }

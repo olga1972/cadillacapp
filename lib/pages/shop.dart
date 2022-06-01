@@ -63,25 +63,39 @@ class _ShopState extends State<Shop> {
             shadowColor: Colors.transparent,
           ),
 
+            // final List<DocumentSnapshot> userList = snapshot.data.documents
+            // .where((DocumentSnapshot documentSnapshot) => documentSnapshot['userId'] != id).toList();
+
           body: FutureBuilder<ProductsList>(
               future: productsList,
               builder: (context, snapshot) {
-                print(snapshot.data);
+                print('snapshot.data.products');
+                var products = snapshot.data?.products;
+                final List<Product>? productsList = snapshot.data?.products
+                    .where((p) => p.categoryId != 1).toList();
+                print(productsList);
+                // fruits.where((f) => f.startsWith('a')).toList(); //apples
+                // products.where((p) => p.category = products[0]?.category).toList();
+                final selectedCategory = snapshot.data?.products.where((u) => u.category.contains('футболка')).toList();
+                // print(snapshot.data?.products[0].category);
+                print(selectedCategory);
                 if (snapshot.hasData) {
-                  return ListView.builder(
+                    return ListView.builder(
                       itemCount: snapshot.data?.products.length,
-                      itemBuilder: (context, index) {
-                        return Card(
-                          child: ListTile(
-                            title: Text('${snapshot.data?.products[index].name}'),
-                            subtitle:
-                            Text('${snapshot.data?.products[index].category}'),
-                            leading: Image.network(
-                                '${snapshot.data?.products[index].image}'),
-                            isThreeLine: true,
-                          ),
-                        );
-                      });
+                      //   itemCount: selectedCategory?.length,
+                        itemBuilder: (context, index) {
+                          return Card(
+                            child: ListTile(
+                              title: Text('${snapshot.data?.products[index]?.name}'),
+                              subtitle:
+                              Text('${snapshot.data?.products[index]?.category}'),
+                              leading: Image.network(
+                                  '${snapshot.data?.products[index].image}'),
+                              isThreeLine: true,
+                            ),
+                          );
+                        });
+
                 } else if (snapshot.hasError) {
                   print(snapshot.data);
                   return const Text('Error');
@@ -212,7 +226,7 @@ class _ShopState extends State<Shop> {
           //
           //  ),
 
-          drawer: const NavDrawer(),
+          drawer: NavDrawer(),
         )
     );
   }

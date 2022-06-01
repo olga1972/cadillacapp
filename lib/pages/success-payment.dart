@@ -8,7 +8,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 // import 'generated/l10n.dart';
 
 // import 'package:hive/hive.dart';
-
+// import 'package:requests/requests.dart';
 
 // import 'package:uuid/uuid.dart';
 // import 'package:uuid/uuid_util.dart';
@@ -43,7 +43,7 @@ import 'package:cadillac/common/theme_helper.dart';
 import 'package:cadillac/pages/account.dart';
 import 'package:cadillac/pages/home.dart';
 
-import 'package:cadillac/models/user.dart';
+import 'package:cadillac/models/user2.dart';
 // import 'package:cadillac/models/users.dart';
 import 'dart:developer';
 import 'package:flutter/services.dart';
@@ -55,9 +55,11 @@ import 'news.dart';
 
 class SuccessPayment extends StatelessWidget {
   //var currentUser;
-  final User currentUser;
+  //final User currentUser;
+  //final User userId;
 
-  SuccessPayment({Key? key, required this.currentUser,} ) : super(key: key);
+  // SuccessPayment({Key? key, required this.currentUser,} ) : super(key: key);
+  SuccessPayment({Key? key, required this.userId,} ) : super(key: key);
 
   //final String userUuId;
   //late final dynamic currentUser;
@@ -117,7 +119,8 @@ class SuccessPayment extends StatelessWidget {
 
     // print('after');
     print('load');
-    print(this.currentUser);
+    print(userId);
+    // print(this.currentUser);
     // print('after2');
 
 
@@ -138,7 +141,7 @@ class SuccessPayment extends StatelessWidget {
 
 
         routes: {
-          '/home': (context) => const Home(),
+          '/home': (context) => Home(),
            // '/account': (context) => Account(currentUser: currentUser),
            //  '/members': (context) => Members(),
            //  '/news': (context) => const News(),
@@ -208,9 +211,9 @@ class SuccessPayment extends StatelessWidget {
                                                 ),
                                                 FormBuilderTextField(
                                                     name: 'login',
-                                                    readOnly: true,
-                                                    enabled: false,
-                                                    initialValue: '${currentUser.email}',
+                                                    // readOnly: true,
+                                                    // enabled: false,
+                                                    // initialValue: '${currentUser.email}',
                                                     autofocus: true,
                                                     cursorWidth: 1.0,
                                                     cursorColor: Colors.white,
@@ -518,9 +521,9 @@ class SuccessPayment extends StatelessWidget {
 
                                                               FormBuilderTextField(
                                                                   name: 'phone2',
-                                                                  readOnly: true,
-                                                                  enabled: false,
-                                                                  initialValue: '${currentUser.phone}',
+                                                                  // readOnly: true,
+                                                                  // enabled: false,
+                                                                  // initialValue: '${currentUser.phone}',
 
                                                                   // controller: _phoneController,
                                                                   cursorWidth: 1.0,
@@ -704,6 +707,7 @@ class SuccessPayment extends StatelessWidget {
                                                                         //photo =new ApiImage();
                                                                         //final user = User(email: email, phone :phone);
                                                                         dynamic currentUser = User(
+                                                                            userId: userId,
                                                                             login: login,
                                                                             password: password,
                                                                             photo: photo,
@@ -737,7 +741,7 @@ class SuccessPayment extends StatelessWidget {
                                                                             MaterialPageRoute(
                                                                                 builder: (
                                                                                     context) =>
-                                                                                    Account(currentUser: currentUser)));
+                                                                                    Account(userId: userId)));
                                                                         // Home());
 
                                                                       } else {
@@ -816,7 +820,7 @@ class SuccessPayment extends StatelessWidget {
 
 
 
-            drawer: const NavDrawer(),
+            drawer: NavDrawer(),
         )
     );
   }
@@ -849,12 +853,14 @@ class SuccessPayment extends StatelessWidget {
     String apiurl = "http://localhost/test/edit.php";
     var response = await http.post(Uri.parse(apiurl), body:{'login': login, 'password': password,'photo': photo, 'username': username, 'birthday': birthday, 'car': car, },headers: {'Accept':'application/json, charset=utf-8',"Access-Control-Allow-Origin": "*",
       "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS"});
+
     // var response = await http.post(Uri.parse(apiurl), headers: {'Accept':'application/json, charset=utf-8',"Access-Control-Allow-Origin": "*",
     //   "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS"}, body:{'phone': phone,'email': email});
     // var response = await http.post(Uri.parse(apiurl), headers: {'Accept':'application/json',"Access-Control-Allow-Origin": "*",
     //       "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS"});
     print('after response');
     // print("response.body success: ${jsonDecode(response.body)}");  SyntaxError: Unexpected end of JSON input
+
 
     // print(User.fromJson(jsonDecode(response.body)));
     if(response.statusCode == 200){

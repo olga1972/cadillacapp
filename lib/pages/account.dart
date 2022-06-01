@@ -12,7 +12,7 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'dart:async';
 
-import '../../models/user.dart';
+import '../../models/user2.dart';
 //import '../../models/users.dart';
 
 
@@ -36,12 +36,52 @@ import 'package:cadillac/widgets/gallery.dart';
 import 'package:card_swiper/card_swiper.dart';
 
 import '../models/products.dart';
+import 'gift.dart';
 
 
-class Account extends StatelessWidget {
-  Account({Key? key, required this.currentUser}) : super(key: key);
-  //final String userUuId;
-  final User currentUser;
+class Account extends StatefulWidget {
+  // final User currentUser;
+
+  Account({Key? key, required this.userId}) : super(key: key);
+
+  final String userId;
+
+  // currentUser<User> = User();
+
+  @override
+  _AccountState createState() => _AccountState();
+}
+
+  class _AccountState extends State<Account> {
+  get currentUser => null;
+
+  late bool _loading;
+
+  //get userId => null;
+  //set userId = userId;
+  //late User _user;
+  //late Future<User> user;
+  // late Future<UsersList> usersList;
+
+  @override
+  void initState() {
+  print('initstate account');
+  _loading = false;
+  //var userId = userId;
+
+  super.initState();
+
+  print('userId: $this.userId');
+  //_user = currentUser;
+
+  var user = getUser();
+  print(user);
+  // usersList = getUsersList();
+  // print("usersList: ${getUsersList()}");
+    //print("usersList: ${getUser()}");
+
+  }
+
 
   //get user => null;
 
@@ -57,6 +97,7 @@ class Account extends StatelessWidget {
     print('user account');
 
 
+
     return MaterialApp(
         theme: ThemeData(scaffoldBackgroundColor: const Color(0xFF181c33)),
         title: 'Cadillac',
@@ -64,13 +105,14 @@ class Account extends StatelessWidget {
         //initialRoute: '/account',
 
         routes: {
-          '/home': (context) => const Home(),
+          '/home': (context) => Home(),
           // '/account': (context) => Account(currentUser: currentUser,),
           '/members': (context) => Members(),
           '/news': (context) => const News(),
           '/shop': (context) => const Shop(),
           '/partners': (context) => Partners(),
           '/contacts': (context) => Contacts(),
+          '/gift': (context) => const Gift(),
 
         },
 
@@ -146,8 +188,8 @@ class Account extends StatelessWidget {
                                                     height: 22.0
                                                 ),
                                               ),
-                                              // Text('Денис'.toUpperCase(),
-                                              Text('${currentUser.username}'.toUpperCase(),
+                                              Text('Денис'.toUpperCase(),
+                                              // Text('${currentUser.username}'.toUpperCase(),
                                                   textAlign: TextAlign.center,
                                                   style: const TextStyle(
                                                     fontSize: 14.0,
@@ -161,21 +203,33 @@ class Account extends StatelessWidget {
                                           ),
                                           Row (
                                             mainAxisAlignment: MainAxisAlignment.start,
+                                            mainAxisSize: MainAxisSize.min,
                                             children: [
                                               Container (
                                                 height: 36,
-                                                margin: const EdgeInsets.only(right: 18.0, ),
+                                                //margin: const EdgeInsets.only(right: 18.0, ),
                                                 alignment: Alignment.centerLeft,
-                                                child: SvgPicture.network(
-                                                    'assets/images/gift.svg',
-                                                    semanticsLabel: 'Icon gift',
-                                                    height: 22.0
-                                                ),
+                                                child: IconButton (
+                                                  alignment: Alignment.centerLeft,
+                                                  padding: const EdgeInsets.all(0),
+                                                  iconSize: 22.0,
+                                                  icon: SvgPicture.network(
+
+                                                      'assets/images/gift.svg',
+                                                      semanticsLabel: 'Icon gift',
+                                                      height: 22.0,
+
+                                                  ),
+                                                  onPressed: () {
+                                                    Route route = MaterialPageRoute(builder: (context) => const Gift());
+                                                    Navigator.push(context, route);
+                                                  },
+                                                )
                                               ),
 
-                                              Text('${currentUser.birthday}'.toUpperCase(),
-                                              // Text('24.08.1996'.toUpperCase(),
-                                                  textAlign: TextAlign.center,
+                                              // Text('${currentUser.birthday}'.toUpperCase(),
+                                              Text('24.08.1996'.toUpperCase(),
+                                                  textAlign: TextAlign.left,
                                                   style: const TextStyle(
                                                     fontSize: 14.0,
                                                     fontWeight: FontWeight.normal,
@@ -269,8 +323,8 @@ class Account extends StatelessWidget {
                                 height: 1.5, //line-height : font-size
                               )
                           ),
-                          Text('${currentUser.car}'.toUpperCase(),
-                          //Text('cadillac'.toUpperCase(),
+                          // Text('${currentUser.car}'.toUpperCase(),
+                          Text('cadillac'.toUpperCase(),
                               textAlign: TextAlign.center,
                               style: const TextStyle(
                                 fontSize: 24.0,
@@ -298,11 +352,24 @@ class Account extends StatelessWidget {
             )
           ),
 
-          drawer: const NavDrawer(),
+          drawer: NavDrawer(),
         ),
 
     );
   }
+
+  Future<List<User>> getUser() async {
+    final response = await http.get(Uri.parse('http://jsonplaceholder.typicode.com/users'));
+
+    if (response.statusCode == 200) {
+      final List<dynamic> userJson = json.decode(response.body);
+      return userJson.map((json) => User.fromJson(json)).toList();
+    } else {
+      throw Exception('Error fetching users');
+    }
+  }
+
+
 }
 
 // addInfoUser() async {

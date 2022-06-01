@@ -9,7 +9,9 @@ import 'package:cadillac/pages/shop.dart';
 import 'package:cadillac/pages/partners.dart';
 import 'package:cadillac/pages/contacts.dart';
 
-//import 'models/user.dart';
+import 'models/user2.dart';
+
+//import 'models/user2.dart';
 
 // import 'package:flutter_app_learning/routes.dart';
 // final List<String> menuUser = ["главная", "мой аккаунт", "члены автоклуба", "клубные новости", "клубная атрибутика и одежда", "партнеры", "контакты"];
@@ -24,24 +26,24 @@ import 'package:cadillac/pages/contacts.dart';
 // );
 
 class NavDrawer extends StatefulWidget {
-  final currentUser;
-
+  //final currentUser = User();
+final userId;
   //const NavDrawer({Key? key, this.currentUser}) : super(key: key);
-  const NavDrawer({Key? key, this.currentUser, }) : super(key: key);
+  NavDrawer({Key? key, this.userId,}) : super(key: key);
 
   @override
   _NavDrawerState createState() => _NavDrawerState();
 }
 
 class _NavDrawerState extends State<NavDrawer> {
-  Widget mainWidget = const Home();
+  Widget mainWidget = Home();
 
   final List<String> menuUser = ["главная", "мой аккаунт", "члены автоклуба", "клубные новости", "клубная атрибутика и одежда", "партнеры", "контакты"];
   final List<String> menuAdmin = ["главная", "аккаунт члена клуба", "члены автоклуба", "клубные новости", "клубная атрибутика и одежда", "партнеры"];
   final List<String> icons = ["home.svg", "account.svg", "members.svg", "news.svg", "clubwear.svg", "partners.svg", "contacts.svg"];
-  final List<Widget> pages = [Home(), Account(currentUser: user), Members(), News(), Shop(), Partners(), Contacts()];
+  final List<Widget> pages = [Home(), Account(userId: userId), Members(), News(), Shop(), Partners(), Contacts()];
 
-  static get user => null;
+  static get userId => null;
 
   //static get currentUser => null;
 
