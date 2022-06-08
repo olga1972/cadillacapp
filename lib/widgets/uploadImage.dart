@@ -3,7 +3,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:form_builder_image_picker/form_builder_image_picker.dart';
 
 
-import '../models/user2.dart';
+import '../models/users.dart';
 
 
 class uploadImage extends StatelessWidget {
@@ -16,8 +16,8 @@ class uploadImage extends StatelessWidget {
   Widget build(BuildContext context) {
     return FormBuilderImagePicker(
       name: 'photos',
-      displayCustomType: (obj) =>
-      obj is ApiImage ? obj.imageUrl : obj,
+      // displayCustomType: (obj) =>
+      // obj is ApiImage ? obj.imageUrl : obj,
       // decoration: const InputDecoration(labelText: 'Pick Photos'),
       decoration: const InputDecoration(
         border: OutlineInputBorder(

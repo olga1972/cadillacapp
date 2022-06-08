@@ -17,6 +17,7 @@ import 'package:cadillac/pages/news.dart';
 import 'package:cadillac/pages/shop.dart';
 import 'package:cadillac/pages/partners.dart';
 import 'package:cadillac/pages/contacts.dart';
+import 'package:cadillac/pages/test.dart';
 
 import 'package:cadillac/NavDrawer.dart';
 import 'package:cadillac/widgets/titlePage.dart';
@@ -26,12 +27,14 @@ import 'package:cadillac/widgets/bannersList.dart';
 import 'package:url_launcher/link.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-import '../models/users.dart';
-// import '../models/user.dart';
-import 'login.dart';
+import 'package:cadillac/models/users.dart';
+import 'package:cadillac/models/products.dart';
+
 import 'dart:convert';
 import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
+
+import 'gift.dart';
 
 class Home extends StatefulWidget {
   Home({Key? key}) : super(key: key);
@@ -42,6 +45,7 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   late Future<UsersList> usersList;
+  //late Future<ProductsList> productsList;
 
   @override
   void initState() {
@@ -49,8 +53,9 @@ class _HomeState extends State<Home> {
     //officesList = getOfficesList();
     //officesList = readJson();
 
-    usersList = getUsersList();
-    // usersList = readJson();
+    //usersList = getUsersList();
+    //productsList = readJson();
+    //usersList = readJsonUsers();
     // setState(() {
     //   _items = data["items"];
     // });
@@ -86,124 +91,215 @@ class _HomeState extends State<Home> {
           // '/success_payment': (context) => SuccessPayment(),
 
         // },
-return Scaffold(
-  body: FutureBuilder<UsersList>(
+    return MaterialApp(
+        theme: ThemeData(scaffoldBackgroundColor: const Color(0xFF181c33)),
+        title: 'Cadillac',
+        debugShowCheckedModeBanner: false,
+        //initialRoute: '/account',
 
-    future: usersList,
-    builder: (context, AsyncSnapshot snapshot)
-    {
-      print('snapshot.data home');
-      //print(snapshot.data.users);
-      // if (snapshot.connectionState == ConnectionState.done) {
-      if (snapshot.hasData) {
-        return ListView.builder(
-            itemCount: snapshot.data.users?.length,
-            itemBuilder: (context, index) {
-              return Card(
-                child: ListTile(
-                  title: Text('${snapshot.data?.users[index].email}'),
-                  // title: Text('users'),
-                ),
-              );
-            }
-        );
-      } else if (snapshot.connectionState == ConnectionState.waiting) {
-        return Center(child: CircularProgressIndicator());
-      } else {
-        print('error');
-        return Text('error');
-      }
-    }
-  )
-);
+        routes: {
+          '/home': (context) => Home(),
+          // '/account': (context) => Account(currentUser: currentUser,),
+          '/members': (context) => Members(),
+          '/news': (context) => const News(),
+          // '/shop': (context) => Shop(),
+          '/partners': (context) => Partners(),
+          '/contacts': (context) => Contacts(),
+          '/gift': (context) => const Gift(),
+          // '/test': (context) => Test()
 
-
-    }
-
-
+        },
         // home: Scaffold(
-        //   appBar: AppBar(
-        //     backgroundColor: const Color(0xFF181c33),
-        //     shadowColor: Colors.transparent,
-        //     leading: Builder(
-        //       builder: (BuildContext context) {
-        //         return IconButton(
-        //           icon: SvgPicture.network(
-        //             'assets/images/burger.svg',
-        //             semanticsLabel: 'Icon burger',
-        //             height: 12.0),
-        //           onPressed: () { Scaffold.of(context).openDrawer(); },
-        //           tooltip: MaterialLocalizations.of(context).openAppDrawerTooltip,
-        //         );
-        //       },
+        //     appBar: AppBar(
+        //         backgroundColor: const Color(0xFF181c33),
+        //         shadowColor: Colors.transparent,
+        //         leading: Builder(
+        //             builder: (BuildContext context) {
+        //               return IconButton(
+        //                 icon: SvgPicture.network('assets/images/burger.svg'),
+        //                 onPressed: () { Scaffold.of(context).openDrawer(); },
+        //                 tooltip: MaterialLocalizations.of(context).openAppDrawerTooltip,
+        //               );
+        //             },
+        //         ),
         //     ),
+        //   body: FutureBuilder<UsersList>(
+        //     future: usersList,
+        //     builder: (context, snapshot) {
+        //       print('snapshot.data.users');
+        //       var users = snapshot.data?.users;
+        //       final List<User>? usersList = snapshot.data?.users;
+        //           // .where((p) => p.id != 1).toList();
+        //       print(usersList);
+        //       // fruits.where((f) => f.startsWith('a')).toList(); //apples
+        //       // products.where((p) => p.category = products[0]?.category).toList();
+        //       // final selectedCategory = snapshot.data?.products.where((u) => u.category.contains('футболка')).toList();
+        //       // print(snapshot.data?.products[0].category);
+        //       // print(selectedCategory);
+        //       if (snapshot.hasData) {
+        //         return ListView.builder(
+        //             itemCount: snapshot.data?.users.length,
+        //             //   itemCount: selectedCategory?.length,
+        //             itemBuilder: (context, index) {
+        //               return Card(
+        //                 child: ListTile(
+        //                   title: Text('${snapshot.data?.users[index]?.username}'),
+        //                   subtitle:
+        //                   Text('${snapshot.data?.users[index]?.email}'),
+        //
+        //                   isThreeLine: true,
+        //                 ),
+        //               );
+        //             });
+        //
+        //       } else if (snapshot.hasError) {
+        //         print(snapshot.data);
+        //         return const Text('Error');
+        //       }
+        //       return const Center(child: CircularProgressIndicator());
+        //     },
         //   ),
-        //
-        //   body: Center (
-        //     child: Container (
-        //       width: 284,
-        //       child: Column (
-        //           children: [
-        //             const TitlePage(title: 'главная'),
-        //
-        //             Container (
-        //               margin: const EdgeInsets.only(top: 100, bottom: 100),
-        //               child: (
-        //                   Text('Став владельцем Cadillac, \nвы не просто приобретаете \nавтомобиль класса-люкс, \nвы вступаете в элитное сообщество, единомышленников, объединённых общими ценностями и интересами.'.toUpperCase(),
-        //                     style:const TextStyle (
-        //                       fontSize: 14.0,
-        //                       fontWeight: FontWeight.normal,
-        //                       fontFamily: 'CadillacSans',
-        //                       color: Color(0xFF8F97BF),
-        //                       height: 1.7, //line-height : font-size
-        //                     ),
-        //                     textAlign: TextAlign.center,
-        //                     softWrap: true,
-        //                   )
-        //               )
-        //
-        //             ),
-        //
-        //             Container (
-        //               width: MediaQuery.of(context).size.width,
-        //               height: 200,
-        //               padding: EdgeInsets.zero,
-        //               margin: const EdgeInsets.only(top: 10, bottom: 30, left: 0, right: 0),
-        //               color: const Color(0xFF181C33),
-        //               child: Banners(),
-        //             ),
-        //
-        //             const TitlePage(title: 'мы в соцсетях'),
-        //
-        //             Socials(),
-        //
-        //           ]
-        //
-        //       ),
-        //   )
-        // ),
+//
+//   body: FutureBuilder<UsersList>(
+//
+//     future: usersList,
+//     builder: (context, AsyncSnapshot snapshot)
+//     {
+//       print('snapshot.data home');
+//       print(snapshot.data);
+//       // if (snapshot.connectionState == ConnectionState.done) {
+//       if (snapshot.hasData) {
+//         return ListView.builder(
+//             // itemCount: snapshot.data.users?.length,
+//             itemCount: 6,
+//             itemBuilder: (context, index) {
+//               return Card(
+//                 child: ListTile(
+//                   // title: Text('${snapshot.data?.users[index].email}'),
+//                   title: Text('users'),
+//                 ),
+//               );
+//             }
+//         );
+//       } else if (snapshot.connectionState == ConnectionState.waiting) {
+//         return Center(child: CircularProgressIndicator());
+//       } else {
+//         print('error');
+//         return Text('error');
+//       }
+//     }
+//   )
+//         )
+// );
+//
+//
+//     }
+
+
+        home: Scaffold(
+          appBar: AppBar(
+            backgroundColor: const Color(0xFF181c33),
+            shadowColor: Colors.transparent,
+            leading: Builder(
+              builder: (BuildContext context) {
+                return IconButton(
+                  icon: SvgPicture.network(
+                    'assets/images/burger.svg',
+                    semanticsLabel: 'Icon burger',
+                    height: 12.0),
+                  onPressed: () { Scaffold.of(context).openDrawer(); },
+                  tooltip: MaterialLocalizations.of(context).openAppDrawerTooltip,
+                );
+              },
+            ),
+          ),
+
+          body: Center (
+            child: Container (
+              width: 284,
+              child: Column (
+                  children: [
+                    const TitlePage(title: 'главная'),
+
+                    Container (
+                      margin: const EdgeInsets.only(top: 100, bottom: 100),
+                      child: (
+                          Text('Став владельцем Cadillac, \nвы не просто приобретаете \nавтомобиль класса-люкс, \nвы вступаете в элитное сообщество, единомышленников, объединённых общими ценностями и интересами.'.toUpperCase(),
+                            style:const TextStyle (
+                              fontSize: 14.0,
+                              fontWeight: FontWeight.normal,
+                              fontFamily: 'CadillacSans',
+                              color: Color(0xFF8F97BF),
+                              height: 1.7, //line-height : font-size
+                            ),
+                            textAlign: TextAlign.center,
+                            softWrap: true,
+                          )
+                      )
+
+                    ),
+
+                    Container (
+                      width: MediaQuery.of(context).size.width,
+                      height: 200,
+                      padding: EdgeInsets.zero,
+                      margin: const EdgeInsets.only(top: 10, bottom: 30, left: 0, right: 0),
+                      color: const Color(0xFF181C33),
+                      child: Banners(),
+                    ),
+
+                    const TitlePage(title: 'мы в соцсетях'),
+
+                    Socials(),
+
+                  ]
+
+              ),
+          )
+        ),
 
           //body: Home(),
 
-          // drawer: NavDrawer(),
+          drawer: NavDrawer(),
 
 
 
-  //       ),
-  //
-  //
-  //   );
-  // }
-}
+        ),
 
-Future<UsersList> getUsersList() async {
-  // const url = 'https://about.google/static/data/locations.json';
-  const url = 'http://localhost/test/users_list.php';
-  final response = await http.post(Uri.parse(url));
 
-  if(response.statusCode == 200) {
-    return UsersList.fromJson(json.decode(response.body));
-  } else {
-    throw Exception('Error: ${response.reasonPhrase}');
+    );
   }
 }
+
+// Future<UsersList> getUsersList() async {
+// //   getUsersList() async {
+//   print('get users-list home');
+//   // const url = 'https://about.google/static/data/locations.json';
+//   //const url = 'http://localhost/test/users.json';
+//   const url = 'http://localhost/test/users_list.php';
+//   final response = await http.post(Uri.parse(url));
+// print(response.body);
+// print(json.decode(response.body));
+// // var results = json.decode(response.body);
+// // print(UsersList.fromJson(json.decode(response.body))); //error
+//   if(response.statusCode == 200) {
+//     print(response.statusCode);
+//     // User user = User.fromJson(results);
+//     // print(user);
+//
+//
+//     return UsersList.fromJson(json.decode(response.body));
+//
+//
+//     //return UsersList.fromJson(results);
+//   } else {
+//     throw Exception('Error: ${response.reasonPhrase}');
+//   }
+//
+//}
+// Future<UsersList> readJsonUsers() async {
+//   final String response = await rootBundle.loadString('assets/users.json');
+//   final data = await json.decode(response);
+//   return UsersList.fromJson(json.decode(response));
+//
+// }

@@ -1,3 +1,4 @@
+import 'package:cadillac/pages/test.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -9,7 +10,7 @@ import 'package:cadillac/pages/shop.dart';
 import 'package:cadillac/pages/partners.dart';
 import 'package:cadillac/pages/contacts.dart';
 
-import 'models/user2.dart';
+import 'models/users.dart';
 
 //import 'models/user2.dart';
 
@@ -38,10 +39,10 @@ final userId;
 class _NavDrawerState extends State<NavDrawer> {
   Widget mainWidget = Home();
 
-  final List<String> menuUser = ["главная", "мой аккаунт", "члены автоклуба", "клубные новости", "клубная атрибутика и одежда", "партнеры", "контакты"];
+  final List<String> menuUser = ["главная", "мой аккаунт", "члены автоклуба", "клубные новости", "клубная атрибутика и одежда", "партнеры", "контакты", "test"];
   final List<String> menuAdmin = ["главная", "аккаунт члена клуба", "члены автоклуба", "клубные новости", "клубная атрибутика и одежда", "партнеры"];
-  final List<String> icons = ["home.svg", "account.svg", "members.svg", "news.svg", "clubwear.svg", "partners.svg", "contacts.svg"];
-  final List<Widget> pages = [Home(), Account(userId: userId), Members(), News(), Shop(), Partners(), Contacts()];
+  final List<String> icons = ["home.svg", "account.svg", "members.svg", "news.svg", "clubwear.svg", "partners.svg", "contacts.svg", "contacts.svg"];
+  final List<Widget> pages = [Home(), Account(), Members(), News(), Shop(), Partners(), Contacts(), Test()];
 
   static get userId => null;
 

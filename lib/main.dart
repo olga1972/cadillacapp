@@ -11,23 +11,28 @@
 // import 'package:build_runner/build_runner.dart';
 // import 'package:sqflite/sqflite.dart';
 import 'package:cadillac/pages/account.dart';
+import 'package:cadillac/pages/cardProduct.dart';
 import 'package:cadillac/pages/contacts.dart';
+import 'package:cadillac/pages/edit.dart';
 import 'package:cadillac/pages/home.dart';
-import 'package:cadillac/pages/login.dart';
+
 import 'package:cadillac/pages/members.dart';
 import 'package:cadillac/pages/news.dart';
 import 'package:cadillac/pages/partners.dart';
 import 'package:cadillac/pages/shop.dart';
 import 'package:cadillac/pages/success-payment.dart';
+import 'package:cadillac/pages/test.dart';
+
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'dart:async';
 
 import '../env.dart';
-// import '../models/user2.dart';
-// import '../models/users.dart';
-import '../models/user.dart';
+
+import '../models/users.dart';
+//import '../models/user.dart';
+
 import '../utils/app_url.dart';
 // import './details.dart';
 // import './create.dart';
@@ -39,7 +44,7 @@ import '../utils/app_url.dart';
 // import 'client/hive_names.dart';
 
 import 'package:cadillac/pages/registrationPage.dart';
-import 'package:cadillac/pages/login.dart';
+
 import 'package:cadillac/NavDrawer.dart';
 
 void main() {
@@ -51,7 +56,19 @@ class MyApp extends StatelessWidget {
   //final currentUser;
 
   MyApp({Key? key,}) : super(key: key);
-  final currentUser = User(email: 'olga.sadyreva@mail.ru', phone: '9221238853', username: 'Olga', birthday: '19.04.1972', userId: '1111');
+  final currentUser = User(
+      id: 1,
+      userId: '1111',
+      email: 'olga.sadyreva@mail.ru',
+      phone: '9221238853',
+      username: 'Olga',
+      birthday: '19.04.1972',
+      login: 'olga.sadyreva@mail.ru',
+
+      // password: '11111',
+      // car: 'wwww',
+      // login: 'wwwww'
+      );
 
   get userId => null;
   //get currentUser => null;
@@ -73,16 +90,21 @@ class MyApp extends StatelessWidget {
       routes: {
         //'/': (context) => RegistrationPage(),
         //'/home': (context) => SuccessPayment(),
-        // '/home': (context) => RegistrationPage(),
-        '/home': (context) => Shop(),
-        // '/home': (context) => Account(),
+        '/home': (context) => RegistrationPage(),
+        // '/home': (context) => Shop(),
+        // '/home': (context) => Test(),
+        //'/home': (context) => CardProduct(),
+        //'/home': (context) => Account(),
         // '/home': (context) => Home(),
-        '/account': (context) => Account(userId: userId),
+        '/account': (context) => Account(),
         '/members': (context) => Members(),
         '/news': (context) => News(),
         '/shop': (context) => Shop(),
         '/partners': (context) => Partners(),
         '/contacts': (context) => Contacts(),
+        '/edit': (context) => Edit(),
+        '/test': (context) => Test(),
+        // '/card': (context) => Card(productId: 1),
         // '/success_payment': (context) => SuccessPayment(currentUser: currentUser),
         // '/success_payment': (context) => SuccessPayment(
         //   currentUser: currentUser),
@@ -147,7 +169,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   void initState() {
-    print('init state');
+    print('init state main');
     super.initState();
 
     var usersList = getUsersList();
@@ -213,12 +235,12 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   // Future<UsersList> getUsersList() async {
-  //   var url = "http://localhost/test/login.php";
+  //   var url = "http://localhost/test/users_list.php";
   //   final response = await http.get(Uri.parse(url));
-  //   // final items = json.decode(response.body).cast<Map<String, dynamic>>();
-  //   // List<UsersList> user = items.map<User>((json) {
-  //   //   return User.fromJson(json);
-  //   // }).toList();
+  //   final items = json.decode(response.body).cast<Map<String, dynamic>>();
+  //   List<UsersList> user = items.map<User>((json) {
+  //     return User.fromJson(json);
+  //   }).toList();
   //
   //   // return user;
   //   if (response.statusCode == 200) {

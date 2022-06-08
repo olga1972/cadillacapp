@@ -36,18 +36,18 @@ class User {
 
   factory User.fromJson(Map<String, dynamic> jsonData) {
     return User(
-        userId: jsonData['userId'],
-        email: jsonData['email'],
-        phone: jsonData['phone'],
-        login: jsonData['login'],
-        password: jsonData['password'],
-        photo: jsonData['photo'],
-        username: jsonData['username'],
-        birthday: jsonData['birthday'],
-        phone2: jsonData['phone2'],
-        car: jsonData['car'],
-        // cars: jsonData['cars'],
-        address: jsonData['address'],
+      userId: jsonData['userId'],
+      email: jsonData['email'],
+      phone: jsonData['phone'],
+      login: jsonData['login'],
+      password: jsonData['password'],
+      photo: jsonData['photo'],
+      username: jsonData['username'],
+      birthday: jsonData['birthday'],
+      phone2: jsonData['phone2'],
+      car: jsonData['car'],
+      // cars: jsonData['cars'],
+      address: jsonData['address'],
     );
 
   }
@@ -68,34 +68,58 @@ class User {
 //   }
 // }
 
-  Future<List<User>> getUser() async {
-    final response = await http.get(Uri.parse('http://jsonplaceholder.typicode.com/users'));
+  // Future<List<User>> getUser() async {
+  //   final response = await http.get(Uri.parse('http://jsonplaceholder.typicode.com/users'));
+  //
+  //   if (response.statusCode == 200) {
+  //     final List<dynamic> userJson = json.decode(response.body);
+  //     return userJson.map((json) => User.fromJson(json)).toList();
+  //   } else {
+  //     throw Exception('Error fetching users');
+  //   }
+  // }
+
+  Future<List<User>> getUser(userId) async {
+    print('getUser user2');
+    print('userId: $userId');
+
+    String apiurl = "http://localhost/test/get_user.php"; // get jsonplaceholder
+    // final response = await http.post(Uri.parse(apiurl), body:{'userId': userId});
+    var birthday;
+    var phone;
+    var email;
+    final response = await http.post(Uri.parse(apiurl), body:{'userId': userId, 'phone': phone,'email': email, 'birthday': birthday},headers: {'Accept':'application/json, charset=utf-8',"Access-Control-Allow-Origin": "*",
+      "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS"});
 
     if (response.statusCode == 200) {
+      print(response.statusCode);
+      print(response.body);
       final List<dynamic> userJson = json.decode(response.body);
+      print('userJson user2');
+      print(userJson);
       return userJson.map((json) => User.fromJson(json)).toList();
     } else {
       throw Exception('Error fetching users');
     }
   }
 
-  // Map<String, dynamic> toJson() {
-  //   final Map<String, dynamic> data = new Map<String, dynamic>();
-  //   data['userId'] = this.userId;
-  //   data['email'] = this.email;
-  //   data['phone'] = this.phone;
-  //   data['login'] = this.login;
-  //   data['password'] = this.password;
-  //   if (this.photo != null) {
-  //     data['photo'] = this.photo!.toJson();
-  //   }
-  //   data['name'] = this.name;
-  //   data['birthday'] = this.birthday;
-  //   data['phone2'] = this.phone2;
-  //   data['car'] = this.car;
-  //   data['address'] = this.address;
-  //   return data;
-  // }
+// Map<String, dynamic> toJson() {
+//   final Map<String, dynamic> data = new Map<String, dynamic>();
+//   data['userId'] = this.userId;
+//   data['email'] = this.email;
+//   data['phone'] = this.phone;
+//   data['login'] = this.login;
+//   data['password'] = this.password;
+//   if (this.photo != null) {
+//     data['photo'] = this.photo!.toJson();
+//   }
+//   data['name'] = this.name;
+//   data['birthday'] = this.birthday;
+//   data['phone2'] = this.phone2;
+//   data['car'] = this.car;
+//   data['address'] = this.address;
+//   return data;
+// }
 }
 
 // class XFile {

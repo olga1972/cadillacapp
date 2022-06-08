@@ -11,7 +11,7 @@ import 'package:card_swiper/card_swiper.dart';
 // void main() => runApp(Gallery());
 
 
-import '../../models/user2.dart';
+import '../../models/users.dart';
 
 
 class Gallery extends StatelessWidget {
@@ -95,7 +95,7 @@ Widget build(BuildContext context) {
               },
 
               // indicatorLayout: PageIndicatorLayout.COLOR,
-              autoplay: true,
+              // autoplay: true,
               itemCount: images.length,
               // itemWidth: 285.0,
               pagination: const SwiperPagination(

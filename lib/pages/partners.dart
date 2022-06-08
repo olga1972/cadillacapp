@@ -11,6 +11,7 @@ import 'package:cadillac/pages/contacts.dart';
 import 'package:cadillac/NavDrawer.dart';
 import 'package:cadillac/widgets/titlePage.dart';
 import 'package:cadillac/widgets/partnersList.dart';
+import 'package:flutter_svg/svg.dart';
 
 
 class Partners extends StatelessWidget {
@@ -51,66 +52,54 @@ class Partners extends StatelessWidget {
           appBar: AppBar(
             backgroundColor: const Color(0xFF181c33),
             shadowColor: Colors.transparent,
+            leading: Builder(
+              builder: (BuildContext context) {
+                return IconButton(
+                  icon: SvgPicture.network('assets/images/burger.svg'),
+                  onPressed: () { Scaffold.of(context).openDrawer(); },
+                  tooltip: MaterialLocalizations.of(context).openAppDrawerTooltip,
+                );
+              },
+            ),
           ),
-          body: Center (
-              child: Container (
-                  width: 284,
+          body: ListView(
+              children: [
+                  Center (
+                      child: Container (
+                      width: 284,
+                        alignment: Alignment.topCenter,
+                        child: Column (
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                                Container (
+                                margin: const EdgeInsets.only(bottom: 73),
+                                child:
+                                const TitlePage(title: 'партнеры автоклуба\ncadillac'),
+                              ),
 
-                  child: Column (
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                          Expanded (
-                          child: SingleChildScrollView (
+                                ListView.builder (
+                                    scrollDirection: Axis.vertical,
+                                    shrinkWrap: true,
+                                    itemCount: partners.length,
+                                    itemBuilder: (BuildContext context, int index) {
+                                      return Container (
 
-                              child: Column(
-                                    children: [
-                                          ListView(
-                                              children: [
-                                                  Center (
-                                                      child: Container (
-                                                      width: 284,
-                                                        alignment: Alignment.topCenter,
-                                                        child: Column (
-                                                            mainAxisAlignment: MainAxisAlignment.start,
-                                                            crossAxisAlignment: CrossAxisAlignment.center,
-                                                            children: [
-                                                                Container (
-                                                                margin: const EdgeInsets.only(bottom: 73),
-                                                                child:
-                                                                const TitlePage(title: 'партнеры автоклуба\ncadillac'),
-                                                              ),
+                                        margin: const EdgeInsets.only(bottom: 30),
+                                        child: Image(
+                                          image: NetworkImage(partners[index]),
+                                          fit: BoxFit.fill,
+                                        ),
+                                      );
 
-                                                                ListView.builder (
-                                                                    scrollDirection: Axis.vertical,
-                                                                    shrinkWrap: true,
-                                                                    itemCount: partners.length,
-                                                                    itemBuilder: (BuildContext context, int index) {
-                                                                      return Container (
-
-                                                                        margin: const EdgeInsets.only(bottom: 30),
-                                                                        child: Image(
-                                                                          image: NetworkImage(partners[index]),
-                                                                          fit: BoxFit.fill,
-                                                                        ),
-                                                                      );
-
-                                                                    }
-                                                                )
-                                                            ]
-                                    )
-                                                      )
-                                                  )
-                                              ]
-                                          ),
-                                    ]
-                              )
-                          )
-                          )
-                      ]
+                                    }
+                                )
+                            ]
+                       )
+                      )
                   )
+              ]
 
-              ),
           ),
           drawer: NavDrawer(),
       )

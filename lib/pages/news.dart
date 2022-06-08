@@ -11,6 +11,7 @@ import 'package:cadillac/pages/contacts.dart';
 import 'package:cadillac/NavDrawer.dart';
 import 'package:cadillac/widgets/titlePage.dart';
 import 'package:cadillac/widgets/bannersList.dart';
+import 'package:flutter_svg/svg.dart';
 
 class News extends StatelessWidget {
   const News({Key? key}) : super(key: key);
@@ -42,6 +43,15 @@ class News extends StatelessWidget {
           appBar: AppBar(
             backgroundColor: const Color(0xFF181c33),
             shadowColor: Colors.transparent,
+            leading: Builder(
+              builder: (BuildContext context) {
+                return IconButton(
+                  icon: SvgPicture.network('assets/images/burger.svg'),
+                  onPressed: () { Scaffold.of(context).openDrawer(); },
+                  tooltip: MaterialLocalizations.of(context).openAppDrawerTooltip,
+                );
+              },
+            ),
           ),
 
           body: Center (

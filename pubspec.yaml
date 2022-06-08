@@ -1,5 +1,5 @@
 name: cadillac
-description: A new Flutter project.
+description: С нами Вы получите общения, Совместных мероприятий, Пользования высококачественной партнерской программой
 
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
@@ -102,8 +102,8 @@ flutter:
 
   assets:
     - assets/images/
-#    - assets/data.json
     - assets/products.json
+    - assets/users.json
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
 

@@ -51,8 +51,8 @@ import 'package:cadillac/common/theme_helper.dart';
 
 import 'package:cadillac/pages/account.dart';
 
-import 'package:cadillac/models/user2.dart';
-//import 'package:cadillac/models/users.dart';
+
+import 'package:cadillac/models/users.dart';
 import 'dart:developer';
 import 'package:flutter/services.dart';
 
@@ -76,9 +76,9 @@ class RegistrationPage extends StatelessWidget {
   final dynamic password ='123';
   final dynamic birthday = '111';
   late dynamic car;
-  late dynamic type;
-  final dynamic token = '1111';
-  final dynamic renewalToken = '11111';
+  // late dynamic type;
+  // final dynamic token = '1111';
+  // final dynamic renewalToken = '11111';
 
   late final dynamic photo = 'assets/images/avatar.png';
   /*late final dynamic cars = const [ 'assets/images/cadillac-eldorado.png',
@@ -124,7 +124,7 @@ class RegistrationPage extends StatelessWidget {
 
     return MaterialApp(
       theme: ThemeData(scaffoldBackgroundColor: const Color(0xFF181c33)),
-      title: 'Cadillac',
+      title: 'Клуб Любителей Кадиллак в России',
       debugShowCheckedModeBanner: false,
       localizationsDelegates: [
         GlobalMaterialLocalizations.delegate,
@@ -142,14 +142,14 @@ class RegistrationPage extends StatelessWidget {
       routes: {
         '/home': (context) => Home(),
         // '/home': (context) => RegistrationPage(),
-        '/account': (context) => Account(userId: userId),
+        '/account': (context) => Account(),
           // '/members': (context) => Members(),
           // '/news': (context) => const News(),
-          '/shop': (context) => const Shop(),
+          '/shop': (context) => Shop(),
           '/partners': (context) => Partners(),
           '/contacts': (context) => Contacts(),
           // '/success_payment': (context) => SuccessPayment(currentUser: currentUser),
-        '/success_payment': (context) => SuccessPayment(userId: userId)
+        '/success_payment': (context) => SuccessPayment()
       },
       home: Scaffold(
         body: Center (
@@ -334,11 +334,22 @@ class RegistrationPage extends StatelessWidget {
 
                                           _formKey.currentState?.save();
                                           //User user = User(name: 'Konstantin', age: 34);
-                                          var uuid = const Uuid();
-                                          var userId = uuid.v1();
+                                          // var uuid = const Uuid();
+                                          // var userId = uuid.v1();
 
-                                          final user = User(userId: userId, email: email, phone :phone);
-                                          //startLogin();
+                                          final user = User(
+                                              id: 1,
+                                              userId: 'userId',
+                                              email: email,
+                                              phone : phone,
+                                              username: 'username',
+                                              birthday: 'birthday',
+                                              login: email,
+                                              // car: 'car',
+                                              // password: 'password',
+                                              // login: email
+                                          );
+
 
 
                                           currentUser = addUser(user);
@@ -352,7 +363,7 @@ class RegistrationPage extends StatelessWidget {
                                           Navigator.pushReplacement(
                                               context, MaterialPageRoute(
                                             builder: (context) =>
-                                            SuccessPayment(userId: userId)
+                                            SuccessPayment()
                                             // SuccessPayment(
                                             //     currentUser: user),
                                           )
@@ -463,13 +474,9 @@ class RegistrationPage extends StatelessWidget {
     String apiurl = "http://localhost/test/create.php";
     // var response = await http.post(Uri.parse(apiurl),body:{'userId': userId,'phone': phone,'email': email});
     var response = await http.post(Uri.parse(apiurl), headers: {'Accept':'application/json, charset=utf-8',"Access-Control-Allow-Origin": "*",
-    "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS"}, body:{'userId': userId, 'phone': phone,'email': email});
-
+    "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS"}, body:{'phone': phone,'email': email});
 
     // final response = await http.post(Uri.parse(apiurl));
-
-    print('after response registr');
-
     //print(User.fromJson(jsonDecode(response.body)));
 
     if(response.statusCode == 200){
@@ -479,14 +486,14 @@ class RegistrationPage extends StatelessWidget {
         // var id = uuid.v1();
         print(response.statusCode);
 
-        print('response.body registr');
-        print(response);
-        //print(response.body); // пустая стрка в консоли вне зависимости от передачи боди)
-        // currentUser = json.decode(response);
-        // print(currentUser);
-        print('after json.decode registr');
+        final userJson = json.decode(response.body);
+        //final userJson = response.body;
+        print('userJson registr');
+        print(userJson);
+        return User.fromJson(userJson);
 
-        return response.body;
+
+        //return response.body; //это правильно
         //return User.fromJson(currentUser); // error
         //return User.fromJson(jsonDecode(response.body));
         // setState(() {
@@ -503,58 +510,6 @@ class RegistrationPage extends StatelessWidget {
     //return User.fromJson(json.decode(response.body));
   }
 
-  startLogin() async {
-    print('startLogin');
-    // String apiurl = "http://192.168.31.213/test/login.php"; //api url no  work, login.php - error
-    String apiurl = "http://localhost/test/create.php"; //api url
-    print(apiurl);
-    // print("userId : $userId");  no field form
-    // print("phone2 : $phone");
-    // print("email2: $email");
-
-    // final response = await http.post(Uri.parse(apiurl),body:{'userId': userId, 'phone': phone,'email': email}, headers: {'Accept':'application/json',"Access-Control-Allow-Origin": "*",
-    //   "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS"});
-    final response = await http.post(Uri.parse(apiurl), headers: {'Accept':'application/json',"Access-Control-Allow-Origin": "*",
-      "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS"});
-
-
-    print('response body start login');
-
-    //print(json.decode(response.body));
-    //return User.fromJson(jsonDecode(response.body));
-
-
-
-
-    if(response.statusCode == 200){
-
-      print(response.statusCode);
-
-      print('response.body');
-      print(response.body);
-      currentUser = json.decode(response.body);
-      //print(User.fromJson(jsonDecode(response.body)));
-        // var uuid = const Uuid();
-        // id = uuid.v1();
-      //return response.body;
-      return User.fromJson(json.decode(response.body));
-      //return User.fromJson(jsonDecode(response.body));
-      // return UsersList.fromJson(json.decode(response.body));
-      // dynamic user = User.fromJson(jsonDecode(response.body));
-      // print('user: ${user}');
-      // return User.fromJson(jsonDecode(response.body));
-        // setState(() {
-        //   showprogress = false; //don't show progress indicator
-        //   error = true;
-        //   errormsg = jsondata["message"];
-        // });
-      } else {
-        print('error');
-        throw Exception('We were not able to successfully download the json data.');
-      }
-    //return response.body;
-    //return User.fromJson(jsonDecode(response.body));
-  }
 
   void _onChanged() {
   }

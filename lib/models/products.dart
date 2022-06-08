@@ -8,9 +8,18 @@ class ProductsList {
   ProductsList({required this.products});
 
   factory ProductsList.fromJson (Map<String, dynamic> json) {
+    print('from json productList');
+    print(json);
+    print(json['product']);
     var productsJson = json['products'] as List;
 
+    print('productsJson');
+    print(productsJson);
     List<Product> productsList = productsJson.map((i) => Product.fromJson(i)).toList();
+
+    print('productsList');
+    print(productsList);
+    print(productsList.runtimeType);
 
     return ProductsList(
       products: productsList,

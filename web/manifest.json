@@ -1,11 +1,11 @@
 {
-    "name": "cadillac",
+    "name": "Клуб Любителей Кадиллак в России",
     "short_name": "cadillac",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",
     "theme_color": "#0175C2",
-    "description": "A new Flutter project.",
+    "description": "С нами Вы получите общения\uD83E\uDDD1\u200D\uD83E\uDD1D\u200D\uD83E\uDDD1 Совместных мероприятий\uD83E\uDD73 Пользования высококачественной партнерской программой\uD83D\uDCB3",
     "orientation": "portrait-primary",
     "prefer_related_applications": false,
     "icons": [

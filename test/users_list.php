@@ -1,23 +1,20 @@
-require 'db/connect.php';
-
 <?php
-header('Content-Type: application/json');
-include "db/connect.php";
 
-global $db_name;
-global $db_server;
-global $db_user;
-global $db_pass;
+header("Content-type: text/html; charset=utf-8");
+header("Content-type: text/json");
 
-global $link;
-global $result;
+error_reporting(-1);
+require_once 'connect.php';
+require_once 'funcs.php';
 
-$item = "";
-$data = "";
+global $dbhost, $dbuser, $dbpassword, $dbname, $link;
+ini_set('display_errors', 1);
 
-$sql_query = "SELECT * FROM `users_list`";
+$users_list = get_all_users();
+$users_json = json_encode($users_list);
+//$users_list = users_to_obj();
+print($users_json);
+//echo $users_list;
 
-$result = mysqli_query($link, "SELECT * FROM users_list");
-$data = mysqli_fetch_all($result);
 
-var_dump($data);
+
