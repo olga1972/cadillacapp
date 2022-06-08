@@ -71,7 +71,7 @@ class Edit extends StatelessWidget {
   late dynamic login = 'test@test';
   late dynamic birthday;
   late dynamic type;
-  late dynamic car;
+  late dynamic carname;
   // late final dynamic token = '12345678';
   // late final dynamic renewalToken = '12345678';
   // late final dynamic photo = new ApiImage(imageUrl: 'assets/images/avatar.png', id: '1');
@@ -533,7 +533,7 @@ class Edit extends StatelessWidget {
                                                               ),
                                                             ),
                                                             FormBuilderTextField(
-                                                                name: 'car',
+                                                                name: 'carname',
                                                                 cursorWidth: 1.0,
                                                                 cursorColor: Colors
                                                                     .white,
@@ -557,7 +557,7 @@ class Edit extends StatelessWidget {
                                                                     color: Colors.white60,
                                                                   ),
                                                                 ),
-                                                                onSaved: (value) => car = value!,
+                                                                onSaved: (value) => carname = value!,
                                                                 // onChanged: _onChanged,
                                                                 // valueTransformer: (text) => num.tryParse(text),
                                                                 //
@@ -686,7 +686,7 @@ class Edit extends StatelessWidget {
                                                                         // photo: photo,
                                                                         username: username,
                                                                         birthday: birthday,
-                                                                        // car: car,
+                                                                        carname: carname,
                                                                         phone: phone,
                                                                         email: email,
                                                                         // cars: (cars),
@@ -775,12 +775,13 @@ class Edit extends StatelessWidget {
     // dynamic photo = user.photo;
     dynamic username = user.username;
     dynamic birthday = user.birthday;
+    dynamic carname = user.carname;
     // dynamic car = user.car;
     // dynamic cars = user.cars;
 
 
     String apiurl = "http://localhost/test/edit.php";
-    var response = await http.post(Uri.parse(apiurl), body:{'login': login, 'username': username, 'birthday': birthday,},headers: {'Accept':'application/json, charset=utf-8',"Access-Control-Allow-Origin": "*",
+    var response = await http.post(Uri.parse(apiurl), body:{'login': login, 'username': username, 'birthday': birthday, 'carname': carname},headers: {'Accept':'application/json, charset=utf-8',"Access-Control-Allow-Origin": "*",
       "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS"});
 
     // var response = await http.post(Uri.parse(apiurl), headers: {'Accept':'application/json, charset=utf-8',"Access-Control-Allow-Origin": "*",

@@ -428,8 +428,8 @@ class Account extends StatelessWidget {
                                                     height: 1.5, //line-height : font-size
                                                   )
                                               ),
-                                              // Text('${snapshot.data?.car}'.toUpperCase(),
-                                              Text('cadillac'.toUpperCase(),
+                                              Text('${snapshot.data?.carname}'.toUpperCase(),
+                                              // Text('cadillac'.toUpperCase(),
                                                   textAlign: TextAlign.center,
                                                   style: const TextStyle(
                                                     fontSize: 24.0,

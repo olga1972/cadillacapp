@@ -39,10 +39,10 @@ final userId;
 class _NavDrawerState extends State<NavDrawer> {
   Widget mainWidget = Home();
 
-  final List<String> menuUser = ["главная", "мой аккаунт", "члены автоклуба", "клубные новости", "клубная атрибутика и одежда", "партнеры", "контакты", "test"];
+  final List<String> menuUser = ["главная", "мой аккаунт", "члены автоклуба", "клубные новости", "клубная атрибутика и одежда", "партнеры", "контакты"];
   final List<String> menuAdmin = ["главная", "аккаунт члена клуба", "члены автоклуба", "клубные новости", "клубная атрибутика и одежда", "партнеры"];
   final List<String> icons = ["home.svg", "account.svg", "members.svg", "news.svg", "clubwear.svg", "partners.svg", "contacts.svg", "contacts.svg"];
-  final List<Widget> pages = [Home(), Account(), Members(), News(), Shop(), Partners(), Contacts(), Test()];
+  final List<Widget> pages = [Home(), Account(), Members(), News(), Shop(), Partners(), Contacts()];
 
   static get userId => null;
 

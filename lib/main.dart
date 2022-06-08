@@ -66,7 +66,7 @@ class MyApp extends StatelessWidget {
       login: 'olga.sadyreva@mail.ru',
 
       // password: '11111',
-      // car: 'wwww',
+      carname: 'wwww',
       // login: 'wwwww'
       );
 
@@ -103,7 +103,7 @@ class MyApp extends StatelessWidget {
         '/partners': (context) => Partners(),
         '/contacts': (context) => Contacts(),
         '/edit': (context) => Edit(),
-        '/test': (context) => Test(),
+        // '/test': (context) => Test(),
         // '/card': (context) => Card(productId: 1),
         // '/success_payment': (context) => SuccessPayment(currentUser: currentUser),
         // '/success_payment': (context) => SuccessPayment(

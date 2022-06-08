@@ -74,7 +74,7 @@ class SuccessPayment extends StatelessWidget {
   late dynamic password;
   late dynamic birthday;
   late dynamic type;
-  late dynamic car;
+  late dynamic carname;
   // late final dynamic token = '12345678';
   // late final dynamic renewalToken = '12345678';
   // late final dynamic photo = new ApiImage(imageUrl: 'assets/images/avatar.png', id: '1');
@@ -655,7 +655,7 @@ class SuccessPayment extends StatelessWidget {
                                                                         ),
                                                                       ),
                                                                       FormBuilderTextField(
-                                                                          name: 'car',
+                                                                          name: 'carname',
                                                                           cursorWidth: 1.0,
                                                                           cursorColor: Colors
                                                                               .white,
@@ -690,7 +690,7 @@ class SuccessPayment extends StatelessWidget {
                                                                           ),
                                                                           onSaved: (
                                                                               value) =>
-                                                                          car =
+                                                                          carname =
                                                                           value!,
                                                                           // onChanged: _onChanged,
                                                                           // valueTransformer: (text) => num.tryParse(text),
@@ -834,10 +834,11 @@ class SuccessPayment extends StatelessWidget {
                                                                                   username: username,
                                                                                   birthday: birthday,
                                                                                   login: login,
+                                                                                  carname: carname,
                                                                                   // password: password,
                                                                                   // photo: photo,
 
-                                                                                  // car: car,
+
 
                                                                                   // cars: (cars),
 
@@ -966,12 +967,12 @@ class SuccessPayment extends StatelessWidget {
     // dynamic photo = user.photo;
     dynamic username = user.username;
     dynamic birthday = user.birthday;
-    // dynamic car = user.car;
+    dynamic carname = user.carname;
     // dynamic cars = user.cars;
 
 
     String apiurl = "http://localhost/test/edit.php";
-    var response = await http.post(Uri.parse(apiurl), body:{'login': login, 'username': username, 'birthday': birthday, },headers: {'Accept':'application/json, charset=utf-8',"Access-Control-Allow-Origin": "*",
+    var response = await http.post(Uri.parse(apiurl), body:{'login': login, 'username': username, 'birthday': birthday, 'carname': carname,},headers: {'Accept':'application/json, charset=utf-8',"Access-Control-Allow-Origin": "*",
       "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS"});
 
     // var response = await http.post(Uri.parse(apiurl), headers: {'Accept':'application/json, charset=utf-8',"Access-Control-Allow-Origin": "*",

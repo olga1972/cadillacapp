@@ -75,7 +75,7 @@ class RegistrationPage extends StatelessWidget {
   late dynamic phone = 'erterert';
   final dynamic password ='123';
   final dynamic birthday = '111';
-  late dynamic car;
+  late dynamic carname = 'carname';
   // late dynamic type;
   // final dynamic token = '1111';
   // final dynamic renewalToken = '11111';
@@ -345,7 +345,7 @@ class RegistrationPage extends StatelessWidget {
                                               username: 'username',
                                               birthday: 'birthday',
                                               login: email,
-                                              // car: 'car',
+                                              carname: carname,
                                               // password: 'password',
                                               // login: email
                                           );
