@@ -12,12 +12,13 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'dart:async';
 
+
+
 import '../../models/users.dart';
 //import '../../models/user2.dart';
 
 
 import 'package:cadillac/variables.dart';
-import 'dart:async';
 import 'dart:io';
 
 
@@ -109,6 +110,7 @@ class Account extends StatelessWidget {
     //dynamic currentUser;
     print('user account');
     print('load');
+
     //print(userId);
 
     print('userId: $userId');
@@ -116,6 +118,7 @@ class Account extends StatelessWidget {
     //User currentUser = User( email: '', birthday: '', userId: userId, phone: '', username: '' );
     user = getUser();
     print(user.runtimeType);
+    // getCookie();
 
     return MaterialApp(
         theme: ThemeData(scaffoldBackgroundColor: const Color(0xFF181c33)),
@@ -489,21 +492,28 @@ Future<User> getUser() async {
   print('getUser');
   // print('userId: $userId');
 
-  String apiurl = "http://localhost/test/get_user.php"; // get jsonplaceholder
+  String apiurl = "http://localhost/test/get_user.php";
+  //String apiurl = "https://cadillacapp.ru/test/get_user.php"; // get jsonplaceholder
   // final response = await http.post(Uri.parse(apiurl), body:{'userId': userId});
   var birthday = '111';
   var phone = '111';
   var email= '111';
+  // var userId;
   final response = await http.post(Uri.parse(apiurl), body:{'phone': phone,'email': email, 'birthday': birthday},headers: {'Accept':'application/json, charset=utf-8',"Access-Control-Allow-Origin": "*",
     "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS"});
 
   if (response.statusCode == 200) {
-    print(response.statusCode);
-    print(response.body);
+    // print(response.statusCode);
+    // print(response.body);
+
+    // print(response);
     final userJson = json.decode(response.body);
+    // var userId = userJson.userId;  // error load account
+    // print('userId');
+    // print(userId);
     //final userJson = response.body;
-    print('userJson');
-    print(userJson);
+    // print('userJson');
+    // print(userJson);
     return User.fromJson(userJson);
 
     //return userJson.map((json) => User.fromJson(userJson));
@@ -511,6 +521,8 @@ Future<User> getUser() async {
     throw Exception('Error fetching users');
   }
 }
+
+
 
 // addInfoUser() async {
 //   dynamic phone='';

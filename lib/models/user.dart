@@ -44,7 +44,7 @@ class User {
 
   late final String login;
   late final String password;
-  late final String car;
+  late final String carname;
 
   User({
     required this.userId,
@@ -55,7 +55,7 @@ class User {
 
     required this.login,
     required this.password,
-    required this.car
+    required this.carname
   });
 
   factory User.fromJson(Map<String, dynamic> json) {
@@ -68,7 +68,7 @@ class User {
 
       login: json['login'] as String,
       password: json['password'] as String,
-      car: json['car'] as String,
+      carname: json['carname'] as String,
     );
 
   }
@@ -95,7 +95,7 @@ class User {
 
     data['login'] = this.login;
     data['password'] = this.password;
-    data['car'] = this.car;
+    data['carname'] = this.carname;
     return data;
   }
 }

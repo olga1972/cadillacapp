@@ -65,6 +65,7 @@ class User {
 Future<UsersList> readJson() async {
   final String response = await rootBundle.loadString('assets/users.json');
   final data = await json.decode(response);
+  print('userlist readJson');
   return UsersList.fromJson(json.decode(response));
 
 }

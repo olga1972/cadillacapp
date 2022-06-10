@@ -847,9 +847,7 @@ class SuccessPayment extends StatelessWidget {
                                                                                 editUser(
                                                                                     currentUser);
                                                                                 print(
-                                                                                    'after editUser');
-                                                                                print(
-                                                                                    'user success');
+                                                                                    'after editUser success');
 
                                                                                 print(
                                                                                     "currentUser: ${currentUser
@@ -971,6 +969,7 @@ class SuccessPayment extends StatelessWidget {
     // dynamic cars = user.cars;
 
 
+    //String apiurl = "https://cadillacapp.ru/test/edit.php";
     String apiurl = "http://localhost/test/edit.php";
     var response = await http.post(Uri.parse(apiurl), body:{'login': login, 'username': username, 'birthday': birthday, 'carname': carname,},headers: {'Accept':'application/json, charset=utf-8',"Access-Control-Allow-Origin": "*",
       "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS"});
@@ -979,7 +978,7 @@ class SuccessPayment extends StatelessWidget {
     //   "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS"}, body:{'phone': phone,'email': email});
     // var response = await http.post(Uri.parse(apiurl), headers: {'Accept':'application/json',"Access-Control-Allow-Origin": "*",
     //       "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS"});
-    print('after response');
+    print('after response success');
     // print("response.body success: ${jsonDecode(response.body)}");  SyntaxError: Unexpected end of JSON input
 
 

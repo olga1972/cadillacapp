@@ -1,3 +1,5 @@
+
+
 import 'package:cadillac/main.dart';
 import 'package:cadillac/pages/partners.dart';
 import 'package:cadillac/pages/shop.dart';
@@ -18,7 +20,14 @@ import 'package:path_provider/path_provider.dart';
 import 'package:uuid/uuid.dart';
 import 'package:uuid/uuid_util.dart';
 
+import 'package:dio/dio.dart';
+import 'package:dio_cookie_manager/dio_cookie_manager.dart';
+import 'package:cookie_jar/cookie_jar.dart';
 
+import 'package:flutter/services.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
+import 'dart:async';
 
 import 'package:flutter/services.dart';
 
@@ -120,7 +129,7 @@ class RegistrationPage extends StatelessWidget {
   Widget build(BuildContext context) {
     //currentUser = addUser();
     //print(currentUser);
-
+    getCookie();
 
     return MaterialApp(
       theme: ThemeData(scaffoldBackgroundColor: const Color(0xFF181c33)),
@@ -462,6 +471,7 @@ class RegistrationPage extends StatelessWidget {
   }
 
   addUser(User user) async {
+
     // var uuid = const Uuid();
     // var id = uuid.v1();
     print('func addUser registr');
@@ -471,6 +481,7 @@ class RegistrationPage extends StatelessWidget {
     dynamic userId = user.userId;
 
 
+    //String apiurl = "https://cadillacapp.ru/test/create.php";
     String apiurl = "http://localhost/test/create.php";
     // var response = await http.post(Uri.parse(apiurl),body:{'userId': userId,'phone': phone,'email': email});
     var response = await http.post(Uri.parse(apiurl), headers: {'Accept':'application/json, charset=utf-8',"Access-Control-Allow-Origin": "*",
@@ -490,6 +501,8 @@ class RegistrationPage extends StatelessWidget {
         //final userJson = response.body;
         print('userJson registr');
         print(userJson);
+
+
         return User.fromJson(userJson);
 
 
@@ -508,6 +521,22 @@ class RegistrationPage extends StatelessWidget {
     }
     //return response.body;
     //return User.fromJson(json.decode(response.body));
+  }
+
+  getCookie() async {
+    print('get cookie');
+    var dio = Dio();
+    //dynamic cookies = {"TestCookie", "9265988f-e70d-11ec-af6a-00ff21c5bb0a"};
+
+    var cookieJar = CookieJar();
+    print(cookieJar);
+
+    dio.interceptors.add(CookieManager(cookieJar));
+    dynamic result = await dio.get("http://localhost");
+    // Print cookies
+    print(cookieJar.loadForRequest(Uri.parse("http://localhost")));
+    // second request with the cookie
+    await dio.get("http://localhost");
   }
 
 

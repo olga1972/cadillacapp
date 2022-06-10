@@ -1,4 +1,5 @@
 // import 'package:cadillac/models/productsList.dart';
+import 'package:card_swiper/card_swiper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -13,6 +14,9 @@ import 'package:cadillac/NavDrawer.dart';
 import 'package:cadillac/widgets/titlePage.dart';
 // import 'package:cadillac/widgets/productsList.dart';
 import 'package:cadillac/models/products.dart';
+import 'package:flutter_svg/svg.dart';
+
+import 'cardProduct.dart';
 
 class Shop extends StatefulWidget {
   const Shop({Key? key}) : super(key: key);
@@ -25,7 +29,12 @@ class _ShopState extends State<Shop> {
   //late Future<OfficesList> officesList;
   late Future<ProductsList> productsList;
 
-  get currentUser => null;
+  // get currentUser => null;
+  List<String> images = [
+    "assets/images/t-shirt.png",
+    "assets/images/t-shirt.png",
+    "assets/images/t-shirt.png",
+  ];
 
   @override
   void initState() {
@@ -61,170 +70,681 @@ class _ShopState extends State<Shop> {
           appBar: AppBar(
             backgroundColor: const Color(0xFF181c33),
             shadowColor: Colors.transparent,
-          ),
-
-            // final List<DocumentSnapshot> userList = snapshot.data.documents
-            // .where((DocumentSnapshot documentSnapshot) => documentSnapshot['userId'] != id).toList();
-
-          body: FutureBuilder<ProductsList>(
-              future: productsList,
-              builder: (context, snapshot) {
-                print('snapshot.data.products');
-                var products = snapshot.data?.products;
-                final List<Product>? productsList = snapshot.data?.products
-                    .where((p) => p.categoryId != 1).toList();
-                print(productsList);
-                // fruits.where((f) => f.startsWith('a')).toList(); //apples
-                // products.where((p) => p.category = products[0]?.category).toList();
-                final selectedCategory = snapshot.data?.products.where((u) => u.category.contains('футболка')).toList();
-                // print(snapshot.data?.products[0].category);
-                print(selectedCategory);
-                if (snapshot.hasData) {
-                    return ListView.builder(
-                      itemCount: snapshot.data?.products.length,
-                      //   itemCount: selectedCategory?.length,
-                        itemBuilder: (context, index) {
-                          return Card(
-                            child: ListTile(
-                              title: Text('${snapshot.data?.products[index]?.name}'),
-                              subtitle:
-                              Text('${snapshot.data?.products[index]?.category}'),
-                              leading: Image.network(
-                                  '${snapshot.data?.products[index].image}'),
-                              isThreeLine: true,
-                            ),
-                          );
-                        });
-
-                } else if (snapshot.hasError) {
-                  print(snapshot.data);
-                  return const Text('Error');
-                }
-                return const Center(child: CircularProgressIndicator());
+            leading: Builder(
+              builder: (BuildContext context) {
+                return IconButton(
+                  icon: SvgPicture.network('assets/images/burger.svg'),
+                  onPressed: () { Scaffold.of(context).openDrawer(); },
+                  tooltip: MaterialLocalizations.of(context).openAppDrawerTooltip,
+                );
               },
             ),
-          //),
+          ),
 
+          body: Center (
+              child: ListView (
+                  children: [
+                  Column (
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Container (
+                          width: 390,
+                          margin: EdgeInsets.only(top: 30, bottom: 20),
+                          child: const TitlePage(title: 'клубная атрибутика'),
+                        ),
+                        Container (
+                            alignment: Alignment.topCenter,
+                            width: 390,
+                            child: Column (
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
 
-          // body: Center (
-          //     child: Container (
-          //       alignment: Alignment.topCenter,
-          //         // width: 284,
-          //
-          //         child: Column (
-          //             mainAxisAlignment: MainAxisAlignment.start,
-          //             crossAxisAlignment: CrossAxisAlignment.center,
-          //             children: [
-          //               const TitlePage(title: 'клубная атрибутика'),
-          //               FutureBuilder<ProductsList>(
-          //                 future: productsList,
-          //                 builder: (context, AsyncSnapshot snapshot) {
-          //                   // if (snapshot.connectionState == ConnectionState.waiting) {
-          //                   //   return const Center(
-          //                   //     child: CircularProgressIndicator(),
-          //                   //   );
-          //                   // }
-          //                   // if (snapshot.connectionState == ConnectionState.done) if (snapshot.hasError) {
-          //                   if (snapshot.connectionState == ConnectionState.done && snapshot.hasError) {
-          //                     return Container(
-          //                       // height: 100,
-          //                         margin: const EdgeInsets.only(
-          //                             top: 43.0, bottom: 43.0),
-          //                         // color: Colors.transparent,
-          //                         child: ListView.builder(
-          //                             itemCount: snapshot.data?.products.length,
-          //                             itemBuilder: (context, index) {
-          //                               return Row(
-          //                                   children: [
-          //                                       Expanded(
-          //                                           flex: 1,
-          //                                           child: Container(
-          //                                               height: 172,
-          //                                               margin: const EdgeInsets.only(
-          //                                                   right: 25.0),
-          //                                               padding: const EdgeInsets.only(
-          //                                                   left: 5.0, right: 5.0),
-          //                                               alignment: Alignment.center,
-          //                                               child: Text('${snapshot.data?.products[index].category}'.toUpperCase(),
-          //                                               textAlign: TextAlign.center,
-          //                                               style: const TextStyle(
-          //                                                 fontSize: 14.0,
-          //                                                 fontWeight: FontWeight.normal,
-          //                                                 fontFamily: 'CadillacSans',
-          //                                                 color: Colors.white,
-          //                                                 height: 1.4, //line-height : font-size
-          //                                                   )
-          //                                               )
-          //                                           ),
-          //                                       ),
-          //                                       const Expanded(
-          //                                           flex: 2,
-          //                                           child: Text('slider'),
-          //                                       )
-          //
-          //                                   ],
-          //                               );
-          //                             }
-          //                         )
-          //                     );
-          //                   }
-          //
-          //                   if (snapshot.data != null) {
-          //                     return snapshot.data;
-          //                   } else {
-          //                     return const Center(
-          //                       child: CircularProgressIndicator(),
-          //                     );
-          //                   }
-          //
-          //                   if (snapshot.hasData) {
-          //                     return ListView.builder(
-          //                         itemCount: snapshot.data?.products.length,
-          //                         itemBuilder: (context, index) {
-          //                           return  Container(
-          //                             // height: 100,
-          //                               margin: const EdgeInsets.only(top: 43.0, bottom: 43.0),
-          //                               // color: Colors.transparent,
-          //                               child: Row (
-          //                                   children: [
-          //                                       Expanded(
-          //                                         flex: 1,
-          //                                         child: Container (
-          //                                             height: 172,
-          //                                             margin: const EdgeInsets.only(right: 25.0),
-          //                                             padding: const EdgeInsets.only(left: 5.0, right: 5.0),
-          //                                             alignment: Alignment.center,
-          //                                             child: Text('${snapshot.data?.products[index].category}'.toUpperCase(),
-          //                                                 textAlign: TextAlign.center,
-          //                                                 style: const TextStyle(
-          //                                                   fontSize: 14.0,
-          //                                                   fontWeight: FontWeight.normal,
-          //                                                   fontFamily: 'CadillacSans',
-          //                                                   color: Colors.white,
-          //                                                   height: 1.4, //line-height : font-size
-          //                                                 )
-          //                                             )
-          //                                         ),
-          //                                       ),
-          //                                       Expanded(
-          //                                         flex: 2,
-          //                                           child: Text('slider'),
-          //                                       )
-          //
-          //                                    ],
-          //                               ),
-          //
-          //                             );
-          //                           }
-          //                         );
-          //                     }
-          //                 }
-          //               )
-          //            ]
-          //         )
-          //     )
-          //
-          //  ),
+                                Row (
+                                    children: [
+                                      Container (
+                                        margin: EdgeInsets.only(bottom: 30),
+                                        //padding: EdgeInsets.only(left: 50),
+                                        alignment: Alignment.center,
+                                        width: 140,
+                                        height: 200,
+                                        child: Text("Футболки".toUpperCase(),
+                                          style: TextStyle(
+                                            fontSize: 14,
+
+                                            color: Colors.white,
+                                            // color: Color(
+                                            //     0xFF12141F)
+                                          ),
+                                          textAlign: TextAlign.center,
+
+                                        ),
+                                      ),
+
+                                      Container (
+                                        // width: MediaQuery.of(context).size.width,
+                                          width: 250,
+                                          height: 200,
+
+                                          padding: EdgeInsets.only(bottom: 10),
+                                          margin: const EdgeInsets.only(top: 10, bottom: 30, left: 0, right: 0),
+                                          child: Container(
+                                            child: Swiper(
+                                              itemCount: 3,
+                                              // control: SwiperControl(),
+                                              layout: SwiperLayout.CUSTOM,
+
+                                              customLayoutOption:
+                                              CustomLayoutOption(startIndex: -1, stateCount: 3)..addTranslate([
+                                                const Offset(-81.0, 0.0),
+                                                const Offset(20.0, 0.0),
+                                                const Offset(121.0, 0.0)
+                                              ]),
+                                              //fade: 0.2,
+                                              //allowImplicitScrolling: true,
+                                              //duration: 3,
+                                              //containerHeight: 160,
+                                              containerWidth: 280,
+                                              viewportFraction: 0.43,
+                                              itemHeight: 200,
+                                              itemWidth: 88,
+                                              autoplay: MediaQuery.of(context).size.width > 920 ? true : false,
+                                              outer: true,
+                                              itemBuilder: (BuildContext context, int index) {
+
+                                                return Container(
+                                                    width: 88,
+                                                    height: 190,
+                                                    // margin: const EdgeInsets.only(left: 10,right: 10),
+                                                    decoration: BoxDecoration(
+                                                      color: Color(0xFFE4E4FF),
+                                                      borderRadius: BorderRadius.all(Radius.circular(10)),),
+                                                    child: Column (
+                                                        children: [
+                                                          Container(
+                                                              width: 88,
+                                                              height: 132,
+                                                              decoration: const BoxDecoration(
+                                                                borderRadius: BorderRadius.all(Radius.circular(20)),
+                                                              ),
+
+                                                              child: IconButton(
+                                                                icon: Image.asset(
+                                                                  images[index],
+                                                                  //centerSlice: Rect.fromPoints(const Offset(0.0, 0.0), const Offset(0, 0)),
+                                                                  fit: BoxFit.contain,
+                                                                  // alignment: Alignment.topLeft,
+                                                                ),
+                                                                onPressed: () {
+                                                                  Navigator
+                                                                      .pushReplacement(
+                                                                      context,
+                                                                      MaterialPageRoute(
+                                                                          builder: (
+                                                                              context) =>
+                                                                          // Card(productId: 1)));
+                                                                          CardProduct()));
+                                                                },
+                                                              )
+                                                          ),
+                                                          Container (
+                                                              width: 88,
+                                                              padding: EdgeInsets.only(left: 5),
+                                                              decoration: BoxDecoration(
+                                                                color: Color(0xffE4E6FF),
+                                                                borderRadius: BorderRadius.only(
+                                                                  bottomLeft: Radius.circular(10.0),
+                                                                  bottomRight: Radius.circular(10.0),
+
+                                                                ),
+                                                              ),
+                                                              child: Row(
+                                                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                                  children: [
+                                                                    Text("Блокноты ".toUpperCase(),
+                                                                      style: const TextStyle(
+                                                                          fontWeight: FontWeight.bold,
+                                                                          fontSize: 7,
+                                                                          letterSpacing: 0,
+                                                                          color: Color(
+                                                                              0xFF12141F)
+                                                                      ),
+                                                                      textAlign: TextAlign.center,
+
+                                                                    ),
+                                                                    IconButton( icon: Icon(Icons.add, size: 10,),
+                                                                      color: Color( 0xFF12141F),
+                                                                      padding: EdgeInsets.zero,
+                                                                      onPressed: () {
+                                                                        print('add');
+                                                                      },
+                                                                    ),
+                                                                  ]
+                                                              )
+                                                          ),
+                                                          Container (
+                                                              width: 88,
+                                                              padding: EdgeInsets.only(left: 5),
+                                                              child: Row(
+                                                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                                                  children: const [
+                                                                    Text("2500 ",
+                                                                      style: TextStyle(
+                                                                          fontSize: 7,
+                                                                          //color: Colors.white,
+                                                                          color: Color(
+                                                                              0xFF12141F)
+                                                                      ),
+                                                                      textAlign: TextAlign.center,
+                                                                    ),
+                                                                    Icon( Icons.currency_ruble,
+                                                                      color: Color( 0xFF12141F),
+                                                                      size: 8,),
+                                                                  ]
+                                                              )
+                                                          ),
+                                                        ]
+                                                    )
+                                                );
+
+                                              },
+                                              // indicatorLayout: PageIndicatorLayout.COLOR,
+
+                                            ),
+
+                                          )
+                                      )
+
+                                    ]
+
+                                ),
+                                Row (
+                                    children: [
+                                      Container (
+                                        margin: EdgeInsets.only(bottom: 30),
+                                        //padding: EdgeInsets.only(left: 50),
+                                        alignment: Alignment.center,
+                                        width: 140,
+                                        height: 200,
+                                        child: Text("Худи".toUpperCase(),
+                                          style: TextStyle(
+                                            fontSize: 14,
+
+                                            color: Colors.white,
+                                            // color: Color(
+                                            //     0xFF12141F)
+                                          ),
+                                          textAlign: TextAlign.left,
+
+                                        ),
+                                      ),
+
+                                      Container (
+                                        // width: MediaQuery.of(context).size.width,
+                                          width: 250,
+                                          height: 200,
+
+                                          padding: EdgeInsets.only(bottom: 10),
+                                          margin: const EdgeInsets.only(top: 10, bottom: 30, left: 0, right: 0),
+                                          child: Container(
+                                            child: Swiper(
+                                              itemCount: 3,
+                                              // control: SwiperControl(),
+                                              layout: SwiperLayout.CUSTOM,
+
+                                              customLayoutOption:
+                                              CustomLayoutOption(startIndex: -1, stateCount: 3)..addTranslate([
+                                                const Offset(-81.0, 0.0),
+                                                const Offset(20.0, 0.0),
+                                                const Offset(121.0, 0.0)
+                                              ]),
+                                              //fade: 0.2,
+                                              //allowImplicitScrolling: true,
+                                              //duration: 3,
+                                              //containerHeight: 160,
+                                              containerWidth: 280,
+                                              viewportFraction: 0.43,
+                                              itemHeight: 200,
+                                              itemWidth: 88,
+                                              autoplay: MediaQuery.of(context).size.width > 920 ? true : false,
+                                              outer: true,
+                                              itemBuilder: (BuildContext context, int index) {
+
+                                                return Container(
+                                                    width: 88,
+                                                    height: 190,
+                                                    // margin: const EdgeInsets.only(left: 10,right: 10),
+                                                    decoration: BoxDecoration(
+                                                      color: Color(0xFFE4E4FF),
+                                                      borderRadius: BorderRadius.all(Radius.circular(10)),),
+                                                    child: Column (
+                                                        children: [
+                                                          Container(
+                                                              width: 88,
+                                                              height: 132,
+                                                              decoration: const BoxDecoration(
+                                                                borderRadius: BorderRadius.all(Radius.circular(20)),
+                                                              ),
+
+                                                              child: IconButton(
+                                                                icon: Image.asset(
+                                                                  images[index],
+                                                                  //centerSlice: Rect.fromPoints(const Offset(0.0, 0.0), const Offset(0, 0)),
+                                                                  fit: BoxFit.contain,
+                                                                  // alignment: Alignment.topLeft,
+                                                                ),
+                                                                onPressed: () {
+                                                                  Navigator
+                                                                      .pushReplacement(
+                                                                      context,
+                                                                      MaterialPageRoute(
+                                                                          builder: (
+                                                                              context) =>
+                                                                          // Card(productId: 1)));
+                                                                          CardProduct()));
+                                                                },
+                                                              )
+                                                          ),
+                                                          Container (
+                                                              width: 88,
+                                                              padding: EdgeInsets.only(left: 5),
+                                                              decoration: BoxDecoration(
+                                                                color: Color(0xffE4E6FF),
+                                                                borderRadius: BorderRadius.only(
+                                                                  bottomLeft: Radius.circular(10.0),
+                                                                  bottomRight: Radius.circular(10.0),
+
+                                                                ),
+                                                              ),
+                                                              child: Row(
+                                                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                                  children: [
+                                                                    Text("Блокноты ".toUpperCase(),
+                                                                      style: const TextStyle(
+                                                                          fontWeight: FontWeight.bold,
+                                                                          fontSize: 7,
+                                                                          letterSpacing: 0,
+                                                                          color: Color(
+                                                                              0xFF12141F)
+                                                                      ),
+                                                                      textAlign: TextAlign.center,
+
+                                                                    ),
+                                                                    IconButton( icon: Icon(Icons.add, size: 10,),
+                                                                      color: Color( 0xFF12141F),
+                                                                      padding: EdgeInsets.zero,
+                                                                      onPressed: () {
+                                                                        print('add');
+                                                                      },
+                                                                    ),
+                                                                  ]
+                                                              )
+                                                          ),
+                                                          Container (
+                                                              width: 88,
+                                                              padding: EdgeInsets.only(left: 5),
+                                                              child: Row(
+                                                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                                                  children: const [
+                                                                    Text("2500 ",
+                                                                      style: TextStyle(
+                                                                          fontSize: 7,
+                                                                          //color: Colors.white,
+                                                                          color: Color(
+                                                                              0xFF12141F)
+                                                                      ),
+                                                                      textAlign: TextAlign.center,
+                                                                    ),
+                                                                    Icon( Icons.currency_ruble,
+                                                                      color: Color( 0xFF12141F),
+                                                                      size: 8,),
+                                                                  ]
+                                                              )
+                                                          ),
+                                                        ]
+                                                    )
+                                                );
+
+                                              },
+                                              // indicatorLayout: PageIndicatorLayout.COLOR,
+
+                                            ),
+
+                                          )
+                                      )
+
+                                    ]
+
+                                ),
+                                Row (
+                                    children: [
+                                      Container (
+                                        margin: EdgeInsets.only(bottom: 30),
+                                        //padding: EdgeInsets.only(left: 50),
+                                        alignment: Alignment.center,
+                                        width: 140,
+                                        height: 200,
+                                        child: Text("Блокноты".toUpperCase(),
+                                          style: TextStyle(
+                                            fontSize: 14,
+
+                                            color: Colors.white,
+                                            // color: Color(
+                                            //     0xFF12141F)
+                                          ),
+                                          textAlign: TextAlign.center,
+
+                                        ),
+                                      ),
+
+                                      Container (
+
+                                          width: 250,
+                                          height: 200,
+
+                                          padding: EdgeInsets.only(bottom: 10),
+                                          margin: const EdgeInsets.only(top: 10, bottom: 30, left: 0, right: 0),
+                                          child: Container(
+                                            child: Swiper(
+                                              itemCount: 3,
+                                              // control: SwiperControl(),
+                                              layout: SwiperLayout.CUSTOM,
+
+                                              customLayoutOption:
+                                                CustomLayoutOption(startIndex: -1, stateCount: 3)..addTranslate([
+                                                  const Offset(-81.0, 0.0),
+                                                  const Offset(20.0, 0.0),
+                                                  const Offset(121.0, 0.0)
+                                                ]),
+                                              //fade: 0.2,
+                                              //allowImplicitScrolling: true,
+                                             // duration: 3,
+                                              //containerHeight: 160,
+                                              containerWidth: 280,
+                                              viewportFraction: 0.43,
+                                              itemHeight: 200,
+                                              itemWidth: 88,
+                                              autoplay: MediaQuery.of(context).size.width > 920 ? true : false,
+                                              outer: true,
+                                              itemBuilder: (BuildContext context, int index) {
+
+                                                return Container(
+                                                    width: 88,
+                                                    height: 190,
+                                                    // margin: const EdgeInsets.only(left: 10,right: 10),
+                                                    decoration: BoxDecoration(
+                                                      color: Color(0xFFE4E4FF),
+                                                      borderRadius: BorderRadius.all(Radius.circular(10)),),
+                                                    child: Column (
+                                                        children: [
+                                                          Container(
+                                                            width: 88,
+                                                            height: 132,
+                                                            decoration: const BoxDecoration(
+                                                              borderRadius: BorderRadius.all(Radius.circular(20)),
+                                                            ),
+
+                                                              child: IconButton(
+                                                                icon: Image.asset(
+                                                                  images[index],
+                                                                  //centerSlice: Rect.fromPoints(const Offset(0.0, 0.0), const Offset(0, 0)),
+                                                                  fit: BoxFit.contain,
+                                                                  // alignment: Alignment.topLeft,
+                                                                ),
+                                                                onPressed: () {
+                                                                  Navigator
+                                                                      .pushReplacement(
+                                                                      context,
+                                                                      MaterialPageRoute(
+                                                                          builder: (
+                                                                              context) =>
+                                                                          // Card(productId: 1)));
+                                                                          CardProduct()));
+                                                                },
+                                                              )
+                                                          ),
+                                                          Container (
+                                                              width: 88,
+                                                              padding: EdgeInsets.only(left: 5),
+                                                              decoration: BoxDecoration(
+                                                                color: Color(0xffE4E6FF),
+                                                                borderRadius: BorderRadius.only(
+                                                                  bottomLeft: Radius.circular(10.0),
+                                                                  bottomRight: Radius.circular(10.0),
+
+                                                                ),
+                                                              ),
+                                                              child: Row(
+                                                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                                  children: [
+                                                                    Text("Блокноты ".toUpperCase(),
+                                                                      style: const TextStyle(
+                                                                          fontWeight: FontWeight.bold,
+                                                                          fontSize: 7,
+                                                                          letterSpacing: 0,
+                                                                          color: Color(
+                                                                              0xFF12141F)
+                                                                      ),
+                                                                      textAlign: TextAlign.center,
+
+                                                                    ),
+                                                                    IconButton( icon: Icon(Icons.add, size: 10,),
+                                                                      color: Color( 0xFF12141F),
+                                                                      padding: EdgeInsets.zero,
+                                                                      onPressed: () {
+                                                                        print('add');
+                                                                      },
+                                                                    ),
+                                                                  ]
+                                                              )
+                                                          ),
+                                                          Container (
+                                                              width: 88,
+                                                              padding: EdgeInsets.only(left: 5),
+                                                              child: Row(
+                                                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                                                  children: const [
+                                                                    Text("2500 ",
+                                                                      style: TextStyle(
+                                                                          fontSize: 7,
+                                                                          //color: Colors.white,
+                                                                          color: Color(
+                                                                              0xFF12141F)
+                                                                      ),
+                                                                      textAlign: TextAlign.center,
+                                                                    ),
+                                                                    Icon( Icons.currency_ruble,
+                                                                      color: Color( 0xFF12141F),
+                                                                      size: 8,),
+                                                                  ]
+                                                              )
+                                                          ),
+                                                        ]
+                                                    )
+                                                );
+
+                                              },
+                                              // indicatorLayout: PageIndicatorLayout.COLOR,
+
+                                            ),
+
+                                          )
+                                      )
+
+                                    ]
+
+                                ),
+                                Row (
+                                    children: [
+                                      Container (
+                                        margin: EdgeInsets.only(bottom: 30),
+                                        //padding: EdgeInsets.only(left: 50),
+                                        alignment: Alignment.center,
+                                        width: 140,
+                                        height: 200,
+                                        child: Text("Наклейки".toUpperCase(),
+                                          style: TextStyle(
+                                            fontSize: 14,
+
+                                            color: Colors.white,
+                                            // color: Color(
+                                            //     0xFF12141F)
+                                          ),
+                                          textAlign: TextAlign.center,
+
+                                        ),
+                                      ),
+
+                                      Container (
+                                        // width: MediaQuery.of(context).size.width,
+                                          width: 250,
+                                          height: 200,
+
+                                          padding: EdgeInsets.only(bottom: 10),
+                                          margin: const EdgeInsets.only(top: 10, bottom: 30, left: 0, right: 0),
+                                          child: Container(
+                                            child: Swiper(
+                                              itemCount: 3,
+                                              // control: SwiperControl(),
+                                              layout: SwiperLayout.CUSTOM,
+
+                                              customLayoutOption:
+                                              CustomLayoutOption(startIndex: -1, stateCount: 3)..addTranslate([
+                                                const Offset(-81.0, 0.0),
+                                                const Offset(20.0, 0.0),
+                                                const Offset(121.0, 0.0)
+                                              ]),
+                                              //fade: 0.2,
+                                              //allowImplicitScrolling: true,
+                                             // duration: 3,
+                                              //containerHeight: 160,
+                                              containerWidth: 280,
+                                              viewportFraction: 0.43,
+                                              itemHeight: 200,
+                                              itemWidth: 88,
+                                              autoplay: MediaQuery.of(context).size.width > 920 ? true : false,
+                                              outer: true,
+                                              itemBuilder: (BuildContext context, int index) {
+
+                                                return Container(
+                                                    width: 88,
+                                                    height: 190,
+                                                    // margin: const EdgeInsets.only(left: 10,right: 10),
+                                                    decoration: BoxDecoration(
+                                                      color: Color(0xFFE4E4FF),
+                                                      borderRadius: BorderRadius.all(Radius.circular(10)),),
+                                                    child: Column (
+                                                        children: [
+                                                          Container(
+                                                              width: 88,
+                                                              height: 132,
+                                                              decoration: const BoxDecoration(
+                                                                borderRadius: BorderRadius.all(Radius.circular(20)),
+                                                              ),
+
+                                                              child: IconButton(
+                                                                icon: Image.asset(
+                                                                  images[index],
+                                                                  //centerSlice: Rect.fromPoints(const Offset(0.0, 0.0), const Offset(0, 0)),
+                                                                  fit: BoxFit.contain,
+                                                                  // alignment: Alignment.topLeft,
+                                                                ),
+                                                                onPressed: () {
+                                                                  Navigator
+                                                                      .pushReplacement(
+                                                                      context,
+                                                                      MaterialPageRoute(
+                                                                          builder: (
+                                                                              context) =>
+                                                                          // Card(productId: 1)));
+                                                                          CardProduct()));
+                                                                },
+                                                              )
+                                                          ),
+                                                          Container (
+                                                              width: 88,
+                                                              padding: EdgeInsets.only(left: 5),
+                                                              decoration: BoxDecoration(
+                                                                color: Color(0xffE4E6FF),
+                                                                borderRadius: BorderRadius.only(
+                                                                  bottomLeft: Radius.circular(10.0),
+                                                                  bottomRight: Radius.circular(10.0),
+
+                                                                ),
+                                                              ),
+                                                              child: Row(
+                                                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                                  children: [
+                                                                    Text("Блокноты ".toUpperCase(),
+                                                                      style: const TextStyle(
+                                                                          fontWeight: FontWeight.bold,
+                                                                          fontSize: 7,
+                                                                          letterSpacing: 0,
+                                                                          color: Color(
+                                                                              0xFF12141F)
+                                                                      ),
+                                                                      textAlign: TextAlign.center,
+
+                                                                    ),
+                                                                    IconButton( icon: Icon(Icons.add, size: 10,),
+                                                                      color: Color( 0xFF12141F),
+                                                                      padding: EdgeInsets.zero,
+                                                                      onPressed: () {
+                                                                        print('add');
+                                                                      },
+                                                                    ),
+                                                                  ]
+                                                              )
+                                                          ),
+                                                          Container (
+                                                              width: 88,
+                                                              padding: EdgeInsets.only(left: 5),
+                                                              child: Row(
+                                                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                                                  children: const [
+                                                                    Text("2500 ",
+                                                                      style: TextStyle(
+                                                                          fontSize: 7,
+                                                                          //color: Colors.white,
+                                                                          color: Color(
+                                                                              0xFF12141F)
+                                                                      ),
+                                                                      textAlign: TextAlign.center,
+                                                                    ),
+                                                                    Icon( Icons.currency_ruble,
+                                                                      color: Color( 0xFF12141F),
+                                                                      size: 8,),
+                                                                  ]
+                                                              )
+                                                          ),
+                                                        ]
+                                                    )
+                                                );
+
+                                              },
+                                              // indicatorLayout: PageIndicatorLayout.COLOR,
+
+                                            ),
+
+                                          )
+                                      )
+
+                                    ]
+
+                                ),
+                              ],
+                            )
+                        ),
+                      ]
+
+                  )
+                  ],
+
+              )
+
+          ),
+
 
           drawer: NavDrawer(),
         )

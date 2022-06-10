@@ -214,49 +214,78 @@ class _HomeState extends State<Home> {
             ),
           ),
 
-          body: Center (
-            child: Container (
-              width: 284,
-              child: Column (
-                  children: [
-                    const TitlePage(title: 'главная'),
+          body: Center(
+            child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                //ListView(
+                children: [
+                  Container(
+                    width: 284,
+                    margin: const EdgeInsets.only(
+                        top: 10, bottom: 47),
+                  ),
+                  Expanded(
+                      child: SingleChildScrollView(
 
-                    Container (
-                      margin: const EdgeInsets.only(top: 100, bottom: 100),
-                      child: (
-                          Text('Став владельцем Cadillac, \nвы не просто приобретаете \nавтомобиль класса-люкс, \nвы вступаете в элитное сообщество, единомышленников, объединённых общими ценностями и интересами.'.toUpperCase(),
-                            style:const TextStyle (
-                              fontSize: 14.0,
-                              fontWeight: FontWeight.normal,
-                              fontFamily: 'CadillacSans',
-                              color: Color(0xFF8F97BF),
-                              height: 1.7, //line-height : font-size
-                            ),
-                            textAlign: TextAlign.center,
-                            softWrap: true,
+                          child: Column(
+                              mainAxisAlignment: MainAxisAlignment
+                                  .center,
+                              crossAxisAlignment: CrossAxisAlignment
+                                  .center,
+                              children: [
+                                Container(
+                                  width: 284,
+                                  margin: const EdgeInsets.only(
+                                      bottom: 58),
+                                  child: const TitlePage(
+                                      title: 'главная'),
+                                ),
+
+                                Container (
+                                    width: 284,
+                                    margin: const EdgeInsets.only(top: 100, bottom: 100),
+                                    child: (
+                                        Text('Став владельцем Cadillac, \nвы не просто приобретаете \nавтомобиль класса-люкс, \nвы вступаете в элитное сообщество, единомышленников, объединённых общими ценностями и интересами.'.toUpperCase(),
+                                          style:const TextStyle (
+                                            fontSize: 14.0,
+                                            fontWeight: FontWeight.normal,
+                                            fontFamily: 'CadillacSans',
+                                            color: Color(0xFF8F97BF),
+                                            height: 1.7, //line-height : font-size
+                                          ),
+                                          textAlign: TextAlign.center,
+                                          softWrap: true,
+                                        )
+                                    )
+
+                                ),
+                                Container (
+                                  //constraints: BoxConstraints(maxWidth: 284, maxHeight: 400),
+                                  // width: MediaQuery.of(context).size.width,
+                                  width: 284,
+                                  height: 200,
+                                  padding: EdgeInsets.zero,
+                                  margin: const EdgeInsets.only(top: 10, bottom: 30, left: 0, right: 0),
+                                  color: const Color(0xFF181C33),
+                                  child: Banners(),
+                                ),
+
+                                const TitlePage(title: 'мы в соцсетях'),
+
+                                Socials(),
+
+
+
+                              ]
                           )
                       )
+                  ),
 
-                    ),
 
-                    Container (
-                      width: MediaQuery.of(context).size.width,
-                      height: 200,
-                      padding: EdgeInsets.zero,
-                      margin: const EdgeInsets.only(top: 10, bottom: 30, left: 0, right: 0),
-                      color: const Color(0xFF181C33),
-                      child: Banners(),
-                    ),
+                ]
+            ),
 
-                    const TitlePage(title: 'мы в соцсетях'),
-
-                    Socials(),
-
-                  ]
-
-              ),
-          )
-        ),
+          ),
 
           //body: Home(),
 
@@ -265,6 +294,7 @@ class _HomeState extends State<Home> {
 
 
         ),
+
 
 
     );

@@ -65,14 +65,14 @@ Widget build(BuildContext context) {
         body: Swiper(
               //containerHeight: 160,
               //containerWidth: 390,
-              // layout: SwiperLayout.CUSTOM,
-              // customLayoutOption:
-              //   CustomLayoutOption(startIndex: -1, stateCount: 3)
-              //       .addTranslate([
-              //     const Offset(-304.0, 0.0),
-              //     const Offset(0.0, 0.0),
-              //     const Offset(304.0, 0.0)
-              //   ]),
+              layout: SwiperLayout.CUSTOM,
+              customLayoutOption:
+                CustomLayoutOption(startIndex: -1, stateCount: 2)
+                    ..addTranslate([
+                  const Offset(-10.0, 0.0),
+                  const Offset(294.0, 0.0),
+                  // const Offset(304.0, 0.0)
+                ]),
 
               viewportFraction: 0.8,
               itemHeight: 160,

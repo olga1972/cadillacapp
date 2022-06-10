@@ -27,6 +27,14 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'dart:async';
+import 'dart:html' as html;
+//import 'dart:io';
+
+import 'package:flutter/services.dart';
+
+import 'package:dio/dio.dart';
+import 'package:dio_cookie_manager/dio_cookie_manager.dart';
+import 'package:cookie_jar/cookie_jar.dart';
 
 import '../env.dart';
 
@@ -47,9 +55,40 @@ import 'package:cadillac/pages/registrationPage.dart';
 
 import 'package:cadillac/NavDrawer.dart';
 
-void main() {
+Future<void> main() async {
 
   runApp(MyApp());
+
+
+
+//   var dio = Dio();
+//   List<Cookie> cookies = [
+//     new Cookie("uuid", "9265988f-e70d-11ec-af6a-00ff21c5bb0a"),
+//     // ....
+//   ];
+//
+//
+//   var cookieJar = PersistCookieJar();
+//   dio.interceptors.add(CookieManager(cookieJar));
+//   //Save cookies
+//   cookieJar.saveFromResponse(Uri.parse("http://localhost"), cookies);
+//
+// //Get cookies
+//   cookieJar.loadForRequest(Uri.parse("http://localhost"));
+//   print(cookieJar.loadForRequest(Uri.parse("http://localhost")));
+//
+//   // print(cookies);
+//   await dio.get("http://localhost");
+
+
+  // print(cookieJar);
+  //
+  // dio.interceptors.add(CookieManager(cookieJar));
+  // dynamic result = await dio.get("http://localhost");
+  // // Print cookies
+  // print(cookieJar.loadForRequest(Uri.parse("http://localhost")));
+  // // second request with the cookie
+  // await dio.get("http://localhost");
 }
 
 class MyApp extends StatelessWidget {
@@ -74,9 +113,12 @@ class MyApp extends StatelessWidget {
   //get currentUser => null;
 
 
-
   @override
   Widget build(BuildContext context) {
+
+    var cookies = html.window.document.cookie;
+    print (cookies);
+
     return MaterialApp(
       theme: ThemeData (
         // primarySwatch: Colors.blue,
@@ -90,12 +132,12 @@ class MyApp extends StatelessWidget {
       routes: {
         //'/': (context) => RegistrationPage(),
         //'/home': (context) => SuccessPayment(),
-        '/home': (context) => RegistrationPage(),
-        // '/home': (context) => Shop(),
+        '/home': (context) => cookies != null && cookies != '' ? Account() : RegistrationPage(),
+        //'/home': (context) => Shop(),
         // '/home': (context) => Test(),
-        //'/home': (context) => CardProduct(),
+        //'/home': (context) => Contacts(),
         //'/home': (context) => Account(),
-        // '/home': (context) => Home(),
+        //'/home': (context) => Home(),
         '/account': (context) => Account(),
         '/members': (context) => Members(),
         '/news': (context) => News(),

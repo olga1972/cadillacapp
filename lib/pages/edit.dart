@@ -115,7 +115,7 @@ class Edit extends StatelessWidget {
 
     // print('after');
     print('load');
-    print(userId);
+    // print(userId);
     // print(this.currentUser);
     // print('after2');
 
@@ -657,6 +657,7 @@ class Edit extends StatelessWidget {
                                                                     ),
                                                                   ),
                                                                   onPressed: () async {
+                                                                    confirmDialog(context);
                                                                     if (_formKey
                                                                         .currentState
                                                                         ?.saveAndValidate() ??
@@ -672,7 +673,7 @@ class Edit extends StatelessWidget {
                                                                       //   // _emailFieldKey.currentState?.invalidate('Email already taken.');
                                                                       // }
 
-                                                                      debugPrint('Valid success payment');
+                                                                      debugPrint('Valid success edit');
                                                                       print(_formKey
                                                                           .currentState?.fields.values
                                                                       );
@@ -710,13 +711,13 @@ class Edit extends StatelessWidget {
 
                                                                       // debugPrint(box.get('phone2').toString());
 
-                                                                      Navigator
-                                                                          .pushReplacement(
-                                                                          context,
-                                                                          MaterialPageRoute(
-                                                                              builder: (
-                                                                                  context) =>
-                                                                                  Account()));
+                                                                      // Navigator
+                                                                      //     .pushReplacement(
+                                                                      //     context,
+                                                                      //     MaterialPageRoute(
+                                                                      //         builder: (
+                                                                      //             context) =>
+                                                                      //             Account()));
                                                                       // Home());
 
                                                                     } else {
@@ -780,6 +781,7 @@ class Edit extends StatelessWidget {
     // dynamic cars = user.cars;
 
 
+    //String apiurl = "https://cadillacapp.ru/test/edit.php";
     String apiurl = "http://localhost/test/edit.php";
     var response = await http.post(Uri.parse(apiurl), body:{'login': login, 'username': username, 'birthday': birthday, 'carname': carname},headers: {'Accept':'application/json, charset=utf-8',"Access-Control-Allow-Origin": "*",
       "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS"});
@@ -788,7 +790,7 @@ class Edit extends StatelessWidget {
     //   "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS"}, body:{'phone': phone,'email': email});
     // var response = await http.post(Uri.parse(apiurl), headers: {'Accept':'application/json',"Access-Control-Allow-Origin": "*",
     //       "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS"});
-    print('after response');
+    print('after response edit');
     // print("response.body success: ${jsonDecode(response.body)}");  SyntaxError: Unexpected end of JSON input
 
 
@@ -797,6 +799,7 @@ class Edit extends StatelessWidget {
       print('success edit');
       // var uuid = const Uuid();
       // id = uuid.v1();
+      print(response.body);
       //return response.body;
       final userJson = json.decode(response.body);
       //final userJson = response.body;
@@ -831,5 +834,39 @@ void _launchURL() async {
   //   await launchUrl(url, forceWebView: true);   //true если открываем в приложении, false открываем в браузере
   // } else {
   //   throw 'Could not launch $url';
+}
+
+Future confirmDialog(BuildContext context) async {
+  return showDialog(
+    context: context,
+    barrierDismissible: false, // user must tap button for close dialog!
+    builder: (BuildContext context) {
+      return AlertDialog(
+        title: Text('Подтвердите изменение ваших данных'),
+        content: Text('Хочу изменить свои данные'),
+        actions: <Widget>[
+          MaterialButton(
+            child: Text('Отмена'),
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+          ),
+          MaterialButton(
+            child: Text('Ок'),
+            onPressed: () {
+              Navigator
+                  .pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                      builder: (
+                          context) =>
+                          Account()
+                  ));
+            },
+          )
+        ],
+      );
+    },
+  );
 }
 
