@@ -827,7 +827,7 @@ class SuccessPayment extends StatelessWidget {
                                                                                 //photo =new ApiImage();
                                                                                 //final user = User(email: email, phone :phone);
                                                                                 dynamic currentUser = User(
-                                                                                  id: 1,
+                                                                                  id: '1',
                                                                                   userId: userId,
                                                                                   phone: phone,
                                                                                   email: email,

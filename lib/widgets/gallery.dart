@@ -69,8 +69,8 @@ Widget build(BuildContext context) {
               customLayoutOption:
                 CustomLayoutOption(startIndex: -1, stateCount: 2)
                     ..addTranslate([
-                  const Offset(-10.0, 0.0),
-                  const Offset(294.0, 0.0),
+                  const Offset(-28.0, 0.0),
+                  const Offset(161.0, 0.0),
                   // const Offset(304.0, 0.0)
                 ]),
 

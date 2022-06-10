@@ -1,4 +1,5 @@
 // import 'package:cadillac/models/productsList.dart';
+import 'package:card_swiper/card_swiper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -13,7 +14,15 @@ import 'package:cadillac/NavDrawer.dart';
 import 'package:cadillac/widgets/titlePage.dart';
 // import 'package:cadillac/widgets/productsList.dart';
 // import 'package:cadillac/models/products.dart';
-import 'package:cadillac/models/users.dart';
+import 'package:flutter_svg/svg.dart';
+
+//import '../models/user.dart';
+import '../models/users.dart';
+//import 'cardProduct.dart';
+
+import 'dart:convert';
+import 'package:flutter/services.dart';
+import 'package:http/http.dart' as http;
 
 class Test extends StatefulWidget {
   const Test({Key? key}) : super(key: key);
@@ -26,15 +35,17 @@ class _TestState extends State<Test> {
   //late Future<OfficesList> officesList;
   late Future<UsersList> usersList;
 
-  get currentUser => null;
+  // get currentUser => null;
 
   @override
   void initState() {
+    print('init state test');
     super.initState();
     //officesList = getOfficesList();
     //officesList = readJson();
-
-    usersList = readJson();
+    usersList = getUsersList();
+    //usersList = readJson();
+    print(usersList);
     // setState(() {
     //   _items = data["items"];
     // });
@@ -62,179 +73,66 @@ class _TestState extends State<Test> {
           appBar: AppBar(
             backgroundColor: const Color(0xFF181c33),
             shadowColor: Colors.transparent,
+            leading: Builder(
+              builder: (BuildContext context) {
+                return IconButton(
+                  icon: SvgPicture.network('assets/images/burger.svg'),
+                  onPressed: () { Scaffold.of(context).openDrawer(); },
+                  tooltip: MaterialLocalizations.of(context).openAppDrawerTooltip,
+                );
+              },
+            ),
           ),
-
-          // final List<DocumentSnapshot> userList = snapshot.data.documents
-          // .where((DocumentSnapshot documentSnapshot) => documentSnapshot['userId'] != id).toList();
-
           body: FutureBuilder<UsersList>(
             future: usersList,
             builder: (context, snapshot) {
-              print('snapshot.data.users');
-              var users = snapshot.data?.users;
-              final List<User>? usersList = snapshot.data?.users;
-                  // .where((p) => p.id != 1).toList();
-              print(usersList);
-              // fruits.where((f) => f.startsWith('a')).toList(); //apples
-              // products.where((p) => p.category = products[0]?.category).toList();
-              // final selectedCategory = snapshot.data?.products.where((u) => u.category.contains('футболка')).toList();
-              // print(snapshot.data?.products[0].category);
-              // print(selectedCategory);
               if (snapshot.hasData) {
+                print('snapshot.data?.users');
+                print(snapshot.data?.users);
+                print('lengt snapshot.data?.users');
+                print(snapshot.data?.users?[0]);
                 return ListView.builder(
-                    itemCount: snapshot.data?.users.length,
-                    //   itemCount: selectedCategory?.length,
+                    itemCount: snapshot.data?.users?.length,
                     itemBuilder: (context, index) {
                       return Card(
                         child: ListTile(
-                          title: Text('${snapshot.data?.users[index]?.username}'),
+                          title: Text('${snapshot.data?.users?[index].username}'),
+                          // title: Text('${snapshot.data?.users[index].email}'),
+                          // title: Text('user'),
                           subtitle:
-                          Text('${snapshot.data?.users[index]?.email}'),
+                          Text('${snapshot.data?.users?[index]?.login}'),
 
                           isThreeLine: true,
                         ),
                       );
                     });
-
               } else if (snapshot.hasError) {
-                print(snapshot.data);
                 return const Text('Error');
               }
               return const Center(child: CircularProgressIndicator());
             },
           ),
-          //),
 
 
-          // body: Center (
-          //     child: Container (
-          //       alignment: Alignment.topCenter,
-          //         // width: 284,
-          //
-          //         child: Column (
-          //             mainAxisAlignment: MainAxisAlignment.start,
-          //             crossAxisAlignment: CrossAxisAlignment.center,
-          //             children: [
-          //               const TitlePage(title: 'клубная атрибутика'),
-          //               FutureBuilder<ProductsList>(
-          //                 future: productsList,
-          //                 builder: (context, AsyncSnapshot snapshot) {
-          //                   // if (snapshot.connectionState == ConnectionState.waiting) {
-          //                   //   return const Center(
-          //                   //     child: CircularProgressIndicator(),
-          //                   //   );
-          //                   // }
-          //                   // if (snapshot.connectionState == ConnectionState.done) if (snapshot.hasError) {
-          //                   if (snapshot.connectionState == ConnectionState.done && snapshot.hasError) {
-          //                     return Container(
-          //                       // height: 100,
-          //                         margin: const EdgeInsets.only(
-          //                             top: 43.0, bottom: 43.0),
-          //                         // color: Colors.transparent,
-          //                         child: ListView.builder(
-          //                             itemCount: snapshot.data?.products.length,
-          //                             itemBuilder: (context, index) {
-          //                               return Row(
-          //                                   children: [
-          //                                       Expanded(
-          //                                           flex: 1,
-          //                                           child: Container(
-          //                                               height: 172,
-          //                                               margin: const EdgeInsets.only(
-          //                                                   right: 25.0),
-          //                                               padding: const EdgeInsets.only(
-          //                                                   left: 5.0, right: 5.0),
-          //                                               alignment: Alignment.center,
-          //                                               child: Text('${snapshot.data?.products[index].category}'.toUpperCase(),
-          //                                               textAlign: TextAlign.center,
-          //                                               style: const TextStyle(
-          //                                                 fontSize: 14.0,
-          //                                                 fontWeight: FontWeight.normal,
-          //                                                 fontFamily: 'CadillacSans',
-          //                                                 color: Colors.white,
-          //                                                 height: 1.4, //line-height : font-size
-          //                                                   )
-          //                                               )
-          //                                           ),
-          //                                       ),
-          //                                       const Expanded(
-          //                                           flex: 2,
-          //                                           child: Text('slider'),
-          //                                       )
-          //
-          //                                   ],
-          //                               );
-          //                             }
-          //                         )
-          //                     );
-          //                   }
-          //
-          //                   if (snapshot.data != null) {
-          //                     return snapshot.data;
-          //                   } else {
-          //                     return const Center(
-          //                       child: CircularProgressIndicator(),
-          //                     );
-          //                   }
-          //
-          //                   if (snapshot.hasData) {
-          //                     return ListView.builder(
-          //                         itemCount: snapshot.data?.products.length,
-          //                         itemBuilder: (context, index) {
-          //                           return  Container(
-          //                             // height: 100,
-          //                               margin: const EdgeInsets.only(top: 43.0, bottom: 43.0),
-          //                               // color: Colors.transparent,
-          //                               child: Row (
-          //                                   children: [
-          //                                       Expanded(
-          //                                         flex: 1,
-          //                                         child: Container (
-          //                                             height: 172,
-          //                                             margin: const EdgeInsets.only(right: 25.0),
-          //                                             padding: const EdgeInsets.only(left: 5.0, right: 5.0),
-          //                                             alignment: Alignment.center,
-          //                                             child: Text('${snapshot.data?.products[index].category}'.toUpperCase(),
-          //                                                 textAlign: TextAlign.center,
-          //                                                 style: const TextStyle(
-          //                                                   fontSize: 14.0,
-          //                                                   fontWeight: FontWeight.normal,
-          //                                                   fontFamily: 'CadillacSans',
-          //                                                   color: Colors.white,
-          //                                                   height: 1.4, //line-height : font-size
-          //                                                 )
-          //                                             )
-          //                                         ),
-          //                                       ),
-          //                                       Expanded(
-          //                                         flex: 2,
-          //                                           child: Text('slider'),
-          //                                       )
-          //
-          //                                    ],
-          //                               ),
-          //
-          //                             );
-          //                           }
-          //                         );
-          //                     }
-          //                 }
-          //               )
-          //            ]
-          //         )
-          //     )
-          //
-          //  ),
+
 
           drawer: NavDrawer(),
         )
     );
   }
+
+
 }
 
-// Future<UsersList> readJson() async {
-//   final String response = await rootBundle.loadString('assets/users.json');
-//   final data = await json.decode(response);
-//   return UsersList.fromJson(json.decode(response));
-//
-// }
+Future<UsersList> getUsersList() async {
+  // const url = 'https://about.google/static/data/locations.json';
+  const url = 'http://localhost/test/users_list.php';
+  final response = await http.get(Uri.parse(url));
+print('response test getUserLists');
+print(response.body);
+  if(response.statusCode == 200) {
+    return UsersList.fromJson(json.decode(response.body));
+  } else {
+    throw Exception('Error: ${response.reasonPhrase}');
+  }
+}

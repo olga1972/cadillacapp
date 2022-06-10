@@ -13,6 +13,11 @@ import 'package:cadillac/NavDrawer.dart';
 import 'package:cadillac/widgets/titlePage.dart';
 import 'package:cadillac/widgets/bannersList.dart';
 import 'package:cadillac/models/users.dart';
+//import 'package:cadillac/models/user.dart';
+
+import 'dart:convert';
+import 'package:flutter/services.dart';
+import 'package:http/http.dart' as http;
 
 class Members extends StatefulWidget {
   Members({Key? key}) : super(key: key);
@@ -106,7 +111,7 @@ class _MembersState extends State<Members> {
                                       scrollDirection: Axis.vertical,
                                       shrinkWrap: true,
                                       // padding: const EdgeInsets.only(top: 38, bottom: 10),
-                                      itemCount: snapshot.data?.users.length,
+                                      itemCount: snapshot.data?.users?.length,
                                       itemBuilder: (context, index) {
                                         return Container(
                                             width: 284,
@@ -135,7 +140,7 @@ class _MembersState extends State<Members> {
                                                         .only(bottom: 10),
                                                     child: Text(
                                                         '${snapshot.data
-                                                            ?.users[index]
+                                                            ?.users?[index]
                                                             ?.username}'
                                                             .toUpperCase(),
                                                         textAlign: TextAlign
@@ -185,9 +190,8 @@ class _MembersState extends State<Members> {
                                                       mainAxisAlignment: MainAxisAlignment
                                                           .end,
                                                       children: [
-                                                        // Text('${snapshot.data?.users[index]?.car}'.toUpperCase(),
-                                                        Text('cadillac'
-                                                            .toUpperCase(),
+                                                        Text('${snapshot.data?.users?[index]?.carname}'.toUpperCase(),
+                                                        // Text('cadillac'.toUpperCase(),
                                                             style: const TextStyle(
                                                               fontSize: 14.0,
                                                               fontWeight: FontWeight
@@ -237,5 +241,18 @@ class _MembersState extends State<Members> {
           drawer: NavDrawer(),
         )
     );
+  }
+}
+
+Future<UsersList> getUsersList() async {
+  // const url = 'https://about.google/static/data/locations.json';
+  const url = 'http://localhost/test/users_list.php';
+  final response = await http.get(Uri.parse(url));
+  print('response test getUserLists');
+  print(response.body);
+  if(response.statusCode == 200) {
+    return UsersList.fromJson(json.decode(response.body));
+  } else {
+    throw Exception('Error: ${response.reasonPhrase}');
   }
 }

@@ -347,7 +347,7 @@ class RegistrationPage extends StatelessWidget {
                                           // var userId = uuid.v1();
 
                                           final user = User(
-                                              id: 1,
+                                              id: '1',
                                               userId: 'userId',
                                               email: email,
                                               phone : phone,

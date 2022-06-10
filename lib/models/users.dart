@@ -28,7 +28,7 @@ class UsersList {
 }
 
 class User {
-  late final int id;
+  late final String id;
   late final String userId;
   late final String username;
   late final String email;
@@ -50,7 +50,7 @@ class User {
 
   factory User.fromJson(Map<String, dynamic> json) {
     return User(
-      id: json['id'] as int,
+      id: json['id'] as String,
       userId: json['userId'] as String,
       username: json['username'] as String,
       email: json['email'] as String,
@@ -59,6 +59,35 @@ class User {
       login: json['login'] as String,
       carname: json['carname'] as String
     );
+  }
+
+
+  Future<UsersList> getUsersList() async {
+    // const url = 'https://about.google/static/data/locations.json';
+    const url = 'http://localhost/test/users_list.php';
+    final response = await http.get(Uri.parse(url));
+    print('response body user getUsersList');
+    print('response body');
+    if(response.statusCode == 200) {
+      return UsersList.fromJson(json.decode(response.body));
+    } else {
+      throw Exception('Error: ${response.reasonPhrase}');
+    }
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['id'] = this.id;
+    data['userId'] = this.userId;
+    data['phone'] = this.phone;
+    data['email'] = this.email;
+    data['username'] = this.username;
+    data['birthday'] = this.birthday;
+
+    data['login'] = this.login;
+    // data['password'] = this.password;
+    data['carname'] = this.carname;
+    return data;
   }
 }
 

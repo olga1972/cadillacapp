@@ -96,7 +96,7 @@ class MyApp extends StatelessWidget {
 
   MyApp({Key? key,}) : super(key: key);
   final currentUser = User(
-      id: 1,
+      id: '1',
       userId: '1111',
       email: 'olga.sadyreva@mail.ru',
       phone: '9221238853',
@@ -134,7 +134,7 @@ class MyApp extends StatelessWidget {
         //'/home': (context) => SuccessPayment(),
         '/home': (context) => cookies != null && cookies != '' ? Account() : RegistrationPage(),
         //'/home': (context) => Shop(),
-        // '/home': (context) => Test(),
+        //'/home': (context) => Test(),
         //'/home': (context) => Contacts(),
         //'/home': (context) => Account(),
         //'/home': (context) => Home(),
@@ -145,7 +145,7 @@ class MyApp extends StatelessWidget {
         '/partners': (context) => Partners(),
         '/contacts': (context) => Contacts(),
         '/edit': (context) => Edit(),
-        // '/test': (context) => Test(),
+        '/test': (context) => Test(),
         // '/card': (context) => Card(productId: 1),
         // '/success_payment': (context) => SuccessPayment(currentUser: currentUser),
         // '/success_payment': (context) => SuccessPayment(
