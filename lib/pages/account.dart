@@ -503,8 +503,8 @@ Future<User> getUser() async {
     "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS"});
 
   if (response.statusCode == 200) {
-    // print(response.statusCode);
-    // print(response.body);
+    print(response.statusCode);
+    print(response.body);
 
     // print(response);
     final userJson = json.decode(response.body);

@@ -1,6 +1,8 @@
 <?php
 
 header("Content-type: text/html; charset=utf-8");
+header("Access-Control-Allow-Origin: *");
+
 error_reporting(-1);
 require_once 'connect.php';
 require_once 'funcs.php';
@@ -66,7 +68,7 @@ if(isset($_POST["phone"]) && isset($_POST["email"])) {
 //        print(json_encode($newUser));
 //        print($userId);
 
-        setcookie('TestCookie', $userId, time() + 3600, '/');
+        setcookie('uuid', $userId, time() + (3600 * 24 * 30), '/');
         return $newUser;
 
     } else {
@@ -79,7 +81,7 @@ if(isset($_POST["phone"]) && isset($_POST["email"])) {
 //
 //        var_dump($existUser);
 
-        setcookie('TestCookie', $userId, time() + 3600, '/');
+        setcookie('uuid', $userId, time() + (3600 * 24 * 30), '/');
 
 //        $idExistUser = get_user($userId);
 

@@ -20,11 +20,9 @@ header("Refresh:0");
 
 
 
-if(isset ($_COOKIE['TestCookie'])) {
-//    print('cookie yes');
+if(isset ($_COOKIE['uuid'])) {
 
-$userId = $_COOKIE['TestCookie'];
-//print($userId);
+$userId = $_COOKIE['uuid'];
 
 } else {
     print('cookie no');

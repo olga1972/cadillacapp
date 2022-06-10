@@ -49,8 +49,8 @@ function get_user_by_login() {
 
 
     $stmt = mysqli_stmt_init($link);
-    mysqli_stmt_prepare($stmt,"UPDATE users SET username = ?, birthday = ?, login = ? WHERE email = ?");
-    mysqli_stmt_bind_param($stmt,'ssss', $username, $birthday, $login, $login);
+    mysqli_stmt_prepare($stmt,"UPDATE users SET username = ?, birthday = ?, login = ?, carname = ? WHERE email = ?");
+    mysqli_stmt_bind_param($stmt,'sssss', $username, $birthday, $login, $carname, $login);
     mysqli_stmt_execute($stmt);
     mysqli_stmt_get_result($stmt);
 
@@ -180,7 +180,7 @@ function get_user($userId) {
 //            echo $_COOKIE["TestCookie"];
         }
 
-
+        $userInfoArray[0]["id"] = strval($userInfoArray[0]["id"]);
 
 //        var_dump($userInfoArray[0]);
         print(json_encode($userInfoArray[0]));
@@ -200,7 +200,7 @@ function get_user($userId) {
 
 function get_user_old() {
     extract($_POST);
-//    print('get_usr_old');
+
 //    print($email);
     global $link;
     global $stmt;
@@ -229,7 +229,6 @@ function get_user_old() {
         $userId = $userInfoArray[0];
 //        print($userId);
 //setcookie('TestCookie', $userId, time() + 3600, '/');
-
 
 
                 return $userInfoArray[0];
@@ -286,8 +285,9 @@ function get_all_users(){
 
 //          print($users);
         $file = "../assets/assets/users.json";
-        $users_obj = '{"users" : ' . json_encode($users) . '}';
+        $users_obj = '{"users": ' . json_encode($users) . '}';
         $data_file = file_put_contents($file, $users_obj);
+
 
 //        var_dump($users);
         return ($users);
