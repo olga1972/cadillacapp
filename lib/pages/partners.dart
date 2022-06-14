@@ -55,54 +55,106 @@ class Partners extends StatelessWidget {
             leading: Builder(
               builder: (BuildContext context) {
                 return IconButton(
-                  icon: SvgPicture.network('assets/images/burger.svg'),
+                  icon: SvgPicture.asset('assets/images/burger.svg'),
                   onPressed: () { Scaffold.of(context).openDrawer(); },
                   tooltip: MaterialLocalizations.of(context).openAppDrawerTooltip,
                 );
               },
             ),
           ),
-          body: ListView(
+          body: Center(
+              child: ListView (
               children: [
-                  Center (
-                      child: Container (
-                      width: 284,
-                        alignment: Alignment.topCenter,
-                        child: Column (
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                                Container (
-                                margin: const EdgeInsets.only(bottom: 73),
-                                child:
-                                const TitlePage(title: 'партнеры автоклуба\ncadillac'),
-                              ),
+                Center(
+                  child: Container(
 
-                                ListView.builder (
-                                    scrollDirection: Axis.vertical,
-                                    shrinkWrap: true,
-                                    itemCount: partners.length,
-                                    itemBuilder: (BuildContext context, int index) {
-                                      return Container (
+                //   )
+                // )
+                  // Container(
+                  //   width: 284,
+                  //   margin: const EdgeInsets.only(
+                  //       top: 10, bottom: 47),
+                  // ),
+                  child: Column(
+                    // mainAxisAlignment: MainAxisAlignment
+                    //     .center,
+                    crossAxisAlignment: CrossAxisAlignment
+                        .center,
+                    children: [
+                        Container (
+                          width: 284,
+                          margin: const EdgeInsets.only(bottom: 40),
+                          child:
+                          const TitlePage(title: 'партнеры автоклуба\ncadillac'),
+                        ),
+                        Container (
+                            width: 284,
+                            height: 680,
+                            child: ListView.builder (
+                                // scrollDirection: Axis.vertical,
+                                // shrinkWrap: true,
+                                itemCount: partners.length,
+                                itemBuilder: (BuildContext context, int index) {
+                                  return Container (
+                                    width: 284,
+                                    margin: const EdgeInsets.only(bottom: 30),
+                                    child: Image.asset(
+                                       partners[index],
+                                      fit: BoxFit.fill,
+                                    ),
+                                  );
 
-                                        margin: const EdgeInsets.only(bottom: 30),
-                                        child: Image(
-                                          image: NetworkImage(partners[index]),
-                                          fit: BoxFit.fill,
-                                        ),
-                                      );
+                                }
+                            )
+                      //   Container (
+                      //     margin: const EdgeInsets.only(bottom: 30),
+                      //     child: Image.asset(
+                      //       partners[0],
+                      //       fit: BoxFit.fill,
+                      //     ),
+                      //   ),
+                      // Container (
+                      //   margin: const EdgeInsets.only(bottom: 30),
+                      //   child: Image.asset(
+                      //     partners[1],
+                      //     fit: BoxFit.fill,
+                      //   ),
+                      // ),
+                      // Container (
+                      //   margin: const EdgeInsets.only(bottom: 30),
+                      //   child: Image.asset(
+                      //     partners[2],
+                      //     fit: BoxFit.fill,
+                      //   ),
+                      // ),
+                      // Container (
+                      //   margin: const EdgeInsets.only(bottom: 30),
+                      //   child: Image.asset(
+                      //     partners[3],
+                      //     fit: BoxFit.fill,
+                      //   ),
+                      // ),
+                      // Container (
+                      //   margin: const EdgeInsets.only(bottom: 30),
+                      //   child: Image.asset(
+                      //     partners[4],
+                      //     fit: BoxFit.fill,
+                      //   ),
+                      // ),
 
-                                    }
-                                )
-                            ]
-                       )
-                      )
-                  )
-              ]
 
-          ),
+                  ),
+                ]
+              )
+
+            ),
+        ),
+      ]
+    ),
+    ),
+
           drawer: NavDrawer(),
-      )
+        )
     );
   }
 }

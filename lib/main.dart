@@ -22,13 +22,14 @@ import 'package:cadillac/pages/partners.dart';
 import 'package:cadillac/pages/shop.dart';
 import 'package:cadillac/pages/success-payment.dart';
 import 'package:cadillac/pages/test.dart';
+import 'package:cadillac/variables.dart';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'dart:async';
-import 'dart:html' as html;
-//import 'dart:io';
+//import 'dart:html' as html;
+import 'dart:io' as IO;
 
 import 'package:flutter/services.dart';
 
@@ -62,23 +63,23 @@ Future<void> main() async {
 
 
 //   var dio = Dio();
-//   List<Cookie> cookies = [
-//     new Cookie("uuid", "9265988f-e70d-11ec-af6a-00ff21c5bb0a"),
-//     // ....
-//   ];
+//   // List<Cookie> cookies = [
+//   //   new Cookie("uuid", "9265988f-e70d-11ec-af6a-00ff21c5bb0a"),
+//   //   // ....
+//   // ];
 //
 //
 //   var cookieJar = PersistCookieJar();
 //   dio.interceptors.add(CookieManager(cookieJar));
 //   //Save cookies
-//   cookieJar.saveFromResponse(Uri.parse("http://localhost"), cookies);
+//   // cookieJar.saveFromResponse(Uri.parse("http://localhost"), cookies);
 //
 // //Get cookies
-//   cookieJar.loadForRequest(Uri.parse("http://localhost"));
-//   print(cookieJar.loadForRequest(Uri.parse("http://localhost")));
+//   cookieJar.loadForRequest(Uri.parse(baseUrl));
+//   print(cookieJar.loadForRequest(Uri.parse(baseUrl)));
 //
-//   // print(cookies);
-//   await dio.get("http://localhost");
+//   //print(cookies);
+//   await dio.get(baseUrl);
 
 
   // print(cookieJar);
@@ -111,13 +112,18 @@ class MyApp extends StatelessWidget {
 
   get userId => null;
   //get currentUser => null;
-
+  late String cookies;
 
   @override
   Widget build(BuildContext context) {
-
-    var cookies = html.window.document.cookie;
-    print (cookies);
+    // if (IO.Platform.isAndroid) {
+    //   // Android-specific code/UI Component
+    // } else if (IO.Platform.isIOS) {
+    //   // iOS-specific code/UI Component
+    // } else {
+    //   // cookies = html.window.document.cookie!;
+    //   // print(cookies);
+    // }
 
     return MaterialApp(
       theme: ThemeData (
@@ -130,9 +136,9 @@ class MyApp extends StatelessWidget {
 
 
       routes: {
-        //'/': (context) => RegistrationPage(),
+        '/home': (context) => RegistrationPage(),
         //'/home': (context) => SuccessPayment(),
-        '/home': (context) => cookies != null && cookies != '' ? Account() : RegistrationPage(),
+        // '/home': (context) => cookies != null && cookies != '' ? Account() : RegistrationPage(),
         //'/home': (context) => Shop(),
         //'/home': (context) => Test(),
         //'/home': (context) => Contacts(),
@@ -214,8 +220,8 @@ class _MyHomePageState extends State<MyHomePage> {
     print('init state main');
     super.initState();
 
-    var usersList = getUsersList();
-    print("usersList: ${getUsersList()}");
+    // var usersList = getUsersList();
+    // print("usersList: ${getUsersList()}");
   }
 
   @override
@@ -223,58 +229,59 @@ class _MyHomePageState extends State<MyHomePage> {
 
     return Scaffold(
         // body:Home(),
-        // body: Text('2Став владельцем Cadillac, \nвы не просто приобретаете \nавтомобиль класса-люкс, \nвы вступаете в элитное сообщество, единомышленников, объединённых общими ценностями и интересами.'.toUpperCase(),
-        //   style:const TextStyle (
-        //     fontSize: 14.0,
-        //     fontWeight: FontWeight.normal,
-        //     fontFamily: 'CadillacSans',
-        //     color: Color(0xFF8F97BF),
-        //     height: 1.7, //line-height : font-size
-        //   ),
-        //   textAlign: TextAlign.center,
-        //   softWrap: true,
-        // ),
-
-        body: FutureBuilder<UsersList>(
-          future: usersList,
-          builder: (context, snapshot) {
-            print(snapshot.data);
-            if (snapshot.hasData) {
-              return ListView.builder(
-                  itemCount: snapshot.data?.users?.length,
-                  itemBuilder: (context, index) {
-                    return Card(
-                      child: ListTile(
-                        // title: Text('${snapshot.data?.users[index].email}'),
-                        title: Text('users'),
-                      ),
-                    );
-                  }
-              );
-            } else if (snapshot.hasError) {
-              return const Text('Error');
-            }
-            return const Center(child: CircularProgressIndicator());
-          },
-
+        body: Text('2Став владельцем Cadillac, \nвы не просто приобретаете \nавтомобиль класса-люкс, \nвы вступаете в элитное сообщество, единомышленников, объединённых общими ценностями и интересами.'.toUpperCase(),
+          style:const TextStyle (
+            fontSize: 14.0,
+            fontWeight: FontWeight.normal,
+            fontFamily: 'CadillacSans',
+            color: Color(0xFF8F97BF),
+            height: 1.7, //line-height : font-size
+          ),
+          textAlign: TextAlign.center,
+          softWrap: true,
         ),
+
+        // body: FutureBuilder<UsersList>(
+        //   future: usersList,
+        //   builder: (context, snapshot) {
+        //     print(snapshot.data);
+        //     if (snapshot.hasData) {
+        //       return ListView.builder(
+        //           itemCount: snapshot.data?.users?.length,
+        //           itemBuilder: (context, index) {
+        //             return Card(
+        //               child: ListTile(
+        //                 // title: Text('${snapshot.data?.users[index].email}'),
+        //                 title: Text('users'),
+        //               ),
+        //             );
+        //           }
+        //       );
+        //     } else if (snapshot.hasError) {
+        //       return const Text('Error');
+        //     }
+        //     return const Center(child: CircularProgressIndicator());
+        //   },
+        //
+        // ),
 
         drawer: NavDrawer(),
 
     );
   }
 
-  Future<UsersList> getUsersList() async {
-    // const url = 'https://about.google/static/data/locations.json';
-    const url = 'http://localhost/test/users_list.php';
-    final response = await http.get(Uri.parse(url));
-
-    if(response.statusCode == 200) {
-      return UsersList.fromJson(json.decode(response.body));
-    } else {
-      throw Exception('Error: ${response.reasonPhrase}');
-    }
-  }
+  // Future<UsersList> getUsersList() async {
+  //   // const url = 'https://about.google/static/data/locations.json';
+  //   // const url = 'http://localhost/test/users_list.php';
+  //   const url = baseUrl + '/users_list.php';
+  //   final response = await http.get(Uri.parse(url));
+  //
+  //   if(response.statusCode == 200) {
+  //     return UsersList.fromJson(json.decode(response.body));
+  //   } else {
+  //     throw Exception('Error: ${response.reasonPhrase}');
+  //   }
+  // }
 
   // Future<UsersList> getUsersList() async {
   //   var url = "http://localhost/test/users_list.php";

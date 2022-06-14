@@ -64,7 +64,8 @@ class User {
 
   Future<UsersList> getUsersList() async {
     // const url = 'https://about.google/static/data/locations.json';
-    const url = 'http://localhost/test/users_list.php';
+    // const url = 'http://localhost/test/users_list.php';
+    const url = 'https://cadillacapp.ru/test/users_list.php';
     final response = await http.get(Uri.parse(url));
     print('response body user getUsersList');
     print('response body');

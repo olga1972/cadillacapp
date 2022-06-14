@@ -724,7 +724,7 @@ class SuccessPayment extends StatelessWidget {
                                                                       //   previewMargin: EdgeInsets.only(bottom: 0),
                                                                       //   iconColor: Colors.white,
                                                                       //
-                                                                      //   // galleryIcon: SvgPicture.network(
+                                                                      //   // galleryIcon: SvgPicture.asset(
                                                                       //   //   'assets/images/image2.svg',
                                                                       //   //   // height: 22.0,
                                                                       //   //   height: 10.0,
@@ -969,8 +969,8 @@ class SuccessPayment extends StatelessWidget {
     // dynamic cars = user.cars;
 
 
-    //String apiurl = "https://cadillacapp.ru/test/edit.php";
-    String apiurl = "http://localhost/test/edit.php";
+    String apiurl = baseUrl + "/test/edit.php";
+    // String apiurl = "http://localhost/test/edit.php";
     var response = await http.post(Uri.parse(apiurl), body:{'login': login, 'username': username, 'birthday': birthday, 'carname': carname,},headers: {'Accept':'application/json, charset=utf-8',"Access-Control-Allow-Origin": "*",
       "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS"});
 

@@ -32,7 +32,7 @@ Widget build(BuildContext context) {
               Align (
                 alignment: Alignment.topRight,
                 child: IconButton(
-                  icon: SvgPicture.network(
+                  icon: SvgPicture.asset(
                       'assets/images/close.svg',
                       semanticsLabel: 'Icon close',
                       height: 16.0,
@@ -49,7 +49,7 @@ Widget build(BuildContext context) {
              ),
               Container (
                   margin: const EdgeInsets.only(bottom: 15),
-                  child: SvgPicture.network(
+                  child: SvgPicture.asset(
                   'assets/images/gift.svg',
                   semanticsLabel: 'Icon gift',
                   height: 22.0,
@@ -89,7 +89,7 @@ Widget build(BuildContext context) {
                     ),
                     Container(
                       margin: const EdgeInsets.only(right: 15),
-                      child: SvgPicture.network(
+                      child: SvgPicture.asset(
                         'assets/images/logo-text.svg',
                         semanticsLabel: 'Icon logo-text',
                         height: 23.0,

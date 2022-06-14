@@ -57,7 +57,7 @@ Widget build(BuildContext context) {
    // );
 
     return MaterialApp(
-      title: 'Material App',
+      title: 'Cadillac',
       debugShowCheckedModeBanner: false,
       home: Scaffold(
         backgroundColor: Colors.transparent,
@@ -70,7 +70,7 @@ Widget build(BuildContext context) {
                 CustomLayoutOption(startIndex: -1, stateCount: 2)
                     ..addTranslate([
                   const Offset(-28.0, 0.0),
-                  const Offset(161.0, 0.0),
+                  const Offset(256.0, 0.0),
                   // const Offset(304.0, 0.0)
                 ]),
 

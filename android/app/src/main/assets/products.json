@@ -1,0 +1,75 @@
+{"products": [
+  {
+    "categoryId": 1,
+    "category": "футболки",
+    "id": 1,
+    "name": "футболка",
+    "image": "assets/images/t-shirt.png",
+    "price": 8800,
+    "quantity": 5
+  },
+  {
+    "categoryId": 1,
+    "category": "футболки",
+    "id": 2,
+    "name": "футболка",
+    "image": "assets/images/t-shirt.png",
+    "price": 8800,
+    "quantity": 5
+  },
+  {
+    "categoryId": 2,
+    "category": "худи",
+    "id": 1,
+    "name": "худи",
+    "image": "assets/images/hoodie.png",
+    "price": 16300,
+    "quantity": 1
+  },
+  {
+    "categoryId": 2,
+    "category": "худи",
+    "id": 2,
+    "name": "худи",
+    "image": "assets/images/hoodie.png",
+    "price": 16300,
+    "quantity": 5
+  },
+  {
+    "categoryId": 3,
+    "category": "блокноты",
+    "id": 1,
+    "name": "блокноты",
+    "image": "assets/images/notebook.png",
+    "price": 3700,
+    "quantity": 2
+  },
+  {
+    "categoryId": 3,
+    "category": "блокноты",
+    "id": 2,
+    "name": "блокноты",
+    "image": "assets/images/notebook.png",
+    "price": 3700,
+    "quantity": 2
+  },
+  {
+    "categoryId": 4,
+    "category": "наклейки",
+    "id": 1,
+    "name": "наклейки",
+    "image": "assets/images/stickers.png",
+    "price": 1500,
+    "quantity": 5
+  },
+  {
+    "categoryId": 4,
+    "category": "наклейки",
+    "id": 2,
+    "name": "наклейки",
+    "image": "assets/images/stickers.png",
+    "price": 1500,
+    "quantity": 3
+  }
+]
+}

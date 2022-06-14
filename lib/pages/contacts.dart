@@ -75,7 +75,7 @@ class Contacts extends StatelessWidget {
             leading: Builder(
               builder: (BuildContext context) {
                 return IconButton(
-                  icon: SvgPicture.network('assets/images/burger.svg'),
+                  icon: SvgPicture.asset('assets/images/burger.svg'),
                   onPressed: () { Scaffold.of(context).openDrawer(); },
                   tooltip: MaterialLocalizations.of(context).openAppDrawerTooltip,
                 );
@@ -372,7 +372,8 @@ class Contacts extends StatelessWidget {
     dynamic theme = order.theme;
     dynamic message = order.message;
 
-    String apiurl = "http://localhost/test/mail.php";
+    // String apiurl = "http://localhost/test/mail.php";
+    String apiurl = baseUrl + "/test/mail.php";
 
     var response = await http.post(Uri.parse(apiurl),body:{'email': email, 'subject':subject,'theme': theme, 'message': message},headers: {'Accept':'application/json, charset=utf-8',"Access-Control-Allow-Origin": "*",
       "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS"});

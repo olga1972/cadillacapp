@@ -19,6 +19,8 @@ import 'dart:convert';
 import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
 
+import '../variables.dart';
+
 class Members extends StatefulWidget {
   Members({Key? key}) : super(key: key);
 
@@ -70,7 +72,7 @@ class _MembersState extends State<Members> {
             leading: Builder(
               builder: (BuildContext context) {
                 return IconButton(
-                  icon: SvgPicture.network('assets/images/burger.svg'),
+                  icon: SvgPicture.asset('assets/images/burger.svg'),
                   onPressed: () { Scaffold.of(context).openDrawer(); },
                   tooltip: MaterialLocalizations.of(context).openAppDrawerTooltip,
                 );
@@ -211,7 +213,7 @@ class _MembersState extends State<Members> {
                                                           alignment: Alignment
                                                               .centerLeft,
                                                           child: SvgPicture
-                                                              .network(
+                                                              .asset(
                                                               'assets/images/cadillac.svg',
                                                               semanticsLabel: 'Icon car',
                                                               height: 15.0
@@ -246,7 +248,8 @@ class _MembersState extends State<Members> {
 
 Future<UsersList> getUsersList() async {
   // const url = 'https://about.google/static/data/locations.json';
-  const url = 'http://localhost/test/users_list.php';
+  // const url = 'http://localhost/test/users_list.php';
+  const url = baseUrl + '/test/users_list.php';
   final response = await http.get(Uri.parse(url));
   print('response test getUserLists');
   print(response.body);

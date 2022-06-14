@@ -37,3 +37,6 @@ const stylePlaceHolderText = TextStyle(
   color: Colors.white,
   height: 1.5, //line-height : font-size
 );
+
+const baseUrl = 'http://localhost';
+// const baseUrl = 'https://cadillacapp.ru';

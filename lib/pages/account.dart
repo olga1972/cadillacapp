@@ -145,7 +145,7 @@ class Account extends StatelessWidget {
             leading: Builder(
               builder: (BuildContext context) {
                 return IconButton(
-                  icon: SvgPicture.network('assets/images/burger.svg'),
+                  icon: SvgPicture.asset('assets/images/burger.svg'),
                   onPressed: () { Scaffold.of(context).openDrawer(); },
                   tooltip: MaterialLocalizations.of(context).openAppDrawerTooltip,
                 );
@@ -229,7 +229,7 @@ class Account extends StatelessWidget {
                                                                     alignment: Alignment
                                                                         .centerLeft,
                                                                     child: SvgPicture
-                                                                        .network(
+                                                                        .asset(
                                                                         'assets/images/account.svg',
                                                                         semanticsLabel: 'Icon author',
                                                                         height: 22.0
@@ -273,7 +273,7 @@ class Account extends StatelessWidget {
                                                                             0),
                                                                         iconSize: 22.0,
                                                                         icon: SvgPicture
-                                                                            .network(
+                                                                            .asset(
                                                                           'assets/images/gift.svg',
                                                                           semanticsLabel: 'Icon gift',
                                                                           height: 22.0,
@@ -327,7 +327,7 @@ class Account extends StatelessWidget {
                                                                             0),
                                                                         iconSize: 22.0,
                                                                         icon: SvgPicture
-                                                                            .network(
+                                                                            .asset(
 
                                                                           'assets/images/edit.svg',
                                                                           semanticsLabel: 'Icon edit',
@@ -492,8 +492,8 @@ Future<User> getUser() async {
   print('getUser');
   // print('userId: $userId');
 
-  String apiurl = "http://localhost/test/get_user.php";
-  //String apiurl = "https://cadillacapp.ru/test/get_user.php"; // get jsonplaceholder
+  //String apiurl = "http://localhost/test/get_user.php";
+  String apiurl = baseUrl + "/test/get_user.php"; // get jsonplaceholder
   // final response = await http.post(Uri.parse(apiurl), body:{'userId': userId});
   var birthday = '111';
   var phone = '111';

@@ -116,7 +116,7 @@ class _HomeState extends State<Home> {
         //         leading: Builder(
         //             builder: (BuildContext context) {
         //               return IconButton(
-        //                 icon: SvgPicture.network('assets/images/burger.svg'),
+        //                 icon: SvgPicture.asset('assets/images/burger.svg'),
         //                 onPressed: () { Scaffold.of(context).openDrawer(); },
         //                 tooltip: MaterialLocalizations.of(context).openAppDrawerTooltip,
         //               );
@@ -203,7 +203,7 @@ class _HomeState extends State<Home> {
             leading: Builder(
               builder: (BuildContext context) {
                 return IconButton(
-                  icon: SvgPicture.network(
+                  icon: SvgPicture.asset(
                     'assets/images/burger.svg',
                     semanticsLabel: 'Icon burger',
                     height: 12.0),

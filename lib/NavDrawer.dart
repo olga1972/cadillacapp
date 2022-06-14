@@ -109,7 +109,7 @@ class _NavDrawerState extends State<NavDrawer> {
                                 )
                             ),
 
-                            leading: SvgPicture.network(
+                            leading: SvgPicture.asset(
                               'assets/images/' + icons[index],
                               semanticsLabel: 'Icon home',
                               height: 20.0,
@@ -145,7 +145,7 @@ class _NavDrawerState extends State<NavDrawer> {
                         )
                     ),
 
-                    leading: SvgPicture.network(
+                    leading: SvgPicture.asset(
                       'assets/images/' + icons[index],
                       semanticsLabel: 'Icon home',
                       height: 20.0,

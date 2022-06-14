@@ -66,7 +66,7 @@ class _AccordionState extends State<Accordion> {
 
             child:
               IconButton (
-                  icon: SvgPicture.network(
+                  icon: SvgPicture.asset(
                   'assets/images/arrow_down.svg',
                       semanticsLabel: 'Icon arrow down',
                       height: 6.0,

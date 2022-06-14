@@ -32,8 +32,8 @@ class _ShopState extends State<Shop> {
   // get currentUser => null;
   List<String> images = [
     "assets/images/t-shirt.png",
-    "assets/images/t-shirt.png",
-    "assets/images/t-shirt.png",
+    "assets/images/hoodie.png",
+    "assets/images/notebook.png",
   ];
 
   @override
@@ -73,7 +73,7 @@ class _ShopState extends State<Shop> {
             leading: Builder(
               builder: (BuildContext context) {
                 return IconButton(
-                  icon: SvgPicture.network('assets/images/burger.svg'),
+                  icon: SvgPicture.asset('assets/images/burger.svg'),
                   onPressed: () { Scaffold.of(context).openDrawer(); },
                   tooltip: MaterialLocalizations.of(context).openAppDrawerTooltip,
                 );
@@ -107,7 +107,7 @@ class _ShopState extends State<Shop> {
                                         margin: EdgeInsets.only(bottom: 30),
                                         //padding: EdgeInsets.only(left: 50),
                                         alignment: Alignment.center,
-                                        width: 140,
+                                        width: 130,
                                         height: 200,
                                         child: Text("Футболки".toUpperCase(),
                                           style: TextStyle(
@@ -127,7 +127,7 @@ class _ShopState extends State<Shop> {
                                           width: 250,
                                           height: 200,
 
-                                          padding: EdgeInsets.only(bottom: 10),
+                                          //padding: EdgeInsets.only(bottom: 10),
                                           margin: const EdgeInsets.only(top: 10, bottom: 30, left: 0, right: 0),
                                           child: Container(
                                             child: Swiper(
@@ -137,24 +137,24 @@ class _ShopState extends State<Shop> {
 
                                               customLayoutOption:
                                               CustomLayoutOption(startIndex: -1, stateCount: 3)..addTranslate([
-                                                const Offset(-81.0, 0.0),
-                                                const Offset(20.0, 0.0),
-                                                const Offset(121.0, 0.0)
+                                                const Offset(-71.0, 0.0),
+                                                const Offset(40.0, 0.0),
+                                                const Offset(151.0, 0.0)
                                               ]),
                                               //fade: 0.2,
                                               //allowImplicitScrolling: true,
-                                              //duration: 3,
+                                              // duration: 3,
                                               //containerHeight: 160,
                                               containerWidth: 280,
                                               viewportFraction: 0.43,
                                               itemHeight: 200,
-                                              itemWidth: 88,
+                                              itemWidth: 98,
                                               autoplay: MediaQuery.of(context).size.width > 920 ? true : false,
                                               outer: true,
                                               itemBuilder: (BuildContext context, int index) {
 
                                                 return Container(
-                                                    width: 88,
+                                                    width: 98,
                                                     height: 190,
                                                     // margin: const EdgeInsets.only(left: 10,right: 10),
                                                     decoration: BoxDecoration(
@@ -163,10 +163,10 @@ class _ShopState extends State<Shop> {
                                                     child: Column (
                                                         children: [
                                                           Container(
-                                                              width: 88,
+                                                              width: 98,
                                                               height: 132,
                                                               decoration: const BoxDecoration(
-                                                                borderRadius: BorderRadius.all(Radius.circular(20)),
+                                                                borderRadius: BorderRadius.all(Radius.circular(10)),
                                                               ),
 
                                                               child: IconButton(
@@ -189,8 +189,9 @@ class _ShopState extends State<Shop> {
                                                               )
                                                           ),
                                                           Container (
-                                                              width: 88,
+                                                              width: 98,
                                                               padding: EdgeInsets.only(left: 5),
+                                                              //padding: EdgeInsets.zero,
                                                               decoration: BoxDecoration(
                                                                 color: Color(0xffE4E6FF),
                                                                 borderRadius: BorderRadius.only(
@@ -214,6 +215,7 @@ class _ShopState extends State<Shop> {
 
                                                                     ),
                                                                     IconButton( icon: Icon(Icons.add, size: 10,),
+                                                                      //iconSize: 48,
                                                                       color: Color( 0xFF12141F),
                                                                       padding: EdgeInsets.zero,
                                                                       onPressed: () {
@@ -222,6 +224,7 @@ class _ShopState extends State<Shop> {
                                                                     ),
                                                                   ]
                                                               )
+                                                            //)
                                                           ),
                                                           Container (
                                                               width: 88,
@@ -265,7 +268,7 @@ class _ShopState extends State<Shop> {
                                         margin: EdgeInsets.only(bottom: 30),
                                         //padding: EdgeInsets.only(left: 50),
                                         alignment: Alignment.center,
-                                        width: 140,
+                                        width: 130,
                                         height: 200,
                                         child: Text("Худи".toUpperCase(),
                                           style: TextStyle(
@@ -275,7 +278,7 @@ class _ShopState extends State<Shop> {
                                             // color: Color(
                                             //     0xFF12141F)
                                           ),
-                                          textAlign: TextAlign.left,
+                                          textAlign: TextAlign.center,
 
                                         ),
                                       ),
@@ -285,7 +288,7 @@ class _ShopState extends State<Shop> {
                                           width: 250,
                                           height: 200,
 
-                                          padding: EdgeInsets.only(bottom: 10),
+                                          //padding: EdgeInsets.only(bottom: 10),
                                           margin: const EdgeInsets.only(top: 10, bottom: 30, left: 0, right: 0),
                                           child: Container(
                                             child: Swiper(
@@ -295,24 +298,24 @@ class _ShopState extends State<Shop> {
 
                                               customLayoutOption:
                                               CustomLayoutOption(startIndex: -1, stateCount: 3)..addTranslate([
-                                                const Offset(-81.0, 0.0),
-                                                const Offset(20.0, 0.0),
-                                                const Offset(121.0, 0.0)
+                                                const Offset(-71.0, 0.0),
+                                                const Offset(40.0, 0.0),
+                                                const Offset(151.0, 0.0)
                                               ]),
                                               //fade: 0.2,
                                               //allowImplicitScrolling: true,
-                                              //duration: 3,
+                                              // duration: 3,
                                               //containerHeight: 160,
                                               containerWidth: 280,
                                               viewportFraction: 0.43,
                                               itemHeight: 200,
-                                              itemWidth: 88,
+                                              itemWidth: 98,
                                               autoplay: MediaQuery.of(context).size.width > 920 ? true : false,
                                               outer: true,
                                               itemBuilder: (BuildContext context, int index) {
 
                                                 return Container(
-                                                    width: 88,
+                                                    width: 98,
                                                     height: 190,
                                                     // margin: const EdgeInsets.only(left: 10,right: 10),
                                                     decoration: BoxDecoration(
@@ -321,10 +324,10 @@ class _ShopState extends State<Shop> {
                                                     child: Column (
                                                         children: [
                                                           Container(
-                                                              width: 88,
+                                                              width: 98,
                                                               height: 132,
                                                               decoration: const BoxDecoration(
-                                                                borderRadius: BorderRadius.all(Radius.circular(20)),
+                                                                borderRadius: BorderRadius.all(Radius.circular(10)),
                                                               ),
 
                                                               child: IconButton(
@@ -347,8 +350,9 @@ class _ShopState extends State<Shop> {
                                                               )
                                                           ),
                                                           Container (
-                                                              width: 88,
+                                                              width: 98,
                                                               padding: EdgeInsets.only(left: 5),
+                                                              //padding: EdgeInsets.zero,
                                                               decoration: BoxDecoration(
                                                                 color: Color(0xffE4E6FF),
                                                                 borderRadius: BorderRadius.only(
@@ -372,6 +376,7 @@ class _ShopState extends State<Shop> {
 
                                                                     ),
                                                                     IconButton( icon: Icon(Icons.add, size: 10,),
+                                                                      //iconSize: 48,
                                                                       color: Color( 0xFF12141F),
                                                                       padding: EdgeInsets.zero,
                                                                       onPressed: () {
@@ -380,6 +385,7 @@ class _ShopState extends State<Shop> {
                                                                     ),
                                                                   ]
                                                               )
+                                                            //)
                                                           ),
                                                           Container (
                                                               width: 88,
@@ -423,7 +429,7 @@ class _ShopState extends State<Shop> {
                                         margin: EdgeInsets.only(bottom: 30),
                                         //padding: EdgeInsets.only(left: 50),
                                         alignment: Alignment.center,
-                                        width: 140,
+                                        width: 130,
                                         height: 200,
                                         child: Text("Блокноты".toUpperCase(),
                                           style: TextStyle(
@@ -439,11 +445,11 @@ class _ShopState extends State<Shop> {
                                       ),
 
                                       Container (
-
+                                        // width: MediaQuery.of(context).size.width,
                                           width: 250,
                                           height: 200,
 
-                                          padding: EdgeInsets.only(bottom: 10),
+                                          //padding: EdgeInsets.only(bottom: 10),
                                           margin: const EdgeInsets.only(top: 10, bottom: 30, left: 0, right: 0),
                                           child: Container(
                                             child: Swiper(
@@ -452,25 +458,25 @@ class _ShopState extends State<Shop> {
                                               layout: SwiperLayout.CUSTOM,
 
                                               customLayoutOption:
-                                                CustomLayoutOption(startIndex: -1, stateCount: 3)..addTranslate([
-                                                  const Offset(-81.0, 0.0),
-                                                  const Offset(20.0, 0.0),
-                                                  const Offset(121.0, 0.0)
-                                                ]),
+                                              CustomLayoutOption(startIndex: -1, stateCount: 3)..addTranslate([
+                                                const Offset(-71.0, 0.0),
+                                                const Offset(40.0, 0.0),
+                                                const Offset(151.0, 0.0)
+                                              ]),
                                               //fade: 0.2,
                                               //allowImplicitScrolling: true,
-                                             // duration: 3,
+                                              // duration: 3,
                                               //containerHeight: 160,
                                               containerWidth: 280,
                                               viewportFraction: 0.43,
                                               itemHeight: 200,
-                                              itemWidth: 88,
+                                              itemWidth: 98,
                                               autoplay: MediaQuery.of(context).size.width > 920 ? true : false,
                                               outer: true,
                                               itemBuilder: (BuildContext context, int index) {
 
                                                 return Container(
-                                                    width: 88,
+                                                    width: 98,
                                                     height: 190,
                                                     // margin: const EdgeInsets.only(left: 10,right: 10),
                                                     decoration: BoxDecoration(
@@ -479,11 +485,11 @@ class _ShopState extends State<Shop> {
                                                     child: Column (
                                                         children: [
                                                           Container(
-                                                            width: 88,
-                                                            height: 132,
-                                                            decoration: const BoxDecoration(
-                                                              borderRadius: BorderRadius.all(Radius.circular(20)),
-                                                            ),
+                                                              width: 98,
+                                                              height: 132,
+                                                              decoration: const BoxDecoration(
+                                                                borderRadius: BorderRadius.all(Radius.circular(10)),
+                                                              ),
 
                                                               child: IconButton(
                                                                 icon: Image.asset(
@@ -505,8 +511,9 @@ class _ShopState extends State<Shop> {
                                                               )
                                                           ),
                                                           Container (
-                                                              width: 88,
+                                                              width: 98,
                                                               padding: EdgeInsets.only(left: 5),
+                                                              //padding: EdgeInsets.zero,
                                                               decoration: BoxDecoration(
                                                                 color: Color(0xffE4E6FF),
                                                                 borderRadius: BorderRadius.only(
@@ -530,6 +537,7 @@ class _ShopState extends State<Shop> {
 
                                                                     ),
                                                                     IconButton( icon: Icon(Icons.add, size: 10,),
+                                                                      //iconSize: 48,
                                                                       color: Color( 0xFF12141F),
                                                                       padding: EdgeInsets.zero,
                                                                       onPressed: () {
@@ -538,6 +546,7 @@ class _ShopState extends State<Shop> {
                                                                     ),
                                                                   ]
                                                               )
+                                                            //)
                                                           ),
                                                           Container (
                                                               width: 88,
@@ -581,7 +590,7 @@ class _ShopState extends State<Shop> {
                                         margin: EdgeInsets.only(bottom: 30),
                                         //padding: EdgeInsets.only(left: 50),
                                         alignment: Alignment.center,
-                                        width: 140,
+                                        width: 130,
                                         height: 200,
                                         child: Text("Наклейки".toUpperCase(),
                                           style: TextStyle(
@@ -601,7 +610,7 @@ class _ShopState extends State<Shop> {
                                           width: 250,
                                           height: 200,
 
-                                          padding: EdgeInsets.only(bottom: 10),
+                                          //padding: EdgeInsets.only(bottom: 10),
                                           margin: const EdgeInsets.only(top: 10, bottom: 30, left: 0, right: 0),
                                           child: Container(
                                             child: Swiper(
@@ -611,9 +620,9 @@ class _ShopState extends State<Shop> {
 
                                               customLayoutOption:
                                               CustomLayoutOption(startIndex: -1, stateCount: 3)..addTranslate([
-                                                const Offset(-81.0, 0.0),
-                                                const Offset(20.0, 0.0),
-                                                const Offset(121.0, 0.0)
+                                                const Offset(-71.0, 0.0),
+                                                const Offset(40.0, 0.0),
+                                                const Offset(151.0, 0.0)
                                               ]),
                                               //fade: 0.2,
                                               //allowImplicitScrolling: true,
@@ -622,13 +631,13 @@ class _ShopState extends State<Shop> {
                                               containerWidth: 280,
                                               viewportFraction: 0.43,
                                               itemHeight: 200,
-                                              itemWidth: 88,
+                                              itemWidth: 98,
                                               autoplay: MediaQuery.of(context).size.width > 920 ? true : false,
                                               outer: true,
                                               itemBuilder: (BuildContext context, int index) {
 
                                                 return Container(
-                                                    width: 88,
+                                                    width: 98,
                                                     height: 190,
                                                     // margin: const EdgeInsets.only(left: 10,right: 10),
                                                     decoration: BoxDecoration(
@@ -637,10 +646,10 @@ class _ShopState extends State<Shop> {
                                                     child: Column (
                                                         children: [
                                                           Container(
-                                                              width: 88,
+                                                              width: 98,
                                                               height: 132,
                                                               decoration: const BoxDecoration(
-                                                                borderRadius: BorderRadius.all(Radius.circular(20)),
+                                                                borderRadius: BorderRadius.all(Radius.circular(10)),
                                                               ),
 
                                                               child: IconButton(
@@ -663,8 +672,9 @@ class _ShopState extends State<Shop> {
                                                               )
                                                           ),
                                                           Container (
-                                                              width: 88,
+                                                              width: 98,
                                                               padding: EdgeInsets.only(left: 5),
+                                                              //padding: EdgeInsets.zero,
                                                               decoration: BoxDecoration(
                                                                 color: Color(0xffE4E6FF),
                                                                 borderRadius: BorderRadius.only(
@@ -674,28 +684,30 @@ class _ShopState extends State<Shop> {
                                                                 ),
                                                               ),
                                                               child: Row(
-                                                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                                  children: [
-                                                                    Text("Блокноты ".toUpperCase(),
-                                                                      style: const TextStyle(
-                                                                          fontWeight: FontWeight.bold,
-                                                                          fontSize: 7,
-                                                                          letterSpacing: 0,
-                                                                          color: Color(
-                                                                              0xFF12141F)
-                                                                      ),
-                                                                      textAlign: TextAlign.center,
+                                                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                                    children: [
+                                                                      Text("Блокноты ".toUpperCase(),
+                                                                        style: const TextStyle(
+                                                                            fontWeight: FontWeight.bold,
+                                                                            fontSize: 7,
+                                                                            letterSpacing: 0,
+                                                                            color: Color(
+                                                                                0xFF12141F)
+                                                                        ),
+                                                                        textAlign: TextAlign.center,
 
-                                                                    ),
-                                                                    IconButton( icon: Icon(Icons.add, size: 10,),
-                                                                      color: Color( 0xFF12141F),
-                                                                      padding: EdgeInsets.zero,
-                                                                      onPressed: () {
-                                                                        print('add');
-                                                                      },
-                                                                    ),
-                                                                  ]
-                                                              )
+                                                                      ),
+                                                                      IconButton( icon: Icon(Icons.add, size: 10,),
+                                                                        //iconSize: 48,
+                                                                        color: Color( 0xFF12141F),
+                                                                        padding: EdgeInsets.zero,
+                                                                        onPressed: () {
+                                                                          print('add');
+                                                                        },
+                                                                      ),
+                                                                    ]
+                                                                )
+                                                              //)
                                                           ),
                                                           Container (
                                                               width: 88,

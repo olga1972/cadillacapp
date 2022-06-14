@@ -129,7 +129,7 @@ class RegistrationPage extends StatelessWidget {
   Widget build(BuildContext context) {
     //currentUser = addUser();
     //print(currentUser);
-    getCookie();
+    //getCookie();
 
     return MaterialApp(
       theme: ThemeData(scaffoldBackgroundColor: const Color(0xFF181c33)),
@@ -164,7 +164,7 @@ class RegistrationPage extends StatelessWidget {
         body: Center (
           child: Container (
               width: 284,
-
+              margin: const EdgeInsets.only(top: 70),
               child: Column (
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
@@ -176,11 +176,17 @@ class RegistrationPage extends StatelessWidget {
                                 children: [
                                   Container (
                                     margin: const EdgeInsets.only(bottom: 70, top: 70),
-                                    child: SvgPicture.network(
+                                    child: SvgPicture.asset(
                                       'assets/images/LOGO.svg',
+                                      //fit: BoxFit.fill,
                                       height: 103.0,
                                       color: Colors.white,
                                     ),
+                                    // child: SvgPicture.network(
+                                    //   'assets/images/LOGO.svg',
+                                    //   height: 103.0,
+                                    //   color: Colors.white,
+                                    // ),
                                   ),
 
                                   FormBuilder(
@@ -399,48 +405,48 @@ class RegistrationPage extends StatelessWidget {
                                     ),
                                   ),
 
-                                  Row(
+                                  Column(
                                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                      mainAxisSize: MainAxisSize.min,
                                       children: [
                                         MaterialButton(
 
-                                          //height: 48,
+
                                           padding: const EdgeInsets.all(17),
                                           // color: const Color(0xFF515569),
-                                          // child: Image(
-                                          //   image:  NetworkImage('assets/images/app01.png',),
-                                          //   fit: BoxFit.fill,
-                                          // ),
-                                          child: Image(
-                                            width: 110,
-                                            image:  NetworkImage('assets/images/app01.png',),
-                                            fit: BoxFit.fill,
+                                          child:  Image.asset(
+                                            'assets/images/app01.png',
+                                            fit: BoxFit.contain,
+                                            height: 48,
                                           ),
                                           // shape: const RoundedRectangleBorder(
                                           //   side: BorderSide.none,
                                           //   borderRadius: BorderRadius.all(Radius.circular(10),
                                           //   ),
-                                          // ),
-                                          onPressed: () {  },
-                                        ),
+                                          //),
+                                          onPressed: () {
+                                            downLoadApp();
+                                            // Navigator
+                                            //     .pushReplacement(
+                                            //     context,
+                                            //     MaterialPageRoute(
+                                            //         builder: (context) =>
+                                            //             Home()
+                                            //     ));
+                                          }),
 
                                         MaterialButton(
+                                          //width: 110,
 
-                                          ////height: 48,
                                           padding: const EdgeInsets.all(17),
                                           // color: const Color(0xFF515569),
 
-                                          child: Image(
-                                            width: 110,
-                                            image:  NetworkImage('assets/images/app02.png',),
-                                            fit: BoxFit.fill,
+                                          child: Image.asset(
+                                              'assets/images/app02.png',
+                                              fit: BoxFit.contain,
+                                              height: 48,
                                           ),
-                                          //   shape: const RoundedRectangleBorder(
-                                          //     side: BorderSide.none,
-                                          //     borderRadius: BorderRadius.all(Radius.circular(10),
-                                          //   ),
-                                          // ),
-                                          onPressed: () {  },
+                                           onPressed: () {  },
                                         ),
 
                                       ]
@@ -481,8 +487,8 @@ class RegistrationPage extends StatelessWidget {
     dynamic userId = user.userId;
 
 
-    //String apiurl = "https://cadillacapp.ru/test/create.php";
-    String apiurl = "http://localhost/test/create.php";
+    String apiurl = baseUrl + "/test/create.php";
+    // String apiurl = "http://localhost/test/create.php";
     // var response = await http.post(Uri.parse(apiurl),body:{'userId': userId,'phone': phone,'email': email});
     var response = await http.post(Uri.parse(apiurl), headers: {'Accept':'application/json, charset=utf-8',"Access-Control-Allow-Origin": "*",
     "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS"}, body:{'phone': phone,'email': email});
@@ -526,20 +532,49 @@ class RegistrationPage extends StatelessWidget {
   getCookie() async {
     print('get cookie');
     var dio = Dio();
-    //dynamic cookies = {"TestCookie", "9265988f-e70d-11ec-af6a-00ff21c5bb0a"};
+    dynamic cookies = {"uuid", "9265988f-e70d-11ec-af6a-00ff21c5bb0a"};
 
-    var cookieJar = CookieJar();
-    print(cookieJar);
 
-    dio.interceptors.add(CookieManager(cookieJar));
-    dynamic result = await dio.get("http://localhost");
-    // Print cookies
-    print(cookieJar.loadForRequest(Uri.parse("http://localhost")));
-    // second request with the cookie
-    await dio.get("http://localhost");
+      // List<Cookie> cookies = [
+      //   new Cookie("uuid", "9265988f-e70d-11ec-af6a-00ff21c5bb0a"),
+      //   // ....
+      // ];
+
+
+      var cookieJar = PersistCookieJar();
+      dio.interceptors.add(CookieManager(cookieJar));
+      //Save cookies
+      //cookieJar.saveFromResponse(Uri.parse("http://localhost"), cookies);
+
+    //Get cookies
+      cookieJar.loadForRequest(Uri.parse(baseUrl));
+      print(cookieJar.loadForRequest(Uri.parse(baseUrl)));
+
+      //print(cookies);
+      await dio.get(baseUrl);
   }
 
 
   void _onChanged() {
   }
+}
+
+downLoadApp() async {
+
+  print('download');
+
+  String apiurl = baseUrl + "/test/download.php";
+  print(apiurl);
+
+  var response = await http.post(Uri.parse(apiurl));
+
+  if(response.statusCode == 200){
+    print('success download');
+    print(response.statusCode);
+    return true;
+  }else{
+    print('error');
+    throw Exception('We were not able to successfully download the json data.');
+  }
+
 }

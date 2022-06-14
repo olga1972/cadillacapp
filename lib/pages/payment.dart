@@ -175,7 +175,7 @@ class Payment extends StatelessWidget {
                                             ),
                                             suffixIcon: Padding(
                                               padding: const EdgeInsets.all(15.0),
-                                              child: SvgPicture.network(
+                                              child: SvgPicture.asset(
                                                   'assets/images/card.svg',
                                                   semanticsLabel: 'Icon card',
                                                   height: 15.0,
