@@ -1,7 +1,11 @@
+//import 'dart:html';
+import 'dart:io';
 import 'dart:ui';
 import 'package:cadillac/pages/partners.dart';
+import 'package:cadillac/pages/registrationPage.dart';
 import 'package:cadillac/pages/shop.dart';
 import 'package:cadillac/widgets/uploadImage.dart';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -12,7 +16,21 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 
 // import 'package:uuid/uuid.dart';
 // import 'package:uuid/uuid_util.dart';
+import 'package:dio/dio.dart';
+import 'package:dio_cookie_manager/dio_cookie_manager.dart';
+import 'package:cookie_jar/cookie_jar.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
+// import 'dart:html' as html;
+
+import 'package:web_socket_channel/web_socket_channel.dart';
+
+import 'package:web_socket_channel/io.dart';
+import 'package:web_socket_channel/status.dart' as status;
+
+// import 'package:cross_file_image/cross_file_image.dart';
 
 
 import 'package:flutter/services.dart';
@@ -52,21 +70,97 @@ import 'contacts.dart';
 import 'members.dart';
 import 'news.dart';
 
-class SuccessPayment extends StatelessWidget {
+enum ImageSourceType { gallery, camera }
+
+var uuid = '';
+
+class SuccessPayment extends StatefulWidget {
+
   //var currentUser;
   //final User currentUser;
   //final User userId;
 
   // SuccessPayment({Key? key, required this.currentUser,} ) : super(key: key);
-  SuccessPayment({Key? key,} ) : super(key: key);
+  SuccessPayment({Key? key, required this.userId} ) : super(key: key);
 
+  late dynamic userId;
+  late String path;
+
+
+  get appDocPath => null;
+
+
+
+
+
+  @override
+  State<SuccessPayment> createState() => _SuccessPaymentState();
+}
+
+class _SuccessPaymentState extends State<SuccessPayment> {
+  //String filePath = '';
+
+
+
+  getImage() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    bool check = prefs.containsKey('image');
+    if (check) {
+      setState(() {
+        //filePath = prefs.getString('image')!;
+      });
+      return;
+    }
+    // ImagePicker imagePicker = new ImagePicker();
+    // PickedFile? image = (await imagePicker.pickImage(source: ImageSource.gallery)) as PickedFile?;
+    // String? imagePath = image?.path;
+    // await prefs.setString('image', imagePath!);
+    // setState(() {
+    //   filePath = prefs.getString('image')!;
+    // });
+  }
+
+  dynamic user;
+
+  @override
+  initState()  {
+    print('init state success payment');
+
+
+    super.initState();
+
+    uuid = '';
+    //uuid = userId;
+    getImage();
+
+    var path = "assets/images/avatar.png";
+    print(path);
+    print(uuid);
+
+    // setState(() {
+    //     userId = userId;
+    // });
+    // final file =
+    //     await ImagePicker().pickImage(source: ImageSource.gallery);
+    // setState(() => this.file = file);
+    //officesList = getOfficesList();
+    //officesList = readJson();
+    // usersList = getUsersList();
+    //usersList = readJson();
+    //print(usersList);
+    // setState(() {
+    //   _items = data["items"];
+    // });
+  }
+
+  //XFile? file;
   //final String userUuId;
   //late final dynamic currentUser;
 
   final _formKey = GlobalKey<FormBuilderState>();
   //final List<String>? _allowedExtensions = ['png', 'pdf'];
 
-  late dynamic userId = "111";
+  late dynamic userId = uuid;
   late dynamic login = "test@mail.ru";
   late dynamic username;
   late dynamic email = 'test@test';
@@ -75,10 +169,15 @@ class SuccessPayment extends StatelessWidget {
   late dynamic birthday;
   late dynamic type;
   late dynamic carname;
+  late String path = "assets/images/avatar.png";
+
   // late final dynamic token = '12345678';
   // late final dynamic renewalToken = '12345678';
   // late final dynamic photo = new ApiImage(imageUrl: 'assets/images/avatar.png', id: '1');
-  late final dynamic photo = ('assets/images/avatar.png');
+  //late dynamic photo = ('assets/images/avatar.png');
+  //late XFile? photo;
+
+  late List<dynamic> photo;
   // late final dynamic cars = new ApiImage (
   //     imageUrl: 'assets/images/cadillac-eldorado.png', id: '2');
   // late final cars = Cars ();
@@ -119,11 +218,48 @@ class SuccessPayment extends StatelessWidget {
 
     // print('after');
     print('load');
+    print('state success payment');
+    // print(userId);
+    // print(uuid);
+    //XFile? file;
     // print(userId);
     // print(this.currentUser);
     // print('after2');
+    // Future<String> getApplicationDirectoryPath() async {
+    //   Directory appDocDir = await getApplicationDocumentsDirectory();
+    //   var appDocPath = appDocDir.path;
+    //   print('appDocPath');
+    //   print(appDocPath);
+    //   return appDocPath;
+    // }
 
 
+//     Future _getImage(path, fileName) async {
+//       Directory appDocDir = await getApplicationDocumentsDirectory();
+//       var appDocPath = appDocDir.path;
+//       print('appDocPath');
+//       print(appDocPath);
+//       // final picker = ImagePicker();
+//       //
+//       // final pickedFile = await picker.pickImage(source: ImageSource.gallery);
+//
+//       // if (pickedFile == null) return;
+//
+//       // _image = File(pickedFile.path);
+//       var image = File(path);
+//
+//       //final fileName = 'background_image';
+//       final File localImage = await image.copy('$appDocPath/$fileName');
+//
+// print('localImage');
+//       print(localImage);
+//     }
+
+
+
+
+
+    //var path;
     return MaterialApp(
         theme: ThemeData(scaffoldBackgroundColor: const Color(0xFF181c33)),
         title: 'Cadillac',
@@ -177,7 +313,7 @@ class SuccessPayment extends StatelessWidget {
                                         children: [
                                           Container(
                                             width: 284,
-                                            margin: const EdgeInsets.only(
+                                            margin: const EdgeInsets.only(top: 70,
                                                 bottom: 58),
                                             child: const TitlePage(
                                                 title: 'успешная оплата!'),
@@ -267,7 +403,7 @@ class SuccessPayment extends StatelessWidget {
                                                             //     FormBuilderValidators.min(context, 8, errorText: 'Минимум 8 символа'),
                                                             //   ]),
                                                             keyboardType: TextInputType
-                                                                .text,
+                                                                .emailAddress,
                                                             onSaved: (value) =>
                                                             login = value!),
                                                         Container(
@@ -402,44 +538,75 @@ class SuccessPayment extends StatelessWidget {
                                                                                     .circular(
                                                                                     48))
                                                                         ),
+                                                                        // child: Column(
+                                                                        //   children: [
+                                                                        // file == null
+                                                                        // ? Text('Click floating button to pick some image')
+                                                                        //       : Image(image: XFileImage(file!)),
 
-                                                                        child: uploadImage(
-                                                                            maxImages: 1),
 
-                                                                        // child: FormBuilderImagePicker(
-                                                                        //   name: 'photo',
-                                                                        //   // previewHeight: 96,
-                                                                        //   // previewWidth: 96,
-                                                                        //   // previewMargin: EdgeInsets.symmetric(horizontal: 150),
-                                                                        //   previewHeight: 140,
-                                                                        //   previewWidth: 284,
-                                                                        //   previewMargin: EdgeInsets.only(bottom: 0),
-                                                                        //   iconColor: Colors.white,
-                                                                        //   decoration: const InputDecoration(
-                                                                        //     border: OutlineInputBorder(
-                                                                        //         borderSide: BorderSide.none,
-                                                                        //         borderRadius: BorderRadius.all(
-                                                                        //             Radius.circular(20)
-                                                                        //         )
-                                                                        //     ),
+                                                                        // MaterialButton(
+                                                                        //   onPressed: () async {
                                                                         //
-                                                                        //     // labelText: 'Загрузить фото',
-                                                                        //     // labelStyle: styleHelperText,
-                                                                        //   ),
-                                                                        //   maxImages: 1,
-                                                                        //   displayCustomType: (obj) =>
-                                                                        //   obj is ApiImage ? obj.imageUrl : obj,
-                                                                        //   initialValue: [
-                                                                        //     'https://images.pexels.com/photos/7078045/pexels-photo-7078045.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260',
-                                                                        //     const Text('this is an image\nas a widget !'),
-                                                                        //     ApiImage(
-                                                                        //       id: 'whatever',
-                                                                        //       imageUrl:
-                                                                        //       'https://images.pexels.com/photos/8311418/pexels-photo-8311418.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=750&w=1260',
-                                                                        //     ),
-                                                                        //   ],
-                                                                        //
+                                                                        //   },
+                                                                        //   ///tooltip: 'Pick Image',
+                                                                        //   child: Icon(Icons.add),
                                                                         // ),
+                                                                        //  ]
+
+                                                                        // child: uploadImage(
+                                                                        //
+                                                                        //     maxImages: 1),
+
+                                                                        child: FormBuilderImagePicker(
+                                                                          name: 'photo',
+                                                                          // previewHeight: 96,
+                                                                          // previewWidth: 96,
+                                                                          // previewMargin: EdgeInsets.symmetric(horizontal: 150),
+                                                                          previewHeight: 140,
+                                                                          previewWidth: 284,
+                                                                          previewMargin: EdgeInsets.only(bottom: 0),
+                                                                          iconColor: Colors.white,
+                                                                          decoration: const InputDecoration(
+                                                                            border: OutlineInputBorder(
+                                                                                borderSide: BorderSide.none,
+                                                                                borderRadius: BorderRadius.all(
+                                                                                    Radius.circular(20)
+                                                                                )
+                                                                            ),
+
+                                                                            // labelText: 'Загрузить фото',
+                                                                            // labelStyle: styleHelperText,
+                                                                          ),
+                                                                          maxImages: 1,
+                                                                          onSaved: (
+                                                                              value) =>
+                                                                          photo = value!,
+                                                                          //photo = value! as List?,
+                                                                          // {
+                                                                          //   //print(value?.path),
+                                                                          // // photo =
+                                                                          // // await ImagePicker().pickImage(source: ImageSource.gallery),
+                                                                          //   //setState(() => photo = value as XFile?),
+                                                                          // // print('photo?.path'),
+                                                                          // //   print(photo?.path),
+                                                                          //
+                                                                          //   //photo = value as XFile?
+                                                                          // },
+
+                                                                          // displayCustomType: (obj) =>
+                                                                          // obj is ApiImage ? obj.imageUrl : obj,
+                                                                          // initialValue: [
+                                                                          //   'https://images.pexels.com/photos/7078045/pexels-photo-7078045.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260',
+                                                                          //   const Text('this is an image\nas a widget !'),
+                                                                          //   ApiImage(
+                                                                          //     id: 'whatever',
+                                                                          //     imageUrl:
+                                                                          //     'https://images.pexels.com/photos/8311418/pexels-photo-8311418.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=750&w=1260',
+                                                                          //   ),
+                                                                          // ],
+
+                                                                        ),
 
                                                                       ),
 
@@ -691,7 +858,7 @@ class SuccessPayment extends StatelessWidget {
                                                                           onSaved: (
                                                                               value) =>
                                                                           carname =
-                                                                          value!,
+                                                                          value,
                                                                           // onChanged: _onChanged,
                                                                           // valueTransformer: (text) => num.tryParse(text),
                                                                           //
@@ -714,8 +881,8 @@ class SuccessPayment extends StatelessWidget {
                                                                         ),
                                                                       ),
 
-                                                                      uploadImage(
-                                                                          maxImages: 3),
+                                                                      // uploadImage(
+                                                                      //     maxImages: 3),
                                                                       // FormBuilderImagePicker(
                                                                       //   // fit: BoxFit.contain,
                                                                       //   name: 'cars',
@@ -749,17 +916,17 @@ class SuccessPayment extends StatelessWidget {
                                                                       //
                                                                       //   ),
                                                                       //   maxImages: 3,
-                                                                      //   displayCustomType: (obj) =>
-                                                                      //   obj is ApiImage ? obj.imageUrl : obj,
-                                                                      //   initialValue: [
-                                                                      //     'https://images.pexels.com/photos/7078045/pexels-photo-7078045.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260',
-                                                                      //     const Text('this is an image\nas a widget !'),
-                                                                      //     ApiImage(
-                                                                      //       id: 'whatever',
-                                                                      //       imageUrl:
-                                                                      //       'https://images.pexels.com/photos/8311418/pexels-photo-8311418.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=750&w=1260',
-                                                                      //     ),
-                                                                      //   ],
+                                                                      //   // displayCustomType: (obj) =>
+                                                                      //   // obj is ApiImage ? obj.imageUrl : obj,
+                                                                      //   // initialValue: [
+                                                                      //   //   'https://images.pexels.com/photos/7078045/pexels-photo-7078045.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260',
+                                                                      //   //   const Text('this is an image\nas a widget !'),
+                                                                      //   //   ApiImage(
+                                                                      //   //     id: 'whatever',
+                                                                      //   //     imageUrl:
+                                                                      //   //     'https://images.pexels.com/photos/8311418/pexels-photo-8311418.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=750&w=1260',
+                                                                      //   //   ),
+                                                                      //   // ],
                                                                       // ),
 
                                                                       Container(
@@ -816,15 +983,36 @@ class SuccessPayment extends StatelessWidget {
 
                                                                                 debugPrint(
                                                                                     'Valid success payment');
-                                                                                print(
-                                                                                    userId);
+
+                                                                                print(photo[0].path); //путь к картинке в кеше
+                                                                                print(photo[0].path.runtimeType);
+
+                                                                                path = await getpathImage(photo[0].path);
+
+                                                                                dynamic imageName = path.split('/');
+                                                                                print(imageName);
+                                                                                print(imageName.length);
+                                                                                print(imageName[imageName.length - 1]);
+                                                                                imageName = imageName[imageName.length - 1];
+
+                                                                                var bytes = utf8.encode(path);
+                                                                                var base64Path = base64.encode(bytes);
+                                                                                print('base64Path');
+                                                                                print(base64Path);
+
+                                                                                //_getImage(path, imageName);
+                                                                                // setState(() {
+                                                                                //   path: photo[0].path;
+                                                                                //
+                                                                                // });
+                                                                                //path = photo?.path;
                                                                                 print(
                                                                                     _formKey
                                                                                         .currentState
                                                                                         ?.fields
-                                                                                        .values
                                                                                 );
-                                                                                //photo =new ApiImage();
+
+                                                                                print(userId);
                                                                                 //final user = User(email: email, phone :phone);
                                                                                 dynamic currentUser = User(
                                                                                   id: '1',
@@ -836,7 +1024,8 @@ class SuccessPayment extends StatelessWidget {
                                                                                   login: login,
                                                                                   carname: carname,
                                                                                   // password: password,
-                                                                                  // photo: photo,
+                                                                                  // path: imageName,
+                                                                                  path: base64Path,
 
 
 
@@ -844,20 +1033,28 @@ class SuccessPayment extends StatelessWidget {
 
                                                                                 );
                                                                                 //currentUser = editUser(user);
-                                                                                editUser(
+                                                                                // editUser(
+                                                                                //     currentUser);
+
+
+                                                                                user = await editUser(
                                                                                     currentUser);
+
                                                                                 print(
                                                                                     'after editUser success');
+                                                                                print('state: $uuid');
+                                                                                //var userId;
+                                                                                //print(editUser.userId)
+                                                                                //print(editUser(currentUser));
+                                                                                //print(editUser(currentUser).userId);
 
+                                                                                //print(
+                                                                                    //"editUser: ${editUser.userId}");
+                                                                                dynamic id = uuid;
                                                                                 print(
-                                                                                    "currentUser: ${currentUser
-                                                                                        .email}");
-                                                                                // var id = currentUser
-                                                                                //     .userId;
-                                                                                // print(
-                                                                                //     "currentId: ${id}");
+                                                                                "currentId: ${id}");
+                                                                                userId = uuid;
                                                                                 // await contactsBox.put(userUuId, currentUser);
-
 
                                                                                 debugPrint(
                                                                                     _formKey
@@ -873,8 +1070,8 @@ class SuccessPayment extends StatelessWidget {
                                                                                     MaterialPageRoute(
                                                                                         builder: (
                                                                                             context) =>
-                                                                                            Account()
-                                                                                    ));
+                                                                                            Account(userId: userId))
+                                                                                    );
                                                                                 // Home());
 
                                                                               } else {
@@ -934,44 +1131,52 @@ class SuccessPayment extends StatelessWidget {
                                                                 )
                                                             )
 
-                                                        )
 
-                                                      ]
+
+                                                      //]
                                                   )
+                                               ]
                                               )
                                           )
-                                        ]
+
                                     )
+                                  ]
                                 )
                             ),
 
-
+                            )
                           ]
                       ),
 
             ),
+
             drawer: NavDrawer(),
         )
     );
   }
-
+getpathImage(url) async {
+    return url;
+}
 
   // Future<String> editUser() async {
     editUser(User user) async {
     print('func editUser success');
-    // print(user.login);
+    //print('user.userId');
+    //print(userId);
+    print(user.path);
     dynamic login = user.login;
     // dynamic password  = user.password;
     // dynamic photo = user.photo;
     dynamic username = user.username;
     dynamic birthday = user.birthday;
     dynamic carname = user.carname;
+    dynamic path = user.path;
     // dynamic cars = user.cars;
 
 
     String apiurl = baseUrl + "/test/edit.php";
     // String apiurl = "http://localhost/test/edit.php";
-    var response = await http.post(Uri.parse(apiurl), body:{'login': login, 'username': username, 'birthday': birthday, 'carname': carname,},headers: {'Accept':'application/json, charset=utf-8',"Access-Control-Allow-Origin": "*",
+    var response = await http.post(Uri.parse(apiurl), body:{'userId': uuid,'login': login, 'username': username, 'birthday': birthday, 'carname': carname, 'path': path},headers: {'Accept':'application/json, charset=utf-8',"Access-Control-Allow-Origin": "*",
       "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS"});
 
     // var response = await http.post(Uri.parse(apiurl), headers: {'Accept':'application/json, charset=utf-8',"Access-Control-Allow-Origin": "*",
@@ -985,6 +1190,12 @@ class SuccessPayment extends StatelessWidget {
     // print(User.fromJson(jsonDecode(response.body)));
     if(response.statusCode == 200){
       print('success success-payment');
+
+
+
+      var cookie = response.headers['set-cookie'];
+      print('cookie: $cookie');
+      print(path);
       // var uuid = const Uuid();
       // id = uuid.v1();
       print(response.body);
@@ -994,7 +1205,21 @@ class SuccessPayment extends StatelessWidget {
       //final userJson = response.body;
       print('userJson success');
       print(userJson);
+      var data = User.fromJson(userJson);
+      print('data.userId');
+      print(data.userId);
+      setState(() {
+        uuid = data.userId;
+      });
+      // if (mounted && userId != null) {
+      //   setState(() {
+      //     uuid = data.userId;
+      //   });
+      // }
+      //getCookie(data.userId);
+      //return(data);
       return User.fromJson(userJson);
+
       // return User.fromJson(jsonDecode(response.body));
       // setState(() {
       //   showprogress = false; //don't show progress indicator
@@ -1007,6 +1232,31 @@ class SuccessPayment extends StatelessWidget {
     }
 
   }
+}
+
+getCookie(cookie) async {
+  print('get cookie');
+  var dio = Dio();
+  //dynamic cookies = {"uuid", cookie};
+  //var cookies = html.window.document.cookie;
+
+  // List<Cookie> cookies = [
+  //   new Cookie("uuid", cookie),
+  //   // ....
+  // ];
+
+
+  // var cookieJar = PersistCookieJar();
+  // dio.interceptors.add(CookieManager(cookieJar));
+  // //Save cookies
+  // cookieJar.saveFromResponse(Uri.parse(baseUrl), cookies);
+  //
+  // //Get cookies
+  // cookieJar.loadForRequest(Uri.parse(baseUrl));
+  // print(cookieJar.loadForRequest(Uri.parse(baseUrl)));
+
+  //print(cookies);
+  // await dio.get(baseUrl);
 }
 
 

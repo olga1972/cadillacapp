@@ -200,6 +200,7 @@ class _HomeState extends State<Home> {
           appBar: AppBar(
             backgroundColor: const Color(0xFF181c33),
             shadowColor: Colors.transparent,
+            elevation: 0.0,
             leading: Builder(
               builder: (BuildContext context) {
                 return IconButton(

@@ -52,6 +52,7 @@ class Partners extends StatelessWidget {
           appBar: AppBar(
             backgroundColor: const Color(0xFF181c33),
             shadowColor: Colors.transparent,
+            elevation: 0.0,
             leading: Builder(
               builder: (BuildContext context) {
                 return IconButton(
@@ -89,7 +90,7 @@ class Partners extends StatelessWidget {
                         ),
                         Container (
                             width: 284,
-                            height: 680,
+                            height: 760,
                             child: ListView.builder (
                                 // scrollDirection: Axis.vertical,
                                 // shrinkWrap: true,

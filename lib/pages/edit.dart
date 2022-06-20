@@ -27,8 +27,11 @@ import 'package:flutter_svg/svg.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:form_builder_image_picker/form_builder_image_picker.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:form_builder_asset_picker/form_builder_asset_picker.dart';
+
+import 'package:image_picker/image_picker.dart';
 
 import 'package:url_launcher/link.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -52,10 +55,37 @@ import 'contacts.dart';
 import 'members.dart';
 import 'news.dart';
 
-class Edit extends StatelessWidget {
+
+enum ImageSourceType { gallery, camera }
+
+class Edit extends StatefulWidget {
 
   Edit({Key? key} ) : super(key: key);
+  @override
+  State<Edit> createState() => _EditState();
+}
 
+class _EditState extends State<Edit> {
+
+  @override
+  initState()  {
+    print('init state edit');
+    super.initState();
+
+    // final file =
+    //     await ImagePicker().pickImage(source: ImageSource.gallery);
+    // setState(() => this.file = file);
+    //officesList = getOfficesList();
+    //officesList = readJson();
+    // usersList = getUsersList();
+    //usersList = readJson();
+    //print(usersList);
+    // setState(() {
+    //   _items = data["items"];
+    // });
+  }
+
+  //XFile? file;
   //final String userUuId;
   //late final dynamic currentUser;
 
@@ -63,6 +93,7 @@ class Edit extends StatelessWidget {
 
 
   late dynamic userId ='111';
+  late String path;
 
   late dynamic username;
   late dynamic email = 'test@test';
@@ -72,10 +103,12 @@ class Edit extends StatelessWidget {
   late dynamic birthday;
   late dynamic type;
   late dynamic carname;
+  //late String path;
   // late final dynamic token = '12345678';
   // late final dynamic renewalToken = '12345678';
   // late final dynamic photo = new ApiImage(imageUrl: 'assets/images/avatar.png', id: '1');
-  late final dynamic photo = ('assets/images/avatar.png');
+  // late XFile? photo;
+  late List<dynamic> photo;
   // late final dynamic cars = new ApiImage (
   //     imageUrl: 'assets/images/cadillac-eldorado.png', id: '2');
   // late final cars = Cars ();
@@ -114,7 +147,7 @@ class Edit extends StatelessWidget {
     // currentUser = editUser();
 
     // print('after');
-    print('load');
+    print('load edit');
     // print(userId);
     // print(this.currentUser);
     // print('after2');
@@ -230,7 +263,7 @@ class Edit extends StatelessWidget {
                                                   //     FormBuilderValidators.max(context, 10, errorText: 'Максимум 20 символов'),
                                                   //     FormBuilderValidators.min(context, 8, errorText: 'Минимум 8 символа'),
                                                   //   ]),
-                                                  keyboardType: TextInputType.text,
+                                                  keyboardType: TextInputType.emailAddress,
                                                   onSaved: (value) => login = value!),
                                               Container(
                                                 width: 284,
@@ -325,42 +358,46 @@ class Edit extends StatelessWidget {
                                                                   borderRadius: BorderRadius.all(Radius.circular(48))
                                                               ),
 
-                                                              child: uploadImage(maxImages: 1),
+                                                              // child: uploadImage(maxImages: 1),
 
-                                                              // child: FormBuilderImagePicker(
-                                                              //   name: 'photo',
-                                                              //   // previewHeight: 96,
-                                                              //   // previewWidth: 96,
-                                                              //   // previewMargin: EdgeInsets.symmetric(horizontal: 150),
-                                                              //   previewHeight: 140,
-                                                              //   previewWidth: 284,
-                                                              //   previewMargin: EdgeInsets.only(bottom: 0),
-                                                              //   iconColor: Colors.white,
-                                                              //   decoration: const InputDecoration(
-                                                              //     border: OutlineInputBorder(
-                                                              //         borderSide: BorderSide.none,
-                                                              //         borderRadius: BorderRadius.all(
-                                                              //             Radius.circular(20)
-                                                              //         )
-                                                              //     ),
-                                                              //
-                                                              //     // labelText: 'Загрузить фото',
-                                                              //     // labelStyle: styleHelperText,
-                                                              //   ),
-                                                              //   maxImages: 1,
-                                                              //   displayCustomType: (obj) =>
-                                                              //   obj is ApiImage ? obj.imageUrl : obj,
-                                                              //   initialValue: [
-                                                              //     'https://images.pexels.com/photos/7078045/pexels-photo-7078045.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260',
-                                                              //     const Text('this is an image\nas a widget !'),
-                                                              //     ApiImage(
-                                                              //       id: 'whatever',
-                                                              //       imageUrl:
-                                                              //       'https://images.pexels.com/photos/8311418/pexels-photo-8311418.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=750&w=1260',
-                                                              //     ),
-                                                              //   ],
-                                                              //
-                                                              // ),
+                                                              child: FormBuilderImagePicker(
+                                                                name: 'photo',
+                                                                // previewHeight: 96,
+                                                                // previewWidth: 96,
+                                                                // previewMargin: EdgeInsets.symmetric(horizontal: 150),
+                                                                previewHeight: 140,
+                                                                previewWidth: 284,
+                                                                previewMargin: EdgeInsets.only(bottom: 0),
+                                                                iconColor: Colors.white,
+                                                                decoration: const InputDecoration(
+                                                                  border: OutlineInputBorder(
+                                                                      borderSide: BorderSide.none,
+                                                                      borderRadius: BorderRadius.all(
+                                                                          Radius.circular(20)
+                                                                      )
+                                                                  ),
+
+                                                                  // labelText: 'Загрузить фото',
+                                                                  // labelStyle: styleHelperText,
+                                                                ),
+                                                                maxImages: 1,
+                                                                onSaved: (
+                                                                    value) =>
+                                                                //photo = value! as XFile?,
+                                                                photo = value!,
+                                                                // displayCustomType: (obj) =>
+                                                                // obj is ApiImage ? obj.imageUrl : obj,
+                                                                // initialValue: [
+                                                                //   'https://images.pexels.com/photos/7078045/pexels-photo-7078045.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260',
+                                                                //   const Text('this is an image\nas a widget !'),
+                                                                //   ApiImage(
+                                                                //     id: 'whatever',
+                                                                //     imageUrl:
+                                                                //     'https://images.pexels.com/photos/8311418/pexels-photo-8311418.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=750&w=1260',
+                                                                //   ),
+                                                                // ],
+
+                                                              ),
 
                                                             ),
 
@@ -578,7 +615,7 @@ class Edit extends StatelessWidget {
                                                               ),
                                                             ),
 
-                                                            uploadImage(maxImages: 3),
+                                                            //uploadImage(maxImages: 3),
                                                             // FormBuilderImagePicker(
                                                             //   // fit: BoxFit.contain,
                                                             //   name: 'cars',
@@ -677,6 +714,9 @@ class Edit extends StatelessWidget {
                                                                       print(_formKey
                                                                           .currentState?.fields.values
                                                                       );
+                                                                      setState(() {
+                                                                        path: photo[0].path;
+                                                                      });
                                                                       //photo =new ApiImage();
                                                                       //final user = User(email: email, phone :phone);
                                                                       dynamic currentUser = User(
@@ -684,12 +724,13 @@ class Edit extends StatelessWidget {
                                                                         userId: userId,
                                                                         login: login,
                                                                         // password: password,
-                                                                        // photo: photo,
+                                                                        //photo: photo,
                                                                         username: username,
                                                                         birthday: birthday,
                                                                         carname: carname,
                                                                         phone: phone,
                                                                         email: email,
+                                                                        path: path,
                                                                         // cars: (cars),
 
                                                                       );
@@ -842,28 +883,60 @@ Future confirmDialog(BuildContext context) async {
     barrierDismissible: false, // user must tap button for close dialog!
     builder: (BuildContext context) {
       return AlertDialog(
-        title: Text('Подтвердите изменение ваших данных'),
-        content: Text('Хочу изменить свои данные'),
+        // title: Text('Подтвердите ваш заказ'),
+        content: Text('Изменить данные?'.toUpperCase(),
+          textAlign: TextAlign.center,
+          style: styleTextAlertDialog,
+        ),
         actions: <Widget>[
-          MaterialButton(
-            child: Text('Отмена'),
-            onPressed: () {
-              Navigator.of(context).pop();
-            },
-          ),
-          MaterialButton(
-            child: Text('Ок'),
-            onPressed: () {
-              Navigator
-                  .pushReplacement(
-                  context,
-                  MaterialPageRoute(
-                      builder: (
-                          context) =>
-                          Account()
-                  ));
-            },
+          Container (
+              padding: EdgeInsets.only(left: 20, right: 20, bottom: 20),
+              child: Row (
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    MaterialButton(
+                      padding: const EdgeInsets.all(14),
+                      color: Color(0xFFE4E6FF),
+                      elevation: 0,
+                      shape: const RoundedRectangleBorder(
+                        side: BorderSide.none,
+                        borderRadius: BorderRadius.all(Radius.circular(10),
+                        ),),
+                      child: Text(
+                        'Да'.toUpperCase(),
+                        textAlign: TextAlign.left,
+                        style: styleTextAlertDialog,
+                      ),
+                      onPressed: () {
+                        var userId;
+                        Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => Account(userId: userId)));
+                      },
+                    ),
+                    MaterialButton(
+                      padding: const EdgeInsets.all(14),
+                      color: Color(0xFFE4E6FF),
+                      elevation: 0,
+                      shape: const RoundedRectangleBorder(
+                        side: BorderSide.none,
+                        borderRadius: BorderRadius.all(Radius.circular(10),
+                        ),),
+                      child: Text(
+                        'Нет'.toUpperCase(),
+                        textAlign: TextAlign.left,
+                        style: styleTextAlertDialog,
+                      ),
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                      },
+                    )
+                  ]
+              )
           )
+
+
         ],
       );
     },

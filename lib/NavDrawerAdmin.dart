@@ -1,3 +1,7 @@
+import 'package:cadillac/pages/homeAdmin.dart';
+import 'package:cadillac/pages/membersAdmin.dart';
+import 'package:cadillac/pages/partnersAdmin.dart';
+import 'package:cadillac/pages/shopAdmin.dart';
 import 'package:cadillac/pages/test.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -26,23 +30,23 @@ import 'models/users.dart';
 //     semanticsLabel: 'Acme Logo'
 // );
 
-class NavDrawer extends StatefulWidget {
+class NavDrawerAdmin extends StatefulWidget {
   //final currentUser = User();
-final userId;
+  final userId;
   //const NavDrawer({Key? key, this.currentUser}) : super(key: key);
-  NavDrawer({Key? key, this.userId,}) : super(key: key);
+  NavDrawerAdmin({Key? key, this.userId,}) : super(key: key);
 
   @override
-  _NavDrawerState createState() => _NavDrawerState();
+  _NavDrawerAdminState createState() => _NavDrawerAdminState();
 }
 
-class _NavDrawerState extends State<NavDrawer> {
-  Widget mainWidget = Home();
+class _NavDrawerAdminState extends State<NavDrawerAdmin> {
+  Widget mainWidget = HomeAdmin();
 
-  final List<String> menuUser = ["главная", "мой аккаунт", "члены автоклуба", "клубные новости", "клубная атрибутика и одежда", "партнеры", "контакты"];
+
   final List<String> menuAdmin = ["главная", "аккаунт члена клуба", "члены автоклуба", "клубные новости", "клубная атрибутика и одежда", "партнеры"];
-  final List<String> icons = ["home.svg", "account.svg", "members.svg", "news.svg", "clubwear.svg", "partners.svg", "contacts.svg", "contacts.svg"];
-  final List<Widget> pages = [Home(), Account(userId: null,), Members(), News(), Shop(), Partners(), Contacts()];
+  final List<String> icons = ["home.svg", "account.svg", "members.svg", "news.svg", "clubwear.svg", "partners.svg"];
+  final List<Widget> pages = [HomeAdmin(), Account(userId: null,), MembersAdmin(), News(), ShopAdmin(), PartnersAdmin()];
 
   static get userId => null;
 
@@ -72,7 +76,7 @@ class _NavDrawerState extends State<NavDrawer> {
                   spreadRadius: 0.0,
                 ),
                 BoxShadow(
-                  color: Color(0xFF181c33),
+                  color: Color(0xFF2C335E),
                   offset: Offset(-2.0, -2.0),
                   blurRadius: 0.0,
                   spreadRadius: 0.0,
@@ -83,7 +87,7 @@ class _NavDrawerState extends State<NavDrawer> {
             child: ListView.builder (
 
               padding: const EdgeInsets.only(top: 30, bottom: 10, left: 60, right: 10),
-              itemCount: menuUser.length,
+              itemCount: menuAdmin.length,
               itemBuilder: (BuildContext context, int index) {
                 if (index == 0) {
                   return Column (
@@ -99,7 +103,7 @@ class _NavDrawerState extends State<NavDrawer> {
                           ),
                         ),
                         ListTile (
-                            title: Text(menuUser[index].toUpperCase(),
+                            title: Text(menuAdmin[index].toUpperCase(),
                                 style: const TextStyle(
                                   fontSize: 14.0,
                                   fontWeight: FontWeight.normal,
@@ -135,7 +139,7 @@ class _NavDrawerState extends State<NavDrawer> {
                 }
 
                 return ListTile(
-                    title: Text(menuUser[index].toUpperCase(),
+                    title: Text(menuAdmin[index].toUpperCase(),
                         style: const TextStyle(
                           fontSize: 14.0,
                           fontWeight: FontWeight.normal,
@@ -155,8 +159,7 @@ class _NavDrawerState extends State<NavDrawer> {
                       // What happens after you tap the navigation item
 
                       print('path');
-                      print(menuUser[index]);
-
+                      print(menuAdmin[index]);
 
                       setState(() {
                         mainWidget = pages[index];

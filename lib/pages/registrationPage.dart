@@ -1,14 +1,22 @@
+// import 'package:flutter_bloc/flutter_bloc.dart';
 
+//import 'package:http/http.dart' as html;
+
+import 'dart:io';
 
 import 'package:cadillac/main.dart';
+import 'package:cadillac/pages/homeAdmin.dart';
 import 'package:cadillac/pages/partners.dart';
 import 'package:cadillac/pages/shop.dart';
 import 'package:cadillac/pages/success-payment.dart';
 // import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:image_picker/image_picker.dart';
 
 import 'package:path_provider/path_provider.dart';
+
+
 // import 'package:dio/dio.dart';
 // import 'package:dio_cookie_manager/dio_cookie_manager.dart';
 // import 'package:cookie_jar/cookie_jar.dart';
@@ -71,13 +79,34 @@ import 'home.dart';
 import 'members.dart';
 import 'news.dart';
 
-class RegistrationPage extends StatelessWidget {
+var uuid = '';
 
+class RegistrationPage extends StatefulWidget {
   RegistrationPage({Key? key, }) : super(key: key);
+
+  @override
+  State<RegistrationPage> createState() => _RegistrationPageState();
+}
+
+class _RegistrationPageState extends State<RegistrationPage> {
+
+
+  @override
+  void initState() {
+    super.initState();
+
+    setState(() {
+      uuid = '';
+    });
+
+
+  }
+
+
   final _formKey = GlobalKey<FormBuilderState>();
   final _emailController = TextEditingController();
 
-  late dynamic userId = 'rgrr';
+  late dynamic userId;
   late dynamic login;
   late dynamic name = 'ewrew';
   late dynamic email =' dgferger';
@@ -85,11 +114,12 @@ class RegistrationPage extends StatelessWidget {
   final dynamic password ='123';
   final dynamic birthday = '111';
   late dynamic carname = 'carname';
+  //late String path = "assets/images/avatar.png";
   // late dynamic type;
   // final dynamic token = '1111';
   // final dynamic renewalToken = '11111';
 
-  late final dynamic photo = 'assets/images/avatar.png';
+  //XFile? photo = ImagePicker().pickImage(source: ImageSource.gallery) as XFile?;
   /*late final dynamic cars = const [ 'assets/images/cadillac-eldorado.png',
     "assets/images/cadillac-escalada.png",
     "assets/images/cadillac-orange.png",
@@ -109,6 +139,9 @@ class RegistrationPage extends StatelessWidget {
   dynamic newUser;
   dynamic user;
 
+  //final directory = getApplicationDocumentsDirectory();
+
+
   //User newUser = User(); нужен только импорт модели юзер
   //User newUser = User();
 
@@ -127,6 +160,7 @@ class RegistrationPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
     //currentUser = addUser();
     //print(currentUser);
     //getCookie();
@@ -150,15 +184,15 @@ class RegistrationPage extends StatelessWidget {
 
       routes: {
         '/home': (context) => Home(),
-        // '/home': (context) => RegistrationPage(),
-        '/account': (context) => Account(),
+        '/homeAdmin': (context) => HomeAdmin(),
+        '/account': (context) => Account(userId: userId),
           // '/members': (context) => Members(),
           // '/news': (context) => const News(),
           '/shop': (context) => Shop(),
           '/partners': (context) => Partners(),
           '/contacts': (context) => Contacts(),
           // '/success_payment': (context) => SuccessPayment(currentUser: currentUser),
-        '/success_payment': (context) => SuccessPayment()
+        '/success_payment': (context) => SuccessPayment(userId: userId)
       },
       home: Scaffold(
         body: Center (
@@ -333,7 +367,7 @@ class RegistrationPage extends StatelessWidget {
                                         borderRadius: BorderRadius.all(Radius.circular(10),
                                         ),
                                       ),
-                                      onPressed: () {
+                                      onPressed: () async {
                                         debugPrint('onPressed');
                                         if (_formKey.currentState?.saveAndValidate() ?? false) {
                                           if (true) {
@@ -361,28 +395,43 @@ class RegistrationPage extends StatelessWidget {
                                               birthday: 'birthday',
                                               login: email,
                                               carname: carname,
+                                              path: 'path'
+                                              //photo: null,
                                               // password: 'password',
                                               // login: email
                                           );
 
 
 
-                                          currentUser = addUser(user);
+                                          currentUser = await addUser(user);
                                           //newUser = addUser();
                                           //print(currentUser.getUser());
                                       //addUser(user);
                                           debugPrint('after addUser registr');
-                                          print('userId: $userId');
+                                          print('state: $uuid');
+                                          print(currentUser.userId);
 
                                           // Navigator.of(context).pop();
-                                          Navigator.pushReplacement(
-                                              context, MaterialPageRoute(
-                                            builder: (context) =>
-                                            SuccessPayment()
-                                            // SuccessPayment(
-                                            //     currentUser: user),
-                                          )
-                                          );
+                                          if(currentUser.email == 'admin@admin')  {
+                                            Navigator.pushReplacement(
+                                                context, MaterialPageRoute(
+                                                builder: (context) =>
+                                                    HomeAdmin()
+                                              // SuccessPayment(
+                                              //     currentUser: user),
+                                            )
+                                            );
+                                          } else {
+                                            Navigator.pushReplacement(
+                                                context, MaterialPageRoute(
+                                                builder: (context) =>
+                                                    SuccessPayment(userId: uuid)
+                                              // SuccessPayment(
+                                              //     currentUser: user),
+                                            )
+                                            );
+                                          }
+
 
                                         } else {
                                           debugPrint('Invalid');
@@ -484,33 +533,49 @@ class RegistrationPage extends StatelessWidget {
     // print(id);
     dynamic phone = user.phone;
     dynamic email = user.email;
-    dynamic userId = user.userId;
+    //dynamic path = user.path;
+    //(path);
+    //dynamic userId = user.userId;
 
 
     String apiurl = baseUrl + "/test/create.php";
-    // String apiurl = "http://localhost/test/create.php";
+    //print(baseUrl + "/test/create.php");
+    //String apiurl = "http://localhost/test/create.php";
     // var response = await http.post(Uri.parse(apiurl),body:{'userId': userId,'phone': phone,'email': email});
     var response = await http.post(Uri.parse(apiurl), headers: {'Accept':'application/json, charset=utf-8',"Access-Control-Allow-Origin": "*",
-    "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS"}, body:{'phone': phone,'email': email});
+    "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS"}, body:{'path': 'path', 'phone': phone,'email': email});
 
     // final response = await http.post(Uri.parse(apiurl));
     //print(User.fromJson(jsonDecode(response.body)));
 
     if(response.statusCode == 200){
         print('success registr code');
+        var cookie = response.headers['set-cookie'];
+        print('cookie: $cookie');
+        List<String>? cookiesList = cookie?.split(';');
+        cookiesList?.forEach((i)=>print(i.toLowerCase().trim()));
+        userId = cookiesList?[0].split('=')[1];
+        print('userId: ${this.userId}');
+
+        if (mounted && userId != null) {
+          setState(() {
+            uuid = userId;
+          });
+        }
 
         // var uuid = const Uuid();
         // var id = uuid.v1();
         print(response.statusCode);
-
+        print(response.body);
+        print(json.decode(response.body));
         final userJson = json.decode(response.body);
         //final userJson = response.body;
         print('userJson registr');
-        print(userJson);
+        // print(userJson);
 
-
-        return User.fromJson(userJson);
-
+        dynamic data = User.fromJson(userJson);
+        // return User.fromJson(userJson);
+        return data;
 
         //return response.body; //это правильно
         //return User.fromJson(currentUser); // error
@@ -557,6 +622,7 @@ class RegistrationPage extends StatelessWidget {
 
   void _onChanged() {
   }
+
 }
 
 downLoadApp() async {

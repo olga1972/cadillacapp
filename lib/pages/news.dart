@@ -41,8 +41,9 @@ class News extends StatelessWidget {
 
         home: Scaffold(
           appBar: AppBar(
-            backgroundColor: const Color(0xFF181c33),
+            backgroundColor: const Color(0xFF2C335E),
             shadowColor: Colors.transparent,
+            elevation: 0.0,
             leading: Builder(
               builder: (BuildContext context) {
                 return IconButton(
@@ -88,16 +89,21 @@ class News extends StatelessWidget {
                                                   children: [
                                                     Container(
                                                       margin: const EdgeInsets.only(bottom: 10),
-                                                      child: const Text('14 апреля 2022',
-                                                          textAlign: TextAlign.left,
-                                                          style: TextStyle(
-                                                            fontSize: 32.0,
-                                                            fontWeight: FontWeight.normal,
-                                                            fontFamily: 'CadillacSans',
-                                                            color: Color(0xFF8F97BF),
-                                                            height: 1.7, //line-height / font-size
-                                                          )
-                                                      ),
+                                                      child: Row(
+                                                        children: [
+                                                          const Text('14 апреля 2022',
+                                                              textAlign: TextAlign.left,
+                                                              style: TextStyle(
+                                                                fontSize: 32.0,
+                                                                fontWeight: FontWeight.normal,
+                                                                fontFamily: 'CadillacSans',
+                                                                color: Color(0xFF8F97BF),
+                                                                height: 1.7, //line-height / font-size
+                                                              )
+                                                          ),
+
+                                                        ]
+                                                      )
                                                     ),
                                                     Text.rich(
                                                       TextSpan (

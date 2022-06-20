@@ -56,7 +56,7 @@ class Socials extends StatelessWidget {
 
                       IconButton(
                         iconSize: 27.0,
-                        icon: SvgPicture.network('assets/images/whatsapp.svg',
+                        icon: SvgPicture.asset('assets/images/whatsapp.svg',
                           semanticsLabel: 'Icon whatsapp',
                           height: 27.0,
                           width: 27.0,
@@ -88,7 +88,7 @@ class Socials extends StatelessWidget {
 
                   IconButton(
                     iconSize: 27.0,
-                    icon: SvgPicture.network('assets/images/vk.svg',
+                    icon: SvgPicture.asset('assets/images/vk.svg',
                       semanticsLabel: 'Icon whatsapp',
                       height: 27.0,
                       width: 31.0,
@@ -117,7 +117,7 @@ class Socials extends StatelessWidget {
 
                   IconButton(
                     iconSize: 27.0,
-                    icon: SvgPicture.network('assets/images/instagram.svg',
+                    icon: SvgPicture.asset('assets/images/instagram.svg',
                       semanticsLabel: 'Icon whatsapp',
                       height: 27.0,
                       width: 27.0,
@@ -145,7 +145,7 @@ class Socials extends StatelessWidget {
 
                   IconButton(
                     iconSize: 28.0,
-                    icon: SvgPicture.network('assets/images/telegram.svg',
+                    icon: SvgPicture.asset('assets/images/telegram.svg',
                       semanticsLabel: 'Icon telegram',
                       height: 28.0,
                       width: 28.0,

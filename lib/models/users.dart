@@ -1,7 +1,9 @@
 import 'dart:convert';
 
 import 'package:flutter/services.dart';
+import 'package:form_builder_image_picker/form_builder_image_picker.dart';
 import 'package:http/http.dart' as http;
+import 'package:image_picker/image_picker.dart';
 
 class UsersList {
   List<User> users;
@@ -36,6 +38,8 @@ class User {
   late final String birthday;
   late final String login;
   late final String carname;
+  late final String path;
+  //late final XFile? photo;
 
   User({
     required this.id,
@@ -46,6 +50,8 @@ class User {
     required this.birthday,
     required this.login,
     required this.carname,
+    required this.path
+    //this.photo,
   });
 
   factory User.fromJson(Map<String, dynamic> json) {
@@ -57,7 +63,9 @@ class User {
       phone: json['phone'] as String,
       birthday: json['birthday'] as String,
       login: json['login'] as String,
-      carname: json['carname'] as String
+      carname: json['carname'] as String,
+      path: json['path'] as String,
+      //XFileImage(file!)photo: json['photo'] as XFile
     );
   }
 
@@ -88,6 +96,7 @@ class User {
     data['login'] = this.login;
     // data['password'] = this.password;
     data['carname'] = this.carname;
+    data['path'] = this.path;
     return data;
   }
 }

@@ -11,20 +11,28 @@
 // import 'package:build_runner/build_runner.dart';
 // import 'package:sqflite/sqflite.dart';
 import 'package:cadillac/pages/account.dart';
+import 'package:cadillac/pages/addNews.dart';
 import 'package:cadillac/pages/cardProduct.dart';
+import 'package:cadillac/pages/cardProductAdmin.dart';
 import 'package:cadillac/pages/contacts.dart';
 import 'package:cadillac/pages/edit.dart';
 import 'package:cadillac/pages/home.dart';
+import 'package:cadillac/pages/homeAdmin.dart';
 
 import 'package:cadillac/pages/members.dart';
+import 'package:cadillac/pages/membersAdmin.dart';
 import 'package:cadillac/pages/news.dart';
+import 'package:cadillac/pages/newsAdmin.dart';
 import 'package:cadillac/pages/partners.dart';
+import 'package:cadillac/pages/partnersAdmin.dart';
 import 'package:cadillac/pages/shop.dart';
+import 'package:cadillac/pages/shopAdmin.dart';
 import 'package:cadillac/pages/success-payment.dart';
 import 'package:cadillac/pages/test.dart';
 import 'package:cadillac/variables.dart';
 
 import 'package:flutter/material.dart';
+//import 'package:http/browser_client.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'dart:async';
@@ -57,7 +65,6 @@ import 'package:cadillac/pages/registrationPage.dart';
 import 'package:cadillac/NavDrawer.dart';
 
 Future<void> main() async {
-
   runApp(MyApp());
 
 
@@ -96,34 +103,39 @@ class MyApp extends StatelessWidget {
   //final currentUser;
 
   MyApp({Key? key,}) : super(key: key);
-  final currentUser = User(
-      id: '1',
-      userId: '1111',
-      email: 'olga.sadyreva@mail.ru',
-      phone: '9221238853',
-      username: 'Olga',
-      birthday: '19.04.1972',
-      login: 'olga.sadyreva@mail.ru',
-
-      // password: '11111',
-      carname: 'wwww',
-      // login: 'wwwww'
-      );
+  // final currentUser = User(
+  //     id: '1',
+  //     userId: '1111',
+  //     email: 'olga.sadyreva@mail.ru',
+  //     phone: '9221238853',
+  //     username: 'Olga',
+  //     birthday: '19.04.1972',
+  //     login: 'olga.sadyreva@mail.ru',
+  //     photo: '',
+  //     // password: '11111',
+  //     carname: 'wwww',
+  //     // login: 'wwwww'
+  //     );
 
   get userId => null;
   //get currentUser => null;
   late String cookies;
 
+
   @override
   Widget build(BuildContext context) {
+
+    //при сборке под web ошибка
     // if (IO.Platform.isAndroid) {
-    //   // Android-specific code/UI Component
+    //   print('android');
     // } else if (IO.Platform.isIOS) {
-    //   // iOS-specific code/UI Component
+    //   print('ios');
     // } else {
-    //   // cookies = html.window.document.cookie!;
-    //   // print(cookies);
-    // }
+    //   print('windows');
+
+      // cookies = html.window.document.cookie!;
+      // print(cookies);
+    //}
 
     return MaterialApp(
       theme: ThemeData (
@@ -137,14 +149,17 @@ class MyApp extends StatelessWidget {
 
       routes: {
         '/home': (context) => RegistrationPage(),
+        //'/home': (context) => Account(userId:userId),
+        '/homeAdmin': (context) => HomeAdmin(),
         //'/home': (context) => SuccessPayment(),
         // '/home': (context) => cookies != null && cookies != '' ? Account() : RegistrationPage(),
         //'/home': (context) => Shop(),
         //'/home': (context) => Test(),
         //'/home': (context) => Contacts(),
-        //'/home': (context) => Account(),
+        //'/home': (context) => Account(userId:userId),
         //'/home': (context) => Home(),
-        '/account': (context) => Account(),
+        //'/home': (context) => Members(),
+        '/account': (context) => Account(userId:userId),
         '/members': (context) => Members(),
         '/news': (context) => News(),
         '/shop': (context) => Shop(),
@@ -265,11 +280,18 @@ class _MyHomePageState extends State<MyHomePage> {
         //
         // ),
 
-        drawer: NavDrawer(),
+        //drawer: NavDrawer(),
+
 
     );
   }
-
+  // Future<String> getTestString() async {
+  //   if (_client is BrowserClient)
+  //     (_client as BrowserClient).withCredentials = true;
+  //   await _client.get('https://localhost/api/login');
+  //   await _client.get('https://localhost/api/login');
+  //   return 'blah';
+  // }
   // Future<UsersList> getUsersList() async {
   //   // const url = 'https://about.google/static/data/locations.json';
   //   // const url = 'http://localhost/test/users_list.php';
@@ -299,6 +321,8 @@ class _MyHomePageState extends State<MyHomePage> {
   //   }
   // }
 }
+
+
 
 
 

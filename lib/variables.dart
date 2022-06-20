@@ -38,5 +38,18 @@ const stylePlaceHolderText = TextStyle(
   height: 1.5, //line-height : font-size
 );
 
-const baseUrl = 'http://localhost';
-// const baseUrl = 'https://cadillacapp.ru';
+const styleButtonAlertDialog = TextStyle(
+  fontSize: 16.0,
+  fontWeight: FontWeight.normal,
+  fontFamily: 'CadillacSans',
+  color: Color(0xFFE4E6FF),
+);
+
+const styleTextAlertDialog = TextStyle(
+  fontSize: 16.0,
+  fontWeight: FontWeight.normal,
+  fontFamily: 'CadillacSans',
+  color: Color(0xFF181C33),
+);
+//const baseUrl = 'http://localhost';
+const baseUrl = 'https://cadillacapp.ru';

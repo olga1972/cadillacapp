@@ -16,16 +16,19 @@ import 'package:cadillac/widgets/titlePage.dart';
 import 'package:cadillac/models/products.dart';
 import 'package:flutter_svg/svg.dart';
 
+import '../NavDrawerAdmin.dart';
+import '../variables.dart';
 import 'cardProduct.dart';
+import 'cardProductAdmin.dart';
 
-class Shop extends StatefulWidget {
-  const Shop({Key? key}) : super(key: key);
+class ShopAdmin extends StatefulWidget {
+  const ShopAdmin({Key? key}) : super(key: key);
 
-@override
-State<Shop> createState() => _ShopState();
+  @override
+  State<ShopAdmin> createState() => _ShopAdminState();
 }
 
-class _ShopState extends State<Shop> {
+class _ShopAdminState extends State<ShopAdmin> {
   //late Future<OfficesList> officesList;
   late Future<ProductsList> productsList;
 
@@ -52,7 +55,7 @@ class _ShopState extends State<Shop> {
   Widget build(BuildContext context) {
     RouteSettings settings = ModalRoute.of(context)!.settings;
     return MaterialApp(
-        theme: ThemeData(scaffoldBackgroundColor: const Color(0xFF181c33)),
+        theme: ThemeData(scaffoldBackgroundColor: const Color(0xFF2C335E)),
         title: 'Cadillac',
         debugShowCheckedModeBanner: false,
 
@@ -68,8 +71,8 @@ class _ShopState extends State<Shop> {
         },
         home: Scaffold(
           appBar: AppBar(
-            backgroundColor: const Color(0xFF181c33),
-            shadowColor: Colors.transparent,
+            backgroundColor: const Color(0xFF2C335E),
+            shadowColor: Color(0xFF2C335E),
             elevation: 0.0,
             leading: Builder(
               builder: (BuildContext context) {
@@ -84,7 +87,7 @@ class _ShopState extends State<Shop> {
 
           body: Center (
               child: ListView (
-                  children: [
+                children: [
                   Column (
                       mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.center,
@@ -185,7 +188,7 @@ class _ShopState extends State<Shop> {
                                                                           builder: (
                                                                               context) =>
                                                                           // Card(productId: 1)));
-                                                                          CardProduct()));
+                                                                          CardProductAdmin()));
                                                                 },
                                                               )
                                                           ),
@@ -627,7 +630,7 @@ class _ShopState extends State<Shop> {
                                               ]),
                                               //fade: 0.2,
                                               //allowImplicitScrolling: true,
-                                             // duration: 3,
+                                              // duration: 3,
                                               //containerHeight: 160,
                                               containerWidth: 280,
                                               viewportFraction: 0.43,
@@ -685,30 +688,30 @@ class _ShopState extends State<Shop> {
                                                                 ),
                                                               ),
                                                               child: Row(
-                                                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                                    children: [
-                                                                      Text("Блокноты ".toUpperCase(),
-                                                                        style: const TextStyle(
-                                                                            fontWeight: FontWeight.bold,
-                                                                            fontSize: 7,
-                                                                            letterSpacing: 0,
-                                                                            color: Color(
-                                                                                0xFF12141F)
-                                                                        ),
-                                                                        textAlign: TextAlign.center,
+                                                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                                  children: [
+                                                                    Text("Блокноты ".toUpperCase(),
+                                                                      style: const TextStyle(
+                                                                          fontWeight: FontWeight.bold,
+                                                                          fontSize: 7,
+                                                                          letterSpacing: 0,
+                                                                          color: Color(
+                                                                              0xFF12141F)
+                                                                      ),
+                                                                      textAlign: TextAlign.center,
 
-                                                                      ),
-                                                                      IconButton( icon: Icon(Icons.add, size: 10,),
-                                                                        //iconSize: 48,
-                                                                        color: Color( 0xFF12141F),
-                                                                        padding: EdgeInsets.zero,
-                                                                        onPressed: () {
-                                                                          print('add');
-                                                                        },
-                                                                      ),
-                                                                    ]
-                                                                )
-                                                              //)
+                                                                    ),
+                                                                    IconButton( icon: Icon(Icons.add, size: 10,),
+                                                                      //iconSize: 48,
+                                                                      color: Color( 0xFF12141F),
+                                                                      padding: EdgeInsets.zero,
+                                                                      onPressed: () {
+                                                                        print('add');
+                                                                      },
+                                                                    ),
+                                                                  ]
+                                                              )
+                                                            //)
                                                           ),
                                                           Container (
                                                               width: 88,
@@ -746,21 +749,144 @@ class _ShopState extends State<Shop> {
                                     ]
 
                                 ),
+
+                                Container(
+                                    width: 380,
+                                    margin: const EdgeInsets.only(left: 15),
+                                    alignment: Alignment(-1, 1),
+                                    child: IconButton(
+                                      alignment: Alignment
+                                          .centerLeft,
+                                      padding: const EdgeInsets.all(0),
+                                      iconSize: 20.0,
+                                      icon: SvgPicture
+                                          .asset(
+                                        'assets/images/delete.svg',
+                                        semanticsLabel: 'Icon delete',
+                                        height: 20.0,
+
+                                      ),
+                                      onPressed: () {
+                                        confirmDialog(context);
+                                        //   Route route = MaterialPageRoute(
+                                        //       builder: (
+                                        //           context) => const Gift());
+                                        //   Navigator
+                                        //       .push(
+                                        //       context,
+                                        //       route);
+                                      },
+                                    )
+                                ),
+                                Container(
+                                    width: 380,
+                                    margin: const EdgeInsets.only(left: 15),
+                                    alignment: Alignment(-1, 1),
+                                    child: IconButton(
+                                      alignment: Alignment
+                                          .centerLeft,
+                                      padding: const EdgeInsets.all(0),
+                                      iconSize: 20.0,
+                                      icon: SvgPicture
+                                          .asset(
+                                        'assets/images/add.svg',
+                                        semanticsLabel: 'Icon add',
+                                        height: 20.0,
+
+                                      ),
+                                      onPressed: () {
+
+                                        //   Route route = MaterialPageRoute(
+                                        //       builder: (
+                                        //           context) => const Gift());
+                                        //   Navigator
+                                        //       .push(
+                                        //       context,
+                                        //       route);
+                                      },
+                                    )
+                                )
                               ],
                             )
                         ),
                       ]
 
                   )
-                  ],
+                ],
 
               )
 
           ),
 
 
-          drawer: NavDrawer(),
+          drawer: NavDrawerAdmin(),
         )
     );
   }
+}
+
+Future confirmDialog(BuildContext context) async {
+  return showDialog(
+    context: context,
+    barrierDismissible: false, // user must tap button for close dialog!
+    builder: (BuildContext context) {
+      return AlertDialog(
+        // title: Text('Подтвердите ваш заказ'),
+        content: Text('Удалить товар?'.toUpperCase(),
+          textAlign: TextAlign.center,
+          style: styleTextAlertDialog,
+        ),
+        actions: <Widget>[
+          Container (
+              padding: EdgeInsets.only(left: 20, right: 20, bottom: 20),
+              child: Row (
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    MaterialButton(
+                      padding: const EdgeInsets.all(14),
+                      color: Color(0xFFE4E6FF),
+                      elevation: 0,
+                      shape: const RoundedRectangleBorder(
+                        side: BorderSide.none,
+                        borderRadius: BorderRadius.all(Radius.circular(10),
+                        ),),
+                      child: Text(
+                        'Да'.toUpperCase(),
+                        textAlign: TextAlign.left,
+                        style: styleTextAlertDialog,
+                      ),
+                      onPressed: () {
+                        var userId;
+                        Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => Account(userId: userId)));
+                      },
+                    ),
+                    MaterialButton(
+                      padding: const EdgeInsets.all(14),
+                      color: Color(0xFFE4E6FF),
+                      elevation: 0,
+                      shape: const RoundedRectangleBorder(
+                        side: BorderSide.none,
+                        borderRadius: BorderRadius.all(Radius.circular(10),
+                        ),),
+                      child: Text(
+                        'Нет'.toUpperCase(),
+                        textAlign: TextAlign.left,
+                        style: styleTextAlertDialog,
+                      ),
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                      },
+                    )
+                  ]
+              )
+          )
+
+
+        ],
+      );
+    },
+  );
 }
