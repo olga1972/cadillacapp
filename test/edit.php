@@ -22,6 +22,7 @@ if(isset($_POST["login"])) {
 
     clear();
     extract($_POST);
+    
 
     foreach ($users as $user) {
         $current_user_email = array_values($user)[3];
@@ -40,7 +41,7 @@ if(isset($_POST["login"])) {
 
           echo(json_encode($editUser));
 
-          header("Refresh:0");
+          //header("Refresh:0");
 
           return $editUser;
         }

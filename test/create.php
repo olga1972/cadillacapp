@@ -6,6 +6,8 @@ header("Access-Control-Allow-Origin: *");
 error_reporting(-1);
 require_once 'connect.php';
 require_once 'funcs.php';
+require_once "Mobile_Detect.php";
+$detect = new Mobile_Detect;
 
 global $dbhost, $dbuser, $dbpassword, $dbname, $link;
 ini_set('display_errors', 1);
@@ -64,11 +66,31 @@ if(isset($_POST["phone"]) && isset($_POST["email"])) {
 
 
         $newUser = get_user_by_email();
+        
+        $newUser["id"] = strval($newUser["id"]);
         $userId = $newUser["userId"];
-//        print(json_encode($newUser));
-//        print($userId);
 
         setcookie('uuid', $userId, time() + (3600 * 24 * 30), '/');
+        
+        //var_dump($newUser);
+print(json_encode($newUser));
+// print('after add new user create.php');
+//  print($userId);
+
+
+if ( $detect->isMobile() ) { 
+    // Здесь пишем код header'a который будет выводиться для мобильных устройств
+} else {
+    // Здесь код, который выводится, если устройство не мобильное
+    // if(isset($_COOKIE["uuid"])) {
+    //     return;
+    // } else {
+    //     setcookie('uuid', $userId, time() + (3600 * 24 * 30), '/');
+    // }
+}
+
+
+        
         return $newUser;
 
     } else {
@@ -88,7 +110,7 @@ if(isset($_POST["phone"]) && isset($_POST["email"])) {
 //        print('такой пользователь уже есть в таблице');
 
 //        var_dump($idExistUser);
-
+        $existUser["id"] = strval($existUser["id"]);
 //        var_dump($existUser);
         print(json_encode($existUser));
 

@@ -1,9 +1,8 @@
 <?php
 
-$dbname = "users"; //database name
-$dbuser = "root"; //database username
-//$dbpassword = "root"; //database password 5.6
-$dbpassword = ""; //database password 5.7
+$dbname = "u1226706_default"; //database name
+$dbuser = "u1226706_default"; //database username
+$dbpassword = "h1Uj6_nL"; //database password
 $dbhost = "localhost"; //database host
 
 $link = mysqli_connect($dbhost, $dbuser, $dbpassword, $dbname) or die('Ошибка соединения с БД');

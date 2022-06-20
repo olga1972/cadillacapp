@@ -31,8 +31,8 @@ function edit_user() {
 
     //mysqli_stmt_prepare($stmt, "INSERT INTO users (username, birthday) VALUES(?, ?)");
 
-    mysqli_stmt_prepare($stmt, "UPDATE users SET username = ?, birthday = ? WHERE login = ?");
-    mysqli_stmt_bind_param($stmt, 'sss',  $username, $birthday, $login);
+    mysqli_stmt_prepare($stmt, "UPDATE users SET username = ?, birthday = ? path =? WHERE login = ?");
+    mysqli_stmt_bind_param($stmt, 'ssss',  $username, $birthday, $path, $login);
     mysqli_stmt_execute($stmt);
     mysqli_stmt_get_result($stmt);
     //print(mysqli_stmt_errno($stmt));
@@ -49,8 +49,8 @@ function get_user_by_login() {
 
 
     $stmt = mysqli_stmt_init($link);
-    mysqli_stmt_prepare($stmt,"UPDATE users SET username = ?, birthday = ?, login = ?, carname = ? WHERE email = ?");
-    mysqli_stmt_bind_param($stmt,'sssss', $username, $birthday, $login, $carname, $login);
+    mysqli_stmt_prepare($stmt,"UPDATE users SET username = ?, birthday = ?, login = ?, carname = ?, path = ? WHERE email = ?");
+    mysqli_stmt_bind_param($stmt,'ssssss', $username, $birthday, $login, $carname, $path, $login);
     mysqli_stmt_execute($stmt);
     mysqli_stmt_get_result($stmt);
 
@@ -82,7 +82,7 @@ function get_user_by_email() {
 
     if ($mysqli_result) {
         $rowsCount = mysqli_num_rows($mysqli_result); // количество полученных строк
-//        echo "<p>Получено объектов: $rowsCount</p>";
+
 
         foreach ($mysqli_result as $row) {
             $userInfoArray[] = $row;
@@ -91,7 +91,7 @@ function get_user_by_email() {
 //            echo "<td>" . $email = $row["email"];
 
         }
-        echo(json_encode($userInfoArray[0]));
+        //echo(json_encode($userInfoArray[0]));
 //        unset($userInfoArray[0]['id']);
 
         return $userInfoArray[0];
@@ -134,7 +134,7 @@ function get_user_all() {
 
 //        unset($userInfoArray[0]['id']);
 //        echo(json_encode($userInfoArray[0]));
-
+        $userInfoArray[0]["id"] = strval($userInfoArray[0]["id"]);
         return $userInfoArray[0];
 //        print('новый пользователь');
 //        print($new_user);
@@ -150,7 +150,7 @@ function get_user_all() {
 }
 
 function get_user($userId) {
-
+   
     global $link;
     global $stmt;
     mysqli_stmt_prepare($stmt,"SELECT * FROM users WHERE userId = ?");
@@ -167,7 +167,7 @@ function get_user($userId) {
 
     if($mysqli_result){
         $rowsCount = mysqli_num_rows($mysqli_result); // количество полученных строк
-//         echo "<p>Получено объектов: $rowsCount</p>";
+//echo "<p>Получено объектов: $rowsCount</p>";
 
         foreach($mysqli_result as $row){
             $userInfoArray[] = $row;
@@ -179,6 +179,9 @@ function get_user($userId) {
 //            print($userInfoArray["userId"]);
 //            echo $_COOKIE["TestCookie"];
         }
+
+        //var_dump($userInfoArray);
+        
 
         $userInfoArray[0]["id"] = strval($userInfoArray[0]["id"]);
 
@@ -200,8 +203,7 @@ function get_user($userId) {
 
 function get_user_old() {
     extract($_POST);
-
-//    print($email);
+    
     global $link;
     global $stmt;
     mysqli_stmt_prepare($stmt,"SELECT * FROM users WHERE email = ?");
@@ -217,7 +219,7 @@ function get_user_old() {
 
     if($mysqli_result){
         $rowsCount = mysqli_num_rows($mysqli_result); // количество полученных строк
-//        echo "<p>Получено объектов: $rowsCount</p>";
+//echo "<p>Получено объектов: $rowsCount</p>";
 
         foreach($mysqli_result as $row){
             $userInfoArray[] = $row;
@@ -284,13 +286,61 @@ function get_all_users(){
 
 
 //          print($users);
-        $file = "../assets/assets/users.json";
-        $users_obj = '{"users": ' . json_encode($users) . '}';
-        $data_file = file_put_contents($file, $users_obj);
+        // $file = "../assets/assets/users.json";
+        // $users_obj = '{"users": ' . json_encode($users) . '}';
+        // $data_file = file_put_contents($file, $users_obj);
 
 
 //        var_dump($users);
         return ($users);
+        //return ($users_obj);
+
+
+    } else{
+        echo "Ошибка: " . mysqli_error($link);
+    }
+    //echo json_encode($users);
+//    print('users\n');
+//    var_dump(json_encode($users));
+//    $users = json_encode($users);
+//    echo($users);
+//    return $users;
+	//return json_encode($users);
+
+}
+
+function get_all_users_json(){
+
+	global $link;
+	$query = "SELECT * FROM users";
+	$result = mysqli_query($link, $query);
+    //$users = mysqli_fetch_all($result);
+    $users = array();
+//    while($r = mysqli_fetch_array($result)) {
+//        $users[] = $r;
+//    }
+    if($result){
+        $rowsCount = mysqli_num_rows($result); // количество полученных строк
+//        echo "<p>Получено объектов: $rowsCount</p>";
+
+        foreach($result as $row){
+            $users[] = $row;
+//            echo "<td>" . $userid = $row["userId"];
+//            echo "<td>" . $phone = $row["phone"];
+//            echo "<td>" . $email = $row["email"];
+        }
+
+
+
+//          print($users);
+        // $file = "../assets/assets/users.json";
+        $users_obj = '{"users": ' . json_encode($users) . '}';
+        // $data_file = file_put_contents($file, $users_obj);
+
+
+//        var_dump($users);
+        //return ($users);
+        return ($users_obj);
 
 
     } else{
@@ -317,4 +367,50 @@ function users_to_obj () {
 
 function print_arr($arr){
 	echo '<pre>' . print_r($arr, true) . '</pre>';
+}
+
+function add_news() {
+    global $stmt, $link;
+    clear();
+    extract($_POST);
+//var_dump($_POST);
+
+    mysqli_stmt_prepare($stmt, "INSERT INTO news (newsId, newsName, newsDate, newsLocation, newsDescr) VALUES(uuid(), ?, ?, ?, ?)");
+    mysqli_stmt_bind_param($stmt, 'ssss',  $newsName, $newsDate, $newsLocation, $newsDescr);
+    mysqli_stmt_execute($stmt);
+    mysqli_stmt_get_result($stmt);
+    
+}
+
+function get_news() {
+
+    global $link;
+    global $stmt;
+    clear();
+    extract($_POST);
+
+    mysqli_stmt_prepare($stmt,"SELECT * FROM news WHERE newsName = ?");
+    mysqli_stmt_bind_param($stmt,'s', $newsName);
+    mysqli_stmt_execute($stmt);
+    $mysqli_result = mysqli_stmt_get_result($stmt);
+    //print(mysqli_stmt_errno($stmt));
+
+    $newsInfoArray =[];
+
+    if($mysqli_result){
+        $rowsCount = mysqli_num_rows($mysqli_result); // количество полученных строк
+//echo "<p>Получено объектов: $rowsCount</p>";
+
+        foreach($mysqli_result as $row){
+            $newsInfoArray[] = $row;
+        }
+
+        // $currentNews = $newsInfoArray[0];
+        //var_dump($newsInfoArray);
+
+
+        return $newsInfoArray;
+
+   
+    }
 }
