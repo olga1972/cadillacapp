@@ -28,6 +28,7 @@ import 'dart:async';
 import '../NavDrawerAdmin.dart';
 import '../models/news.dart';
 import 'homeAdmin.dart';
+import 'newsAdmin.dart';
 
 class AddNews extends StatelessWidget {
   AddNews({Key? key}) : super(key: key);
@@ -62,7 +63,7 @@ class AddNews extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        theme: ThemeData(scaffoldBackgroundColor: const Color(0xFF181c33)),
+        theme: ThemeData(scaffoldBackgroundColor: const Color(0xFF2C335E)),
         title: 'Cadillac',
         debugShowCheckedModeBanner: false,
         routes: {
@@ -136,7 +137,7 @@ class AddNews extends StatelessWidget {
                                                   width: 284,
                                                   child: FormBuilderTextField(
                                                       name: 'newsName',
-                                                      //autofocus: true,
+                                                      autofocus: true,
                                                       cursorWidth: 1.0,
                                                       cursorColor: Colors.white,
                                                       style: styleFormInput,
@@ -188,6 +189,7 @@ class AddNews extends StatelessWidget {
                                                   width: 284,
                                                   child: FormBuilderTextField(
                                                       name: 'newsDate',
+                                                      autofocus: true,
                                                       style: styleFormInput,
                                                       decoration: const InputDecoration(
                                                         contentPadding: EdgeInsets.all(16),
@@ -239,6 +241,7 @@ class AddNews extends StatelessWidget {
                                                   width: 284,
                                                   child: FormBuilderTextField(
                                                       name: 'newsLocation',
+                                                      autofocus: true,
                                                       style: styleFormInput,
                                                       decoration: const InputDecoration(
                                                         contentPadding: EdgeInsets.all(16),
@@ -286,6 +289,7 @@ class AddNews extends StatelessWidget {
                                                 ),
                                                 FormBuilderTextField(
                                                   name: 'newsDescr',
+                                                  autofocus: true,
                                                   style: styleFormInput,
                                                   decoration: const InputDecoration(
                                                     contentPadding: EdgeInsets.all(16),
@@ -351,10 +355,11 @@ class AddNews extends StatelessWidget {
                                                 ),
                                               ),
                                               onPressed: () {
-                                                confirmDialog(context);
+
                                                 if (_newsKey.currentState?.saveAndValidate() ??
                                                     false) {
-                                                  debugPrint('Message send');
+                                                  confirmDialog(context);
+                                                  debugPrint('News added');
                                                   final news = New(
                                                     id: id,
                                                     newsId: newsId,
@@ -372,7 +377,7 @@ class AddNews extends StatelessWidget {
                                                       MaterialPageRoute(
                                                           builder: (
                                                               context) =>
-                                                              HomeAdmin()
+                                                              NewsAdmin()
                                                       ));
                                                 } else {
                                                   debugPrint('Error');
@@ -483,7 +488,7 @@ Future confirmDialog(BuildContext context) async {
                         Navigator.pushReplacement(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => Account(userId: userId)));
+                                builder: (context) => NewsAdmin()));
                       },
                     ),
                     MaterialButton(

@@ -1,5 +1,6 @@
 import 'package:cadillac/pages/homeAdmin.dart';
 import 'package:cadillac/pages/membersAdmin.dart';
+import 'package:cadillac/pages/newsAdmin.dart';
 import 'package:cadillac/pages/partnersAdmin.dart';
 import 'package:cadillac/pages/shopAdmin.dart';
 import 'package:cadillac/pages/test.dart';
@@ -46,7 +47,7 @@ class _NavDrawerAdminState extends State<NavDrawerAdmin> {
 
   final List<String> menuAdmin = ["главная", "аккаунт члена клуба", "члены автоклуба", "клубные новости", "клубная атрибутика и одежда", "партнеры"];
   final List<String> icons = ["home.svg", "account.svg", "members.svg", "news.svg", "clubwear.svg", "partners.svg"];
-  final List<Widget> pages = [HomeAdmin(), Account(userId: null,), MembersAdmin(), News(), ShopAdmin(), PartnersAdmin()];
+  final List<Widget> pages = [HomeAdmin(), Account(userId: null,), MembersAdmin(), NewsAdmin(), ShopAdmin(), PartnersAdmin()];
 
   static get userId => null;
 

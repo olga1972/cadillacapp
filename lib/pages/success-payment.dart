@@ -8,7 +8,7 @@ import 'package:cadillac/widgets/uploadImage.dart';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
+//import 'package:flutter_localizations/flutter_localizations.dart';
 // import 'generated/l10n.dart';
 
 // import 'package:hive/hive.dart';
@@ -264,11 +264,11 @@ class _SuccessPaymentState extends State<SuccessPayment> {
         theme: ThemeData(scaffoldBackgroundColor: const Color(0xFF181c33)),
         title: 'Cadillac',
         debugShowCheckedModeBanner: false,
-        localizationsDelegates: [
-          GlobalMaterialLocalizations.delegate,
-          GlobalWidgetsLocalizations.delegate,
-          GlobalCupertinoLocalizations.delegate,
-        ],
+        // localizationsDelegates: [
+        //   GlobalMaterialLocalizations.delegate,
+        //   GlobalWidgetsLocalizations.delegate,
+        //   GlobalCupertinoLocalizations.delegate,
+        // ],
         supportedLocales: [
           Locale('en', ''),
           // Английский, без кода страны Locale ( 'es' , '' ), // испанский, без кода страны ],

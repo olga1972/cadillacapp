@@ -37,6 +37,7 @@ import 'package:http/http.dart' as http;
 import '../NavDrawerAdmin.dart';
 import 'edit.dart';
 import 'gift.dart';
+import 'newsAdmin.dart';
 
 class HomeAdmin extends StatefulWidget {
   HomeAdmin({Key? key}) : super(key: key);
@@ -103,7 +104,7 @@ class _HomeAdminState extends State<HomeAdmin> {
         '/home': (context) => HomeAdmin(),
         // '/account': (context) => Account(currentUser: currentUser,),
         '/members': (context) => Members(),
-        '/news': (context) => const News(),
+        '/newsAdmin': (context) => const NewsAdmin(),
         // '/shop': (context) => Shop(),
         '/partners': (context) => Partners(),
         '/contacts': (context) => Contacts(),

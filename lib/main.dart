@@ -148,13 +148,13 @@ class MyApp extends StatelessWidget {
 
 
       routes: {
-        '/home': (context) => RegistrationPage(),
+        //'/home': (context) => RegistrationPage(),
         //'/home': (context) => Account(userId:userId),
         '/homeAdmin': (context) => HomeAdmin(),
         //'/home': (context) => SuccessPayment(),
         // '/home': (context) => cookies != null && cookies != '' ? Account() : RegistrationPage(),
         //'/home': (context) => Shop(),
-        //'/home': (context) => Test(),
+        '/home': (context) => NewsAdmin(),
         //'/home': (context) => Contacts(),
         //'/home': (context) => Account(userId:userId),
         //'/home': (context) => Home(),

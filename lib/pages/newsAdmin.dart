@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+
 import 'package:cadillac/pages/home.dart';
 import 'package:cadillac/pages/account.dart';
 import 'package:cadillac/pages/members.dart';
@@ -8,19 +9,45 @@ import 'package:cadillac/pages/shop.dart';
 import 'package:cadillac/pages/partners.dart';
 import 'package:cadillac/pages/contacts.dart';
 
-import 'package:cadillac/NavDrawer.dart';
+import 'package:cadillac/NavDrawerAdmin.dart';
 import 'package:cadillac/widgets/titlePage.dart';
 import 'package:cadillac/widgets/bannersList.dart';
+import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:flutter_svg/svg.dart';
+
+import 'dart:convert';
+import 'package:flutter/services.dart';
+import 'package:http/http.dart' as http;
+
+import '../models/news.dart';
 
 import '../variables.dart';
 import 'addNews.dart';
+import 'membersAdmin.dart';
 
-class NewsAdmin extends StatelessWidget {
+class NewsAdmin extends StatefulWidget {
   const NewsAdmin({Key? key}) : super(key: key);
 
+  @override
+  State<NewsAdmin> createState() => _NewsAdminState();
+}
 
-  // get userId => null;
+class _NewsAdminState extends State<NewsAdmin> {
+  int selectedIndex = 1;
+
+  late Future<NewsList> newsList;
+  late Future<New> news;
+  //late Future<New> deleteNews;
+
+  @override
+  void initState() {
+    super.initState();
+    newsList = getNewsList();
+    //news = deleteNews;
+    // setState(() {
+    //   _items = data["items"];
+    // });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -52,7 +79,7 @@ class NewsAdmin extends StatelessWidget {
               return IconButton(
                 icon: SvgPicture.asset('assets/images/burger.svg'),
                 onPressed: () { Scaffold.of(context).openDrawer(); },
-                tooltip: MaterialLocalizations.of(context).openAppDrawerTooltip,
+                // tooltip: MaterialLocalizations.of(context).openAppDrawerTooltip,
               );
             },
           ),
@@ -60,181 +87,362 @@ class NewsAdmin extends StatelessWidget {
 
         body: Center (
             child: ListView (
-              // mainAxisAlignment: MainAxisAlignment.start,
-              // crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Center (
-                      child: Container (
-                          child: Column (
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                Container (
-                                  margin: const EdgeInsets.only(bottom: 20),
-                                  child: const TitlePage(title: 'клубные новости'),
-                                ),
+                    child: Container (
+                      child: Column (
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Container (
+                                width: 320,
+                                height: 830,
+                                child: FutureBuilder<NewsList>(
+                                    future: newsList,
+                                    builder: (context, snapshot) {
 
-                                Container (
-                                  height: 680,
-                                  child: ListView.builder (
-                                      scrollDirection: Axis.vertical,
-                                      shrinkWrap: true,
-                                      // padding: const EdgeInsets.only(top: 38, bottom: 10),
-                                      itemCount: 3,
-                                      itemBuilder: (BuildContext context, int index) {
-                                        return Container(
-                                            width: 284,
-                                            // height: 166,
-                                            margin: const EdgeInsets.only(top: 10, bottom: 10,),
+                                      var news = snapshot.data?.news;
+                                      List<New>? newsList = snapshot.data?.news;
+                                      print('news');
+                                      print(newsList);
 
-                                            child: Column (
-                                                mainAxisAlignment: MainAxisAlignment.center,
-                                                crossAxisAlignment: CrossAxisAlignment.center,
-                                                children: [
-                                                  Row(
-                                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                      if (snapshot.hasData) {
+                                        return Center(
+                                              child: Container(
+                                                  width: 320,
+                                                  height: 860,
+                                                  child: Column(
+                                                      mainAxisAlignment: MainAxisAlignment.start,
                                                       crossAxisAlignment: CrossAxisAlignment.center,
-                                                    children: [
-                                                      Container(
-                                                        margin: const EdgeInsets.only(bottom: 10, left: 50,),
-                                                        child: const Text('14 апреля 2022',
-                                                            textAlign: TextAlign.left,
-                                                            style: TextStyle(
-                                                              fontSize: 32.0,
-                                                              fontWeight: FontWeight.normal,
-                                                              fontFamily: 'CadillacSans',
-                                                              color: Color(0xFF8F97BF),
-                                                              height: 1.7, //line-height / font-size
-                                                            )
-                                                        ),
-                                                      ),
-                                                      Container(
-                                                          margin: const EdgeInsets.only(left: 15),
-                                                          alignment: Alignment(-1, 1),
-                                                          child: IconButton(
-                                                            alignment: Alignment
-                                                                .centerLeft,
-                                                            padding: const EdgeInsets.all(0),
-                                                            iconSize: 20.0,
-                                                            icon: SvgPicture
-                                                                .asset(
-                                                              'assets/images/delete.svg',
-                                                              semanticsLabel: 'Icon delete',
-                                                              height: 20.0,
-
-                                                            ),
-                                                            onPressed: () {
-                                                              confirmDialog(context);
-                                                              //   Route route = MaterialPageRoute(
-                                                              //       builder: (
-                                                              //           context) => const Gift());
-                                                              //   Navigator
-                                                              //       .push(
-                                                              //       context,
-                                                              //       route);
-                                                            },
-                                                          )
-                                                      ),
-                                                    ]
-                                                  ),
-
-                                                  Row(
-                                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                    crossAxisAlignment: CrossAxisAlignment.center,
-                                                    children: [
-                                                      Container(
-                                                          margin: const EdgeInsets.only(left: 50,),
-                                                          child: Text.rich(
-                                                              TextSpan (
-                                                                  text: 'презентация нового'.toUpperCase(),
-                                                                  style: const TextStyle(fontSize: 14,fontWeight: FontWeight.normal, color: Colors.white, height: 1.5),
-                                                                  children: <InlineSpan>[
-                                                                    TextSpan(
-                                                                      text: '\ncadillac escalada'.toUpperCase(),
-                                                                      style: const TextStyle(fontSize: 24,fontWeight: FontWeight.normal, color: Colors.white, height: 1.4),
-                                                                    )
-                                                                  ]
-                                                              ),
+                                                      children: [
+                                                        Container(
+                                                          margin: const EdgeInsets.only(
+                                                              bottom: 20),
+                                                          child: const TitlePage(title: 'клубные новости')
                                                           ),
-                                                      ),
-                                                      Container(
-                                                          margin: const EdgeInsets.only(left: 15),
-                                                          alignment: Alignment(-1, 1),
-                                                          child: IconButton(
-                                                            alignment: Alignment
-                                                                .centerLeft,
-                                                            padding: const EdgeInsets.all(0),
-                                                            iconSize: 20.0,
-                                                            icon: SvgPicture
-                                                                .asset(
-                                                              'assets/images/add.svg',
-                                                              semanticsLabel: 'Icon add',
-                                                              height: 20.0,
+                                                        Container(
+                                                            height: 740,
+                                                            child: ListView.builder(
+                                                                scrollDirection: Axis.vertical,
+                                                                shrinkWrap: true,
+                                                                // padding: const EdgeInsets.only(top: 38, bottom: 10),
+                                                                itemCount: snapshot.data?.news?.length,
+                                                                itemBuilder: (context, index) {
+                                                                  String currentNewsId;
+                                                                  return Container(
+                                                                      width: 320,
+                                                                      // height: 166,
+                                                                      margin: const EdgeInsets.only(top: 10,bottom: 10,),
 
-                                                            ),
-                                                            onPressed: () {
-                                                              confirmDialog(context);
-                                                                Route route = MaterialPageRoute(
-                                                                    builder: (
-                                                                        context) => AddNews());
-                                                                Navigator.push(context,route);
-                                                            },
-                                                          )
-                                                      ),
-                                                    ]
+                                                                      child: Column(
+                                                                          mainAxisAlignment: MainAxisAlignment
+                                                                              .center,
+                                                                          crossAxisAlignment: CrossAxisAlignment
+                                                                              .start,
+                                                                          children: [
+                                                                            Row(
+                                                                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                                                mainAxisSize: MainAxisSize.min,
+                                                                                children: [
 
-                                                  ),
+                                                                                  Stack(
+                                                                                    alignment: Alignment.centerRight,
+                                                                                      clipBehavior: Clip
+                                                                                          .none,
+                                                                                      children: [
+                                                                                        Container(
+                                                                                          width: 320,
+                                                                                          margin: const EdgeInsets.only(
+                                                                                            bottom: 10,),
+                                                                                          child: Text(
+                                                                                              '${snapshot
+                                                                                                  .data
+                                                                                                  ?.news?[index]
+                                                                                                  ?.newsDate}',
+                                                                                              textAlign: TextAlign
+                                                                                                  .left,
+                                                                                              style: TextStyle(
+                                                                                                fontSize: 32.0,
+                                                                                                fontWeight: FontWeight
+                                                                                                    .normal,
+                                                                                                fontFamily: 'CadillacSans',
+                                                                                                color: Color(
+                                                                                                    0xFF8F97BF),
+                                                                                                height: 1.7, //line-height / font-size
+                                                                                              )
+                                                                                          ),
+                                                                                        ),
+                                                                                        GestureDetector(
+                                                                                            onTap: () {
+                                                                                              confirmDialog(context);
+                                                                                              setState(() {
+                                                                                                // устанавливаем индекс выделенного элемента
+                                                                                                selectedIndex = index;
+                                                                                              });
+                                                                                              print(snapshot.data?.news?[selectedIndex].newsId);
+                                                                                              var currentNewsId = snapshot.data?.news?[selectedIndex].newsId;
+                                                                                              deleteNews(currentNewsId);
 
-                                                  Container (
-                                                    margin: const EdgeInsets.only(bottom: 10.0, top: 10),
-                                                    child: Image.asset(
-                                                      'assets/images/cadillac-escalada.png',
-                                                      fit: BoxFit.fill,
-                                                    ),
-                                                  ),
+                                                                                              Route route = MaterialPageRoute(
+                                                                                                  builder: (context) =>
+                                                                                                      NewsAdmin());
+                                                                                              Navigator.push(context,route);
+
+                                                                                            },
+                                                                                            child: SvgPicture.asset(
+                                                                                            'assets/images/delete.svg',
+                                                                                            semanticsLabel: 'Icon delete',
+                                                                                            height: 20.0,
+
+                                                                                         /*Positioned(
+                                                                                            left: 300.0,
+                                                                                            top: 7.0,
+                                                                                            child: IconButton(
+                                                                                                alignment: Alignment
+                                                                                                    .centerLeft,
+                                                                                                padding: const EdgeInsets
+                                                                                                    .all(
+                                                                                                    0),
+                                                                                                iconSize: 20.0,
+                                                                                                icon: SvgPicture
+                                                                                                    .asset(
+                                                                                                  'assets/images/delete.svg',
+                                                                                                  semanticsLabel: 'Icon delete',
+                                                                                                  height: 20.0,
+
+                                                                                                ),
+
+
+                                                                                                onPressed: () async {
+                                                                                                  //confirmDialog(context);
+                                                                                                  // Route route = MaterialPageRoute(
+                                                                                                  //     builder: (
+                                                                                                  //         context) => MembersAdmin());
+                                                                                                  // Navigator
+                                                                                                  //     .push(
+                                                                                                  //     context,
+                                                                                                  //     route);
+                                                                                                },
+                                                                                              ),*/
+
+
+                                                                                            ),
+                                                                                        ),
+                                                                                        Visibility(
+                                                                                          visible: false,
+                                                                                          child: FormBuilderTextField(
+                                                                                            name: 'currentNewsId',
+                                                                                            initialValue: '${snapshot.data?.news?[selectedIndex].newsId}',
+                                                                                            onSaved: (value) => currentNewsId = value!,
+                                                                                          ),
+                                                                                        ),
+                                                                                      ]
+                                                                                  )
+                                                                                ]
+                                                                            ),
+                                                                            Row(
+                                                                                  mainAxisAlignment: MainAxisAlignment
+                                                                                      .spaceBetween,
+                                                                                  mainAxisSize: MainAxisSize
+                                                                                      .min,
+                                                                                  children: [
+                                                                                    Stack(
+                                                                                        alignment: Alignment.centerRight,
+                                                                                        clipBehavior: Clip
+                                                                                            .none,
+                                                                                        children: [
+                                                                                          // Positioned(
+                                                                                          //     left: 300.0,
+                                                                                          //     top: 7.0,
+                                                                                          //     child: IconButton(
+                                                                                          //       alignment: Alignment
+                                                                                          //           .centerLeft,
+                                                                                          //       padding: const EdgeInsets
+                                                                                          //           .all(
+                                                                                          //           0),
+                                                                                          //       iconSize: 20.0,
+                                                                                          //       icon: SvgPicture
+                                                                                          //           .asset(
+                                                                                          //         'assets/images/add.svg',
+                                                                                          //         semanticsLabel: 'Icon add',
+                                                                                          //         height: 20.0,
+                                                                                          //
+                                                                                          //       ),
+                                                                                          //       onPressed: () {
+                                                                                          //         confirmDialog(
+                                                                                          //             context);
+                                                                                          //         Route route = MaterialPageRoute(
+                                                                                          //             builder: (
+                                                                                          //                 context) =>
+                                                                                          //                 AddNews());
+                                                                                          //         Navigator
+                                                                                          //             .push(
+                                                                                          //             context,
+                                                                                          //             route);
+                                                                                          //       },
+                                                                                          //     )
+                                                                                          // ),
+                                                                                          Container(
+                                                                                              width: 320,
+                                                                                          child: Text.rich(
+                                                                                            TextSpan(
+                                                                                                text: '${snapshot
+                                                                                                    .data
+                                                                                                    ?.news?[index]
+                                                                                                    ?.newsName}'
+                                                                                                    .toUpperCase(),
+                                                                                                style: const TextStyle(
+                                                                                                    fontSize: 14,
+                                                                                                    fontWeight: FontWeight
+                                                                                                        .normal,
+                                                                                                    color: Colors
+                                                                                                        .white,
+                                                                                                    height: 1.5),
+                                                                                                children: <
+                                                                                                    InlineSpan>[
+                                                                                                  TextSpan(
+                                                                                                    text: '\ncadillac escalada'
+                                                                                                        .toUpperCase(),
+                                                                                                    style: const TextStyle(
+                                                                                                        fontSize: 24,
+                                                                                                        fontWeight: FontWeight
+                                                                                                            .normal,
+                                                                                                        color: Colors
+                                                                                                            .white,
+                                                                                                        height: 1.4),
+                                                                                                  )
+                                                                                                ]
+                                                                                            ),
+                                                                                          ),
+                                                                                          ),
+                                                                                          GestureDetector(
+                                                                                            onTap: () {
+                                                                                              Route route = MaterialPageRoute(
+                                                                                                  builder: (context) =>
+                                                                                                      AddNews());
+                                                                                              Navigator.push(context,route);
+                                                                                            },
+                                                                                            child: SvgPicture
+                                                                                                .asset(
+                                                                                              'assets/images/add.svg',
+                                                                                              semanticsLabel: 'Icon add',
+                                                                                              height: 20.0,
+
+                                                                                            ),
+                                                                                          )
+
+
+                                                                                          // Positioned(
+                                                                                          //     left: 300.0,
+                                                                                          //     top: 7.0,
+                                                                                          //     child: IconButton(
+                                                                                          //       alignment: Alignment
+                                                                                          //           .centerLeft,
+                                                                                          //       padding: const EdgeInsets
+                                                                                          //           .all(
+                                                                                          //           0),
+                                                                                          //       iconSize: 20.0,
+                                                                                          //       icon: SvgPicture
+                                                                                          //           .asset(
+                                                                                          //         'assets/images/add.svg',
+                                                                                          //         semanticsLabel: 'Icon add',
+                                                                                          //         height: 20.0,
+                                                                                          //
+                                                                                          //       ),
+                                                                                          //       onPressed: () {
+                                                                                          //         confirmDialog(
+                                                                                          //             context);
+                                                                                          //         Route route = MaterialPageRoute(
+                                                                                          //             builder: (
+                                                                                          //                 context) =>
+                                                                                          //                 AddNews());
+                                                                                          //         Navigator
+                                                                                          //             .push(
+                                                                                          //             context,
+                                                                                          //             route);
+                                                                                          //       },
+                                                                                          //     )
+                                                                                          // ),
+                                                                                        ]
+
+                                                                                    ),
+                                                                                  ]
+                                                                              ),
 
 
 
-                                                ]
-                                            )
-                                        );
+                                                                            Container(
+                                                                              margin: const EdgeInsets
+                                                                                  .only(
+                                                                                  bottom: 10.0,
+                                                                                  top: 10),
+                                                                              child: Image
+                                                                                  .asset(
+                                                                                'assets/images/cadillac-escalada.png',
+                                                                                fit: BoxFit
+                                                                                    .fill,
+                                                                              ),
+                                                                            ),
+                                                                            Container(
+                                                                              margin: const EdgeInsets
+                                                                                  .only(
+                                                                                bottom: 10,),
+                                                                              child: Text(
+                                                                                  '${snapshot
+                                                                                      .data
+                                                                                      ?.news?[index]
+                                                                                      ?.newsDescr}',
+                                                                                  textAlign: TextAlign
+                                                                                      .left,
+                                                                                  style: TextStyle(
+                                                                                    fontSize: 32.0,
+                                                                                    fontWeight: FontWeight
+                                                                                        .normal,
+                                                                                    fontFamily: 'CadillacSans',
+                                                                                    color: Color(
+                                                                                        0xFF8F97BF),
+                                                                                    height: 1.7, //line-height / font-size
+                                                                                  )
+                                                                              ),
+                                                                            ),
+
+                                                                          ]
+                                                                      )
+
+                                                                  );
+                                                                }
+                                                            )
+                                                        )
+                                                  ]
+                                                  )
+                                              )
+                                          );
+
                                       }
-                                  ),
-                                ),
+                                      else if (snapshot.hasError) {
+                                        return const Text('Error');
+                                      }
+                                      return const Center(child: CircularProgressIndicator());
 
-                                // Container (
-                                //   width: MediaQuery.of(context).size.width,
-                                //   height: 200,
-                                //   padding: EdgeInsets.zero,
-                                //   margin: EdgeInsets.only(top: 10, bottom: 10, left: 0, right: 0),
-                                //   color: Color(0xFF181C33),
-                                //   child: Banners(),
-                                // ),
-                              ]
-                          )
+                                    }
+                                )
+                            )
+                          ]
+                      ),
 
-                      )
+                    ),
                   )
-
                 ]
             )
-
-          //)
-          //)
         ),
-        //         ]
-        //     )
-        // )
-        //),
 
+        drawer: NavDrawerAdmin(),
 
-        //),
-
-        drawer: NavDrawer(),
-      ),
-
+      )
     );
   }
+
 }
+
 
 Future confirmDialog(BuildContext context) async {
   return showDialog(
@@ -271,7 +479,7 @@ Future confirmDialog(BuildContext context) async {
                         Navigator.pushReplacement(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => Account(userId: userId)));
+                                builder: (context) => NewsAdmin()));
                       },
                     ),
                     MaterialButton(
@@ -300,4 +508,48 @@ Future confirmDialog(BuildContext context) async {
       );
     },
   );
+}
+
+Future<NewsList> getNewsList() async {
+print('getNewsList');
+  const url = baseUrl + '/test/news_list.php';
+  final response = await http.get(Uri.parse(url));
+  print('response members getUserLists');
+  print(response.body);
+  if(response.statusCode == 200) {
+    return NewsList.fromJson(json.decode(response.body));
+  } else {
+    throw Exception('Error: ${response.reasonPhrase}');
+  }
+}
+
+
+deleteNews(newsId) async {
+  print('delete news admin');
+  String apiurl = baseUrl + "/test/delete_news.php";
+
+  var response = await http.post(Uri.parse(apiurl), body: {
+    'newsId': newsId,
+  }, headers: {
+    'Accept': 'application/json, charset=utf-8',
+    "Access-Control-Allow-Origin": "*",
+    "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS"
+  });
+
+  if (response.statusCode == 200) {
+    print('news deleted');
+    print(response.statusCode);
+    print(response.body);
+    return response.body;
+    //return New.fromJson(json.decode(response.body));
+
+    // setState(() {
+    //   showprogress = false; //don't show progress indicator
+    //   error = true;
+    //   errormsg = jsondata["message"];
+    // });
+
+  } else {
+    throw Exception('Error: ${response.reasonPhrase}');
+  }
 }
