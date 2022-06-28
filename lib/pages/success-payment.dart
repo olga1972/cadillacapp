@@ -584,7 +584,7 @@ class _SuccessPaymentState extends State<SuccessPayment> {
                                                                           photo = value!,
                                                                           //photo = value! as List?,
                                                                           // {
-                                                                          //   //print(value?.path),
+                                                                          //print(value?.path),
                                                                           // // photo =
                                                                           // // await ImagePicker().pickImage(source: ImageSource.gallery),
                                                                           //   //setState(() => photo = value as XFile?),
@@ -986,19 +986,19 @@ class _SuccessPaymentState extends State<SuccessPayment> {
 
                                                                                 print(photo[0].path); //путь к картинке в кеше
                                                                                 print(photo[0].path.runtimeType);
-
+                                                                                print(photo[0].path.toString());
                                                                                 path = await getpathImage(photo[0].path);
 
-                                                                                dynamic imageName = path.split('/');
-                                                                                print(imageName);
-                                                                                print(imageName.length);
-                                                                                print(imageName[imageName.length - 1]);
-                                                                                imageName = imageName[imageName.length - 1];
-
-                                                                                var bytes = utf8.encode(path);
-                                                                                var base64Path = base64.encode(bytes);
-                                                                                print('base64Path');
-                                                                                print(base64Path);
+                                                                                // dynamic imageName = path.split('/');
+                                                                                // print(imageName);
+                                                                                // print(imageName.length);
+                                                                                // print(imageName[imageName.length - 1]);
+                                                                                // imageName = imageName[imageName.length - 1];
+                                                                                //
+                                                                                // var bytes = utf8.encode(path);
+                                                                                // var base64Path = base64.encode(bytes);
+                                                                                // print('base64Path');
+                                                                                // print(base64Path);
 
                                                                                 //_getImage(path, imageName);
                                                                                 // setState(() {
@@ -1025,7 +1025,7 @@ class _SuccessPaymentState extends State<SuccessPayment> {
                                                                                   carname: carname,
                                                                                   // password: password,
                                                                                   // path: imageName,
-                                                                                  path: base64Path,
+                                                                                  path: path,
 
 
 
@@ -1043,6 +1043,7 @@ class _SuccessPaymentState extends State<SuccessPayment> {
                                                                                 print(
                                                                                     'after editUser success');
                                                                                 print('state: $uuid');
+                                                                                print(user.path);
                                                                                 //var userId;
                                                                                 //print(editUser.userId)
                                                                                 //print(editUser(currentUser));
