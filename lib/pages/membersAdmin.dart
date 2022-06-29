@@ -1,6 +1,7 @@
 // import 'dart:js';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 import 'package:cadillac/pages/home.dart';
@@ -23,6 +24,7 @@ import 'package:http/http.dart' as http;
 
 import '../NavDrawerAdmin.dart';
 import '../variables.dart';
+import 'accountAdmin.dart';
 import 'homeAdmin.dart';
 
 class MembersAdmin extends StatefulWidget {
@@ -33,6 +35,7 @@ class MembersAdmin extends StatefulWidget {
 }
 
 class _MembersAdminState extends State<MembersAdmin> {
+  int selectedIndex = 1;
 
   late Future<UsersList> usersList;
 
@@ -137,7 +140,25 @@ class _MembersAdminState extends State<MembersAdmin> {
                                                                 // padding: const EdgeInsets.only(top: 38, bottom: 10),
                                                                 itemCount: snapshot.data?.users?.length,
                                                                 itemBuilder: (context, index) {
-                                                                  return Container(
+                                                                  String currentUserId;
+                                                                  return GestureDetector(
+                                                                      onLongPress: () {
+                                                                        setState(() {
+                                                                          // устанавливаем индекс выделенного элемента
+                                                                          selectedIndex =
+                                                                              index;
+                                                                          var currentUserId = snapshot.data?.users?[selectedIndex].userId;
+                                                                        });
+                                                                        Navigator
+                                                                            .pushReplacement(
+                                                                            context,
+                                                                            MaterialPageRoute(
+                                                                                builder: (
+                                                                                    context) =>
+                                                                                    AccountAdmin(userId: snapshot.data?.users?[selectedIndex].userId))
+                                                                        );
+                                                                      },
+                                                                  child: Container(
                                                                       width: 284,
                                                                       // height: 166,
                                                                       padding: const EdgeInsets
@@ -288,10 +309,19 @@ class _MembersAdminState extends State<MembersAdmin> {
                                                                                   ),
 
                                                                                 ]
-                                                                            )
+                                                                            ),
+                                                                            Visibility(
+                                                                              visible: false,
+                                                                              child: FormBuilderTextField(
+                                                                                name: 'currentNewsId',
+                                                                                initialValue: '${snapshot.data?.users?[selectedIndex].userId}',
+                                                                                onSaved: (value) => currentUserId = value!,
+                                                                              ),
+                                                                            ),
                                                                           ]
                                                                       )
 
+                                                                  )
                                                                   );
 
 

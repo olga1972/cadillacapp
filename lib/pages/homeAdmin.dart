@@ -114,6 +114,7 @@ class _HomeAdminState extends State<HomeAdmin> {
       },
 
       home: Scaffold(
+
         appBar: AppBar(
           backgroundColor: const Color(0xFF2C335E),
           shadowColor: Colors.transparent,
@@ -121,12 +122,12 @@ class _HomeAdminState extends State<HomeAdmin> {
           leading: Builder(
               builder: (BuildContext context) {
                 return IconButton(
-                  icon: SvgPicture.asset(
-                      'assets/images/burger.svg',
-                      semanticsLabel: 'Icon burger',
-                      height: 12.0),
-                  onPressed: () { Scaffold.of(context).openDrawer(); },
-                  tooltip: MaterialLocalizations.of(context).openAppDrawerTooltip,
+                    icon: SvgPicture.asset(
+                    'assets/images/burger.svg',
+                        semanticsLabel: 'Icon burger',
+                        height: 12.0),
+                    onPressed: () { Scaffold.of(context).openDrawer(); },
+                    tooltip: MaterialLocalizations.of(context).openAppDrawerTooltip,
                 );
               }
           ),
@@ -193,43 +194,46 @@ class _HomeAdminState extends State<HomeAdmin> {
                             crossAxisAlignment: CrossAxisAlignment
                                 .center,
                             children: [
-                              Row(
-                                  mainAxisAlignment: MainAxisAlignment.end,
-                                  children: [
-                                    Container (
-                                      width: 160,
-                                      margin: const EdgeInsets.only(right: 18.0, ),
-                                      child: Text('Редактировать рекламу',
-                                        textAlign: TextAlign.left,
+                              Positioned(
+                                right: 0,
+                                child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.end,
+                                    children: [
+                                      Container (
+                                        width: 160,
+                                        margin: const EdgeInsets.only(right: 18.0, ),
+                                        child: Text('Редактировать рекламу',
+                                          textAlign: TextAlign.left,
 
-                                        style: TextStyle(
+                                          style: TextStyle(
 
-                                          fontSize: 14.0,
-                                          fontWeight: FontWeight
-                                              .normal,
-                                          fontFamily: 'CadillacSans',
-                                          color: Colors.white,
-                                          //height: 1.4, //line-height : font-size
+                                            fontSize: 14.0,
+                                            fontWeight: FontWeight
+                                                .normal,
+                                            fontFamily: 'CadillacSans',
+                                            color: Colors.white,
+                                            //height: 1.4, //line-height : font-size
+                                          ),
                                         ),
                                       ),
-                                    ),
 
-                                    IconButton(
-                                      alignment: Alignment.centerLeft,
-                                      padding: const EdgeInsets.all(0),
-                                      iconSize: 22.0,
-                                      icon: SvgPicture.asset(
-                                        'assets/images/edit.svg',
-                                        semanticsLabel: 'Icon edit',
-                                        height: 15.0,
+                                      IconButton(
+                                        alignment: Alignment.centerLeft,
+                                        padding: const EdgeInsets.all(0),
+                                        iconSize: 22.0,
+                                        icon: SvgPicture.asset(
+                                          'assets/images/edit.svg',
+                                          semanticsLabel: 'Icon edit',
+                                          height: 15.0,
+                                        ),
+                                        onPressed: () {
+                                          Route route = MaterialPageRoute(
+                                              builder: (context) => Edit());
+                                          Navigator.push(context,route);
+                                        },
                                       ),
-                                      onPressed: () {
-                                        Route route = MaterialPageRoute(
-                                            builder: (context) => Edit());
-                                        Navigator.push(context,route);
-                                      },
-                                    ),
-                                  ]
+                                    ]
+                                ),
                               ),
                               Container(
                                 width: 284,

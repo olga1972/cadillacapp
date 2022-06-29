@@ -39,7 +39,9 @@ class User {
   late final String login;
   late final String carname;
   late final String path;
-  //late final XFile? photo;
+  late final String car1;
+  late final String car2;
+  late final String car3;
 
   User({
     required this.id,
@@ -50,7 +52,10 @@ class User {
     required this.birthday,
     required this.login,
     required this.carname,
-    required this.path
+    required this.path,
+    required this.car1,
+    required this.car2,
+    required this.car3,
     //this.photo,
   });
 
@@ -65,7 +70,9 @@ class User {
       login: json['login'] as String,
       carname: json['carname'] as String,
       path: json['path'] as String,
-      //XFileImage(file!)photo: json['photo'] as XFile
+      car1: json['car1'] as String,
+      car2: json['car2'] as String,
+      car3: json['car3'] as String
     );
   }
 
@@ -97,6 +104,9 @@ class User {
     // data['password'] = this.password;
     data['carname'] = this.carname;
     data['path'] = this.path;
+    data['car1'] = this.car1;
+    data['car2'] = this.car2;
+    data['car3'] = this.car3;
     return data;
   }
 }
@@ -108,3 +118,4 @@ Future<UsersList> readJson() async {
   return UsersList.fromJson(json.decode(response));
 
 }
+

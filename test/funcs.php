@@ -31,8 +31,8 @@ function edit_user() {
 
     //mysqli_stmt_prepare($stmt, "INSERT INTO users (username, birthday) VALUES(?, ?)");
 
-    mysqli_stmt_prepare($stmt, "UPDATE users SET username = ?, birthday = ? path =? WHERE login = ?");
-    mysqli_stmt_bind_param($stmt, 'ssss',  $username, $birthday, $path, $login);
+    mysqli_stmt_prepare($stmt, "UPDATE users SET username = ?, birthday = ?, path = ?, car1 = ?, car2 = ?, car3 = ? WHERE login = ?");
+    mysqli_stmt_bind_param($stmt, 'sssssss',  $username, $birthday, $path, $car1, $car2, $car3, $login);
     mysqli_stmt_execute($stmt);
     mysqli_stmt_get_result($stmt);
     //print(mysqli_stmt_errno($stmt));
@@ -49,8 +49,8 @@ function get_user_by_login() {
 
 
     $stmt = mysqli_stmt_init($link);
-    mysqli_stmt_prepare($stmt,"UPDATE users SET username = ?, birthday = ?, login = ?, carname = ?, path = ? WHERE email = ?");
-    mysqli_stmt_bind_param($stmt,'ssssss', $username, $birthday, $login, $carname, $path, $login);
+    mysqli_stmt_prepare($stmt,"UPDATE users SET username = ?, birthday = ?, login = ?, carname = ?, path = ?, car1 = ?, car2 = ?, car3 = ? WHERE email = ?");
+    mysqli_stmt_bind_param($stmt,'sssssssss', $username, $birthday, $login, $carname, $path, $car1, $car2, $car3, $login);
     mysqli_stmt_execute($stmt);
     mysqli_stmt_get_result($stmt);
 
@@ -180,13 +180,13 @@ function get_user($userId) {
 //            echo $_COOKIE["TestCookie"];
         }
 
-        //var_dump($userInfoArray);
+        // var_dump($userInfoArray);
         
 
         $userInfoArray[0]["id"] = strval($userInfoArray[0]["id"]);
 
 //        var_dump($userInfoArray[0]);
-        print(json_encode($userInfoArray[0]));
+        print(json_encode($userInfoArray[0], JSON_UNESCAPED_SLASHES));
         return $userInfoArray[0];
 //        print('новый пользователь');
 //        print($new_user);
@@ -356,6 +356,32 @@ function get_all_users_json(){
 
 }
 
+function get_all_news_json(){
+
+	global $link;
+	$query = "SELECT * FROM news";
+	$result = mysqli_query($link, $query);
+    
+    $news = array();
+
+    if($result){
+        $rowsCount = mysqli_num_rows($result); // количество полученных строк
+//        echo "<p>Получено объектов: $rowsCount</p>";
+
+        foreach($result as $row){
+            $news[] = $row;
+          
+        }
+
+        $news_obj = '{"news": ' . json_encode($news) . '}';
+ 
+        return ($news_obj);
+
+    } else{
+        echo "Ошибка: " . mysqli_error($link);
+    }
+}
+
 function users_to_obj () {
     $users_obj = get_all_users();
     $users_obj = json_encode( $users_obj);
@@ -413,4 +439,30 @@ function get_news() {
 
    
     }
+}
+
+function delete_news() {
+    global $link;
+    global $stmt;
+    clear();
+    extract($_POST);
+    var_dump($_POST);
+
+    mysqli_stmt_prepare($stmt,"DELETE FROM news WHERE newsId = ?");
+    mysqli_stmt_bind_param($stmt,'s', $newsId);
+    mysqli_stmt_execute($stmt);
+    $mysqli_result = mysqli_stmt_get_result($stmt);
+}
+
+function delete_user() {
+    global $link;
+    global $stmt;
+    clear();
+    extract($_POST);
+    var_dump($_POST);
+
+    mysqli_stmt_prepare($stmt,"DELETE FROM users WHERE userId = ?");
+    mysqli_stmt_bind_param($stmt,'s', $userId);
+    mysqli_stmt_execute($stmt);
+    $mysqli_result = mysqli_stmt_get_result($stmt);
 }

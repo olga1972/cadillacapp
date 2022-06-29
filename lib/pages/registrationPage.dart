@@ -395,7 +395,10 @@ class _RegistrationPageState extends State<RegistrationPage> {
                                               birthday: 'birthday',
                                               login: email,
                                               carname: carname,
-                                              path: 'path'
+                                              path: 'path',
+                                              car1: 'car1',
+                                              car2: 'car2',
+                                              car3: 'car3',
                                               //photo: null,
                                               // password: 'password',
                                               // login: email

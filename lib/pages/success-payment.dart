@@ -170,7 +170,9 @@ class _SuccessPaymentState extends State<SuccessPayment> {
   late dynamic type;
   late dynamic carname;
   late String path = "assets/images/avatar.png";
-
+  late String car1 = "https://upload.wikimedia.org/wikipedia/ru/0/04/НЕТ_ДОСТУПНОГО_ИЗОБРАЖЕНИЯ.jpg";
+  late String car2 = "https://upload.wikimedia.org/wikipedia/ru/0/04/НЕТ_ДОСТУПНОГО_ИЗОБРАЖЕНИЯ.jpg";
+  late String car3 = "https://upload.wikimedia.org/wikipedia/ru/0/04/НЕТ_ДОСТУПНОГО_ИЗОБРАЖЕНИЯ.jpg";
   // late final dynamic token = '12345678';
   // late final dynamic renewalToken = '12345678';
   // late final dynamic photo = new ApiImage(imageUrl: 'assets/images/avatar.png', id: '1');
@@ -178,6 +180,7 @@ class _SuccessPaymentState extends State<SuccessPayment> {
   //late XFile? photo;
 
   late List<dynamic> photo;
+  late List<dynamic> cars;
   // late final dynamic cars = new ApiImage (
   //     imageUrl: 'assets/images/cadillac-eldorado.png', id: '2');
   // late final cars = Cars ();
@@ -582,29 +585,6 @@ class _SuccessPaymentState extends State<SuccessPayment> {
                                                                           onSaved: (
                                                                               value) =>
                                                                           photo = value!,
-                                                                          //photo = value! as List?,
-                                                                          // {
-                                                                          //print(value?.path),
-                                                                          // // photo =
-                                                                          // // await ImagePicker().pickImage(source: ImageSource.gallery),
-                                                                          //   //setState(() => photo = value as XFile?),
-                                                                          // // print('photo?.path'),
-                                                                          // //   print(photo?.path),
-                                                                          //
-                                                                          //   //photo = value as XFile?
-                                                                          // },
-
-                                                                          // displayCustomType: (obj) =>
-                                                                          // obj is ApiImage ? obj.imageUrl : obj,
-                                                                          // initialValue: [
-                                                                          //   'https://images.pexels.com/photos/7078045/pexels-photo-7078045.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260',
-                                                                          //   const Text('this is an image\nas a widget !'),
-                                                                          //   ApiImage(
-                                                                          //     id: 'whatever',
-                                                                          //     imageUrl:
-                                                                          //     'https://images.pexels.com/photos/8311418/pexels-photo-8311418.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=750&w=1260',
-                                                                          //   ),
-                                                                          // ],
 
                                                                         ),
 
@@ -883,51 +863,48 @@ class _SuccessPaymentState extends State<SuccessPayment> {
 
                                                                       // uploadImage(
                                                                       //     maxImages: 3),
-                                                                      // FormBuilderImagePicker(
-                                                                      //   // fit: BoxFit.contain,
-                                                                      //   name: 'cars',
-                                                                      //   previewHeight: 140,
-                                                                      //   previewWidth: 284,
-                                                                      //   previewMargin: EdgeInsets.only(bottom: 0),
-                                                                      //   iconColor: Colors.white,
-                                                                      //
-                                                                      //   // galleryIcon: SvgPicture.asset(
-                                                                      //   //   'assets/images/image2.svg',
-                                                                      //   //   // height: 22.0,
-                                                                      //   //   height: 10.0,
-                                                                      //   //   color: Colors.white,
-                                                                      //   // ),
-                                                                      //
-                                                                      //
-                                                                      //   decoration: const InputDecoration(
-                                                                      //     contentPadding: EdgeInsets.all(0),
-                                                                      //     border: OutlineInputBorder(
-                                                                      //         borderSide: BorderSide.none,
-                                                                      //         borderRadius: BorderRadius.all(
-                                                                      //             Radius.circular(20)
-                                                                      //         )
-                                                                      //     ),
-                                                                      //
-                                                                      //     // filled: true,
-                                                                      //     // fillColor: Color(0xFF515569),
-                                                                      //     // labelText: 'Загрузить фото',
-                                                                      //     // labelStyle: stylePlaceHolderText,
-                                                                      //
-                                                                      //
-                                                                      //   ),
-                                                                      //   maxImages: 3,
-                                                                      //   // displayCustomType: (obj) =>
-                                                                      //   // obj is ApiImage ? obj.imageUrl : obj,
-                                                                      //   // initialValue: [
-                                                                      //   //   'https://images.pexels.com/photos/7078045/pexels-photo-7078045.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260',
-                                                                      //   //   const Text('this is an image\nas a widget !'),
-                                                                      //   //   ApiImage(
-                                                                      //   //     id: 'whatever',
-                                                                      //   //     imageUrl:
-                                                                      //   //     'https://images.pexels.com/photos/8311418/pexels-photo-8311418.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=750&w=1260',
-                                                                      //   //   ),
-                                                                      //   // ],
-                                                                      // ),
+                                                                      FormBuilderImagePicker(
+                                                                        // fit: BoxFit.contain,
+                                                                        name: 'cars',
+                                                                        previewHeight: 140,
+                                                                        previewWidth: 284,
+                                                                        previewMargin: EdgeInsets.only(bottom: 0),
+                                                                        iconColor: Colors.white,
+
+                                                                        // galleryIcon: SvgPicture.asset(
+                                                                        //   'assets/images/image2.svg',
+                                                                        //   // height: 22.0,
+                                                                        //   height: 10.0,
+                                                                        //   color: Colors.white,
+                                                                        // ),
+
+
+                                                                        decoration: const InputDecoration(
+                                                                          contentPadding: EdgeInsets.all(0),
+                                                                          border: OutlineInputBorder(
+                                                                              borderSide: BorderSide.none,
+                                                                              borderRadius: BorderRadius.all(
+                                                                                  Radius.circular(20)
+                                                                              )
+                                                                          ),
+
+                                                                          // filled: true,
+                                                                          // fillColor: Color(0xFF515569),
+                                                                          // labelText: 'Загрузить фото',
+                                                                          // labelStyle: stylePlaceHolderText,
+
+
+                                                                        ),
+                                                                        maxImages: 3,
+                                                                        onSaved: (
+                                                                            value) =>
+                                                                        {
+                                                                          print('value'),
+                                                                          print(value.runtimeType),
+                                                                          cars = value!,
+
+                                                                        }
+                                                                      ),
 
                                                                       Container(
                                                                           width: 284,
@@ -988,24 +965,21 @@ class _SuccessPaymentState extends State<SuccessPayment> {
                                                                                 print(photo[0].path.runtimeType);
                                                                                 print(photo[0].path.toString());
                                                                                 path = await getpathImage(photo[0].path);
+                                                                                car1 = await getpathImage(cars[0].path);
 
-                                                                                // dynamic imageName = path.split('/');
-                                                                                // print(imageName);
-                                                                                // print(imageName.length);
-                                                                                // print(imageName[imageName.length - 1]);
-                                                                                // imageName = imageName[imageName.length - 1];
-                                                                                //
-                                                                                // var bytes = utf8.encode(path);
-                                                                                // var base64Path = base64.encode(bytes);
-                                                                                // print('base64Path');
-                                                                                // print(base64Path);
+                                                                                print('car1');
+                                                                                print(car1);
+                                                                                car2 = await getpathImage(cars[1].path);
+                                                                                print('car2');
+                                                                                print(car2);
+                                                                                /*if(cars[1]) {
+                                                                                  car2 = await getpathImage(cars[1].path);
+                                                                                }
+                                                                                if(cars[2]) {
+                                                                                car3 = await getpathImage(cars[2].path);
+                                                                                }
+                                                                                print(car1);*/
 
-                                                                                //_getImage(path, imageName);
-                                                                                // setState(() {
-                                                                                //   path: photo[0].path;
-                                                                                //
-                                                                                // });
-                                                                                //path = photo?.path;
                                                                                 print(
                                                                                     _formKey
                                                                                         .currentState
@@ -1026,10 +1000,9 @@ class _SuccessPaymentState extends State<SuccessPayment> {
                                                                                   // password: password,
                                                                                   // path: imageName,
                                                                                   path: path,
-
-
-
-                                                                                  // cars: (cars),
+                                                                                  car1: car1,
+                                                                                  car2: car2,
+                                                                                  car3: car3,
 
                                                                                 );
                                                                                 //currentUser = editUser(user);
@@ -1044,6 +1017,10 @@ class _SuccessPaymentState extends State<SuccessPayment> {
                                                                                     'after editUser success');
                                                                                 print('state: $uuid');
                                                                                 print(user.path);
+                                                                                print(user.car1);
+                                                                                print(user.car2);
+                                                                                print(user.car3);
+
                                                                                 //var userId;
                                                                                 //print(editUser.userId)
                                                                                 //print(editUser(currentUser));
@@ -1172,12 +1149,14 @@ getpathImage(url) async {
     dynamic birthday = user.birthday;
     dynamic carname = user.carname;
     dynamic path = user.path;
-    // dynamic cars = user.cars;
-
+    dynamic car1 = user.car1;
+    dynamic car2 = user.car2;
+    dynamic car3 = user.car3;
+print(car1);
 
     String apiurl = baseUrl + "/test/edit.php";
     // String apiurl = "http://localhost/test/edit.php";
-    var response = await http.post(Uri.parse(apiurl), body:{'userId': uuid,'login': login, 'username': username, 'birthday': birthday, 'carname': carname, 'path': path},headers: {'Accept':'application/json, charset=utf-8',"Access-Control-Allow-Origin": "*",
+    var response = await http.post(Uri.parse(apiurl), body:{'userId': uuid,'login': login, 'username': username, 'birthday': birthday, 'carname': carname, 'path': path, 'car1': car1,'car2': car2,'car3': car3,},headers: {'Accept':'application/json, charset=utf-8',"Access-Control-Allow-Origin": "*",
       "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS"});
 
     // var response = await http.post(Uri.parse(apiurl), headers: {'Accept':'application/json, charset=utf-8',"Access-Control-Allow-Origin": "*",

@@ -103,12 +103,16 @@ class _EditState extends State<Edit> {
   late dynamic birthday;
   late dynamic type;
   late dynamic carname;
+  late dynamic car1;
+  late dynamic car2;
+  late dynamic car3;
   //late String path;
   // late final dynamic token = '12345678';
   // late final dynamic renewalToken = '12345678';
   // late final dynamic photo = new ApiImage(imageUrl: 'assets/images/avatar.png', id: '1');
   // late XFile? photo;
   late List<dynamic> photo;
+
   // late final dynamic cars = new ApiImage (
   //     imageUrl: 'assets/images/cadillac-eldorado.png', id: '2');
   // late final cars = Cars ();
@@ -731,7 +735,9 @@ class _EditState extends State<Edit> {
                                                                         phone: phone,
                                                                         email: email,
                                                                         path: path,
-                                                                        // cars: (cars),
+                                                                        car1: car1,
+                                                                        car2: car2,
+                                                                        car3: car3,
 
                                                                       );
                                                                       //currentUser = editUser(user);
