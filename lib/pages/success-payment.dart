@@ -170,9 +170,9 @@ class _SuccessPaymentState extends State<SuccessPayment> {
   late dynamic type;
   late dynamic carname;
   late String path = "assets/images/avatar.png";
-  late String car1 = "https://upload.wikimedia.org/wikipedia/ru/0/04/НЕТ_ДОСТУПНОГО_ИЗОБРАЖЕНИЯ.jpg";
-  late String car2 = "https://upload.wikimedia.org/wikipedia/ru/0/04/НЕТ_ДОСТУПНОГО_ИЗОБРАЖЕНИЯ.jpg";
-  late String car3 = "https://upload.wikimedia.org/wikipedia/ru/0/04/НЕТ_ДОСТУПНОГО_ИЗОБРАЖЕНИЯ.jpg";
+  late String car1;
+  late String car2;
+  late String car3;
   // late final dynamic token = '12345678';
   // late final dynamic renewalToken = '12345678';
   // late final dynamic photo = new ApiImage(imageUrl: 'assets/images/avatar.png', id: '1');
@@ -839,6 +839,21 @@ class _SuccessPaymentState extends State<SuccessPayment> {
                                                                               value) =>
                                                                           carname =
                                                                           value,
+                                                                          // validator: FormBuilderValidators.compose(
+                                                                          //     [(val) {
+                                                                          //       if (val == '') {
+                                                                          //         return null;
+                                                                          //         // return 'Поле carname не может быть пустым';
+                                                                          //       }
+                                                                          //       else if (val == null || val.length < 3) {
+                                                                          //           return 'Минимум 3 символа';
+                                                                          //       // } else {
+                                                                          //       //     return null;
+                                                                          //       }
+                                                                          //       return null;
+                                                                          //       }
+                                                                          //
+                                                                          //     ]),
                                                                           // onChanged: _onChanged,
                                                                           // valueTransformer: (text) => num.tryParse(text),
                                                                           //
@@ -877,7 +892,6 @@ class _SuccessPaymentState extends State<SuccessPayment> {
                                                                         //   height: 10.0,
                                                                         //   color: Colors.white,
                                                                         // ),
-
 
                                                                         decoration: const InputDecoration(
                                                                           contentPadding: EdgeInsets.all(0),
@@ -965,14 +979,45 @@ class _SuccessPaymentState extends State<SuccessPayment> {
                                                                                 print(photo[0].path.runtimeType);
                                                                                 print(photo[0].path.toString());
                                                                                 path = await getpathImage(photo[0].path);
-                                                                                car1 = await getpathImage(cars[0].path);
 
-                                                                                print('car1');
-                                                                                print(car1);
-                                                                                car2 = await getpathImage(cars[1].path);
-                                                                                print('car2');
-                                                                                print(car2);
-                                                                                /*if(cars[1]) {
+                                                                                print(cars.length);
+                                                                                if(cars.length == 2) {
+                                                                                  if(cars[0].path) {
+                                                                                    car1 = await getpathImage(cars[0].path);
+                                                                                  } else {
+                                                                                    car1 = 'car1';
+                                                                                  }
+                                                                                  if(cars[1].path) {
+                                                                                    car2 = await getpathImage(cars[2].path);
+                                                                                  } else {
+                                                                                    car2 = 'car2';
+                                                                                  }
+                                                                                } else if (cars.length == 2) {
+                                                                                  if(cars[0].path) {
+                                                                                    car1 = await getpathImage(cars[0].path);
+                                                                                  } else {
+                                                                                    car1 = 'car1';
+                                                                                  }
+                                                                                  if(cars[1].path) {
+                                                                                    car2 = await getpathImage(cars[2].path);
+                                                                                  } else {
+                                                                                    car2 = 'car2';
+                                                                                  }
+                                                                                  if(cars[2].path) {
+                                                                                    car3 = await getpathImage(cars[2].path);
+                                                                                  } else {
+                                                                                    car3 = 'car3';
+                                                                                  }
+                                                                                } else {
+                                                                                  car1 = await getpathImage(cars[0].path);
+                                                                                  car2 = 'car2';
+                                                                                  car3 = 'car3';
+                                                                                }
+
+
+
+
+                                                                                  /*if(cars[1]) {
                                                                                   car2 = await getpathImage(cars[1].path);
                                                                                 }
                                                                                 if(cars[2]) {
@@ -980,29 +1025,29 @@ class _SuccessPaymentState extends State<SuccessPayment> {
                                                                                 }
                                                                                 print(car1);*/
 
-                                                                                print(
-                                                                                    _formKey
-                                                                                        .currentState
-                                                                                        ?.fields
-                                                                                );
+                                                                                  print(
+                                                                                      _formKey
+                                                                                          .currentState
+                                                                                          ?.fields
+                                                                                  );
 
-                                                                                print(userId);
-                                                                                //final user = User(email: email, phone :phone);
-                                                                                dynamic currentUser = User(
-                                                                                  id: '1',
-                                                                                  userId: userId,
-                                                                                  phone: phone,
-                                                                                  email: email,
-                                                                                  username: username,
-                                                                                  birthday: birthday,
-                                                                                  login: login,
-                                                                                  carname: carname,
-                                                                                  // password: password,
-                                                                                  // path: imageName,
-                                                                                  path: path,
-                                                                                  car1: car1,
-                                                                                  car2: car2,
-                                                                                  car3: car3,
+                                                                                  print(userId);
+                                                                                  //final user = User(email: email, phone :phone);
+                                                                                  dynamic currentUser = User(
+                                                                                    id: '1',
+                                                                                    userId: userId,
+                                                                                    phone: phone,
+                                                                                    email: email,
+                                                                                    username: username,
+                                                                                    birthday: birthday,
+                                                                                    login: login,
+                                                                                    carname: carname,
+                                                                                    // password: password,
+                                                                                    // path: imageName,
+                                                                                    path: path,
+                                                                                    car1: car1,
+                                                                                    car2: car2,
+                                                                                    car3: car3,
 
                                                                                 );
                                                                                 //currentUser = editUser(user);
@@ -1149,9 +1194,10 @@ getpathImage(url) async {
     dynamic birthday = user.birthday;
     dynamic carname = user.carname;
     dynamic path = user.path;
-    dynamic car1 = user.car1;
-    dynamic car2 = user.car2;
-    dynamic car3 = user.car3;
+    dynamic car1, car2, car3;
+    if(user.car1 != 'null') car1 = user.car1;
+    if(user.car2 != 'null') car2 = user.car2;
+    if(user.car3 != 'null') car3 = user.car3;
 print(car1);
 
     String apiurl = baseUrl + "/test/edit.php";

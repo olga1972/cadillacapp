@@ -6,7 +6,7 @@ import 'package:flutter/widgets.dart';
 // import 'package:getwidget/getwidget.dart';
 // import 'package:getwidget/getwidget.dart';
 import 'package:cadillac/widgets/carousel.dart';
-import 'package:cadillac/models/adsBanner.dart';
+// import 'package:cadillac/models/adsBanner.dart';
 // import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:card_swiper/card_swiper.dart';
 // void main() => runApp(Gallery());
@@ -14,33 +14,33 @@ import 'package:card_swiper/card_swiper.dart';
 class PartnersList extends StatelessWidget {
   PartnersList({Key? key}) : super(key: key);
 
-  final List<AdsBanner> partners = [
-    AdsBanner(
-      id: 1,
-      name: 'Golf Club',
-      image: 'assets/images/golf_club.png',
-    ),
-    AdsBanner(
-      id: 2,
-      name: 'Ritz-Carlton',
-      image: 'assets/images/image16.png',
-    ),
-    AdsBanner(
-      id: 3,
-      name: 'Ritz-Carlton',
-      image: 'assets/images/image18.png',
-    ),
-    AdsBanner(
-      id: 4,
-      name: 'Ritz-Carlton',
-      image: 'assets/images/image19.png',
-    ),
-    AdsBanner(
-      id: 5,
-      name: 'Ritz-Carlton',
-      image: 'assets/images/image17.png',
-    ),
-  ];
+  // final List<AdsBanner> partners = [
+  //   AdsBanner(
+  //     id: 1,
+  //     name: 'Golf Club',
+  //     image: 'assets/images/golf_club.png',
+  //   ),
+  //   AdsBanner(
+  //     id: 2,
+  //     name: 'Ritz-Carlton',
+  //     image: 'assets/images/image16.png',
+  //   ),
+  //   AdsBanner(
+  //     id: 3,
+  //     name: 'Ritz-Carlton',
+  //     image: 'assets/images/image18.png',
+  //   ),
+  //   AdsBanner(
+  //     id: 4,
+  //     name: 'Ritz-Carlton',
+  //     image: 'assets/images/image19.png',
+  //   ),
+  //   AdsBanner(
+  //     id: 5,
+  //     name: 'Ritz-Carlton',
+  //     image: 'assets/images/image17.png',
+  //   ),
+  // ];
   // List<String> images = [
   //   "assets/images/image11.png",
   //   "assets/images/image13.png",
@@ -49,9 +49,9 @@ class PartnersList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    int id = partners[0].id;
-    String name = partners[0].name;
-    String image = partners[0].image;
+    // int id = partners[0].id;
+    // String name = partners[0].name;
+    // String image = partners[0].image;
 
     return MaterialApp(
         title: 'Material App',
@@ -71,7 +71,8 @@ class PartnersList extends StatelessWidget {
             //     const Offset(304.0, 0.0)
             //   ]),
             autoplay: true,
-            itemCount: partners.length,
+            // itemCount: partners.length,
+            itemCount: 3,
             viewportFraction: 1.0,
             itemHeight: 92,
             itemWidth: 284,
@@ -82,12 +83,13 @@ class PartnersList extends StatelessWidget {
                   borderRadius: BorderRadius.all(Radius.circular(20)),
                 ),
                 margin: const EdgeInsets.only(left: 10,right: 10),
-                child: Image.asset(
-                  partners[index].image,
-                  // centerSlice: Rect.fromPoints(const Offset(50.0, 0.0), const Offset(0, 0)),
-                  fit: BoxFit.contain,
-                  alignment: Alignment.centerLeft,
-                ),
+                child: Text('partners')
+                // Image.asset(
+                //   partners[index].image,
+                //   // centerSlice: Rect.fromPoints(const Offset(50.0, 0.0), const Offset(0, 0)),
+                //   fit: BoxFit.contain,
+                //   alignment: Alignment.centerLeft,
+                // ),
               );
             },
             // control: SwiperControl(),

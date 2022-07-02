@@ -18,6 +18,7 @@ import 'package:flutter_svg/svg.dart';
 import 'dart:convert';
 import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
+import 'dart:io';
 
 import '../models/news.dart';
 
@@ -37,6 +38,8 @@ class _NewsAdminState extends State<NewsAdmin> {
 
   late Future<NewsList> newsList;
   late Future<New> news;
+  late File _img;
+  late String path = "assets/images/avatar.png";
   //late Future<New> deleteNews;
 
   @override
@@ -128,6 +131,7 @@ class _NewsAdminState extends State<NewsAdmin> {
                                                                 itemCount: snapshot.data?.news?.length,
                                                                 itemBuilder: (context, index) {
                                                                   String currentNewsId;
+                                                                  _img = File('${snapshot.data?.news?[index].path}');
                                                                   return Container(
                                                                       width: 320,
                                                                       // height: 166,
@@ -375,11 +379,7 @@ class _NewsAdminState extends State<NewsAdmin> {
                                                                                   .only(
                                                                                   bottom: 10.0,
                                                                                   top: 10),
-                                                                              child: Image
-                                                                                  .asset(
-                                                                                'assets/images/cadillac-escalada.png',
-                                                                                fit: BoxFit
-                                                                                    .fill,
+                                                                              child: Image.file(_img, fit: BoxFit.fill, width: 285, height: 140,
                                                                               ),
                                                                             ),
                                                                             Container(

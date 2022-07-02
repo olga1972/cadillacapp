@@ -11,7 +11,9 @@
 // import 'package:build_runner/build_runner.dart';
 // import 'package:sqflite/sqflite.dart';
 import 'package:cadillac/pages/account.dart';
+import 'package:cadillac/pages/accountAdmin.dart';
 import 'package:cadillac/pages/addNews.dart';
+import 'package:cadillac/pages/addPartners.dart';
 import 'package:cadillac/pages/cardProduct.dart';
 import 'package:cadillac/pages/cardProductAdmin.dart';
 import 'package:cadillac/pages/contacts.dart';
@@ -25,6 +27,7 @@ import 'package:cadillac/pages/news.dart';
 import 'package:cadillac/pages/newsAdmin.dart';
 import 'package:cadillac/pages/partners.dart';
 import 'package:cadillac/pages/partnersAdmin.dart';
+import 'package:cadillac/pages/registrationAdmin.dart';
 import 'package:cadillac/pages/shop.dart';
 import 'package:cadillac/pages/shopAdmin.dart';
 import 'package:cadillac/pages/success-payment.dart';
@@ -148,13 +151,15 @@ class MyApp extends StatelessWidget {
 
 
       routes: {
-        //'/home': (context) => RegistrationPage(),
-        //'/home': (context) => Account(userId:userId),
+         '/home': (context) => RegistrationPage(),
+        //'/home': (context) => RegistrationAdmin(userId: '1aa71d78-f91c-11ec-a426-002590eb3418'),
+        //'/home': (context) => Account(userId:'f1c7fde2-ef1b-11ec-a426-002590eb3418'),
         '/homeAdmin': (context) => HomeAdmin(),
-        //'/home': (context) => SuccessPayment(userId:userId),
-        // '/home': (context) => cookies != null && cookies != '' ? Account() : RegistrationPage(),
+        '/registrationAdmin': (context) => RegistrationAdmin(userId: '1aa71d78-f91c-11ec-a426-002590eb3418'),
+        //'/home': (context) => SuccessPayment(userId:'f1c7fde2-ef1b-11ec-a426-002590eb341'),
+        //'/home': (context) => cookies != null && cookies != '' ? AccountAdmin(userId: '1aa71d78-f91c-11ec-a426-002590eb3418') : RegistrationPage(),
         //'/home': (context) => Shop(),
-        '/home': (context) => MembersAdmin(),
+        //'/home': (context) => AccountAdmin(userId:'f1c7fde2-ef1b-11ec-a426-002590eb3418'),
         //'/home': (context) => Contacts(),
         //'/home': (context) => Account(userId:userId),
         //'/home': (context) => Home(),

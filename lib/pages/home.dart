@@ -22,7 +22,7 @@ import 'package:cadillac/pages/test.dart';
 import 'package:cadillac/NavDrawer.dart';
 import 'package:cadillac/widgets/titlePage.dart';
 import 'package:cadillac/widgets/socials.dart';
-import 'package:cadillac/widgets/bannersList.dart';
+// import 'package:cadillac/widgets/bannersList.dart';
 
 import 'package:url_launcher/link.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -268,7 +268,8 @@ class _HomeState extends State<Home> {
                                   padding: EdgeInsets.zero,
                                   margin: const EdgeInsets.only(top: 10, bottom: 30, left: 0, right: 0),
                                   color: const Color(0xFF181C33),
-                                  child: Banners(),
+                                  // child: AdsBanners(),
+                                  child: Text('banners'),
                                 ),
 
                                 const TitlePage(title: 'мы в соцсетях'),

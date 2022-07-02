@@ -36,6 +36,7 @@ class New {
   late final String newsDate;
   late final String newsLocation;
   late final String newsDescr;
+  late final String path;
 
   //late final XFile? photo;
 
@@ -46,6 +47,7 @@ class New {
     required this.newsDate,
     required this.newsLocation,
     required this.newsDescr,
+    required this.path
 
     //this.photo,
   });
@@ -58,6 +60,7 @@ class New {
       newsDate: json['newsDate'] as String,
       newsLocation: json['newsLocation'] as String,
       newsDescr: json['newsDescr'] as String,
+      path: json['path'] as String
 
       //XFileImage(file!)photo: json['photo'] as XFile
     );
@@ -86,6 +89,7 @@ class New {
     data['newsDate'] = this.newsDate;
     data['newsLocation'] = this.newsLocation;
     data['newsDescrl'] = this.newsDescr;
+    data['path'] = this.path;
     return data;
   }
 }

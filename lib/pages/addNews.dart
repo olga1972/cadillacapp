@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:form_builder_image_picker/form_builder_image_picker.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 
 import 'package:cadillac/variables.dart';
@@ -30,8 +31,18 @@ import '../models/news.dart';
 import 'homeAdmin.dart';
 import 'newsAdmin.dart';
 
-class AddNews extends StatelessWidget {
+class AddNews extends StatefulWidget {
   AddNews({Key? key}) : super(key: key);
+
+  @override
+  State<AddNews> createState() => _AddNewsState();
+}
+
+class _AddNewsState extends State<AddNews> {
+  @override
+  void initState() {
+    super.initState();
+  }
   final _newsKey = GlobalKey<FormBuilderState>();
 
   // get currentUser => null;
@@ -43,7 +54,9 @@ class AddNews extends StatelessWidget {
   late String newsDate = 'date';
   late String newsLocation = 'location';
   late String newsDescr = 'descr';
+  late String path;
 
+  late List<dynamic> photo;
 
   // final styleFormInput = const TextStyle(
   //   fontSize: 14.0,
@@ -162,7 +175,9 @@ class AddNews extends StatelessWidget {
                                                       //   // FormBuilderValidators.numeric(context),
                                                       //   // FormBuilderValidators.max(context, 70),
                                                       // ]),
-                                                      validator:
+                                                      autovalidateMode: AutovalidateMode.always,
+
+                                                  validator:
                                                       FormBuilderValidators.compose([
                                                             (val) {
                                                           if (val == null) {
@@ -331,6 +346,33 @@ class AddNews extends StatelessWidget {
                                                   maxLines: null,
                                                 ),
 
+                                                FormBuilderImagePicker(
+                                                  name: 'photo',
+                                                  // previewHeight: 96,
+                                                  // previewWidth: 96,
+                                                  // previewMargin: EdgeInsets.symmetric(horizontal: 150),
+                                                  previewHeight: 140,
+                                                  previewWidth: 284,
+                                                  previewMargin: EdgeInsets.only(bottom: 0),
+                                                  iconColor: Colors.white,
+                                                  decoration: const InputDecoration(
+                                                    border: OutlineInputBorder(
+                                                        borderSide: BorderSide.none,
+                                                        borderRadius: BorderRadius.all(
+                                                            Radius.circular(20)
+                                                        )
+                                                    ),
+
+                                                    // labelText: 'Загрузить фото',
+                                                    // labelStyle: styleHelperText,
+                                                  ),
+                                                  maxImages: 1,
+                                                  onSaved: (
+                                                      value) =>
+                                                  photo = value!,
+
+                                                ),
+
                                             //]
                                           //),
 
@@ -367,6 +409,7 @@ class AddNews extends StatelessWidget {
                                                     newsDate: newsDate,
                                                     newsLocation: newsLocation,
                                                     newsDescr: newsDescr,
+                                                    path: path
                                                   );
 
                                                   addNews(news);

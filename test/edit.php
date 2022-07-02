@@ -1,5 +1,4 @@
 <?php
-
 header("Content-type: text/html; charset=utf-8");
 error_reporting(-1);
 require_once 'connect.php';
@@ -33,13 +32,19 @@ if(isset($_POST["login"])) {
             $currentUser = get_user_by_login();   //нет вывода данных
 //            print('$currentUser');
 //            print($currentUser);
-
-
+//var_dump($currentUser);
+// print($currentUser["userId"]);
+// $userId = $currentUser["userId"];
 
 // получаем все информацию о пользователе (объект json)
             $editUser = get_user_all();
+            
+            //var_dump($editUser);
+            //$editUser = getUser($userId);
+            //setcookie('uuid', $editUser["userId"], time() + (3600 * 24 * 30), '/');
 
           echo(json_encode($editUser));
+
 
           //header("Refresh:0");
 

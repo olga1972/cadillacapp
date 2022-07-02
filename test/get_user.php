@@ -17,26 +17,18 @@ header("Refresh:0");
 extract($_POST);
 //$userId = $_COOKIE['TestCookie'];
 //$_POST['userId'] = $userId;
-//print($userId);
 
 
+setcookie('uuid', $userId, time() + (3600 * 24 * 30), '/');
 
-if(isset ($_COOKIE['uuid'])) {
 
-$userId = $_COOKIE['uuid'];
-get_user($userId);
-
-} else {
-    //print('cookie no');
-    //$newUser = get_user_old(); //array userId приходит
-
-    $newUser = get_user($userId); //array
-    $newUser["id"] = strval($newUser["id"]);
+$newUser = get_user($userId); //array
+$newUser["id"] = strval($newUser["id"]);
 
     //$userId = $newUser["userId"];
     //print($userId);
 
-}
+
 
 // get_user($userId);
 

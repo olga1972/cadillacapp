@@ -109,6 +109,13 @@ class _MembersState extends State<Members> {
                                     final List<User>? usersList = snapshot.data?.users;
                                     print('members');
                                     print(usersList);
+                                    if (snapshot.connectionState != ConnectionState.done) {
+                                      return const Center(child: CircularProgressIndicator());
+                                    }
+
+                                    if (snapshot.hasError) {
+                                      return Center(child:Text(snapshot.error.toString()));
+                                    }
 
                                     if (snapshot.hasData) {
                                         return Center(
@@ -260,10 +267,8 @@ class _MembersState extends State<Members> {
                           )
                      )
                   );
-                  } else if (snapshot.hasError) {
-                      return const Text('Error');
-                      }
-                      return const Center(child: CircularProgressIndicator());
+                  }
+                    return const Center(child: Text('no data'));
 
                             }
                         ),

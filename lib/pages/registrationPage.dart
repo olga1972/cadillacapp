@@ -7,6 +7,7 @@ import 'dart:io';
 import 'package:cadillac/main.dart';
 import 'package:cadillac/pages/homeAdmin.dart';
 import 'package:cadillac/pages/partners.dart';
+import 'package:cadillac/pages/registrationAdmin.dart';
 import 'package:cadillac/pages/shop.dart';
 import 'package:cadillac/pages/success-payment.dart';
 // import 'package:flutter/cupertino.dart';
@@ -419,7 +420,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                                             Navigator.pushReplacement(
                                                 context, MaterialPageRoute(
                                                 builder: (context) =>
-                                                    HomeAdmin()
+                                                    RegistrationAdmin(userId: uuid)
                                               // SuccessPayment(
                                               //     currentUser: user),
                                             )
