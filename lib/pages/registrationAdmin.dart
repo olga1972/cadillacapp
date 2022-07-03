@@ -132,7 +132,7 @@ class _RegistrationAdminState extends State<RegistrationAdmin> {
 
     uuid = '';
     //uuid = userId;
-    //getImage();
+
 
     var path = "assets/images/avatar.png";
     print(path);
@@ -784,7 +784,7 @@ class _RegistrationAdminState extends State<RegistrationAdmin> {
                                                     // uploadImage(
                                                     //     maxImages: 3),
                                                     FormBuilderImagePicker(
-                                                      // fit: BoxFit.contain,
+                                                        fit: BoxFit.contain,
                                                         name: 'cars',
                                                         previewHeight: 140,
                                                         previewWidth: 284,
@@ -878,7 +878,7 @@ class _RegistrationAdminState extends State<RegistrationAdmin> {
                                                               // }
 
                                                               debugPrint(
-                                                                  'Valid success payment');
+                                                                  'Valid success payment admin');
 
 
                                                               print(photo[0].path); //путь к картинке в кеше
@@ -1005,8 +1005,10 @@ class _RegistrationAdminState extends State<RegistrationAdmin> {
                                                               // Home());
 
                                                             } else {
+                                                              showAlertDialog(context); //не работает почему-то
                                                               debugPrint(
                                                                   'Invalid');
+
                                                             }
 
                                                             // Navigator
@@ -1244,5 +1246,54 @@ void _launchURL() async {
   //   await launchUrl(url, forceWebView: true);   //true если открываем в приложении, false открываем в браузере
   // } else {
   //   throw 'Could not launch $url';
+}
+
+showAlertDialog(BuildContext context) {
+
+  AlertDialog alert = AlertDialog(
+    //title: Text("Simple Alert"),
+    content: Text('Вы заполнилил не все поля формы'.toUpperCase(),
+      textAlign: TextAlign.center,
+      style: styleTextAlertDialog,
+    ),
+    actions: <Widget>[
+      Container (
+          padding: EdgeInsets.only(left: 20, right: 20, bottom: 20),
+          child: Row (
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                MaterialButton(
+                  padding: const EdgeInsets.all(14),
+                  color: Color(0xFFE4E6FF),
+                  elevation: 0,
+                  shape: const RoundedRectangleBorder(
+                    side: BorderSide.none,
+                    borderRadius: BorderRadius.all(Radius.circular(10),
+                    ),),
+                  child: Text(
+                    'Ок'.toUpperCase(),
+                    textAlign: TextAlign.left,
+                    style: styleTextAlertDialog,
+                  ),
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                ),
+
+              ]
+          )
+      )
+
+
+    ],
+  );
+
+  // show the dialog
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return alert;
+    },
+  );
 }
 

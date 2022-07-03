@@ -38,8 +38,10 @@ class _NewsAdminState extends State<NewsAdmin> {
 
   late Future<NewsList> newsList;
   late Future<New> news;
-  late File _img;
+  // late File _img;
   late String path = "assets/images/avatar.png";
+  bool isLoadedImage = false;
+  late File _image;
   //late Future<New> deleteNews;
 
   @override
@@ -108,6 +110,14 @@ class _NewsAdminState extends State<NewsAdmin> {
                                       print('news');
                                       print(newsList);
 
+                                      if (snapshot.connectionState != ConnectionState.done) {
+                                        return const Center(child: CircularProgressIndicator());
+                                      }
+
+                                      if (snapshot.hasError) {
+                                        return Center(child:Text(snapshot.error.toString()));
+                                      }
+
                                       if (snapshot.hasData) {
                                         return Center(
                                               child: Container(
@@ -131,7 +141,15 @@ class _NewsAdminState extends State<NewsAdmin> {
                                                                 itemCount: snapshot.data?.news?.length,
                                                                 itemBuilder: (context, index) {
                                                                   String currentNewsId;
-                                                                  _img = File('${snapshot.data?.news?[index].path}');
+                                                                  var fileExtension = snapshot.data?.news[index].path.substring((snapshot.data?.news[index].path.length)! - 3);
+                                                                  if(fileExtension == 'jpg' || fileExtension == 'png' || fileExtension == 'svg') {
+                                                                    isLoadedImage = true;
+                                                                  } else {
+                                                                    isLoadedImage = false;
+                                                                  }
+
+                                                                  _image = File('${snapshot.data?.news?[index]?.path}');
+
                                                                   return Container(
                                                                       width: 320,
                                                                       // height: 166,
@@ -254,37 +272,7 @@ class _NewsAdminState extends State<NewsAdmin> {
                                                                                         clipBehavior: Clip
                                                                                             .none,
                                                                                         children: [
-                                                                                          // Positioned(
-                                                                                          //     left: 300.0,
-                                                                                          //     top: 7.0,
-                                                                                          //     child: IconButton(
-                                                                                          //       alignment: Alignment
-                                                                                          //           .centerLeft,
-                                                                                          //       padding: const EdgeInsets
-                                                                                          //           .all(
-                                                                                          //           0),
-                                                                                          //       iconSize: 20.0,
-                                                                                          //       icon: SvgPicture
-                                                                                          //           .asset(
-                                                                                          //         'assets/images/add.svg',
-                                                                                          //         semanticsLabel: 'Icon add',
-                                                                                          //         height: 20.0,
-                                                                                          //
-                                                                                          //       ),
-                                                                                          //       onPressed: () {
-                                                                                          //         confirmDialog(
-                                                                                          //             context);
-                                                                                          //         Route route = MaterialPageRoute(
-                                                                                          //             builder: (
-                                                                                          //                 context) =>
-                                                                                          //                 AddNews());
-                                                                                          //         Navigator
-                                                                                          //             .push(
-                                                                                          //             context,
-                                                                                          //             route);
-                                                                                          //       },
-                                                                                          //     )
-                                                                                          // ),
+
                                                                                           Container(
                                                                                               width: 320,
                                                                                           child: Text.rich(
@@ -335,37 +323,7 @@ class _NewsAdminState extends State<NewsAdmin> {
                                                                                           )
 
 
-                                                                                          // Positioned(
-                                                                                          //     left: 300.0,
-                                                                                          //     top: 7.0,
-                                                                                          //     child: IconButton(
-                                                                                          //       alignment: Alignment
-                                                                                          //           .centerLeft,
-                                                                                          //       padding: const EdgeInsets
-                                                                                          //           .all(
-                                                                                          //           0),
-                                                                                          //       iconSize: 20.0,
-                                                                                          //       icon: SvgPicture
-                                                                                          //           .asset(
-                                                                                          //         'assets/images/add.svg',
-                                                                                          //         semanticsLabel: 'Icon add',
-                                                                                          //         height: 20.0,
-                                                                                          //
-                                                                                          //       ),
-                                                                                          //       onPressed: () {
-                                                                                          //         confirmDialog(
-                                                                                          //             context);
-                                                                                          //         Route route = MaterialPageRoute(
-                                                                                          //             builder: (
-                                                                                          //                 context) =>
-                                                                                          //                 AddNews());
-                                                                                          //         Navigator
-                                                                                          //             .push(
-                                                                                          //             context,
-                                                                                          //             route);
-                                                                                          //       },
-                                                                                          //     )
-                                                                                          // ),
+
                                                                                         ]
 
                                                                                     ),
@@ -375,12 +333,26 @@ class _NewsAdminState extends State<NewsAdmin> {
 
 
                                                                             Container(
-                                                                              margin: const EdgeInsets
-                                                                                  .only(
+                                                                                width: 284,
+                                                                                height: 160,
+                                                                                decoration: BoxDecoration(
+                                                                                  color: Color(0XffE4E6FF),
+                                                                                  borderRadius: BorderRadius.all(Radius
+                                                                                      .circular(20.0)),
+                                                                                ),
+                                                                              margin: const EdgeInsets.only(
                                                                                   bottom: 10.0,
                                                                                   top: 10),
-                                                                              child: Image.file(_img, fit: BoxFit.fill, width: 285, height: 140,
-                                                                              ),
+                                                                                child: (isLoadedImage &&_image.existsSync()) ? Image.file(_image, fit: BoxFit.cover, width: 284, height: 160) :
+                                                                                Text('no image',
+                                                                                    textAlign: TextAlign.center,
+                                                                                    style: TextStyle(
+                                                                                      fontSize: 18.0,
+                                                                                      fontWeight: FontWeight.normal,
+                                                                                      fontFamily: 'CadillacSans',
+                                                                                      color: Color(0xFF8F97BF),
+                                                                                      height: 1.7, //line-height / font-size
+                                                                                    ))
                                                                             ),
                                                                             Container(
                                                                               margin: const EdgeInsets
@@ -418,11 +390,7 @@ class _NewsAdminState extends State<NewsAdmin> {
                                           );
 
                                       }
-                                      else if (snapshot.hasError) {
-                                        return const Text('Error');
-                                      }
-                                      return const Center(child: CircularProgressIndicator());
-
+                                      return const Center(child: Text('no data'));
                                     }
                                 )
                             )

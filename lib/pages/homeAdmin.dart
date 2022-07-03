@@ -43,7 +43,8 @@ import '../models/banners.dart';
 import '../models/news.dart';
 import '../variables.dart';
 
-import 'edit.dart';
+import 'editAccount.dart';
+import 'editAds.dart';
 import 'gift.dart';
 import 'newsAdmin.dart';
 
@@ -58,11 +59,13 @@ class _HomeAdminState extends State<HomeAdmin> {
   int selectedIndex = 1;
 
   late Future<BannersList> bannersList;
-  late Future<AdsBanner> banners;
-  late File _img;
-  late String path = "assets/images/avatar.png";
 
-  late dynamic length;
+  //late Future<Partner> partners;
+  late String bannerId;
+  //late Future<ProductsList> productsList;
+  bool isLoadedImage = false;
+  late File _image;
+  late String currentBannerId;
 
   @override
   void initState() {
@@ -186,9 +189,9 @@ class _HomeAdminState extends State<HomeAdmin> {
                                 height: 15.0,
                                 ),
                                 onPressed: () {
-                                // Route route = MaterialPageRoute(
-                                //     builder: (context) => Edit());
-                                // Navigator.push(context,route);
+                                Route route = MaterialPageRoute(
+                                    builder: (context) => EditAds());
+                                Navigator.push(context,route);
                                 },
                               ),
                             ]
@@ -205,7 +208,7 @@ class _HomeAdminState extends State<HomeAdmin> {
 
                         Container (
                           width: 284,
-                          margin: const EdgeInsets.only(top: 80, ),
+                          margin: const EdgeInsets.only(top: 80, bottom: 100),
                           child: (
                           Text('Здесь вы можете размещать \nи редактировать рекламу'.toUpperCase(),
                           style:const TextStyle (
@@ -223,149 +226,179 @@ class _HomeAdminState extends State<HomeAdmin> {
                         ),
                         Container (
                           width: 320,
-                          //height: 830,
-                          child: FutureBuilder<BannersList>(
-                            future: bannersList,
-                            builder: (context, snapshot) {
+                          height: 140,
+                            child: FutureBuilder<BannersList>(
+                                future: bannersList,
+                                builder: (context, snapshot) {
 
-                            var banners = snapshot.data?.banners;
-                            List<AdsBanner>? bannersList = snapshot.data?.banners;
-                            print(bannersList);
+                                  var banners = snapshot.data?.banners;
+                                  List<AdsBanner>? bannersList = snapshot.data?.banners;
+                                  print('Banners');
+                                  print(banners?.length);
+                                  print(bannersList);
 
-                            if (snapshot.hasData) {
-                              return Center(
-                                  child: Container(
-                                      width: 320,
-                                      //height: 860,
-                                      child: Column(
-                                          mainAxisAlignment: MainAxisAlignment.start,
-                                          crossAxisAlignment: CrossAxisAlignment.center,
-                                          children: [
+                                  if (snapshot.connectionState !=
+                                      ConnectionState.done) {
+                                    return const Center(
+                                        child: CircularProgressIndicator());
+                                  }
 
-                                            Container(
-                                                height: 340,
-                                                child: Swiper(
-                                                    containerWidth: 320,
-                                                    viewportFraction: 1.0,
-                                                    itemHeight: 92,
-                                                    itemWidth: 284,
-                                                    // padding: const EdgeInsets.only(top: 38, bottom: 10),
-                                                    // itemCount: snapshot.data?.banners.length,
-                                                    itemCount: 2,
-                                                    itemBuilder: (context, index) {
-                                                      String currentBannerId;
-                                                      _img = File('${snapshot.data?.banners?[index].path}');
-                                                      return Container(
-                                                          width: 320,
-                                                          // height: 166,
-                                                          margin: const EdgeInsets.only(top: 10,bottom: 10,),
+                                  if (snapshot.hasError) {
+                                    return Center(
+                                        child: Text(snapshot.error.toString()));
+                                  }
 
-                                                          child: Column(
-                                                              mainAxisAlignment: MainAxisAlignment
-                                                                  .center,
-                                                              crossAxisAlignment: CrossAxisAlignment
-                                                                  .start,
-                                                              children: [
-                                                                Stack(
-                                                                    alignment: Alignment.centerRight,
-                                                                    clipBehavior: Clip
-                                                                        .none,
-                                                                    children: [
+                                  if (snapshot.hasData) {
+                                    int countImages = snapshot.data
+                                    !.banners.length;
+                                    return Swiper(
+                                      // containerHeight: 92,
+                                      containerWidth: 340,
+                                      // layout: SwiperLayout.CUSTOM,
+                                      // customLayoutOption:
+                                      // CustomLayoutOption(startIndex: -1, stateCount: 2)
+                                      //   ..addTranslate([
+                                      //     const Offset(-28.0, 0.0),
+                                      //     const Offset(256.0, 0.0),
+                                      //     // const Offset(304.0, 0.0)
+                                      //   ]),
+
+                                      viewportFraction: 1,
+                                      itemHeight: 92,
+                                      itemWidth: 340,
+                                      autoplay: true,
+                                      itemCount: countImages,
+                                      // outer: true,
+                                      itemBuilder: (BuildContext context, int index) {
+                                        var fileExtension = snapshot
+                                            .data?.banners[index]
+                                            .path.substring(
+                                            (snapshot.data
+                                                ?.banners[index]
+                                                .path.length)! - 3);
+                                        if (fileExtension ==
+                                            'jpg' ||
+                                            fileExtension ==
+                                                'png' ||
+                                            fileExtension ==
+                                                'svg') {
+                                          isLoadedImage = true;
+                                        } else {
+                                          isLoadedImage = false;
+                                        }
+                                        _image = File(
+                                            '${snapshot.data
+                                                ?.banners?[index]
+                                                ?.path}');
+                                        return Container(
+                                            width: 320,
+                                            // height: 166,
+                                            margin: const EdgeInsets.only(top: 10,bottom: 10,),
+
+                                        child: Column(
+                                        mainAxisAlignment: MainAxisAlignment
+                                            .center,
+                                        crossAxisAlignment: CrossAxisAlignment
+                                            .start,
+                                        children: [
+                                        Stack(
+                                        alignment: Alignment.centerRight,
+                                        clipBehavior: Clip
+                                            .none,
+                                        children: [
+
+                                          Container (
+                                            width: 284,
+                                            height: 92,
+                                            decoration: BoxDecoration(
+                                              color: Color(0XffE4E6FF),
+                                              borderRadius: BorderRadius.all(Radius
+                                                  .circular(10.0)),
+                                            ),
+                                            margin: const EdgeInsets.only(bottom: 10.0, top: 10, left: 10,right: 40),
+                                            child: (isLoadedImage &&_image.existsSync()) ? ClipRRect(borderRadius: BorderRadius.all(Radius
+                                                .circular(10.0)), child: Image.file(_image, fit: BoxFit.cover, width: 284, height: 92)) :
+                                            Text('no image',
+                                                textAlign: TextAlign.center,
+                                                style: TextStyle(
+                                                  fontSize: 18.0,
+                                                  fontWeight: FontWeight.normal,
+                                                  fontFamily: 'CadillacSans',
+                                                  color: Color(0xFF8F97BF),
+                                                  height: 1.7, //line-height / font-size
+                                                ))
+                                          ),
+                                          Column (
+                                            children: [
+                                            Container (
+                                              margin: EdgeInsets.only(bottom: 30.0),
+                                              child: GestureDetector(
+                                                onTap: () {
+                                                confirmDialog(context);
+                                                setState(() {
+                                                // устанавливаем индекс выделенного элемента
+                                                selectedIndex = index;
+                                                });
+                                                print(snapshot.data?.banners?[selectedIndex].bannerId);
+                                                var currentBannerId = snapshot.data?.banners?[selectedIndex].bannerId;
+                                                deleteBanner(currentBannerId);
+
+                                                Route route = MaterialPageRoute(
+                                                builder: (context) =>
+                                                HomeAdmin());
+                                                Navigator.push(context,route);
+
+                                                },
+                                                child: SvgPicture.asset(
+                                                'assets/images/delete.svg',
+                                                semanticsLabel: 'Icon delete',
+                                                height: 20.0,
 
 
-
-                                                                Container(
-                                                                  margin: const EdgeInsets
-                                                                      .only(bottom: 10.0, top: 10, right: 50, left: 20),
-                                                                  child: Image.file(_img, fit: BoxFit.fill, width: 285, height: 140,
-                                                                  ),
-                                                                ),
-                                                                Column (
-                                                                  children: [
-                                                                    Container (
-                                                                      margin: EdgeInsets.only(bottom: 30.0),
-                                                                      child: GestureDetector(
-                                                                        onTap: () {
-                                                                          confirmDialog(context);
-                                                                          setState(() {
-                                                                            // устанавливаем индекс выделенного элемента
-                                                                            selectedIndex = index;
-                                                                          });
-                                                                          print(snapshot.data?.banners?[selectedIndex].bannerId);
-                                                                          var currentBannerId = snapshot.data?.banners?[selectedIndex].bannerId;
-                                                                          deleteBanner(currentBannerId);
-
-                                                                          Route route = MaterialPageRoute(
-                                                                              builder: (context) =>
-                                                                                  HomeAdmin());
-                                                                          Navigator.push(context,route);
-
-                                                                        },
-                                                                        child: SvgPicture.asset(
-                                                                          'assets/images/delete.svg',
-                                                                          semanticsLabel: 'Icon delete',
-                                                                          height: 20.0,
+                                              ),
+                                              ),
+                                            ),
 
 
-                                                                        ),
-                                                                      ),
-                                                                    ),
+                                            GestureDetector(
+                                              onTap: () {
+                                              Route route = MaterialPageRoute(
+                                              builder: (context) =>
+                                              AddBanners());
+                                              Navigator.push(context,route);
+                                              },
+                                              child: SvgPicture
+                                                  .asset(
+                                              'assets/images/add.svg',
+                                              semanticsLabel: 'Icon add',
+                                              height: 20.0,
 
-
-                                                                    GestureDetector(
-                                                                      onTap: () {
-                                                                        Route route = MaterialPageRoute(
-                                                                            builder: (context) =>
-                                                                                AddBanners());
-                                                                        Navigator.push(context,route);
-                                                                      },
-                                                                      child: SvgPicture
-                                                                          .asset(
-                                                                        'assets/images/add.svg',
-                                                                        semanticsLabel: 'Icon add',
-                                                                        height: 20.0,
-
-                                                                      ),
-                                                                    ),
-                                                                    Visibility(
-                                                                      visible: false,
-                                                                      child: FormBuilderTextField(
-                                                                        name: 'currentBannerId',
-                                                                        initialValue: '${snapshot.data?.banners?[selectedIndex].bannerId}',
-                                                                        onSaved: (value) => currentBannerId = value!,
-                                                                      ),
-                                                                    ),
-                                                                ]
-                                                                ),
-
-
-                                                              ]
-                                                          )
-                                                      ]
-                                                      )
-
-                                                      );
-                                                    }
-                                                )
+                                              ),
+                                            ),
+                                            Visibility(
+                                              visible: false,
+                                              child: FormBuilderTextField(
+                                              name: 'currentBannerId',
+                                              initialValue: '${snapshot.data?.banners?[selectedIndex].bannerId}',
+                                              onSaved: (value) => currentBannerId = value!,
+                                              ),
+                                            ),
+                                            ]
                                             )
-                                          ]
-                                      )
-                                  )
-                              );
+                                        ]
+                                    )
+                                        ]
+                                        )
+                                        );
+                                      },
+                                      // control: SwiperControl(),
+                                    );
+                                  }
 
-                            }
-                            else if (snapshot.hasError) {
-                              return const Text('Error');
-                            }
-                            return const Center(child: CircularProgressIndicator());
-
+                                  return const Center(child: Text('no data'));
                                 }
-                              //           )
-                              //       )
-                              //     ]
-                              // ),
+                            )
 
-                            ),
                           )
                                   ]
                                 )
@@ -376,247 +409,7 @@ class _HomeAdminState extends State<HomeAdmin> {
               ]
             )
         ),
-    //     body: Center(
-    //           child: Column(
-    //               mainAxisAlignment: MainAxisAlignment.center,
-    //               crossAxisAlignment: CrossAxisAlignment.center,
-    //               children: [
-    //                 Expanded(
-    //                 child: SingleChildScrollView(
-    //
-    //                     child: Column(
-    //                     mainAxisAlignment: MainAxisAlignment
-    //                         .center,
-    //                     crossAxisAlignment: CrossAxisAlignment
-    //                         .center,
-    //                     children: [
 
-    //
-    //                         Container (
-    //                             width: 320,
-    //                             height: 830,
-    //                             child: FutureBuilder<BannersList>(
-    //                             future: bannersList,
-    //                                 builder: (context, snapshot) {
-    //
-    //                             var banners = snapshot.data?.banners;
-    //                             List<AdsBanner>? bannersList = snapshot.data?.banners;
-    //                             print('news');
-    //                             print(bannersList);
-    //
-    //                             if (snapshot.hasData) {
-    //                               return Center(
-    //                                   child: Container(
-    //                                       width: 320,
-    //                                       height: 860,
-    //                                       child: Column(
-    //                                           mainAxisAlignment: MainAxisAlignment
-    //                                               .center,
-    //                                           crossAxisAlignment: CrossAxisAlignment
-    //                                               .center,
-    //                                           children: [
-    //                                             Container(
-    //                                                 height: 740,
-    //
-    //                                                 child: Swiper(
-    //                                                   //containerHeight: 160,
-    //                                                   //containerWidth: 390,
-    //                                                   layout: SwiperLayout
-    //                                                       .CUSTOM,
-    //                                                   customLayoutOption:
-    //                                                   CustomLayoutOption(
-    //                                                       startIndex: -1,
-    //                                                       stateCount: 2)
-    //                                                     ..addTranslate([
-    //                                                       const Offset(
-    //                                                           -28.0, 0.0),
-    //                                                       const Offset(
-    //                                                           256.0, 0.0),
-    //                                                       // const Offset(304.0, 0.0)
-    //                                                     ]),
-    //
-    //                                                   viewportFraction: 0.8,
-    //                                                   itemHeight: 160,
-    //                                                   itemWidth: 284,
-    //                                                   // outer: true,
-    //                                                   itemBuilder: (
-    //                                                       BuildContext context,
-    //                                                       int index) {
-    //                                                     _img = File(
-    //                                                         '${snapshot.data
-    //                                                             ?.banners?[index]
-    //                                                             .path}');
-    //                                                     length =
-    //                                                     snapshot.data?.banners
-    //                                                         .length!;
-    //                                                     return Container(
-    //                                                       decoration: const BoxDecoration(
-    //                                                         borderRadius: BorderRadius
-    //                                                             .all(
-    //                                                             Radius.circular(
-    //                                                                 20)),
-    //                                                       ),
-    //                                                       margin: const EdgeInsets
-    //                                                           .only(left: 10,
-    //                                                           right: 10),
-    //                                                       child: Image.file(
-    //                                                         _img, width: 285,
-    //                                                         height: 160,
-    //                                                         // ${snapshot.data?.car}[index],
-    //                                                         // centerSlice: Rect.fromPoints(const Offset(50.0, 0.0), const Offset(0, 0)),
-    //                                                         fit: BoxFit.fill,
-    //                                                         alignment: Alignment
-    //                                                             .centerLeft,
-    //                                                       ),
-    //                                                     );
-    //                                                   },
-    //                                                   // autoplay: true,
-    //                                                   itemCount: length,
-    //                                                   // itemWidth: 285.0,
-    //                                                 )
-    //                                             ),
-    //
-    //                                             //   child: Stack (
-    //                                             //
-    //                                             //   //)
-    //                                             //   // child: ListView.builder(
-    //                                             //   //   scrollDirection: Axis.vertical,
-    //                                             //   //   shrinkWrap: true,
-    //                                             //   //   // padding: const EdgeInsets.only(top: 38, bottom: 10),
-    //                                             //   //   itemCount: snapshot.data?.banners?.length,
-    //                                             //   //   itemBuilder: (context, index) {
-    //                                             //   //   String currentNewsId;
-    //                                             //   // _img = File('${snapshot.data?.banners?[index].path}');
-    //                                             //
-    //                                             //     alignment: Alignment.centerRight,
-    //                                             //     children: [
-    //                                             //     Container (
-    //                                             //     //constraints: BoxConstraints(maxWidth: 284, maxHeight: 400),
-    //                                             //     // width: MediaQuery.of(context).size.width,
-    //                                             //     width: 284,
-    //                                             //     height: 200,
-    //                                             //     padding: EdgeInsets.zero,
-    //                                             //     margin: const EdgeInsets.only(top: 10, bottom: 30, left: 60, right: 70),
-    //                                             //     color: const Color(0xFF181C33),
-    //                                             //     // child: AdsBanners(),
-    //                                             //     child: Column(
-    //                                             //     children: [
-    //                                             //     Swiper(
-    //                                             //     containerWidth: 284,
-    //                                             //
-    //                                             //     //   autoplay: true,
-    //                                             //     itemCount: snapshot.data?.banners.length,
-    //                                             //
-    //                                             //     viewportFraction: 1.0,
-    //                                             //     itemHeight: 92,
-    //                                             //     itemWidth: 284,
-    //                                             //     // outer: true,
-    //                                             //     itemBuilder: (BuildContext context,
-    //                                             //     int index) {
-    //                                             //     // _img = File('${snapshot.data
-    //                                             //     //     ?.banners?[index].path}');
-    //                                             //
-    //                                             //     return Container(
-    //                                             //     decoration: const BoxDecoration(
-    //                                             //     borderRadius: BorderRadius
-    //                                             //         .all(Radius.circular(20)),
-    //                                             //     ),
-    //                                             //     margin: const EdgeInsets.only(
-    //                                             //     left: 10, right: 10),
-    //                                             //     // child: Text('image'),
-    //                                             //     child: Column (
-    //                                             //     children: [
-    //                                             //     Image.file(
-    //                                             //     _img, fit: BoxFit.fill,
-    //                                             //     width: 245,
-    //                                             //     height: 165,
-    //                                             //     // Image.asset(
-    //                                             //     //   banners[index].image,
-    //                                             //     //   // centerSlice: Rect.fromPoints(const Offset(50.0, 0.0), const Offset(0, 0)),
-    //                                             //     //   fit: BoxFit.contain,
-    //                                             //     //   alignment: Alignment.centerLeft,
-    //                                             //     ),
-    //                                             //     Column (
-    //                                             //     children: [
-    //                                             //     IconButton(
-    //                                             //     onPressed: () {
-    //                                             //     confirmDialog(context);
-    //                                             //     setState(() {
-    //                                             //     // устанавливаем индекс выделенного элемента
-    //                                             //     selectedIndex = index;
-    //                                             //     });
-    //                                             //     print(snapshot.data?.banners?[selectedIndex].bannerId);
-    //                                             //     var currentNewsId = snapshot.data?.banners?[selectedIndex].bannerId;
-    //                                             //
-    //                                             //     deleteNews(currentNewsId);
-    //                                             //     Route route = MaterialPageRoute(
-    //                                             //     builder: (
-    //                                             //     context) => HomeAdmin());
-    //                                             //     Navigator.push(context,route);
-    //                                             //     },
-    //                                             //     icon: SvgPicture.asset(
-    //                                             //     'assets/images/delete.svg',
-    //                                             //     semanticsLabel: 'Icon delete',
-    //                                             //     height: 20.0,
-    //                                             //     ),
-    //                                             //     ),
-    //                                             //     IconButton(
-    //                                             //     onPressed: () {
-    //                                             //     Route route = MaterialPageRoute(
-    //                                             //     builder: (context) =>
-    //                                             //     AddBanners());
-    //                                             //     Navigator.push(context,route);
-    //                                             //     },
-    //                                             //     icon: SvgPicture.asset(
-    //                                             //     'assets/images/add.svg',
-    //                                             //     semanticsLabel: 'Icon add',
-    //                                             //     height: 20.0,
-    //                                             //     ),
-    //                                             //     )
-    //                                             //     ]
-    //                                             //     ),
-    //                                             //     ]
-    //                                             //     )
-    //                                             //     );
-    //                                             //     },
-    //                                             //     // control: SwiperControl(),
-    //                                             //     ),
-    //                                             //
-    //                                             //
-    //                                             //         ]
-    //                                             // );
-    //                                             //         }
-    //                                             //       }
-    //                                             //     ),
-    //                                             //   ),
-    //                                             // ]
-    //                                             // ),
-    //
-    //
-    //                                             const TitlePage(
-    //                                                 title: 'мы в соцсетях'),
-    //
-    //                                             Socials(),
-    //
-    //
-    //                                           ]
-    //                                       )
-    //                                   )
-    //                               );
-    //                             }
-    //                             }
-    //             )
-    //             )
-    //           ]
-    //       ),
-    //
-    //     ),
-    //
-    //     //body: Home(),
-    //   )
-    //     ]
-    // ),
-    //     ),
 
         drawer: NavDrawerAdmin(),
 

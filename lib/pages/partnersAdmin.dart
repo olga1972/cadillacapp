@@ -69,7 +69,8 @@ class _PartnersAdminState extends State<PartnersAdmin> {
   // ];
   //
   // get currentUser => null;
-  late File _img;
+  bool isLoadedImage = false;
+  late File _image;
   late String currentPartnerId;
 
   @override
@@ -130,7 +131,14 @@ class _PartnersAdminState extends State<PartnersAdmin> {
                                   List<Partner>? partnersList = snapshot.data?.partners;
                                   print('partners');
                                   print(partnersList);
-                                
+
+                                if (snapshot.connectionState != ConnectionState.done) {
+                                  return const Center(child: CircularProgressIndicator());
+                                }
+
+                                if (snapshot.hasError) {
+                                  return Center(child:Text(snapshot.error.toString()));
+                                }
 
                                 if (snapshot.hasData) {
                                     return Center(
@@ -156,19 +164,40 @@ class _PartnersAdminState extends State<PartnersAdmin> {
                                                   shrinkWrap: true,
                                                   itemCount: snapshot.data?.partners?.length,
                                                   itemBuilder: (BuildContext context, int index) {
-                                                    _img = File('${snapshot.data?.partners?[index].path}');
+                                                    var fileExtension = snapshot.data?.partners[index].path.substring((snapshot.data?.partners[index].path.length)! - 3);
+                                                    if(fileExtension == 'jpg' || fileExtension == 'png' || fileExtension == 'svg') {
+                                                      isLoadedImage = true;
+                                                    } else {
+                                                      isLoadedImage = false;
+                                                    }
+                                                    _image = File('${snapshot.data?.partners?[index]?.path}');
 
                                                     return Container (
                                                       width: 284,
+                                                      height: 92,
+                                                      decoration: BoxDecoration(
+                                                        //color: Color(0XffE4E6FF),
+                                                        borderRadius: BorderRadius.all(Radius
+                                                            .circular(10.0)),
+                                                      ),
                                                       alignment: Alignment.center,
-                                                      margin: const EdgeInsets.only(bottom: 30),
+                                                      margin: const EdgeInsets.only(bottom: 30, right: 30),
                                                       child: Row(
                                                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                         crossAxisAlignment: CrossAxisAlignment.start,
                                                         children: [
                                                           Expanded(
-                                                            child: Image.file(_img, fit: BoxFit.fill, width: 285, height: 140,
-                                                            ),
+                                                            child: (isLoadedImage &&_image.existsSync()) ? Image.file(_image, fit: BoxFit.cover, width: 284, height: 160)
+                                                            :  Text('no image',
+                                                                  textAlign: TextAlign.center,
+                                                                  style: TextStyle(
+                                                                    fontSize: 18.0,
+                                                                    fontWeight: FontWeight.normal,
+                                                                    fontFamily: 'CadillacSans',
+                                                                    color: Color(0xFF8F97BF),
+                                                                    height: 1.7, //line-height / font-size
+                                                                  ))
+
                                                           ),
 
                                                           Container(
@@ -243,10 +272,10 @@ class _PartnersAdminState extends State<PartnersAdmin> {
                                 ),
                               );
 
-                        } else if (snapshot.hasError) {
-                            return const Text('Error');
+
+
                           }
-                            return const Center(child: CircularProgressIndicator());
+                                  return const Center(child: Text('no data'));
 
                       }
                     )
@@ -262,6 +291,50 @@ class _PartnersAdminState extends State<PartnersAdmin> {
           drawer: NavDrawerAdmin(),
         )
     );
+  }
+  Future<PartnersList> getPartnersList() async {
+    print('getPartnersList');
+    const url = baseUrl + '/test/partners_list.php';
+    final response = await http.get(Uri.parse(url));
+    print('response getPartnersList');
+    print(response.body);
+    if(response.statusCode == 200) {
+      return PartnersList.fromJson(json.decode(response.body));
+    } else {
+      throw Exception('Error: ${response.reasonPhrase}');
+    }
+  }
+
+
+  deletePartner(partnerId) async {
+    print('delete partner admin');
+    String apiurl = baseUrl + "/test/delete_partner.php";
+
+    //var partnerId;
+    var response = await http.post(Uri.parse(apiurl), body: {
+      'partnerId': partnerId,
+    }, headers: {
+      'Accept': 'application/json, charset=utf-8',
+      "Access-Control-Allow-Origin": "*",
+      "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS"
+    });
+
+    if (response.statusCode == 200) {
+      print('partner deleted');
+      print(response.statusCode);
+      print(response.body);
+      return response.body;
+      //return New.fromJson(json.decode(response.body));
+
+      // setState(() {
+      //   showprogress = false; //don't show progress indicator
+      //   error = true;
+      //   errormsg = jsondata["message"];
+      // });
+
+    } else {
+      throw Exception('Error: ${response.reasonPhrase}');
+    }
   }
 }
 
@@ -329,49 +402,8 @@ Future confirmDialog(BuildContext context) async {
       );
     },
   );
+
+
+
 }
 
-Future<PartnersList> getPartnersList() async {
-  print('getPartnersList');
-  const url = baseUrl + '/test/partners_list.php';
-  final response = await http.get(Uri.parse(url));
-  print('response getPartnersList');
-  print(response.body);
-  if(response.statusCode == 200) {
-    return PartnersList.fromJson(json.decode(response.body));
-  } else {
-    throw Exception('Error: ${response.reasonPhrase}');
-  }
-}
-
-
-deletePartner(partnerId) async {
-  print('delete partner admin');
-  String apiurl = baseUrl + "/test/delete_partner.php";
-
-  //var partnerId;
-  var response = await http.post(Uri.parse(apiurl), body: {
-    'partnerId': partnerId,
-  }, headers: {
-    'Accept': 'application/json, charset=utf-8',
-    "Access-Control-Allow-Origin": "*",
-    "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS"
-  });
-
-  if (response.statusCode == 200) {
-    print('partner deleted');
-    print(response.statusCode);
-    print(response.body);
-    return response.body;
-    //return New.fromJson(json.decode(response.body));
-
-    // setState(() {
-    //   showprogress = false; //don't show progress indicator
-    //   error = true;
-    //   errormsg = jsondata["message"];
-    // });
-
-  } else {
-    throw Exception('Error: ${response.reasonPhrase}');
-  }
-}

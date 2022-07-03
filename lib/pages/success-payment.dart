@@ -101,25 +101,6 @@ class _SuccessPaymentState extends State<SuccessPayment> {
   //String filePath = '';
 
 
-
-  getImage() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    bool check = prefs.containsKey('image');
-    if (check) {
-      setState(() {
-        //filePath = prefs.getString('image')!;
-      });
-      return;
-    }
-    // ImagePicker imagePicker = new ImagePicker();
-    // PickedFile? image = (await imagePicker.pickImage(source: ImageSource.gallery)) as PickedFile?;
-    // String? imagePath = image?.path;
-    // await prefs.setString('image', imagePath!);
-    // setState(() {
-    //   filePath = prefs.getString('image')!;
-    // });
-  }
-
   dynamic user;
 
   @override
@@ -131,7 +112,7 @@ class _SuccessPaymentState extends State<SuccessPayment> {
 
     uuid = '';
     //uuid = userId;
-    getImage();
+
 
     var path = "assets/images/avatar.png";
     print(path);
@@ -212,57 +193,7 @@ class _SuccessPaymentState extends State<SuccessPayment> {
   @override
   Widget build(BuildContext context) {
     dynamic user;
-    // debugPrint(box.values.length);
 
-    //User currentUser = User();
-//dynamic currentUser;
-
-    // currentUser = editUser();
-
-    // print('after');
-    print('load');
-    print('state success payment');
-    // print(userId);
-    // print(uuid);
-    //XFile? file;
-    // print(userId);
-    // print(this.currentUser);
-    // print('after2');
-    // Future<String> getApplicationDirectoryPath() async {
-    //   Directory appDocDir = await getApplicationDocumentsDirectory();
-    //   var appDocPath = appDocDir.path;
-    //   print('appDocPath');
-    //   print(appDocPath);
-    //   return appDocPath;
-    // }
-
-
-//     Future _getImage(path, fileName) async {
-//       Directory appDocDir = await getApplicationDocumentsDirectory();
-//       var appDocPath = appDocDir.path;
-//       print('appDocPath');
-//       print(appDocPath);
-//       // final picker = ImagePicker();
-//       //
-//       // final pickedFile = await picker.pickImage(source: ImageSource.gallery);
-//
-//       // if (pickedFile == null) return;
-//
-//       // _image = File(pickedFile.path);
-//       var image = File(path);
-//
-//       //final fileName = 'background_image';
-//       final File localImage = await image.copy('$appDocPath/$fileName');
-//
-// print('localImage');
-//       print(localImage);
-//     }
-
-
-
-
-
-    //var path;
     return MaterialApp(
         theme: ThemeData(scaffoldBackgroundColor: const Color(0xFF181c33)),
         title: 'Cadillac',
@@ -562,31 +493,31 @@ class _SuccessPaymentState extends State<SuccessPayment> {
                                                                         //     maxImages: 1),
 
                                                                         child: FormBuilderImagePicker(
-                                                                          name: 'photo',
-                                                                          // previewHeight: 96,
-                                                                          // previewWidth: 96,
-                                                                          // previewMargin: EdgeInsets.symmetric(horizontal: 150),
-                                                                          previewHeight: 140,
-                                                                          previewWidth: 284,
-                                                                          previewMargin: EdgeInsets.only(bottom: 0),
-                                                                          iconColor: Colors.white,
-                                                                          decoration: const InputDecoration(
-                                                                            border: OutlineInputBorder(
-                                                                                borderSide: BorderSide.none,
-                                                                                borderRadius: BorderRadius.all(
-                                                                                    Radius.circular(20)
-                                                                                )
+                                                                            name: 'photo',
+                                                                            // previewHeight: 96,
+                                                                            // previewWidth: 96,
+                                                                            // previewMargin: EdgeInsets.symmetric(horizontal: 150),
+                                                                            previewHeight: 140,
+                                                                            previewWidth: 284,
+                                                                            previewMargin: EdgeInsets.only(bottom: 0),
+                                                                            iconColor: Colors.white,
+                                                                            decoration: const InputDecoration(
+                                                                              border: OutlineInputBorder(
+                                                                                  borderSide: BorderSide.none,
+                                                                                  borderRadius: BorderRadius.all(
+                                                                                      Radius.circular(20)
+                                                                                  )
+                                                                              ),
+
+                                                                              // labelText: 'Загрузить фото',
+                                                                              // labelStyle: styleHelperText,
                                                                             ),
+                                                                            maxImages: 1,
+                                                                            onSaved: (
+                                                                                value) =>
+                                                                            photo = value!,
 
-                                                                            // labelText: 'Загрузить фото',
-                                                                            // labelStyle: styleHelperText,
                                                                           ),
-                                                                          maxImages: 1,
-                                                                          onSaved: (
-                                                                              value) =>
-                                                                          photo = value!,
-
-                                                                        ),
 
                                                                       ),
 
@@ -879,7 +810,7 @@ class _SuccessPaymentState extends State<SuccessPayment> {
                                                                       // uploadImage(
                                                                       //     maxImages: 3),
                                                                       FormBuilderImagePicker(
-                                                                        // fit: BoxFit.contain,
+                                                                        fit: BoxFit.contain,
                                                                         name: 'cars',
                                                                         previewHeight: 140,
                                                                         previewWidth: 284,
@@ -973,7 +904,7 @@ class _SuccessPaymentState extends State<SuccessPayment> {
                                                                                 // }
 
                                                                                 debugPrint(
-                                                                                    'Valid success payment');
+                                                                                    'Valid success payment user');
 
                                                                                 print(photo[0].path); //путь к картинке в кеше
                                                                                 print(photo[0].path.runtimeType);
@@ -982,28 +913,29 @@ class _SuccessPaymentState extends State<SuccessPayment> {
 
                                                                                 print(cars.length);
                                                                                 if(cars.length == 2) {
-                                                                                  if(cars[0].path) {
+                                                                                  if(cars[0].path != null) {
                                                                                     car1 = await getpathImage(cars[0].path);
                                                                                   } else {
                                                                                     car1 = 'car1';
                                                                                   }
-                                                                                  if(cars[1].path) {
-                                                                                    car2 = await getpathImage(cars[2].path);
+                                                                                  if(cars[1].path != null) {
+                                                                                    car2 = await getpathImage(cars[1].path);
                                                                                   } else {
                                                                                     car2 = 'car2';
                                                                                   }
-                                                                                } else if (cars.length == 2) {
-                                                                                  if(cars[0].path) {
+                                                                                  car3 = 'car3';
+                                                                                } else if (cars.length == 3) {
+                                                                                  if(cars[0].path != null) {
                                                                                     car1 = await getpathImage(cars[0].path);
                                                                                   } else {
                                                                                     car1 = 'car1';
                                                                                   }
-                                                                                  if(cars[1].path) {
-                                                                                    car2 = await getpathImage(cars[2].path);
+                                                                                  if(cars[1].path != null) {
+                                                                                    car2 = await getpathImage(cars[1].path);
                                                                                   } else {
                                                                                     car2 = 'car2';
                                                                                   }
-                                                                                  if(cars[2].path) {
+                                                                                  if(cars[2].path != null) {
                                                                                     car3 = await getpathImage(cars[2].path);
                                                                                   } else {
                                                                                     car3 = 'car3';
@@ -1015,9 +947,7 @@ class _SuccessPaymentState extends State<SuccessPayment> {
                                                                                 }
 
 
-
-
-                                                                                  /*if(cars[1]) {
+                                                                                /*if(cars[1]) {
                                                                                   car2 = await getpathImage(cars[1].path);
                                                                                 }
                                                                                 if(cars[2]) {
@@ -1198,7 +1128,9 @@ getpathImage(url) async {
     if(user.car1 != 'null') car1 = user.car1;
     if(user.car2 != 'null') car2 = user.car2;
     if(user.car3 != 'null') car3 = user.car3;
-print(car1);
+    print(car1);
+    print('uuid: $uuid'); //null
+    print(user.userId); //null
 
     String apiurl = baseUrl + "/test/edit.php";
     // String apiurl = "http://localhost/test/edit.php";

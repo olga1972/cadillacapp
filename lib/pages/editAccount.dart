@@ -58,6 +58,8 @@ import 'news.dart';
 
 enum ImageSourceType { gallery, camera }
 
+var uuid = '';
+
 class Edit extends StatefulWidget {
 
   Edit({Key? key} ) : super(key: key);
@@ -71,7 +73,11 @@ class _EditState extends State<Edit> {
   initState()  {
     print('init state edit');
     super.initState();
+    uuid = '';
+    //uuid = userId;
 
+
+    var path = "assets/images/avatar.png";
     // final file =
     //     await ImagePicker().pickImage(source: ImageSource.gallery);
     // setState(() => this.file = file);
@@ -92,9 +98,7 @@ class _EditState extends State<Edit> {
   final _formKey = GlobalKey<FormBuilderState>();
 
 
-  late dynamic userId ='111';
-  late String path;
-
+  late dynamic userId = uuid;
   late dynamic username;
   late dynamic email = 'test@test';
   late dynamic phone = '5555';
@@ -103,6 +107,7 @@ class _EditState extends State<Edit> {
   late dynamic birthday;
   late dynamic type;
   late dynamic carname;
+  late String path = "assets/images/avatar.png";
   late dynamic car1;
   late dynamic car2;
   late dynamic car3;
@@ -112,7 +117,7 @@ class _EditState extends State<Edit> {
   // late final dynamic photo = new ApiImage(imageUrl: 'assets/images/avatar.png', id: '1');
   // late XFile? photo;
   late List<dynamic> photo;
-
+  late List<dynamic> cars;
   // late final dynamic cars = new ApiImage (
   //     imageUrl: 'assets/images/cadillac-eldorado.png', id: '2');
   // late final cars = Cars ();
@@ -143,19 +148,8 @@ class _EditState extends State<Edit> {
 
   @override
   Widget build(BuildContext context) {
-    // debugPrint(box.values.length);
-
-    //User currentUser = User();
-//dynamic currentUser;
-
-    // currentUser = editUser();
-
-    // print('after');
-    print('load edit');
-    // print(userId);
-    // print(this.currentUser);
-    // print('after2');
-
+    dynamic user;
+    print('load edit account');
 
     return MaterialApp(
         theme: ThemeData(scaffoldBackgroundColor: const Color(0xFF181c33)),
@@ -620,51 +614,47 @@ class _EditState extends State<Edit> {
                                                             ),
 
                                                             //uploadImage(maxImages: 3),
-                                                            // FormBuilderImagePicker(
-                                                            //   // fit: BoxFit.contain,
-                                                            //   name: 'cars',
-                                                            //   previewHeight: 140,
-                                                            //   previewWidth: 284,
-                                                            //   previewMargin: EdgeInsets.only(bottom: 0),
-                                                            //   iconColor: Colors.white,
-                                                            //
-                                                            //   // galleryIcon: SvgPicture.network(
-                                                            //   //   'assets/images/image2.svg',
-                                                            //   //   // height: 22.0,
-                                                            //   //   height: 10.0,
-                                                            //   //   color: Colors.white,
-                                                            //   // ),
-                                                            //
-                                                            //
-                                                            //   decoration: const InputDecoration(
-                                                            //     contentPadding: EdgeInsets.all(0),
-                                                            //     border: OutlineInputBorder(
-                                                            //         borderSide: BorderSide.none,
-                                                            //         borderRadius: BorderRadius.all(
-                                                            //             Radius.circular(20)
-                                                            //         )
-                                                            //     ),
-                                                            //
-                                                            //     // filled: true,
-                                                            //     // fillColor: Color(0xFF515569),
-                                                            //     // labelText: 'Загрузить фото',
-                                                            //     // labelStyle: stylePlaceHolderText,
-                                                            //
-                                                            //
-                                                            //   ),
-                                                            //   maxImages: 3,
-                                                            //   displayCustomType: (obj) =>
-                                                            //   obj is ApiImage ? obj.imageUrl : obj,
-                                                            //   initialValue: [
-                                                            //     'https://images.pexels.com/photos/7078045/pexels-photo-7078045.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260',
-                                                            //     const Text('this is an image\nas a widget !'),
-                                                            //     ApiImage(
-                                                            //       id: 'whatever',
-                                                            //       imageUrl:
-                                                            //       'https://images.pexels.com/photos/8311418/pexels-photo-8311418.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=750&w=1260',
-                                                            //     ),
-                                                            //   ],
-                                                            // ),
+                                                            FormBuilderImagePicker(
+                                                                fit: BoxFit.contain,
+                                                                name: 'cars',
+                                                                previewHeight: 140,
+                                                                previewWidth: 284,
+                                                                previewMargin: EdgeInsets.only(bottom: 0),
+                                                                iconColor: Colors.white,
+
+                                                                // galleryIcon: SvgPicture.asset(
+                                                                //   'assets/images/image2.svg',
+                                                                //   // height: 22.0,
+                                                                //   height: 10.0,
+                                                                //   color: Colors.white,
+                                                                // ),
+
+                                                                decoration: const InputDecoration(
+                                                                  contentPadding: EdgeInsets.all(0),
+                                                                  border: OutlineInputBorder(
+                                                                      borderSide: BorderSide.none,
+                                                                      borderRadius: BorderRadius.all(
+                                                                          Radius.circular(20)
+                                                                      )
+                                                                  ),
+
+                                                                  // filled: true,
+                                                                  // fillColor: Color(0xFF515569),
+                                                                  // labelText: 'Загрузить фото',
+                                                                  // labelStyle: stylePlaceHolderText,
+
+
+                                                                ),
+                                                                maxImages: 3,
+                                                                onSaved: (
+                                                                    value) =>
+                                                                {
+                                                                  print('value'),
+                                                                  print(value.runtimeType),
+                                                                  cars = value!,
+
+                                                                }
+                                                            ),
 
                                                             Container(
                                                                 width: 284,
@@ -715,6 +705,47 @@ class _EditState extends State<Edit> {
                                                                       // }
 
                                                                       debugPrint('Valid success edit');
+
+                                                                      print(photo[0].path); //путь к картинке в кеше
+                                                                      print(photo[0].path.runtimeType);
+                                                                      print(photo[0].path.toString());
+                                                                      path = await getpathImage(photo[0].path);
+
+                                                                      print(cars.length);
+                                                                      if(cars.length == 2) {
+                                                                        if(cars[0].path != null) {
+                                                                          car1 = await getpathImage(cars[0].path);
+                                                                        } else {
+                                                                          car1 = 'car1';
+                                                                        }
+                                                                        if(cars[1].path != null) {
+                                                                          car2 = await getpathImage(cars[1].path);
+                                                                        } else {
+                                                                          car2 = 'car2';
+                                                                        }
+                                                                        car3 = 'car3';
+                                                                      } else if (cars.length == 3) {
+                                                                        if(cars[0].path != null) {
+                                                                          car1 = await getpathImage(cars[0].path);
+                                                                        } else {
+                                                                          car1 = 'car1';
+                                                                        }
+                                                                        if(cars[1].path != null) {
+                                                                          car2 = await getpathImage(cars[1].path);
+                                                                        } else {
+                                                                          car2 = 'car2';
+                                                                        }
+                                                                        if(cars[2].path != null) {
+                                                                          car3 = await getpathImage(cars[2].path);
+                                                                        } else {
+                                                                          car3 = 'car3';
+                                                                        }
+                                                                      } else {
+                                                                        car1 = await getpathImage(cars[0].path);
+                                                                        car2 = 'car2';
+                                                                        car3 = 'car3';
+                                                                      }
+
                                                                       print(_formKey
                                                                           .currentState?.fields.values
                                                                       );
@@ -741,12 +772,13 @@ class _EditState extends State<Edit> {
 
                                                                       );
                                                                       //currentUser = editUser(user);
-                                                                      editUser(currentUser);
+                                                                      user = await editUser(currentUser);
                                                                       print('after editUser');
                                                                       print('user success');
 
+                                                                      dynamic id = uuid;
                                                                       print("currentUser: ${currentUser.userId}");
-
+                                                                      userId = uuid;
 
                                                                       // await contactsBox.put(userUuId, currentUser);
 
@@ -756,16 +788,14 @@ class _EditState extends State<Edit> {
                                                                           ?.value
                                                                           .toString());
 
-                                                                      // debugPrint(box.get('phone2').toString());
-
-                                                                      // Navigator
-                                                                      //     .pushReplacement(
-                                                                      //     context,
-                                                                      //     MaterialPageRoute(
-                                                                      //         builder: (
-                                                                      //             context) =>
-                                                                      //             Account()));
-                                                                      // Home());
+                                                                      Navigator
+                                                                          .pushReplacement(
+                                                                          context,
+                                                                          MaterialPageRoute(
+                                                                              builder: (
+                                                                                  context) =>
+                                                                                  Account(userId: userId))
+                                                                      );
 
                                                                     } else {
                                                                       debugPrint(
@@ -813,6 +843,9 @@ class _EditState extends State<Edit> {
     );
   }
 
+  getpathImage(url) async {
+    return url;
+  }
 
   // Future<String> editUser() async {
   editUser(User user) async {
@@ -824,8 +857,14 @@ class _EditState extends State<Edit> {
     dynamic username = user.username;
     dynamic birthday = user.birthday;
     dynamic carname = user.carname;
-    // dynamic car = user.car;
-    // dynamic cars = user.cars;
+    dynamic path = user.path;
+    dynamic car1, car2, car3;
+    if(user.car1 != 'null') car1 = user.car1;
+    if(user.car2 != 'null') car2 = user.car2;
+    if(user.car3 != 'null') car3 = user.car3;
+    print(car1);
+    print('uuid: $uuid'); //null
+    print(user.userId); //null
 
 
     String apiurl = baseUrl + "/test/edit.php";
@@ -852,6 +891,13 @@ class _EditState extends State<Edit> {
       //final userJson = response.body;
       print('userJson edit');
       print(userJson);
+
+      var data = User.fromJson(userJson);
+      print('data.userId');
+      print(data.userId);
+      setState(() {
+        uuid = data.userId;
+      });
       return User.fromJson(userJson);
       // return User.fromJson(jsonDecode(response.body));
       // setState(() {

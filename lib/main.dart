@@ -17,7 +17,9 @@ import 'package:cadillac/pages/addPartners.dart';
 import 'package:cadillac/pages/cardProduct.dart';
 import 'package:cadillac/pages/cardProductAdmin.dart';
 import 'package:cadillac/pages/contacts.dart';
-import 'package:cadillac/pages/edit.dart';
+import 'package:cadillac/pages/editAccount.dart';
+import 'package:cadillac/pages/editAccountAdmin.dart';
+import 'package:cadillac/pages/editAds.dart';
 import 'package:cadillac/pages/home.dart';
 import 'package:cadillac/pages/homeAdmin.dart';
 
@@ -151,7 +153,7 @@ class MyApp extends StatelessWidget {
 
 
       routes: {
-         '/home': (context) => RegistrationPage(),
+         //'/home': (context) => RegistrationPage(),
         //'/home': (context) => RegistrationAdmin(userId: '1aa71d78-f91c-11ec-a426-002590eb3418'),
         //'/home': (context) => Account(userId:'f1c7fde2-ef1b-11ec-a426-002590eb3418'),
         '/homeAdmin': (context) => HomeAdmin(),
@@ -163,7 +165,7 @@ class MyApp extends StatelessWidget {
         //'/home': (context) => Contacts(),
         //'/home': (context) => Account(userId:userId),
         //'/home': (context) => Home(),
-        //'/home': (context) => Members(),
+        '/home': (context) => EditAds(),
         '/account': (context) => Account(userId:userId),
         '/members': (context) => Members(),
         '/news': (context) => News(),
@@ -171,6 +173,8 @@ class MyApp extends StatelessWidget {
         '/partners': (context) => Partners(),
         '/contacts': (context) => Contacts(),
         '/edit': (context) => Edit(),
+        '/editAds': (context) => EditAds(),
+        '/editAdmin': (context) => EditAdmin(),
         '/test': (context) => Test(),
         // '/card': (context) => Card(productId: 1),
         // '/success_payment': (context) => SuccessPayment(currentUser: currentUser),

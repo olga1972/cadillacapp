@@ -13,18 +13,32 @@ import 'package:cadillac/pages/members.dart';
 import 'package:cadillac/pages/news.dart';
 import 'package:cadillac/pages/shop.dart';
 import 'package:cadillac/pages/partners.dart';
+import 'package:card_swiper/card_swiper.dart';
 
 import 'package:cadillac/NavDrawer.dart';
 import 'package:cadillac/widgets/titlePage.dart';
 import 'package:cadillac/widgets/socials.dart';
-import 'package:cadillac/widgets/partnersList.dart';
+//import 'package:cadillac/widgets/partnersList.dart';
 
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'dart:async';
+import 'dart:io';
 
-class Contacts extends StatelessWidget {
+import 'package:cadillac/models/partners.dart';
+
+class Contacts extends StatefulWidget {
   Contacts({Key? key}) : super(key: key);
+
+  get partners => null;
+
+  @override
+  State<Contacts> createState() => _ContactsState();
+}
+
+class _ContactsState extends State<Contacts> {
+
+  int selectedIndex = 1;
   final _formKey = GlobalKey<FormBuilderState>();
 
   // get currentUser => null;
@@ -33,6 +47,28 @@ class Contacts extends StatelessWidget {
   late dynamic subject = '5555';
   late dynamic theme = 'Заказ атрибутики';
   late dynamic message = 'message';
+
+  late Future<PartnersList> partnersList;
+
+  //late Future<Partner> partners;
+  late String partnerId;
+
+
+  late String path = "assets/images/avatar.png";
+  // late List<dynamic> partnerImage;
+  //late Future<New> deleteNews;
+
+  @override
+  void initState() {
+    super.initState();
+    partnersList = getPartnersList();
+
+  }
+
+  bool isLoadedImage = false;
+  late File _image;
+  late String currentPartnerId;
+
 
   // final styleFormInput = const TextStyle(
   //   fontSize: 14.0,
@@ -293,12 +329,101 @@ class Contacts extends StatelessWidget {
                           child: Container(
                             // width: MediaQuery.of(context).size.width,
                             width: 284,
-                            height: 200,
+                            height: 114,
                             padding: EdgeInsets.zero,
                             margin: EdgeInsets.only(
-                                top: 50, bottom: 0, left: 0, right: 0),
+                                top: 50, bottom: 0, left: 0,right: 0),
                             color: Color(0xFF181C33),
-                            child: PartnersList(),
+                              child: FutureBuilder<PartnersList>(
+                                  future: partnersList,
+                                  builder: (context, snapshot) {
+
+                                    var partners = snapshot.data?.partners;
+                                    List<Partner>? partnersList = snapshot.data?.partners;
+                                    print('partners');
+                                    print(partnersList);
+
+                                    if (snapshot.connectionState !=
+                                        ConnectionState.done) {
+                                      return const Center(
+                                          child: CircularProgressIndicator());
+                                    }
+
+                                    if (snapshot.hasError) {
+                                      return Center(
+                                          child: Text(snapshot.error.toString()));
+                                    }
+
+                                    if (snapshot.hasData) {
+                                      int countImages = snapshot.data
+                                          !.partners.length;
+                                      return Swiper(
+                                        // containerHeight: 92,
+                                        containerWidth: 284,
+                                        // layout: SwiperLayout.CUSTOM,
+                                        // customLayoutOption:
+                                        // CustomLayoutOption(startIndex: -1, stateCount: 2)
+                                        //   ..addTranslate([
+                                        //     const Offset(-28.0, 0.0),
+                                        //     const Offset(256.0, 0.0),
+                                        //     // const Offset(304.0, 0.0)
+                                        //   ]),
+
+                                        viewportFraction: 1,
+                                        itemHeight: 114,
+                                        itemWidth: 284,
+                                        autoplay: true,
+                                        itemCount: countImages,
+                                        // outer: true,
+                                        itemBuilder: (BuildContext context, int index) {
+                                          var fileExtension = snapshot
+                                              .data?.partners[index]
+                                              .path.substring(
+                                              (snapshot.data
+                                                  ?.partners[index]
+                                                  .path.length)! - 3);
+                                          if (fileExtension ==
+                                              'jpg' ||
+                                              fileExtension ==
+                                                  'png' ||
+                                              fileExtension ==
+                                                  'svg') {
+                                            isLoadedImage = true;
+                                          } else {
+                                            isLoadedImage = false;
+                                          }
+                                          _image = File(
+                                              '${snapshot.data
+                                                  ?.partners?[index]
+                                                  ?.path}');
+                                          return Container (
+                                              width: 284,
+                                              height: 160,
+                                              decoration: BoxDecoration(
+                                                color: Color(0XffE4E6FF),
+                                                borderRadius: BorderRadius.all(Radius
+                                                    .circular(20.0)),
+                                              ),
+                                              margin: const EdgeInsets.only(bottom: 10.0, top: 10, left: 10,right: 10),
+                                              child: (isLoadedImage &&_image.existsSync()) ? Image.file(_image, fit: BoxFit.cover, width: 284, height: 160) :
+                                              Text('no image',
+                                                  textAlign: TextAlign.center,
+                                                  style: TextStyle(
+                                                    fontSize: 18.0,
+                                                    fontWeight: FontWeight.normal,
+                                                    fontFamily: 'CadillacSans',
+                                                    color: Color(0xFF8F97BF),
+                                                    height: 1.7, //line-height / font-size
+                                                  ))
+                                          );
+                                        },
+                                        // control: SwiperControl(),
+                                      );
+                                    }
+
+                                    return const Center(child: Text('no data'));
+                                  }
+                              )
                           ),
                         )
                       ]))),
@@ -464,3 +589,16 @@ Future confirmDialog(BuildContext context) async {
 }
 
 void _onChanged() {}
+
+Future<PartnersList> getPartnersList() async {
+  print('getPartnersList');
+  const url = baseUrl + '/test/partners_list.php';
+  final response = await http.get(Uri.parse(url));
+  print('response getPartnersList');
+  print(response.body);
+  if(response.statusCode == 200) {
+    return PartnersList.fromJson(json.decode(response.body));
+  } else {
+    throw Exception('Error: ${response.reasonPhrase}');
+  }
+}
