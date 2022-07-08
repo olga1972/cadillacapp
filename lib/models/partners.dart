@@ -1,9 +1,6 @@
 import 'dart:convert';
 
-import 'package:flutter/services.dart';
-import 'package:form_builder_image_picker/form_builder_image_picker.dart';
 import 'package:http/http.dart' as http;
-import 'package:image_picker/image_picker.dart';
 
 class PartnersList {
   List<Partner> partners;
@@ -69,11 +66,11 @@ class Partner {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['partnerId'] = this.partnerId;
-    data['partnerName'] = this.partnerName;
-    data['path'] = this.path;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['partnerId'] = partnerId;
+    data['partnerName'] = partnerName;
+    data['path'] = path;
 
     return data;
   }

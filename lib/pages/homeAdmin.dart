@@ -5,51 +5,34 @@ import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_svg/svg.dart';
 // import 'package:flutter/src/material/input_border.dart';
-import 'package:flutter/src/material/material_localizations.dart';
 //import 'package:cadillac/NavBar.dart';
 
 //import 'package:cadillac/CustomAppBar.dart';
 
-import 'package:cadillac/pages/registrationPage.dart';
-import 'package:cadillac/pages/success-payment.dart';
-import 'package:cadillac/pages/payment.dart';
-import 'package:cadillac/pages/account.dart';
 import 'package:cadillac/pages/members.dart';
-import 'package:cadillac/pages/news.dart';
-import 'package:cadillac/pages/shop.dart';
 import 'package:cadillac/pages/partners.dart';
 import 'package:cadillac/pages/contacts.dart';
-import 'package:cadillac/pages/test.dart';
 import 'package:cadillac/pages/addBanners.dart';
 
-import 'package:cadillac/NavDrawer.dart';
 import 'package:cadillac/widgets/titlePage.dart';
-import 'package:cadillac/widgets/socials.dart';
 // import 'package:cadillac/widgets/bannersList.dart';
 
-import 'package:url_launcher/link.dart';
-import 'package:url_launcher/url_launcher.dart';
 
-import 'package:cadillac/models/users.dart';
-import 'package:cadillac/models/products.dart';
 
 import 'dart:convert';
-import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
 import 'dart:io';
 
 import '../NavDrawerAdmin.dart';
 import '../models/banners.dart';
-import '../models/news.dart';
 import '../variables.dart';
 
-import 'editAccount.dart';
 import 'editAds.dart';
 import 'gift.dart';
 import 'newsAdmin.dart';
 
 class HomeAdmin extends StatefulWidget {
-  HomeAdmin({Key? key}) : super(key: key);
+  const HomeAdmin({Key? key}) : super(key: key);
 
   @override
   State<HomeAdmin> createState() => _HomeAdminState();
@@ -114,13 +97,13 @@ class _HomeAdminState extends State<HomeAdmin> {
       //initialRoute: '/account',
 
       routes: {
-        '/home': (context) => HomeAdmin(),
+        '/home': (context) => const HomeAdmin(),
         // '/account': (context) => Account(currentUser: currentUser,),
-        '/members': (context) => Members(),
+        '/members': (context) => const Members(),
         '/newsAdmin': (context) => const NewsAdmin(),
         // '/shop': (context) => Shop(),
-        '/partners': (context) => Partners(),
-        '/contacts': (context) => Contacts(),
+        '/partners': (context) => const Partners(),
+        '/contacts': (context) => const Contacts(),
         '/gift': (context) => const Gift(),
         // '/test': (context) => Test()
 
@@ -140,7 +123,7 @@ class _HomeAdminState extends State<HomeAdmin> {
                         semanticsLabel: 'Icon burger',
                         height: 12.0),
                     onPressed: () { Scaffold.of(context).openDrawer(); },
-                    tooltip: MaterialLocalizations.of(context).openAppDrawerTooltip,
+                    // tooltip: MaterialLocalizations.of(context).openAppDrawerTooltip,
                 );
               }
           ),
@@ -190,7 +173,7 @@ class _HomeAdminState extends State<HomeAdmin> {
                                 ),
                                 onPressed: () {
                                 Route route = MaterialPageRoute(
-                                    builder: (context) => EditAds());
+                                    builder: (context) => const EditAds());
                                 Navigator.push(context,route);
                                 },
                               ),
@@ -224,7 +207,7 @@ class _HomeAdminState extends State<HomeAdmin> {
                           )
 
                         ),
-                        Container (
+                        SizedBox (
                           width: 320,
                           height: 140,
                             child: FutureBuilder<BannersList>(
@@ -288,8 +271,8 @@ class _HomeAdminState extends State<HomeAdmin> {
                                         }
                                         _image = File(
                                             '${snapshot.data
-                                                ?.banners?[index]
-                                                ?.path}');
+                                                ?.banners[index]
+                                                .path}');
                                         return Container(
                                             width: 320,
                                             // height: 166,
@@ -310,15 +293,15 @@ class _HomeAdminState extends State<HomeAdmin> {
                                           Container (
                                             width: 284,
                                             height: 92,
-                                            decoration: BoxDecoration(
+                                            decoration: const BoxDecoration(
                                               color: Color(0XffE4E6FF),
                                               borderRadius: BorderRadius.all(Radius
                                                   .circular(10.0)),
                                             ),
                                             margin: const EdgeInsets.only(bottom: 10.0, top: 10, left: 10,right: 40),
-                                            child: (isLoadedImage &&_image.existsSync()) ? ClipRRect(borderRadius: BorderRadius.all(Radius
+                                            child: (isLoadedImage &&_image.existsSync()) ? ClipRRect(borderRadius: const BorderRadius.all(Radius
                                                 .circular(10.0)), child: Image.file(_image, fit: BoxFit.cover, width: 284, height: 92)) :
-                                            Text('no image',
+                                            const Text('no image',
                                                 textAlign: TextAlign.center,
                                                 style: TextStyle(
                                                   fontSize: 18.0,
@@ -331,7 +314,7 @@ class _HomeAdminState extends State<HomeAdmin> {
                                           Column (
                                             children: [
                                             Container (
-                                              margin: EdgeInsets.only(bottom: 30.0),
+                                              margin: const EdgeInsets.only(bottom: 30.0),
                                               child: GestureDetector(
                                                 onTap: () {
                                                 confirmDialog(context);
@@ -339,13 +322,13 @@ class _HomeAdminState extends State<HomeAdmin> {
                                                 // устанавливаем индекс выделенного элемента
                                                 selectedIndex = index;
                                                 });
-                                                print(snapshot.data?.banners?[selectedIndex].bannerId);
-                                                var currentBannerId = snapshot.data?.banners?[selectedIndex].bannerId;
+                                                print(snapshot.data?.banners[selectedIndex].bannerId);
+                                                var currentBannerId = snapshot.data?.banners[selectedIndex].bannerId;
                                                 deleteBanner(currentBannerId);
 
                                                 Route route = MaterialPageRoute(
                                                 builder: (context) =>
-                                                HomeAdmin());
+                                                const HomeAdmin());
                                                 Navigator.push(context,route);
 
                                                 },
@@ -364,7 +347,7 @@ class _HomeAdminState extends State<HomeAdmin> {
                                               onTap: () {
                                               Route route = MaterialPageRoute(
                                               builder: (context) =>
-                                              AddBanners());
+                                              const AddBanners());
                                               Navigator.push(context,route);
                                               },
                                               child: SvgPicture
@@ -379,7 +362,7 @@ class _HomeAdminState extends State<HomeAdmin> {
                                               visible: false,
                                               child: FormBuilderTextField(
                                               name: 'currentBannerId',
-                                              initialValue: '${snapshot.data?.banners?[selectedIndex].bannerId}',
+                                              initialValue: '${snapshot.data?.banners[selectedIndex].bannerId}',
                                               onSaved: (value) => currentBannerId = value!,
                                               ),
                                             ),
@@ -411,7 +394,7 @@ class _HomeAdminState extends State<HomeAdmin> {
         ),
 
 
-        drawer: NavDrawerAdmin(),
+        drawer: const NavDrawerAdmin(),
 
 
 
@@ -436,13 +419,13 @@ Future confirmDialog(BuildContext context) async {
         ),
         actions: <Widget>[
           Container (
-              padding: EdgeInsets.only(left: 20, right: 20, bottom: 20),
+              padding: const EdgeInsets.only(left: 20, right: 20, bottom: 20),
               child: Row (
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     MaterialButton(
                       padding: const EdgeInsets.all(14),
-                      color: Color(0xFFE4E6FF),
+                      color: const Color(0xFFE4E6FF),
                       elevation: 0,
                       shape: const RoundedRectangleBorder(
                         side: BorderSide.none,
@@ -458,12 +441,12 @@ Future confirmDialog(BuildContext context) async {
                         Navigator.pushReplacement(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => HomeAdmin()));
+                                builder: (context) => const HomeAdmin()));
                       },
                     ),
                     MaterialButton(
                       padding: const EdgeInsets.all(14),
-                      color: Color(0xFFE4E6FF),
+                      color: const Color(0xFFE4E6FF),
                       elevation: 0,
                       shape: const RoundedRectangleBorder(
                         side: BorderSide.none,

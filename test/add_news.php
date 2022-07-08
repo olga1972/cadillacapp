@@ -27,7 +27,7 @@ if(isset($_POST["newsName"]) && isset($_POST["newsDate"])) {
 
      $addedNews[0]["id"] = strval($addedNews[0]["id"]);
 //        var_dump($existUser);
-    print(json_encode($addedNews[0]));
+    print(json_encode($addedNews[0], JSON_UNESCAPED_SLASHES));
 
     return $addedNews[0];
     

@@ -84,7 +84,7 @@ class ThemeHelper{
       content: Text(content),
       actions: [
         TextButton(
-          child: Text(
+          child: const Text(
             "OK",
             style: TextStyle(color: Colors.white),
           ),

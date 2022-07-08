@@ -28,7 +28,7 @@ if(isset($_POST["partnerName"])) {
 
      $addedPartner["id"] = strval($addedPartner["id"]);
 //        var_dump($existUser);
-    print(json_encode($addedPartner[0]));
+    print(json_encode($addedPartner[0], JSON_UNESCAPED_SLASHES));
 
     return $addedPartner[0];
     

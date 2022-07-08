@@ -2,16 +2,13 @@
 
 import 'package:flutter/material.dart';
 // import 'package:carousel_slider/carousel_slider.dart';
-import 'package:flutter/widgets.dart';
 // import 'package:getwidget/getwidget.dart';
 // import 'package:getwidget/getwidget.dart';
-import 'package:cadillac/widgets/carousel.dart';
 // import 'package:flutter_swiper/flutter_swiper.dart'
 import 'package:card_swiper/card_swiper.dart';
 // void main() => runApp(Gallery());
 
 
-import '../../models/users.dart';
 
 
 class Gallery extends StatelessWidget {
@@ -274,11 +271,11 @@ Widget build(BuildContext context) {
 List<Widget> indicators(imagesLength, currentIndex) {
   return List<Widget>.generate(imagesLength, (index) {
     return Container(
-      margin: EdgeInsets.all(1),
+      margin: const EdgeInsets.all(1),
       width: 7,
       height: 7,
       decoration: BoxDecoration(
-          color: currentIndex == index ? Color(0xFF2C335E) : Color(0xFF181C33),
+          color: currentIndex == index ? const Color(0xFF2C335E) : const Color(0xFF181C33),
           shape: BoxShape.circle),
     );
   });

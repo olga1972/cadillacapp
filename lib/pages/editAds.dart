@@ -1,40 +1,28 @@
 // import 'dart:html';
-import 'dart:typed_data';
 
 import 'package:cadillac/pages/addBanners.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import 'package:cadillac/pages/home.dart';
-import 'package:cadillac/pages/account.dart';
-import 'package:cadillac/pages/members.dart';
-import 'package:cadillac/pages/news.dart';
-import 'package:cadillac/pages/shop.dart';
 
-import 'package:cadillac/pages/contacts.dart';
 
 import 'dart:convert';
 import 'dart:async';
-import 'package:flutter/services.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:http/http.dart' as http;
 import 'dart:io';
 
-import 'package:cadillac/NavDrawer.dart';
 import 'package:cadillac/widgets/titlePage.dart';
 // import 'package:cadillac/widgets/partnersList.dart';
 import 'package:flutter_svg/svg.dart';
 
 import '../NavDrawerAdmin.dart';
 import '../models/banners.dart';
-import '../models/partners.dart';
 import '../variables.dart';
-import 'addPartners.dart';
 import 'homeAdmin.dart';
 
 
 class EditAds extends StatefulWidget {
-  EditAds({Key? key}) : super(key: key);
+  const EditAds({Key? key}) : super(key: key);
 
   @override
   State<EditAds> createState() => _EditAdsState();
@@ -86,7 +74,7 @@ class _EditAdsState extends State<EditAds> {
         title: 'Cadillac',
         debugShowCheckedModeBanner: false,
 
-        routes: {
+        routes: const {
           // '/home': (context) => const Home(),
           // '/account': (context) => Account(currentUser: currentUser),
           // '/members': (context) => Members(),
@@ -106,7 +94,7 @@ class _EditAdsState extends State<EditAds> {
                 return IconButton(
                   icon: SvgPicture.asset('assets/images/burger.svg'),
                   onPressed: () { Scaffold.of(context).openDrawer(); },
-                  tooltip: MaterialLocalizations.of(context).openAppDrawerTooltip,
+                  // tooltip: MaterialLocalizations.of(context).openAppDrawerTooltip,
                 );
               },
             ),
@@ -122,7 +110,7 @@ class _EditAdsState extends State<EditAds> {
                             crossAxisAlignment: CrossAxisAlignment
                                 .center,
                             children: [
-                              Container (
+                              SizedBox (
                                   width: 320,
                                   //height: 830,
                                   //margin: const EdgeInsets.only(bottom: 40),
@@ -145,7 +133,7 @@ class _EditAdsState extends State<EditAds> {
 
                                         if (snapshot.hasData) {
                                           return Center(
-                                            child: Container(
+                                            child: SizedBox(
                                                 width: 320,
                                                 height: 960,
                                                 child: Column(
@@ -159,13 +147,13 @@ class _EditAdsState extends State<EditAds> {
                                                           child: const TitlePage(title: 'редактирование \nрекламы')
                                                       ),
 
-                                                      Container (
+                                                      SizedBox (
                                                           width: 320,
                                                           // height: 960,
                                                           child: ListView.builder (
                                                               scrollDirection: Axis.vertical,
                                                               shrinkWrap: true,
-                                                              itemCount: snapshot.data?.banners?.length,
+                                                              itemCount: snapshot.data?.banners.length,
                                                               itemBuilder: (BuildContext context, int index) {
                                                                 var fileExtension = snapshot.data?.banners[index].path.substring((snapshot.data?.banners[index].path.length)! - 3);
                                                                 if(fileExtension == 'jpg' || fileExtension == 'png' || fileExtension == 'svg') {
@@ -173,30 +161,30 @@ class _EditAdsState extends State<EditAds> {
                                                                 } else {
                                                                   isLoadedImage = false;
                                                                 }
-                                                                _image = File('${snapshot.data?.banners?[index]?.path}');
+                                                                _image = File('${snapshot.data?.banners[index].path}');
 
                                                                 return Container (
                                                                     width: 284,
                                                                     height: 92,
                                                                     alignment: Alignment.center,
-                                                                    decoration: BoxDecoration(
+                                                                    decoration: const BoxDecoration(
                                                                       //color: Color(0XffE4E6FF),
                                                                       borderRadius: BorderRadius.all(Radius
                                                                           .circular(10.0)),
                                                                     ),
                                                                     margin: const EdgeInsets.only(bottom: 30, top: 10, left: 0,right: 0),
-                                                                    child: Container(
+                                                                    child: SizedBox(
                                                                         //margin: const EdgeInsets.only(right: 30),
                                                                     width: 284,
                                                                     child: Row(
                                                                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                                         crossAxisAlignment: CrossAxisAlignment.center,
                                                                         children: [
-                                                                          Container(
+                                                                          SizedBox(
                                                                               width: 230,
-                                                                              child: (isLoadedImage &&_image.existsSync()) ? ClipRRect(borderRadius: BorderRadius.all(Radius
+                                                                              child: (isLoadedImage &&_image.existsSync()) ? ClipRRect(borderRadius: const BorderRadius.all(Radius
                                                                                   .circular(10.0)), child: Image.file(_image, fit: BoxFit.cover, width: 284, height: 92))
-                                                                                  :  Text('no image',
+                                                                                  :  const Text('no image',
                                                                                   textAlign: TextAlign.center,
                                                                                   style: TextStyle(
                                                                                     fontSize: 18.0,
@@ -222,13 +210,13 @@ class _EditAdsState extends State<EditAds> {
                                                                                       // устанавливаем индекс выделенного элемента
                                                                                       selectedIndex = index;
                                                                                     });
-                                                                                    print(snapshot.data?.banners?[selectedIndex].bannerId);
-                                                                                    var currentBannerId = snapshot.data?.banners?[selectedIndex].bannerId;
+                                                                                    print(snapshot.data?.banners[selectedIndex].bannerId);
+                                                                                    var currentBannerId = snapshot.data?.banners[selectedIndex].bannerId;
                                                                                     deleteBanner(currentBannerId);
 
                                                                                     Route route = MaterialPageRoute(
                                                                                         builder: (context) =>
-                                                                                            AddBanners());
+                                                                                            const AddBanners());
                                                                                     Navigator.push(context,route);
 
                                                                                   },
@@ -246,13 +234,13 @@ class _EditAdsState extends State<EditAds> {
                                                                                       // устанавливаем индекс выделенного элемента
                                                                                       selectedIndex = index;
                                                                                     });
-                                                                                    print(snapshot.data?.banners?[selectedIndex].bannerId);
-                                                                                    var currentBannerId = snapshot.data?.banners?[selectedIndex].bannerId;
+                                                                                    print(snapshot.data?.banners[selectedIndex].bannerId);
+                                                                                    var currentBannerId = snapshot.data?.banners[selectedIndex].bannerId;
                                                                                     deleteBanner(currentBannerId);
 
                                                                                     Route route = MaterialPageRoute(
                                                                                         builder: (context) =>
-                                                                                            HomeAdmin());
+                                                                                            const HomeAdmin());
                                                                                     Navigator.push(context,route);
 
                                                                                   },
@@ -271,7 +259,7 @@ class _EditAdsState extends State<EditAds> {
                                                                             visible: false,
                                                                             child: FormBuilderTextField(
                                                                               name: 'currentBannerId',
-                                                                              initialValue: '${snapshot.data?.banners?[selectedIndex].bannerId}',
+                                                                              initialValue: '${snapshot.data?.banners[selectedIndex].bannerId}',
                                                                               onSaved: (value) => currentBannerId = value!,
                                                                             ),
                                                                           ),
@@ -287,12 +275,12 @@ class _EditAdsState extends State<EditAds> {
                                                           width: 280,
                                                           height: 20,
                                                           margin: const EdgeInsets.only(left: 10,),
-                                                          alignment: Alignment(1, 1),
+                                                          alignment: const Alignment(1, 1),
                                                           child: GestureDetector(
                                                             onLongPress: () {
                                                               Route route = MaterialPageRoute(
                                                                   builder: (context) =>
-                                                                      AddBanners());
+                                                                      const AddBanners());
                                                               Navigator.push(context,route);
                                                             },
                                                             child: SvgPicture
@@ -328,7 +316,7 @@ class _EditAdsState extends State<EditAds> {
               )
           ),
 
-          drawer: NavDrawerAdmin(),
+          drawer: const NavDrawerAdmin(),
         )
     );
   }
@@ -391,13 +379,13 @@ Future confirmDialog(BuildContext context) async {
         ),
         actions: <Widget>[
           Container (
-              padding: EdgeInsets.only(left: 20, right: 20, bottom: 20),
+              padding: const EdgeInsets.only(left: 20, right: 20, bottom: 20),
               child: Row (
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     MaterialButton(
                       padding: const EdgeInsets.all(14),
-                      color: Color(0xFFE4E6FF),
+                      color: const Color(0xFFE4E6FF),
                       elevation: 0,
                       shape: const RoundedRectangleBorder(
                         side: BorderSide.none,
@@ -412,12 +400,12 @@ Future confirmDialog(BuildContext context) async {
                         Navigator.pushReplacement(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => HomeAdmin()));
+                                builder: (context) => const HomeAdmin()));
                       },
                     ),
                     MaterialButton(
                       padding: const EdgeInsets.all(14),
-                      color: Color(0xFFE4E6FF),
+                      color: const Color(0xFFE4E6FF),
                       elevation: 0,
                       shape: const RoundedRectangleBorder(
                         side: BorderSide.none,

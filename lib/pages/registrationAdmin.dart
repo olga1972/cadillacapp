@@ -1,12 +1,7 @@
 //import 'dart:html';
-import 'dart:io';
-import 'dart:ui';
 import 'package:cadillac/pages/partners.dart';
-import 'package:cadillac/pages/registrationPage.dart';
 import 'package:cadillac/pages/shop.dart';
-import 'package:cadillac/widgets/uploadImage.dart';
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 //import 'package:flutter_localizations/flutter_localizations.dart';
 // import 'generated/l10n.dart';
@@ -17,61 +12,40 @@ import 'package:flutter/material.dart';
 // import 'package:uuid/uuid.dart';
 // import 'package:uuid/uuid_util.dart';
 import 'package:dio/dio.dart';
-import 'package:dio_cookie_manager/dio_cookie_manager.dart';
-import 'package:cookie_jar/cookie_jar.dart';
-import 'package:image_picker/image_picker.dart';
-import 'package:path_provider/path_provider.dart';
 //import 'package:shared_preferences/shared_preferences.dart';
 
 // import 'dart:html' as html;
 
-import 'package:web_socket_channel/web_socket_channel.dart';
 
-import 'package:web_socket_channel/io.dart';
-import 'package:web_socket_channel/status.dart' as status;
 
 // import 'package:cross_file_image/cross_file_image.dart';
 
 
-import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-import 'dart:async';
 
 // import 'package:image/image.dart';
 
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:form_builder_image_picker/form_builder_image_picker.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
-import 'package:form_builder_asset_picker/form_builder_asset_picker.dart';
 
-import 'package:url_launcher/link.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import 'package:cadillac/NavDrawer.dart';
 import 'package:cadillac/widgets/titlePage.dart';
-import 'package:cadillac/widgets/accordion.dart';
 
 import 'package:cadillac/variables.dart';
 import 'package:cadillac/common/theme_helper.dart';
 
-import 'package:cadillac/pages/account.dart';
 import 'package:cadillac/pages/home.dart';
 
 import 'package:cadillac/models/users.dart';
-import 'dart:developer';
-import 'package:flutter/services.dart';
-import 'package:cadillac/env.dart';
 
 import 'accountAdmin.dart';
 import 'contacts.dart';
-import 'members.dart';
-import 'news.dart';
 
-import 'package:cadillac/utils/shared_preference.dart';
 
 enum ImageSourceType { gallery, camera }
 
@@ -84,9 +58,9 @@ class RegistrationAdmin extends StatefulWidget {
   //final User userId;
 
   // SuccessPayment({Key? key, required this.currentUser,} ) : super(key: key);
-  RegistrationAdmin({Key? key, required this.userId} ) : super(key: key);
+  RegistrationAdmin({Key? key,} ) : super(key: key);
 
-  late dynamic userId;
+  //late dynamic userId;
   late String path;
 
 
@@ -148,7 +122,7 @@ class _RegistrationAdminState extends State<RegistrationAdmin> {
 
   final _formKey = GlobalKey<FormBuilderState>();
 
-  late dynamic userId = uuid;
+  dynamic userId = '1aa71d78-f91c-11ec-a426-002590eb341';
   late dynamic login = "test@mail.ru";
   late dynamic username;
   late dynamic email = 'test@test';
@@ -202,7 +176,7 @@ class _RegistrationAdminState extends State<RegistrationAdmin> {
         //   GlobalWidgetsLocalizations.delegate,
         //   GlobalCupertinoLocalizations.delegate,
         // ],
-        supportedLocales: [
+        supportedLocales: const [
           Locale('en', ''),
           // Английский, без кода страны Locale ( 'es' , '' ), // испанский, без кода страны ],
         ],
@@ -210,13 +184,13 @@ class _RegistrationAdminState extends State<RegistrationAdmin> {
 
 
         routes: {
-          '/home': (context) => Home(),
+          '/home': (context) => const Home(),
           // '/account': (context) => Account(currentUser: currentUser),
           //  '/members': (context) => Members(),
           //  '/news': (context) => const News(),
-          '/shop': (context) => Shop(),
-          '/partners': (context) => Partners(),
-          '/contacts': (context) => Contacts(),
+          '/shop': (context) => const Shop(),
+          '/partners': (context) => const Partners(),
+          '/contacts': (context) => const Contacts(),
 
         },
         home: Scaffold(
@@ -473,7 +447,7 @@ class _RegistrationAdminState extends State<RegistrationAdmin> {
                                                         // previewMargin: EdgeInsets.symmetric(horizontal: 150),
                                                         previewHeight: 140,
                                                         previewWidth: 284,
-                                                        previewMargin: EdgeInsets.only(bottom: 0),
+                                                        previewMargin: const EdgeInsets.only(bottom: 0),
                                                         iconColor: Colors.white,
                                                         decoration: const InputDecoration(
                                                           border: OutlineInputBorder(
@@ -788,7 +762,7 @@ class _RegistrationAdminState extends State<RegistrationAdmin> {
                                                         name: 'cars',
                                                         previewHeight: 140,
                                                         previewWidth: 284,
-                                                        previewMargin: EdgeInsets.only(bottom: 0),
+                                                        previewMargin: const EdgeInsets.only(bottom: 0),
                                                         iconColor: Colors.white,
 
                                                         // galleryIcon: SvgPicture.asset(
@@ -980,10 +954,10 @@ class _RegistrationAdminState extends State<RegistrationAdmin> {
 
                                                               //print(
                                                               //"editUser: ${editUser.userId}");
-                                                              dynamic id = uuid;
-                                                              print(
-                                                                  "currentId: ${id}");
-                                                              userId = uuid;
+                                                              // dynamic id = uuid;
+                                                              // print(
+                                                              //     "currentId: ${id}");
+                                                              userId = user.userId;
                                                               // await contactsBox.put(userUuId, currentUser);
 
                                                               debugPrint(
@@ -1000,7 +974,7 @@ class _RegistrationAdminState extends State<RegistrationAdmin> {
                                                                   MaterialPageRoute(
                                                                       builder: (
                                                                           context) =>
-                                                                          AccountAdmin(userId: userId))
+                                                                          AccountAdmin())
                                                               );
                                                               // Home());
 
@@ -1082,7 +1056,7 @@ class _RegistrationAdminState extends State<RegistrationAdmin> {
 
           ),
 
-          drawer: NavDrawer(),
+          drawer: const NavDrawer(),
         )
     );
   }
@@ -1258,13 +1232,13 @@ showAlertDialog(BuildContext context) {
     ),
     actions: <Widget>[
       Container (
-          padding: EdgeInsets.only(left: 20, right: 20, bottom: 20),
+          padding: const EdgeInsets.only(left: 20, right: 20, bottom: 20),
           child: Row (
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 MaterialButton(
                   padding: const EdgeInsets.all(14),
-                  color: Color(0xFFE4E6FF),
+                  color: const Color(0xFFE4E6FF),
                   elevation: 0,
                   shape: const RoundedRectangleBorder(
                     side: BorderSide.none,

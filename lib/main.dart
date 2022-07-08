@@ -12,50 +12,34 @@
 // import 'package:sqflite/sqflite.dart';
 import 'package:cadillac/pages/account.dart';
 import 'package:cadillac/pages/accountAdmin.dart';
-import 'package:cadillac/pages/addNews.dart';
-import 'package:cadillac/pages/addPartners.dart';
-import 'package:cadillac/pages/cardProduct.dart';
-import 'package:cadillac/pages/cardProductAdmin.dart';
 import 'package:cadillac/pages/contacts.dart';
 import 'package:cadillac/pages/editAccount.dart';
 import 'package:cadillac/pages/editAccountAdmin.dart';
 import 'package:cadillac/pages/editAds.dart';
-import 'package:cadillac/pages/home.dart';
 import 'package:cadillac/pages/homeAdmin.dart';
 
 import 'package:cadillac/pages/members.dart';
-import 'package:cadillac/pages/membersAdmin.dart';
 import 'package:cadillac/pages/news.dart';
-import 'package:cadillac/pages/newsAdmin.dart';
 import 'package:cadillac/pages/partners.dart';
-import 'package:cadillac/pages/partnersAdmin.dart';
 import 'package:cadillac/pages/registrationAdmin.dart';
 import 'package:cadillac/pages/shop.dart';
-import 'package:cadillac/pages/shopAdmin.dart';
 import 'package:cadillac/pages/success-payment.dart';
 import 'package:cadillac/pages/test.dart';
-import 'package:cadillac/variables.dart';
+import 'package:flutter/foundation.dart';
 
 import 'package:flutter/material.dart';
+import 'package:form_builder_asset_picker/form_builder_asset_picker.dart';
+import 'package:provider/provider.dart';
 //import 'package:http/browser_client.dart';
-import 'package:http/http.dart' as http;
-import 'dart:convert';
 import 'dart:async';
 //import 'dart:html' as html;
-import 'dart:io' as IO;
 
-import 'package:flutter/services.dart';
 
-import 'package:dio/dio.dart';
-import 'package:dio_cookie_manager/dio_cookie_manager.dart';
-import 'package:cookie_jar/cookie_jar.dart';
 
-import '../env.dart';
 
 import '../models/users.dart';
 //import '../models/user.dart';
 
-import '../utils/app_url.dart';
 // import './details.dart';
 // import './create.dart';
 // import 'package:hive/hive.dart';
@@ -67,7 +51,37 @@ import '../utils/app_url.dart';
 
 import 'package:cadillac/pages/registrationPage.dart';
 
-import 'package:cadillac/NavDrawer.dart';
+
+
+checkPlatform() {
+  String platform;
+
+  if (defaultTargetPlatform == TargetPlatform.iOS || defaultTargetPlatform == TargetPlatform.android) {
+
+    return platform = 'android';
+  }
+  else if (defaultTargetPlatform == TargetPlatform.linux || defaultTargetPlatform == TargetPlatform.macOS || defaultTargetPlatform == TargetPlatform.windows) {
+    // Some desktop specific code there
+    return platform = 'windows';
+  }
+  else {
+    // Some web specific code there
+  }
+}
+
+class Data extends ChangeNotifier {
+  late final Map data = {
+    'userId': '871936c4-f009-11ec-a426-002590eb3418',
+    'platform': checkPlatform(),
+    'isAuth': bool,
+    'images' : List<PlatformFile>
+  };
+
+  void updateAccount(value) {
+    data["images"] = value;
+    notifyListeners();
+  }
+}
 
 Future<void> main() async {
   runApp(MyApp());
@@ -122,9 +136,19 @@ class MyApp extends StatelessWidget {
   //     // login: 'wwwww'
   //     );
 
+
+
+  static get platform => checkPlatform();
+
   get userId => null;
   //get currentUser => null;
   late String cookies;
+  //final String data = '8f87d509-fb7e-11ec-a426-002590eb3418'; a@a - mobile
+  //final String data = '871936c4-f009-11ec-a426-002590eb3418'; z@z - web
+
+
+
+
 
 
   @override
@@ -142,47 +166,49 @@ class MyApp extends StatelessWidget {
       // print(cookies);
     //}
 
-    return MaterialApp(
-      theme: ThemeData (
-        // primarySwatch: Colors.blue,
-          scaffoldBackgroundColor: const Color(0xFF181c33)),
-      title: 'Cadillac',
-      debugShowCheckedModeBanner: false,
-      //initialRoute: '/account',
-      initialRoute: '/home',
+    return ChangeNotifierProvider<Data> (
+      create: (context) => Data(),
+      child: MaterialApp(
+        theme: ThemeData (
+          // primarySwatch: Colors.blue,
+            scaffoldBackgroundColor: const Color(0xFF181c33)),
+        title: 'Cadillac',
+        debugShowCheckedModeBanner: false,
+        //initialRoute: '/account',
+        initialRoute: '/home',
 
 
-      routes: {
-         //'/home': (context) => RegistrationPage(),
-        //'/home': (context) => RegistrationAdmin(userId: '1aa71d78-f91c-11ec-a426-002590eb3418'),
-        //'/home': (context) => Account(userId:'f1c7fde2-ef1b-11ec-a426-002590eb3418'),
-        '/homeAdmin': (context) => HomeAdmin(),
-        '/registrationAdmin': (context) => RegistrationAdmin(userId: '1aa71d78-f91c-11ec-a426-002590eb3418'),
-        //'/home': (context) => SuccessPayment(userId:'f1c7fde2-ef1b-11ec-a426-002590eb341'),
-        //'/home': (context) => cookies != null && cookies != '' ? AccountAdmin(userId: '1aa71d78-f91c-11ec-a426-002590eb3418') : RegistrationPage(),
-        //'/home': (context) => Shop(),
-        //'/home': (context) => AccountAdmin(userId:'f1c7fde2-ef1b-11ec-a426-002590eb3418'),
-        //'/home': (context) => Contacts(),
-        //'/home': (context) => Account(userId:userId),
-        //'/home': (context) => Home(),
-        '/home': (context) => EditAds(),
-        '/account': (context) => Account(userId:userId),
-        '/members': (context) => Members(),
-        '/news': (context) => News(),
-        '/shop': (context) => Shop(),
-        '/partners': (context) => Partners(),
-        '/contacts': (context) => Contacts(),
-        '/edit': (context) => Edit(),
-        '/editAds': (context) => EditAds(),
-        '/editAdmin': (context) => EditAdmin(),
-        '/test': (context) => Test(),
-        // '/card': (context) => Card(productId: 1),
-        // '/success_payment': (context) => SuccessPayment(currentUser: currentUser),
-        // '/success_payment': (context) => SuccessPayment(
-        //   currentUser: currentUser),
-      },
+        routes: {
+          '/home': (context) => const RegistrationPage(),
+          //'/home': (context) => RegistrationAdmin(userId: '1aa71d78-f91c-11ec-a426-002590eb3418'),
+          //'/home': (context) => Account(),
+          '/homeAdmin': (context) => const HomeAdmin(),
+          '/registrationAdmin': (context) => RegistrationAdmin(),
+          //'/home': (context) => SuccessPayment(),
+          //'/home': (context) => cookies != null && cookies != '' ? AccountAdmin(userId: '1aa71d78-f91c-11ec-a426-002590eb3418') : RegistrationPage(),
+          //'/home': (context) => Test(),
+          //'/home': (context) => AccountAdmin(userId:'f1c7fde2-ef1b-11ec-a426-002590eb3418'),
+          //'/home': (context) => Contacts(),
+          //'/home': (context) => Account(userId:userId),
+          //'/home': (context) => Home(),
+          //'/home': (context) => Account(userId:'f1c7fde2-ef1b-11ec-a426-002590eb3418'),
+          '/account': (context) => Account(),
+          '/members': (context) => const Members(),
+          '/news': (context) => const News(),
+          '/shop': (context) => const Shop(),
+          '/partners': (context) => const Partners(),
+          '/contacts': (context) => const Contacts(),
+          '/edit': (context) => const Edit(),
+          '/editAds': (context) => const EditAds(),
+          '/editAdmin': (context) => const EditAdmin(),
+          '/test': (context) => const Test(),
+          // '/card': (context) => Card(productId: 1),
+          // '/success_payment': (context) => SuccessPayment(currentUser: currentUser),
+          // '/success_payment': (context) => SuccessPayment(
+          //   currentUser: currentUser),
+        },
 
-      //home: MyHomePage(title: 'Cadillac'),
+        //home: MyHomePage(title: 'Cadillac'),
         // onGenerateRoute: (settings) {
         //   switch (settings.name) {
         //     case '/':
@@ -221,8 +247,9 @@ class MyApp extends StatelessWidget {
         //   }
         // }
 
-
+      )
     );
+
   }
 }
 

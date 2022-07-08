@@ -1,14 +1,7 @@
 // import 'package:cadillac/models/productsList.dart';
 import 'package:card_swiper/card_swiper.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
-import 'package:cadillac/pages/home.dart';
-import 'package:cadillac/pages/account.dart';
-import 'package:cadillac/pages/members.dart';
-import 'package:cadillac/pages/news.dart';
-import 'package:cadillac/pages/partners.dart';
-import 'package:cadillac/pages/contacts.dart';
 
 import 'package:cadillac/NavDrawer.dart';
 import 'package:cadillac/widgets/titlePage.dart';
@@ -56,7 +49,7 @@ class _ShopState extends State<Shop> {
         title: 'Cadillac',
         debugShowCheckedModeBanner: false,
 
-        routes: {
+        routes: const {
           // '/home': (context) => const Home(),
           // '/account': (context) => Account(currentUser: currentUser),
           // '/members': (context) => Members(),
@@ -91,7 +84,7 @@ class _ShopState extends State<Shop> {
                       children: [
                         Container (
                           width: 390,
-                          margin: EdgeInsets.only(top: 30, bottom: 20),
+                          margin: const EdgeInsets.only(top: 30, bottom: 20),
                           child: const TitlePage(title: 'клубная атрибутика'),
                         ),
                         Container (
@@ -105,13 +98,13 @@ class _ShopState extends State<Shop> {
                                 Row (
                                     children: [
                                       Container (
-                                        margin: EdgeInsets.only(bottom: 30),
+                                        margin: const EdgeInsets.only(bottom: 30),
                                         //padding: EdgeInsets.only(left: 50),
                                         alignment: Alignment.center,
                                         width: 130,
                                         height: 200,
                                         child: Text("Футболки".toUpperCase(),
-                                          style: TextStyle(
+                                          style: const TextStyle(
                                             fontSize: 14,
 
                                             color: Colors.white,
@@ -158,7 +151,7 @@ class _ShopState extends State<Shop> {
                                                     width: 98,
                                                     height: 190,
                                                     // margin: const EdgeInsets.only(left: 10,right: 10),
-                                                    decoration: BoxDecoration(
+                                                    decoration: const BoxDecoration(
                                                       color: Color(0xFFE4E4FF),
                                                       borderRadius: BorderRadius.all(Radius.circular(10)),),
                                                     child: Column (
@@ -185,15 +178,15 @@ class _ShopState extends State<Shop> {
                                                                           builder: (
                                                                               context) =>
                                                                           // Card(productId: 1)));
-                                                                          CardProduct()));
+                                                                          const CardProduct()));
                                                                 },
                                                               )
                                                           ),
                                                           Container (
                                                               width: 98,
-                                                              padding: EdgeInsets.only(left: 5),
+                                                              padding: const EdgeInsets.only(left: 5),
                                                               //padding: EdgeInsets.zero,
-                                                              decoration: BoxDecoration(
+                                                              decoration: const BoxDecoration(
                                                                 color: Color(0xffE4E6FF),
                                                                 borderRadius: BorderRadius.only(
                                                                   bottomLeft: Radius.circular(10.0),
@@ -215,9 +208,9 @@ class _ShopState extends State<Shop> {
                                                                       textAlign: TextAlign.center,
 
                                                                     ),
-                                                                    IconButton( icon: Icon(Icons.add, size: 10,),
+                                                                    IconButton( icon: const Icon(Icons.add, size: 10,),
                                                                       //iconSize: 48,
-                                                                      color: Color( 0xFF12141F),
+                                                                      color: const Color( 0xFF12141F),
                                                                       padding: EdgeInsets.zero,
                                                                       onPressed: () {
                                                                         print('add');
@@ -229,7 +222,7 @@ class _ShopState extends State<Shop> {
                                                           ),
                                                           Container (
                                                               width: 88,
-                                                              padding: EdgeInsets.only(left: 5),
+                                                              padding: const EdgeInsets.only(left: 5),
                                                               child: Row(
                                                                   crossAxisAlignment: CrossAxisAlignment.center,
                                                                   children: const [
@@ -266,13 +259,13 @@ class _ShopState extends State<Shop> {
                                 Row (
                                     children: [
                                       Container (
-                                        margin: EdgeInsets.only(bottom: 30),
+                                        margin: const EdgeInsets.only(bottom: 30),
                                         //padding: EdgeInsets.only(left: 50),
                                         alignment: Alignment.center,
                                         width: 130,
                                         height: 200,
                                         child: Text("Худи".toUpperCase(),
-                                          style: TextStyle(
+                                          style: const TextStyle(
                                             fontSize: 14,
 
                                             color: Colors.white,
@@ -319,7 +312,7 @@ class _ShopState extends State<Shop> {
                                                     width: 98,
                                                     height: 190,
                                                     // margin: const EdgeInsets.only(left: 10,right: 10),
-                                                    decoration: BoxDecoration(
+                                                    decoration: const BoxDecoration(
                                                       color: Color(0xFFE4E4FF),
                                                       borderRadius: BorderRadius.all(Radius.circular(10)),),
                                                     child: Column (
@@ -346,15 +339,15 @@ class _ShopState extends State<Shop> {
                                                                           builder: (
                                                                               context) =>
                                                                           // Card(productId: 1)));
-                                                                          CardProduct()));
+                                                                          const CardProduct()));
                                                                 },
                                                               )
                                                           ),
                                                           Container (
                                                               width: 98,
-                                                              padding: EdgeInsets.only(left: 5),
+                                                              padding: const EdgeInsets.only(left: 5),
                                                               //padding: EdgeInsets.zero,
-                                                              decoration: BoxDecoration(
+                                                              decoration: const BoxDecoration(
                                                                 color: Color(0xffE4E6FF),
                                                                 borderRadius: BorderRadius.only(
                                                                   bottomLeft: Radius.circular(10.0),
@@ -376,9 +369,9 @@ class _ShopState extends State<Shop> {
                                                                       textAlign: TextAlign.center,
 
                                                                     ),
-                                                                    IconButton( icon: Icon(Icons.add, size: 10,),
+                                                                    IconButton( icon: const Icon(Icons.add, size: 10,),
                                                                       //iconSize: 48,
-                                                                      color: Color( 0xFF12141F),
+                                                                      color: const Color( 0xFF12141F),
                                                                       padding: EdgeInsets.zero,
                                                                       onPressed: () {
                                                                         print('add');
@@ -390,7 +383,7 @@ class _ShopState extends State<Shop> {
                                                           ),
                                                           Container (
                                                               width: 88,
-                                                              padding: EdgeInsets.only(left: 5),
+                                                              padding: const EdgeInsets.only(left: 5),
                                                               child: Row(
                                                                   crossAxisAlignment: CrossAxisAlignment.center,
                                                                   children: const [
@@ -427,13 +420,13 @@ class _ShopState extends State<Shop> {
                                 Row (
                                     children: [
                                       Container (
-                                        margin: EdgeInsets.only(bottom: 30),
+                                        margin: const EdgeInsets.only(bottom: 30),
                                         //padding: EdgeInsets.only(left: 50),
                                         alignment: Alignment.center,
                                         width: 130,
                                         height: 200,
                                         child: Text("Блокноты".toUpperCase(),
-                                          style: TextStyle(
+                                          style: const TextStyle(
                                             fontSize: 14,
 
                                             color: Colors.white,
@@ -480,7 +473,7 @@ class _ShopState extends State<Shop> {
                                                     width: 98,
                                                     height: 190,
                                                     // margin: const EdgeInsets.only(left: 10,right: 10),
-                                                    decoration: BoxDecoration(
+                                                    decoration: const BoxDecoration(
                                                       color: Color(0xFFE4E4FF),
                                                       borderRadius: BorderRadius.all(Radius.circular(10)),),
                                                     child: Column (
@@ -507,15 +500,15 @@ class _ShopState extends State<Shop> {
                                                                           builder: (
                                                                               context) =>
                                                                           // Card(productId: 1)));
-                                                                          CardProduct()));
+                                                                          const CardProduct()));
                                                                 },
                                                               )
                                                           ),
                                                           Container (
                                                               width: 98,
-                                                              padding: EdgeInsets.only(left: 5),
+                                                              padding: const EdgeInsets.only(left: 5),
                                                               //padding: EdgeInsets.zero,
-                                                              decoration: BoxDecoration(
+                                                              decoration: const BoxDecoration(
                                                                 color: Color(0xffE4E6FF),
                                                                 borderRadius: BorderRadius.only(
                                                                   bottomLeft: Radius.circular(10.0),
@@ -537,9 +530,9 @@ class _ShopState extends State<Shop> {
                                                                       textAlign: TextAlign.center,
 
                                                                     ),
-                                                                    IconButton( icon: Icon(Icons.add, size: 10,),
+                                                                    IconButton( icon: const Icon(Icons.add, size: 10,),
                                                                       //iconSize: 48,
-                                                                      color: Color( 0xFF12141F),
+                                                                      color: const Color( 0xFF12141F),
                                                                       padding: EdgeInsets.zero,
                                                                       onPressed: () {
                                                                         print('add');
@@ -551,7 +544,7 @@ class _ShopState extends State<Shop> {
                                                           ),
                                                           Container (
                                                               width: 88,
-                                                              padding: EdgeInsets.only(left: 5),
+                                                              padding: const EdgeInsets.only(left: 5),
                                                               child: Row(
                                                                   crossAxisAlignment: CrossAxisAlignment.center,
                                                                   children: const [
@@ -588,13 +581,13 @@ class _ShopState extends State<Shop> {
                                 Row (
                                     children: [
                                       Container (
-                                        margin: EdgeInsets.only(bottom: 30),
+                                        margin: const EdgeInsets.only(bottom: 30),
                                         //padding: EdgeInsets.only(left: 50),
                                         alignment: Alignment.center,
                                         width: 130,
                                         height: 200,
                                         child: Text("Наклейки".toUpperCase(),
-                                          style: TextStyle(
+                                          style: const TextStyle(
                                             fontSize: 14,
 
                                             color: Colors.white,
@@ -641,7 +634,7 @@ class _ShopState extends State<Shop> {
                                                     width: 98,
                                                     height: 190,
                                                     // margin: const EdgeInsets.only(left: 10,right: 10),
-                                                    decoration: BoxDecoration(
+                                                    decoration: const BoxDecoration(
                                                       color: Color(0xFFE4E4FF),
                                                       borderRadius: BorderRadius.all(Radius.circular(10)),),
                                                     child: Column (
@@ -668,15 +661,15 @@ class _ShopState extends State<Shop> {
                                                                           builder: (
                                                                               context) =>
                                                                           // Card(productId: 1)));
-                                                                          CardProduct()));
+                                                                          const CardProduct()));
                                                                 },
                                                               )
                                                           ),
                                                           Container (
                                                               width: 98,
-                                                              padding: EdgeInsets.only(left: 5),
+                                                              padding: const EdgeInsets.only(left: 5),
                                                               //padding: EdgeInsets.zero,
-                                                              decoration: BoxDecoration(
+                                                              decoration: const BoxDecoration(
                                                                 color: Color(0xffE4E6FF),
                                                                 borderRadius: BorderRadius.only(
                                                                   bottomLeft: Radius.circular(10.0),
@@ -698,9 +691,9 @@ class _ShopState extends State<Shop> {
                                                                         textAlign: TextAlign.center,
 
                                                                       ),
-                                                                      IconButton( icon: Icon(Icons.add, size: 10,),
+                                                                      IconButton( icon: const Icon(Icons.add, size: 10,),
                                                                         //iconSize: 48,
-                                                                        color: Color( 0xFF12141F),
+                                                                        color: const Color( 0xFF12141F),
                                                                         padding: EdgeInsets.zero,
                                                                         onPressed: () {
                                                                           print('add');
@@ -712,7 +705,7 @@ class _ShopState extends State<Shop> {
                                                           ),
                                                           Container (
                                                               width: 88,
-                                                              padding: EdgeInsets.only(left: 5),
+                                                              padding: const EdgeInsets.only(left: 5),
                                                               child: Row(
                                                                   crossAxisAlignment: CrossAxisAlignment.center,
                                                                   children: const [
@@ -759,7 +752,7 @@ class _ShopState extends State<Shop> {
           ),
 
 
-          drawer: NavDrawer(),
+          drawer: const NavDrawer(),
         )
     );
   }

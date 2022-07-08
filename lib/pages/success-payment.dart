@@ -1,12 +1,9 @@
 //import 'dart:html';
-import 'dart:io';
-import 'dart:ui';
-import 'package:cadillac/pages/partners.dart';
-import 'package:cadillac/pages/registrationPage.dart';
-import 'package:cadillac/pages/shop.dart';
-import 'package:cadillac/widgets/uploadImage.dart';
+import 'dart:typed_data';
 
-import 'package:flutter/cupertino.dart';
+import 'package:cadillac/pages/partners.dart';
+import 'package:cadillac/pages/shop.dart';
+
 import 'package:flutter/material.dart';
 //import 'package:flutter_localizations/flutter_localizations.dart';
 // import 'generated/l10n.dart';
@@ -17,38 +14,28 @@ import 'package:flutter/material.dart';
 // import 'package:uuid/uuid.dart';
 // import 'package:uuid/uuid_util.dart';
 import 'package:dio/dio.dart';
-import 'package:dio_cookie_manager/dio_cookie_manager.dart';
-import 'package:cookie_jar/cookie_jar.dart';
-import 'package:image_picker/image_picker.dart';
-import 'package:path_provider/path_provider.dart';
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
+
 
 // import 'dart:html' as html;
 
-import 'package:web_socket_channel/web_socket_channel.dart';
 
-import 'package:web_socket_channel/io.dart';
-import 'package:web_socket_channel/status.dart' as status;
 
 // import 'package:cross_file_image/cross_file_image.dart';
 
 
-import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-import 'dart:async';
-
+import 'dart:io';
 // import 'package:image/image.dart';
 
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:form_builder_image_picker/form_builder_image_picker.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
-import 'package:form_builder_asset_picker/form_builder_asset_picker.dart';
 
-import 'package:url_launcher/link.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import 'package:cadillac/NavDrawer.dart';
@@ -62,13 +49,13 @@ import 'package:cadillac/pages/account.dart';
 import 'package:cadillac/pages/home.dart';
 
 import 'package:cadillac/models/users.dart';
-import 'dart:developer';
-import 'package:flutter/services.dart';
-import 'package:cadillac/env.dart';
 
+import '../main.dart';
 import 'contacts.dart';
-import 'members.dart';
-import 'news.dart';
+
+import 'package:form_builder_asset_picker/form_builder_asset_picker.dart';
+import 'package:form_builder_file_picker/form_builder_file_picker.dart';
+//import 'package:form_builder_file_picker/form_builder_asset_picker.dart';
 
 enum ImageSourceType { gallery, camera }
 
@@ -81,9 +68,9 @@ class SuccessPayment extends StatefulWidget {
   //final User userId;
 
   // SuccessPayment({Key? key, required this.currentUser,} ) : super(key: key);
-  SuccessPayment({Key? key, required this.userId} ) : super(key: key);
+  SuccessPayment({Key? key,} ) : super(key: key);
 
-  late dynamic userId;
+  //late dynamic userId;
   late String path;
 
 
@@ -99,7 +86,7 @@ class SuccessPayment extends StatefulWidget {
 
 class _SuccessPaymentState extends State<SuccessPayment> {
   //String filePath = '';
-
+  late String encode64;
 
   dynamic user;
 
@@ -111,6 +98,7 @@ class _SuccessPaymentState extends State<SuccessPayment> {
     super.initState();
 
     uuid = '';
+    encode64 = '';
     //uuid = userId;
 
 
@@ -132,6 +120,16 @@ class _SuccessPaymentState extends State<SuccessPayment> {
     // setState(() {
     //   _items = data["items"];
     // });
+  }
+
+  getdata() async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    preferences.setString('userId', userId);
+    // print('get data account');
+    // userId = preferences.getString('userId')!;
+    //
+    // print(userId);
+    //return value;
   }
 
   //XFile? file;
@@ -162,6 +160,11 @@ class _SuccessPaymentState extends State<SuccessPayment> {
 
   late List<dynamic> photo;
   late List<dynamic> cars;
+
+  late String platform;
+  late Uint8List? bytes;
+
+
   // late final dynamic cars = new ApiImage (
   //     imageUrl: 'assets/images/cadillac-eldorado.png', id: '2');
   // late final cars = Cars ();
@@ -169,7 +172,7 @@ class _SuccessPaymentState extends State<SuccessPayment> {
   // final User userInfo;
 
   // var box = Hive.box<User>(HiveBoxes.user);
-
+  final List<String>? _allowedExtensions = ['png','jpg'];
 
   //User newUser = User();
 
@@ -194,6 +197,13 @@ class _SuccessPaymentState extends State<SuccessPayment> {
   Widget build(BuildContext context) {
     dynamic user;
 
+    userId = Provider.of<Data>(context).data['userId'].toString();
+    platform = Provider.of<Data>(context).data['platform'].toString();
+    print(platform);
+    print(platform);
+
+    //Uint8List? bytes = Uint8List.fromList(path);
+
     return MaterialApp(
         theme: ThemeData(scaffoldBackgroundColor: const Color(0xFF181c33)),
         title: 'Cadillac',
@@ -203,7 +213,7 @@ class _SuccessPaymentState extends State<SuccessPayment> {
         //   GlobalWidgetsLocalizations.delegate,
         //   GlobalCupertinoLocalizations.delegate,
         // ],
-        supportedLocales: [
+        supportedLocales: const [
           Locale('en', ''),
           // Английский, без кода страны Locale ( 'es' , '' ), // испанский, без кода страны ],
         ],
@@ -211,13 +221,13 @@ class _SuccessPaymentState extends State<SuccessPayment> {
 
 
         routes: {
-          '/home': (context) => Home(),
+          '/home': (context) => const Home(),
            // '/account': (context) => Account(currentUser: currentUser),
            //  '/members': (context) => Members(),
            //  '/news': (context) => const News(),
-            '/shop': (context) => Shop(),
-            '/partners': (context) => Partners(),
-            '/contacts': (context) => Contacts(),
+            '/shop': (context) => const Shop(),
+            '/partners': (context) => const Partners(),
+            '/contacts': (context) => const Contacts(),
 
         },
         home: Scaffold(
@@ -491,33 +501,75 @@ class _SuccessPaymentState extends State<SuccessPayment> {
                                                                         // child: uploadImage(
                                                                         //
                                                                         //     maxImages: 1),
-
-                                                                        child: FormBuilderImagePicker(
-                                                                            name: 'photo',
-                                                                            // previewHeight: 96,
-                                                                            // previewWidth: 96,
-                                                                            // previewMargin: EdgeInsets.symmetric(horizontal: 150),
-                                                                            previewHeight: 140,
-                                                                            previewWidth: 284,
-                                                                            previewMargin: EdgeInsets.only(bottom: 0),
-                                                                            iconColor: Colors.white,
-                                                                            decoration: const InputDecoration(
-                                                                              border: OutlineInputBorder(
-                                                                                  borderSide: BorderSide.none,
-                                                                                  borderRadius: BorderRadius.all(
-                                                                                      Radius.circular(20)
-                                                                                  )
-                                                                              ),
-
-                                                                              // labelText: 'Загрузить фото',
-                                                                              // labelStyle: styleHelperText,
+// child: FormBuilderAssetPicker(
+//     name: 'photo',
+//     allowedExtensions: _allowedExtensions,
+//     allowMultiple: true,
+//     maxFiles: 1,
+//     type: FileType.custom,
+//     decoration: const InputDecoration(border: InputBorder.none),
+//     selector: Row(
+//         children: const [
+//           Icon(Icons.file_upload),
+//           Text('Upload')
+//         ]
+//     ),
+//       onSaved: (
+//           value) =>
+//       photo = value!,
+// ),
+                                                                        child: FormBuilderFilePicker(
+                                                                            name: "photo",
+                                                                            decoration: InputDecoration(labelText: "Attachments"),
+                                                                            maxFiles: null,
+                                                                            previewImages: true,
+                                                                            // onChanged: (val) => print(val),
+                                                                            onChanged: (val) => {},
+                                                                            selector: Row(
+                                                                              children: <Widget>[
+                                                                                Icon(Icons.file_upload),
+                                                                                Text('Upload'),
+                                                                              ],
                                                                             ),
-                                                                            maxImages: 1,
+                                                                            onFileLoading: (val) {
+                                                                              // print(val);
+                                                                            },
+                                                                            // onSaved: (input) => data['name'] = input,
                                                                             onSaved: (
                                                                                 value) =>
-                                                                            photo = value!,
+                                                                            {
+                                                                              print('value'),
+                                                                              print(value.runtimeType),
+                                                                              photo = value!,
 
-                                                                          ),
+                                                                            }
+                                                                        ),
+                                                                        // child: FormBuilderImagePicker(
+                                                                        //     name: 'photo',
+                                                                        //     // previewHeight: 96,
+                                                                        //     // previewWidth: 96,
+                                                                        //     // previewMargin: EdgeInsets.symmetric(horizontal: 150),
+                                                                        //     previewHeight: 140,
+                                                                        //     previewWidth: 284,
+                                                                        //     previewMargin: const EdgeInsets.only(bottom: 0),
+                                                                        //     iconColor: Colors.white,
+                                                                        //     decoration: const InputDecoration(
+                                                                        //       border: OutlineInputBorder(
+                                                                        //           borderSide: BorderSide.none,
+                                                                        //           borderRadius: BorderRadius.all(
+                                                                        //               Radius.circular(20)
+                                                                        //           )
+                                                                        //       ),
+                                                                        //
+                                                                        //       // labelText: 'Загрузить фото',
+                                                                        //       // labelStyle: styleHelperText,
+                                                                        //     ),
+                                                                        //     maxImages: 1,
+                                                                        //     onSaved: (
+                                                                        //         value) =>
+                                                                        //     photo = value!,
+                                                                        //
+                                                                        //   ),
 
                                                                       ),
 
@@ -814,7 +866,7 @@ class _SuccessPaymentState extends State<SuccessPayment> {
                                                                         name: 'cars',
                                                                         previewHeight: 140,
                                                                         previewWidth: 284,
-                                                                        previewMargin: EdgeInsets.only(bottom: 0),
+                                                                        previewMargin: const EdgeInsets.only(bottom: 0),
                                                                         iconColor: Colors.white,
 
                                                                         // galleryIcon: SvgPicture.asset(
@@ -892,6 +944,30 @@ class _SuccessPaymentState extends State<SuccessPayment> {
                                                                                   .currentState
                                                                                   ?.saveAndValidate() ??
                                                                                   false) {
+
+                                                                                if(platform == 'android') {
+                                                                                  print('android');
+                                                                                  path = photo[0].path;
+                                                                                  //print(data['images'][0].path); //error
+                                                                                } else if (platform == 'ios') {
+                                                                                  print('ios');
+                                                                                } else {
+                                                                                  print('windows');
+                                                                                  //print(images[0].bytes);
+                                                                                  bytes = photo[0].bytes;
+                                                                                  print(bytes);
+                                                                                  print(bytes.runtimeType);
+                                                                                  var decode64 = base64.encode(bytes!);
+                                                                                  print('decode64');
+                                                                                  print(decode64);
+                                                                                  print(decode64.runtimeType); //string
+
+                                                                                  path = decode64;
+
+                                                                                  //Image = base64.encode(bytes);
+                                                                                  //myImage = bytes;
+
+                                                                                }
                                                                                 // if (true) {
                                                                                 //   // Either invalidate using Form Key
                                                                                 //   _formKey
@@ -905,48 +981,118 @@ class _SuccessPaymentState extends State<SuccessPayment> {
 
                                                                                 debugPrint(
                                                                                     'Valid success payment user');
+                                                                                print(photo);
+                                                                                if (platform == 'android' || platform == 'ios') {
+                                                                                  final bytes = File(photo[0].path).readAsBytesSync();
+                                                                                  print(bytes);
+                                                                                  print(bytes.runtimeType);
+                                                                                  setState(() {
+                                                                                    encode64 = base64.encode(bytes);
+                                                                                  });
+                                                                                  //var encode64 = base64.encode(bytes);
+                                                                                  print(encode64);
 
-                                                                                print(photo[0].path); //путь к картинке в кеше
-                                                                                print(photo[0].path.runtimeType);
-                                                                                print(photo[0].path.toString());
-                                                                                path = await getpathImage(photo[0].path);
+                                                                                  // path =
+                                                                                  // await getpathImage(
+                                                                                  //     photo[0]
+                                                                                  //         .path);
 
-                                                                                print(cars.length);
-                                                                                if(cars.length == 2) {
-                                                                                  if(cars[0].path != null) {
-                                                                                    car1 = await getpathImage(cars[0].path);
+                                                                                  // final fileName = 'background_image';
+                                                                                  // final File localImage = photo[0].path.copy('${widget.appDocPath}/$fileName');
+
+                                                                                  print(
+                                                                                      cars
+                                                                                          .length);
+                                                                                  if (cars
+                                                                                      .length ==
+                                                                                      2) {
+                                                                                    if (cars[0]
+                                                                                        .path !=
+                                                                                        null) {
+                                                                                      car1 =
+                                                                                      await getpathImage(
+                                                                                          cars[0]
+                                                                                              .path);
+                                                                                    } else {
+                                                                                      car1 =
+                                                                                      'car1';
+                                                                                    }
+                                                                                    if (cars[1]
+                                                                                        .path !=
+                                                                                        null) {
+                                                                                      car2 =
+                                                                                      await getpathImage(
+                                                                                          cars[1]
+                                                                                              .path);
+                                                                                    } else {
+                                                                                      car2 =
+                                                                                      'car2';
+                                                                                    }
+                                                                                    car3 =
+                                                                                    'car3';
+                                                                                  } else
+                                                                                  if (cars
+                                                                                      .length ==
+                                                                                      3) {
+                                                                                    if (cars[0]
+                                                                                        .path !=
+                                                                                        null) {
+                                                                                      car1 =
+                                                                                      await getpathImage(
+                                                                                          cars[0]
+                                                                                              .path);
+                                                                                    } else {
+                                                                                      car1 =
+                                                                                      'car1';
+                                                                                    }
+                                                                                    if (cars[1]
+                                                                                        .path !=
+                                                                                        null) {
+                                                                                      car2 =
+                                                                                      await getpathImage(
+                                                                                          cars[1]
+                                                                                              .path);
+                                                                                    } else {
+                                                                                      car2 =
+                                                                                      'car2';
+                                                                                    }
+                                                                                    if (cars[2]
+                                                                                        .path !=
+                                                                                        null) {
+                                                                                      car3 =
+                                                                                      await getpathImage(
+                                                                                          cars[2]
+                                                                                              .path);
+                                                                                    } else {
+                                                                                      car3 =
+                                                                                      'car3';
+                                                                                    }
                                                                                   } else {
-                                                                                    car1 = 'car1';
-                                                                                  }
-                                                                                  if(cars[1].path != null) {
-                                                                                    car2 = await getpathImage(cars[1].path);
-                                                                                  } else {
-                                                                                    car2 = 'car2';
-                                                                                  }
-                                                                                  car3 = 'car3';
-                                                                                } else if (cars.length == 3) {
-                                                                                  if(cars[0].path != null) {
-                                                                                    car1 = await getpathImage(cars[0].path);
-                                                                                  } else {
-                                                                                    car1 = 'car1';
-                                                                                  }
-                                                                                  if(cars[1].path != null) {
-                                                                                    car2 = await getpathImage(cars[1].path);
-                                                                                  } else {
-                                                                                    car2 = 'car2';
-                                                                                  }
-                                                                                  if(cars[2].path != null) {
-                                                                                    car3 = await getpathImage(cars[2].path);
-                                                                                  } else {
-                                                                                    car3 = 'car3';
+                                                                                    car1 =
+                                                                                    await getpathImage(
+                                                                                        cars[0]
+                                                                                            .path);
+                                                                                    car2 =
+                                                                                    'car2';
+                                                                                    car3 =
+                                                                                    'car3';
                                                                                   }
                                                                                 } else {
-                                                                                  car1 = await getpathImage(cars[0].path);
-                                                                                  car2 = 'car2';
+                                                                                  //late Uint8List bytes;
+                                                                                  bytes = photo[0].bytes;
+                                                                                  print(bytes);
+                                                                                  print(bytes.runtimeType);
+                                                                                  //var encode64 = base64.encode(bytes!);
+                                                                                  setState(() {
+                                                                                    encode64 = base64.encode(bytes!);
+                                                                                  });
+                                                                                  print('encode64');
+                                                                                  car1 = 'car1';
+                                                                                  car2= 'car2';
                                                                                   car3 = 'car3';
+
+
                                                                                 }
-
-
                                                                                 /*if(cars[1]) {
                                                                                   car2 = await getpathImage(cars[1].path);
                                                                                 }
@@ -974,7 +1120,7 @@ class _SuccessPaymentState extends State<SuccessPayment> {
                                                                                     carname: carname,
                                                                                     // password: password,
                                                                                     // path: imageName,
-                                                                                    path: path,
+                                                                                    path: encode64,
                                                                                     car1: car1,
                                                                                     car2: car2,
                                                                                     car3: car3,
@@ -1005,8 +1151,9 @@ class _SuccessPaymentState extends State<SuccessPayment> {
                                                                                     //"editUser: ${editUser.userId}");
                                                                                 dynamic id = uuid;
                                                                                 print(
-                                                                                "currentId: ${id}");
+                                                                                "currentId: $id");
                                                                                 userId = uuid;
+                                                                                userId = '871936c4-f009-11ec-a426-002590eb3418';
                                                                                 // await contactsBox.put(userUuId, currentUser);
 
                                                                                 debugPrint(
@@ -1023,7 +1170,7 @@ class _SuccessPaymentState extends State<SuccessPayment> {
                                                                                     MaterialPageRoute(
                                                                                         builder: (
                                                                                             context) =>
-                                                                                            Account(userId: userId))
+                                                                                            Account())
                                                                                     );
                                                                                 // Home());
 
@@ -1103,7 +1250,7 @@ class _SuccessPaymentState extends State<SuccessPayment> {
 
             ),
 
-            drawer: NavDrawer(),
+            drawer: const NavDrawer(),
         )
     );
   }
@@ -1149,7 +1296,7 @@ getpathImage(url) async {
     if(response.statusCode == 200){
       print('success success-payment');
 
-
+      getdata();
 
       var cookie = response.headers['set-cookie'];
       print('cookie: $cookie');

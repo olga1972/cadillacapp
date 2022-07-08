@@ -1,6 +1,4 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 
 import 'package:cadillac/widgets/titlePage.dart';
 
@@ -8,30 +6,18 @@ import 'package:cadillac/widgets/titlePage.dart';
 // import 'package:cadillac/models/productsList.dart';
 import 'package:cadillac/pages/shop.dart';
 import 'package:card_swiper/card_swiper.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
-import 'package:cadillac/pages/home.dart';
-import 'package:cadillac/pages/account.dart';
-import 'package:cadillac/pages/members.dart';
-import 'package:cadillac/pages/news.dart';
-import 'package:cadillac/pages/partners.dart';
-import 'package:cadillac/pages/contacts.dart';
 
-import 'package:cadillac/NavDrawer.dart';
-import 'package:cadillac/widgets/titlePage.dart';
 import 'package:cadillac/widgets/socials.dart';
 
 // import 'package:cadillac/widgets/productsList.dart';
 import 'package:cadillac/models/products.dart';
-import 'package:flutter_svg/svg.dart';
-import 'package:hexcolor/hexcolor.dart';
 
 
 class CardProduct extends StatefulWidget {
   // var productId;
 
-  CardProduct({Key? key, }) : super(key: key);
+  const CardProduct({Key? key, }) : super(key: key);
 
   @override
   State<CardProduct> createState() => _CardProductState();
@@ -73,7 +59,7 @@ class _CardProductState extends State<CardProduct> {
           // '/account': (context) => Account(currentUser: currentUser),
           // '/members': (context) => Members(),
           // '/news': (context) => const News(),
-          '/shop': (context) => Shop(),
+          '/shop': (context) => const Shop(),
           // '/partners': (context) => Partners(),
           // '/contacts': (context) => Contacts(),
 
@@ -87,14 +73,14 @@ class _CardProductState extends State<CardProduct> {
             leading: Builder(
               builder: (BuildContext context) {
                 return IconButton(
-                  icon: Icon(Icons.arrow_back_ios),
+                  icon: const Icon(Icons.arrow_back_ios),
                   // icon: SvgPicture.network('assets/images/burger.svg'),
                   onPressed: () {
 
                     Navigator.pushReplacement(
                         context, MaterialPageRoute(
                         builder: (context) =>
-                            Shop()
+                            const Shop()
                       // SuccessPayment(
                       //     currentUser: user),
                     )
@@ -109,7 +95,7 @@ class _CardProductState extends State<CardProduct> {
           ),
 
           body: Center (
-            child: Container (
+            child: SizedBox (
             width: 284,
 
               child: Column(
@@ -118,7 +104,7 @@ class _CardProductState extends State<CardProduct> {
                 children: [
                   Container (
                     width: 284,
-                    margin: EdgeInsets.only(top: 30, bottom: 70),
+                    margin: const EdgeInsets.only(top: 30, bottom: 70),
                     child: const TitlePage(title: 'клубная атрибутика'),
                   ),
                   Column (
@@ -155,7 +141,7 @@ class _CardProductState extends State<CardProduct> {
                                           width: 332,
                                           height: 279,
                                           margin: const EdgeInsets.only(left: 0, right: 10),
-                                          decoration: BoxDecoration(
+                                          decoration: const BoxDecoration(
                                             color: Colors.transparent,
                                             borderRadius: BorderRadius.all(Radius.circular(10)),),
                                           child: Image.asset(
@@ -170,9 +156,9 @@ class _CardProductState extends State<CardProduct> {
                                 ),
                             ),
                         Container (
-                          margin: EdgeInsets.only(bottom: 20),
+                          margin: const EdgeInsets.only(bottom: 20),
                           child: Text("Блокнот".toUpperCase(),
-                            style: TextStyle(
+                            style: const TextStyle(
                                 fontSize: 24,
                                 color: Color(0xFF8F97BF)
                             ),
@@ -200,9 +186,9 @@ class _CardProductState extends State<CardProduct> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Container (
-                                  margin: EdgeInsets.only(top: 100, bottom: 15),
+                                  margin: const EdgeInsets.only(top: 100, bottom: 15),
                                   child: Text("Хотите такой блокнот?".toUpperCase(),
-                                    style: TextStyle(
+                                    style: const TextStyle(
                                         fontSize: 14,
                                         color: Colors.white
                                     ),
@@ -213,7 +199,7 @@ class _CardProductState extends State<CardProduct> {
                                 margin: const EdgeInsets.only(bottom: 15),
                                 child: const TitlePage(title: 'Напишите нам'),
                               ),
-                              Socials()
+                              const Socials()
                             ]
                         )
                     )

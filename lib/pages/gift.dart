@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -18,7 +17,7 @@ Widget build(BuildContext context) {
     home: Scaffold(
       // backgroundColor: Colors.transparent,
       body: Center (
-        child: Container (
+        child: SizedBox (
           width: 320,
 
           child: Column (
@@ -27,7 +26,7 @@ Widget build(BuildContext context) {
             children: [
               Container(
                 width: 320,
-                margin: EdgeInsets.only(top: 15, right: 34),
+                margin: const EdgeInsets.only(top: 15, right: 34),
               ),
               Align (
                 alignment: Alignment.topRight,
@@ -45,7 +44,7 @@ Widget build(BuildContext context) {
               ),
              Container(
                width: 284,
-               margin: EdgeInsets.only(bottom: 200),
+               margin: const EdgeInsets.only(bottom: 200),
              ),
               Container (
                   margin: const EdgeInsets.only(bottom: 15),

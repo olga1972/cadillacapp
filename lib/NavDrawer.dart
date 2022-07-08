@@ -1,4 +1,3 @@
-import 'package:cadillac/pages/test.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -9,8 +8,8 @@ import 'package:cadillac/pages/news.dart';
 import 'package:cadillac/pages/shop.dart';
 import 'package:cadillac/pages/partners.dart';
 import 'package:cadillac/pages/contacts.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-import 'models/users.dart';
 
 //import 'models/user2.dart';
 
@@ -28,29 +27,39 @@ import 'models/users.dart';
 
 class NavDrawer extends StatefulWidget {
   //final currentUser = User();
-final userId;
+
   //const NavDrawer({Key? key, this.currentUser}) : super(key: key);
-  NavDrawer({Key? key, this.userId,}) : super(key: key);
+  const NavDrawer({Key? key}) : super(key: key);
 
   @override
   _NavDrawerState createState() => _NavDrawerState();
 }
 
 class _NavDrawerState extends State<NavDrawer> {
-  Widget mainWidget = Home();
+  Widget mainWidget = const Home();
 
   final List<String> menuUser = ["главная", "мой аккаунт", "члены автоклуба", "клубные новости", "клубная атрибутика и одежда", "партнеры", "контакты"];
   final List<String> menuAdmin = ["главная", "аккаунт члена клуба", "члены автоклуба", "клубные новости", "клубная атрибутика и одежда", "партнеры"];
   final List<String> icons = ["home.svg", "account.svg", "members.svg", "news.svg", "clubwear.svg", "partners.svg", "contacts.svg", "contacts.svg"];
-  final List<Widget> pages = [Home(), Account(userId: null,), Members(), News(), Shop(), Partners(), Contacts()];
+  final List<Widget> pages = [const Home(), Account(), const Members(), const News(), const Shop(), const Partners(), const Contacts()];
 
-  static get userId => null;
-
+  //String userId = '';
+  //String userId = userId;
+//userId =
   //static get currentUser => null;
+  getdata() async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    // preferences.setString('userId', userId);
+    print('get data navdrawer');
+    var userId = preferences.getString('userId')!;
 
+    print(userId);
+    return userId;
+  }
 
   @override
   Widget build(BuildContext context) {
+
 
     return Align(
         alignment: Alignment.topLeft,
@@ -122,6 +131,8 @@ class _NavDrawerState extends State<NavDrawer> {
                                 mainWidget = pages[index];
                               });
                               Navigator.pop(context);
+
+                              getdata();
                               // Navigator.pushNamed(context, '/' + menuUser[index]);
                               Route route = MaterialPageRoute(builder: (context) => pages[index]);
                               Navigator.push(context, route);

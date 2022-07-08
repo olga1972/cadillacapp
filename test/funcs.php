@@ -46,7 +46,8 @@ function get_user_by_login() {
 
     global $link;
     global $stmt;
-
+    // $path = file_get_contents($path);
+    // print($path);
 
     $stmt = mysqli_stmt_init($link);
     mysqli_stmt_prepare($stmt,"UPDATE users SET username = ?, birthday = ?, login = ?, carname = ?, path = ?, car1 = ?, car2 = ?, car3 = ? WHERE email = ?");
@@ -55,6 +56,11 @@ function get_user_by_login() {
     mysqli_stmt_get_result($stmt);
 
 //    print(mysqli_stmt_errno($stmt));
+        // $filename = "../assets/assets/avatar1.png";
+        // print('gettype($path)');
+        // print(gettype($path));
+        // $file = file_get_contents($path);
+        // file_put_contents($file, $filename);
 
     setcookie('uuid', $userId, time() + (3600 * 24 * 30), '/');
 //    echo $_COOKIE["userId"];
@@ -335,7 +341,7 @@ function get_all_users_json(){
 
 //          print($users);
         // $file = "../assets/assets/users.json";
-        $users_obj = '{"users": ' . json_encode($users) . '}';
+        $users_obj = '{"users": ' . json_encode($users, JSON_UNESCAPED_SLASHES) . '}';
         // $data_file = file_put_contents($file, $users_obj);
 
 
@@ -374,7 +380,7 @@ function get_all_news_json(){
           
         }
 
-        $news_obj = '{"news": ' . json_encode($news) . '}';
+        $news_obj = '{"news": ' . json_encode($news, JSON_UNESCAPED_SLASHES) . '}';
  
         return ($news_obj);
 
@@ -385,7 +391,7 @@ function get_all_news_json(){
 
 function users_to_obj () {
     $users_obj = get_all_users();
-    $users_obj = json_encode( $users_obj);
+    $users_obj = json_encode( $users_obj, JSON_UNESCAPED_SLASHES);
     $users_obj = '{"users" : ' . $users_obj . '}';
 
     echo($users_obj);
@@ -532,7 +538,7 @@ function get_all_partners_json(){
           
         }
 
-        $partners_obj = '{"partners": ' . json_encode($partners) . '}';
+        $partners_obj = '{"partners": ' . json_encode($partners, JSON_UNESCAPED_SLASHES) . '}';
  
         return ($partners_obj);
 
@@ -616,7 +622,7 @@ function get_all_banners_json(){
           
         }
 
-        $banners_obj = '{"banners": ' . json_encode($banners) . '}';
+        $banners_obj = '{"banners": ' . json_encode($banners, JSON_UNESCAPED_SLASHES) . '}';
  
         return ($banners_obj);
 

@@ -103,17 +103,17 @@ print('response body');
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['userId'] = this.userId;
-    data['phone'] = this.phone;
-    data['email'] = this.email;
-    data['username'] = this.username;
-    data['birthday'] = this.birthday;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['userId'] = userId;
+    data['phone'] = phone;
+    data['email'] = email;
+    data['username'] = username;
+    data['birthday'] = birthday;
 
-    data['login'] = this.login;
+    data['login'] = login;
     // data['password'] = this.password;
-    data['carname'] = this.carname;
+    data['carname'] = carname;
     return data;
   }
 }

@@ -1,27 +1,15 @@
 // import 'dart:html';
 
 import 'package:cadillac/pages/partnersAdmin.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:form_builder_image_picker/form_builder_image_picker.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 
 import 'package:cadillac/variables.dart';
-import 'package:cadillac/pages/home.dart';
-import 'package:cadillac/pages/account.dart';
-import 'package:cadillac/pages/members.dart';
-import 'package:cadillac/pages/news.dart';
-import 'package:cadillac/pages/shop.dart';
-import 'package:cadillac/pages/partners.dart';
 
-import 'package:cadillac/models/users.dart';
 
-import 'package:cadillac/NavDrawer.dart';
 import 'package:cadillac/widgets/titlePage.dart';
-import 'package:cadillac/widgets/socials.dart';
-import 'package:cadillac/widgets/partnersList.dart';
 
 import 'package:http/http.dart' as http;
 import 'dart:convert';
@@ -29,11 +17,10 @@ import 'dart:async';
 
 import '../NavDrawerAdmin.dart';
 import '../models/partners.dart';
-import 'homeAdmin.dart';
 
 
 class AddPartners extends StatefulWidget {
-  AddPartners({Key? key}) : super(key: key);
+  const AddPartners({Key? key}) : super(key: key);
 
 
   @override
@@ -78,7 +65,7 @@ class _AddPartnersState extends State<AddPartners> {
         theme: ThemeData(scaffoldBackgroundColor: const Color(0xFF2C335E)),
         title: 'Cadillac',
         debugShowCheckedModeBanner: false,
-        routes: {
+        routes: const {
           // '/home': (context) => const Home(),
           // '/account': (context) => Account(currentUser: currentUser),
           // '/members': (context) => Members(),
@@ -147,7 +134,7 @@ class _AddPartnersState extends State<AddPartners> {
                                                 ),
                                                 Container(
                                                   width: 284,
-                                                  margin: EdgeInsets.only(bottom: 10),
+                                                  margin: const EdgeInsets.only(bottom: 10),
                                                   child: FormBuilderTextField(
                                                       name: 'partnerName',
                                                       autofocus: true,
@@ -197,7 +184,7 @@ class _AddPartnersState extends State<AddPartners> {
                                                   // previewMargin: EdgeInsets.symmetric(horizontal: 150),
                                                   previewHeight: 140,
                                                   previewWidth: 284,
-                                                  previewMargin: EdgeInsets.only(bottom: 0),
+                                                  previewMargin: const EdgeInsets.only(bottom: 0),
                                                   iconColor: Colors.white,
                                                   decoration: const InputDecoration(
                                                     border: OutlineInputBorder(
@@ -261,7 +248,7 @@ class _AddPartnersState extends State<AddPartners> {
                                                             MaterialPageRoute(
                                                                 builder: (
                                                                     context) =>
-                                                                    PartnersAdmin()
+                                                                    const PartnersAdmin()
                                                             ));
                                                       } else {
                                                         debugPrint('Error');
@@ -283,7 +270,7 @@ class _AddPartnersState extends State<AddPartners> {
                 ),
               )
           ),
-          drawer: NavDrawerAdmin(),
+          drawer: const NavDrawerAdmin(),
 
         )
     );
@@ -352,13 +339,13 @@ Future confirmDialog(BuildContext context) async {
         ),
         actions: <Widget>[
           Container (
-              padding: EdgeInsets.only(left: 20, right: 20, bottom: 20),
+              padding: const EdgeInsets.only(left: 20, right: 20, bottom: 20),
               child: Row (
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     MaterialButton(
                       padding: const EdgeInsets.all(14),
-                      color: Color(0xFFE4E6FF),
+                      color: const Color(0xFFE4E6FF),
                       elevation: 0,
                       shape: const RoundedRectangleBorder(
                         side: BorderSide.none,
@@ -374,12 +361,12 @@ Future confirmDialog(BuildContext context) async {
                         Navigator.pushReplacement(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => PartnersAdmin()));
+                                builder: (context) => const PartnersAdmin()));
                       },
                     ),
                     MaterialButton(
                       padding: const EdgeInsets.all(14),
-                      color: Color(0xFFE4E6FF),
+                      color: const Color(0xFFE4E6FF),
                       elevation: 0,
                       shape: const RoundedRectangleBorder(
                         side: BorderSide.none,

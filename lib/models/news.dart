@@ -1,9 +1,6 @@
 import 'dart:convert';
 
-import 'package:flutter/services.dart';
-import 'package:form_builder_image_picker/form_builder_image_picker.dart';
 import 'package:http/http.dart' as http;
-import 'package:image_picker/image_picker.dart';
 
 class NewsList {
   List<New> news;
@@ -82,14 +79,14 @@ class New {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['newsId'] = this.newsId;
-    data['newsName'] = this.newsName;
-    data['newsDate'] = this.newsDate;
-    data['newsLocation'] = this.newsLocation;
-    data['newsDescrl'] = this.newsDescr;
-    data['path'] = this.path;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['newsId'] = newsId;
+    data['newsName'] = newsName;
+    data['newsDate'] = newsDate;
+    data['newsLocation'] = newsLocation;
+    data['newsDescrl'] = newsDescr;
+    data['path'] = path;
     return data;
   }
 }

@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:form_builder_image_picker/form_builder_image_picker.dart';
 
 
-import '../models/users.dart';
 
 
 class uploadImage extends StatelessWidget {
@@ -30,7 +28,7 @@ class uploadImage extends StatelessWidget {
       maxImages: maxImages,
       previewHeight: 140,
       previewWidth: 284,
-      previewMargin: EdgeInsets.only(bottom: 0),
+      previewMargin: const EdgeInsets.only(bottom: 0),
       iconColor: Colors.white,
       fit: BoxFit.contain,
       // initialValue: [

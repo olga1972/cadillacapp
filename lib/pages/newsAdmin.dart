@@ -1,22 +1,14 @@
 import 'package:flutter/material.dart';
 
 
-import 'package:cadillac/pages/home.dart';
-import 'package:cadillac/pages/account.dart';
-import 'package:cadillac/pages/members.dart';
 
-import 'package:cadillac/pages/shop.dart';
-import 'package:cadillac/pages/partners.dart';
-import 'package:cadillac/pages/contacts.dart';
 
 import 'package:cadillac/NavDrawerAdmin.dart';
 import 'package:cadillac/widgets/titlePage.dart';
-import 'package:cadillac/widgets/bannersList.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:flutter_svg/svg.dart';
 
 import 'dart:convert';
-import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
 import 'dart:io';
 
@@ -24,7 +16,6 @@ import '../models/news.dart';
 
 import '../variables.dart';
 import 'addNews.dart';
-import 'membersAdmin.dart';
 
 class NewsAdmin extends StatefulWidget {
   const NewsAdmin({Key? key}) : super(key: key);
@@ -98,7 +89,7 @@ class _NewsAdminState extends State<NewsAdmin> {
                       child: Column (
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
-                            Container (
+                            SizedBox (
                                 width: 320,
                                 height: 830,
                                 child: FutureBuilder<NewsList>(
@@ -120,7 +111,7 @@ class _NewsAdminState extends State<NewsAdmin> {
 
                                       if (snapshot.hasData) {
                                         return Center(
-                                              child: Container(
+                                              child: SizedBox(
                                                   width: 320,
                                                   height: 860,
                                                   child: Column(
@@ -132,13 +123,13 @@ class _NewsAdminState extends State<NewsAdmin> {
                                                               bottom: 20),
                                                           child: const TitlePage(title: 'клубные новости')
                                                           ),
-                                                        Container(
+                                                        SizedBox(
                                                             height: 740,
                                                             child: ListView.builder(
                                                                 scrollDirection: Axis.vertical,
                                                                 shrinkWrap: true,
                                                                 // padding: const EdgeInsets.only(top: 38, bottom: 10),
-                                                                itemCount: snapshot.data?.news?.length,
+                                                                itemCount: snapshot.data?.news.length,
                                                                 itemBuilder: (context, index) {
                                                                   String currentNewsId;
                                                                   var fileExtension = snapshot.data?.news[index].path.substring((snapshot.data?.news[index].path.length)! - 3);
@@ -148,7 +139,7 @@ class _NewsAdminState extends State<NewsAdmin> {
                                                                     isLoadedImage = false;
                                                                   }
 
-                                                                  _image = File('${snapshot.data?.news?[index]?.path}');
+                                                                  _image = File('${snapshot.data?.news[index].path}');
 
                                                                   return Container(
                                                                       width: 320,
@@ -178,11 +169,11 @@ class _NewsAdminState extends State<NewsAdmin> {
                                                                                           child: Text(
                                                                                               '${snapshot
                                                                                                   .data
-                                                                                                  ?.news?[index]
-                                                                                                  ?.newsDate}',
+                                                                                                  ?.news[index]
+                                                                                                  .newsDate}',
                                                                                               textAlign: TextAlign
                                                                                                   .left,
-                                                                                              style: TextStyle(
+                                                                                              style: const TextStyle(
                                                                                                 fontSize: 32.0,
                                                                                                 fontWeight: FontWeight
                                                                                                     .normal,
@@ -200,13 +191,13 @@ class _NewsAdminState extends State<NewsAdmin> {
                                                                                                 // устанавливаем индекс выделенного элемента
                                                                                                 selectedIndex = index;
                                                                                               });
-                                                                                              print(snapshot.data?.news?[selectedIndex].newsId);
-                                                                                              var currentNewsId = snapshot.data?.news?[selectedIndex].newsId;
+                                                                                              print(snapshot.data?.news[selectedIndex].newsId);
+                                                                                              var currentNewsId = snapshot.data?.news[selectedIndex].newsId;
                                                                                               deleteNews(currentNewsId);
 
                                                                                               Route route = MaterialPageRoute(
                                                                                                   builder: (context) =>
-                                                                                                      NewsAdmin());
+                                                                                                      const NewsAdmin());
                                                                                               Navigator.push(context,route);
 
                                                                                             },
@@ -253,7 +244,7 @@ class _NewsAdminState extends State<NewsAdmin> {
                                                                                           visible: false,
                                                                                           child: FormBuilderTextField(
                                                                                             name: 'currentNewsId',
-                                                                                            initialValue: '${snapshot.data?.news?[selectedIndex].newsId}',
+                                                                                            initialValue: '${snapshot.data?.news[selectedIndex].newsId}',
                                                                                             onSaved: (value) => currentNewsId = value!,
                                                                                           ),
                                                                                         ),
@@ -273,14 +264,14 @@ class _NewsAdminState extends State<NewsAdmin> {
                                                                                             .none,
                                                                                         children: [
 
-                                                                                          Container(
+                                                                                          SizedBox(
                                                                                               width: 320,
                                                                                           child: Text.rich(
                                                                                             TextSpan(
                                                                                                 text: '${snapshot
                                                                                                     .data
-                                                                                                    ?.news?[index]
-                                                                                                    ?.newsName}'
+                                                                                                    ?.news[index]
+                                                                                                    .newsName}'
                                                                                                     .toUpperCase(),
                                                                                                 style: const TextStyle(
                                                                                                     fontSize: 14,
@@ -310,7 +301,7 @@ class _NewsAdminState extends State<NewsAdmin> {
                                                                                             onTap: () {
                                                                                               Route route = MaterialPageRoute(
                                                                                                   builder: (context) =>
-                                                                                                      AddNews());
+                                                                                                      const AddNews());
                                                                                               Navigator.push(context,route);
                                                                                             },
                                                                                             child: SvgPicture
@@ -335,7 +326,7 @@ class _NewsAdminState extends State<NewsAdmin> {
                                                                             Container(
                                                                                 width: 284,
                                                                                 height: 160,
-                                                                                decoration: BoxDecoration(
+                                                                                decoration: const BoxDecoration(
                                                                                   color: Color(0XffE4E6FF),
                                                                                   borderRadius: BorderRadius.all(Radius
                                                                                       .circular(20.0)),
@@ -344,7 +335,7 @@ class _NewsAdminState extends State<NewsAdmin> {
                                                                                   bottom: 10.0,
                                                                                   top: 10),
                                                                                 child: (isLoadedImage &&_image.existsSync()) ? Image.file(_image, fit: BoxFit.cover, width: 284, height: 160) :
-                                                                                Text('no image',
+                                                                                const Text('no image',
                                                                                     textAlign: TextAlign.center,
                                                                                     style: TextStyle(
                                                                                       fontSize: 18.0,
@@ -361,11 +352,11 @@ class _NewsAdminState extends State<NewsAdmin> {
                                                                               child: Text(
                                                                                   '${snapshot
                                                                                       .data
-                                                                                      ?.news?[index]
-                                                                                      ?.newsDescr}',
+                                                                                      ?.news[index]
+                                                                                      .newsDescr}',
                                                                                   textAlign: TextAlign
                                                                                       .left,
-                                                                                  style: TextStyle(
+                                                                                  style: const TextStyle(
                                                                                     fontSize: 32.0,
                                                                                     fontWeight: FontWeight
                                                                                         .normal,
@@ -403,7 +394,7 @@ class _NewsAdminState extends State<NewsAdmin> {
             )
         ),
 
-        drawer: NavDrawerAdmin(),
+        drawer: const NavDrawerAdmin(),
 
       )
     );
@@ -425,13 +416,13 @@ Future confirmDialog(BuildContext context) async {
         ),
         actions: <Widget>[
           Container (
-              padding: EdgeInsets.only(left: 20, right: 20, bottom: 20),
+              padding: const EdgeInsets.only(left: 20, right: 20, bottom: 20),
               child: Row (
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     MaterialButton(
                       padding: const EdgeInsets.all(14),
-                      color: Color(0xFFE4E6FF),
+                      color: const Color(0xFFE4E6FF),
                       elevation: 0,
                       shape: const RoundedRectangleBorder(
                         side: BorderSide.none,
@@ -447,12 +438,12 @@ Future confirmDialog(BuildContext context) async {
                         Navigator.pushReplacement(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => NewsAdmin()));
+                                builder: (context) => const NewsAdmin()));
                       },
                     ),
                     MaterialButton(
                       padding: const EdgeInsets.all(14),
-                      color: Color(0xFFE4E6FF),
+                      color: const Color(0xFFE4E6FF),
                       elevation: 0,
                       shape: const RoundedRectangleBorder(
                         side: BorderSide.none,

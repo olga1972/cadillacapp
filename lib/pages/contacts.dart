@@ -1,18 +1,12 @@
 // import 'dart:html';
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 
 import 'package:cadillac/variables.dart';
-import 'package:cadillac/pages/home.dart';
 import 'package:cadillac/pages/account.dart';
-import 'package:cadillac/pages/members.dart';
-import 'package:cadillac/pages/news.dart';
-import 'package:cadillac/pages/shop.dart';
-import 'package:cadillac/pages/partners.dart';
 import 'package:card_swiper/card_swiper.dart';
 
 import 'package:cadillac/NavDrawer.dart';
@@ -28,7 +22,7 @@ import 'dart:io';
 import 'package:cadillac/models/partners.dart';
 
 class Contacts extends StatefulWidget {
-  Contacts({Key? key}) : super(key: key);
+  const Contacts({Key? key}) : super(key: key);
 
   get partners => null;
 
@@ -91,7 +85,7 @@ class _ContactsState extends State<Contacts> {
         theme: ThemeData(scaffoldBackgroundColor: const Color(0xFF181c33)),
         title: 'Cadillac',
         debugShowCheckedModeBanner: false,
-        routes: {
+        routes: const {
           // '/home': (context) => const Home(),
           // '/account': (context) => Account(currentUser: currentUser),
           // '/members': (context) => Members(),
@@ -112,8 +106,8 @@ class _ContactsState extends State<Contacts> {
                   onPressed: () {
                     Scaffold.of(context).openDrawer();
                   },
-                  tooltip:
-                      MaterialLocalizations.of(context).openAppDrawerTooltip,
+                  // tooltip:
+                  //     MaterialLocalizations.of(context).openAppDrawerTooltip,
                 );
               },
             ),
@@ -140,7 +134,7 @@ class _ContactsState extends State<Contacts> {
                         ),
                         Container(
                           margin: const EdgeInsets.only(bottom: 80),
-                          child: Socials(),
+                          child: const Socials(),
                         ),
                         Container(
                           margin: const EdgeInsets.only(bottom: 15),
@@ -153,7 +147,7 @@ class _ContactsState extends State<Contacts> {
                           margin: const EdgeInsets.only(bottom: 30),
                           child: const TitlePage(title: 'напишите нам'),
                         ),
-                        Container(
+                        SizedBox(
                           width: 284,
                           child: FormBuilder(
                               key: _formKey,
@@ -186,7 +180,7 @@ class _ContactsState extends State<Contacts> {
                                         style: styleTitleFormInput,
                                       ),
                                     ),
-                                    Container(
+                                    SizedBox(
                                       width: 284,
                                       child: FormBuilderTextField(
                                           name: 'theme',
@@ -331,9 +325,9 @@ class _ContactsState extends State<Contacts> {
                             width: 284,
                             height: 114,
                             padding: EdgeInsets.zero,
-                            margin: EdgeInsets.only(
+                            margin: const EdgeInsets.only(
                                 top: 50, bottom: 0, left: 0,right: 0),
-                            color: Color(0xFF181C33),
+                            color: const Color(0xFF181C33),
                               child: FutureBuilder<PartnersList>(
                                   future: partnersList,
                                   builder: (context, snapshot) {
@@ -394,19 +388,19 @@ class _ContactsState extends State<Contacts> {
                                           }
                                           _image = File(
                                               '${snapshot.data
-                                                  ?.partners?[index]
-                                                  ?.path}');
+                                                  ?.partners[index]
+                                                  .path}');
                                           return Container (
                                               width: 284,
                                               height: 160,
-                                              decoration: BoxDecoration(
+                                              decoration: const BoxDecoration(
                                                 color: Color(0XffE4E6FF),
                                                 borderRadius: BorderRadius.all(Radius
                                                     .circular(20.0)),
                                               ),
                                               margin: const EdgeInsets.only(bottom: 10.0, top: 10, left: 10,right: 10),
                                               child: (isLoadedImage &&_image.existsSync()) ? Image.file(_image, fit: BoxFit.cover, width: 284, height: 160) :
-                                              Text('no image',
+                                              const Text('no image',
                                                   textAlign: TextAlign.center,
                                                   style: TextStyle(
                                                     fontSize: 18.0,
@@ -465,7 +459,7 @@ class _ContactsState extends State<Contacts> {
           //     )
           //   ),
           // ),
-          drawer: NavDrawer(),
+          drawer: const NavDrawer(),
         ));
   }
 
@@ -535,13 +529,13 @@ Future confirmDialog(BuildContext context) async {
         ),
         actions: <Widget>[
           Container (
-            padding: EdgeInsets.only(left: 20, right: 20, bottom: 20),
+            padding: const EdgeInsets.only(left: 20, right: 20, bottom: 20),
             child: Row (
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   MaterialButton(
                     padding: const EdgeInsets.all(14),
-                    color: Color(0xFFE4E6FF),
+                    color: const Color(0xFFE4E6FF),
                     elevation: 0,
                     shape: const RoundedRectangleBorder(
                       side: BorderSide.none,
@@ -557,12 +551,12 @@ Future confirmDialog(BuildContext context) async {
                       Navigator.pushReplacement(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => Account(userId: userId)));
+                              builder: (context) => Account()));
                     },
                   ),
                   MaterialButton(
                     padding: const EdgeInsets.all(14),
-                    color: Color(0xFFE4E6FF),
+                    color: const Color(0xFFE4E6FF),
                     elevation: 0,
                     shape: const RoundedRectangleBorder(
                       side: BorderSide.none,

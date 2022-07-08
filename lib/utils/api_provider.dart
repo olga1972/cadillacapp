@@ -4,7 +4,7 @@ class ApiProvider {
   Dio _dio;
   String aToken = '';
 
-  final BaseOptions options = new BaseOptions(
+  final BaseOptions options = BaseOptions(
     baseUrl: 'http://3.8.141.177:6001/gateway',
     connectTimeout: 15000,
     receiveTimeout: 13000,

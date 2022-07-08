@@ -43,7 +43,7 @@ if(isset($_POST["login"])) {
             //$editUser = getUser($userId);
             //setcookie('uuid', $editUser["userId"], time() + (3600 * 24 * 30), '/');
 
-          echo(json_encode($editUser));
+          echo(json_encode($editUser, JSON_UNESCAPED_SLASHES));
 
 
           //header("Refresh:0");

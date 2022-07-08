@@ -1,20 +1,12 @@
 import 'package:flutter/material.dart';
 
-import 'package:cadillac/pages/home.dart';
-import 'package:cadillac/pages/account.dart';
-import 'package:cadillac/pages/members.dart';
 
-import 'package:cadillac/pages/shop.dart';
-import 'package:cadillac/pages/partners.dart';
-import 'package:cadillac/pages/contacts.dart';
 
 import 'package:cadillac/NavDrawer.dart';
 import 'package:cadillac/widgets/titlePage.dart';
-import 'package:cadillac/widgets/bannersList.dart';
 import 'package:flutter_svg/svg.dart';
 
 import 'dart:convert';
-import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
 import 'dart:io';
 
@@ -73,7 +65,7 @@ class _NewsState extends State<News> {
                 return IconButton(
                   icon: SvgPicture.asset('assets/images/burger.svg'),
                   onPressed: () { Scaffold.of(context).openDrawer(); },
-                  tooltip: MaterialLocalizations.of(context).openAppDrawerTooltip,
+                  // tooltip: MaterialLocalizations.of(context).openAppDrawerTooltip,
                 );
               },
             ),
@@ -87,7 +79,7 @@ class _NewsState extends State<News> {
                           child: Column (
                           crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
-                                Container (
+                                SizedBox (
                                     width: 320,
                                     child: FutureBuilder<NewsList>(
                                         future: newsList,
@@ -108,7 +100,7 @@ class _NewsState extends State<News> {
 
                                           if (snapshot.hasData) {
                                             return Center(
-                                                child: Container(
+                                                child: SizedBox(
                                                     width: 320,
                                                     //height: 1260,
                                                     child: Column(
@@ -128,7 +120,7 @@ class _NewsState extends State<News> {
                                                                 scrollDirection: Axis.vertical,
                                                                 shrinkWrap: true,
                                                                 // padding: const EdgeInsets.only(top: 38, bottom: 10),
-                                                                itemCount: snapshot.data?.news?.length,
+                                                                itemCount: snapshot.data?.news.length,
                                                                 itemBuilder: (context, index) {
                                                                   var fileExtension = snapshot.data?.news[index].path.substring((snapshot.data?.news[index].path.length)! - 3);
                                                                   if(fileExtension == 'jpg' || fileExtension == 'png' || fileExtension == 'svg') {
@@ -137,7 +129,7 @@ class _NewsState extends State<News> {
                                                                     isLoadedImage = false;
                                                                   }
 
-                                                                  _image = File('${snapshot.data?.news?[index]?.path}');
+                                                                  _image = File('${snapshot.data?.news[index].path}');
                                                                   return Container(
                                                                       width: 320,
                                                                       // height: 166,
@@ -156,9 +148,9 @@ class _NewsState extends State<News> {
                                                                                       children: [
                                                                                         Container(
                                                                                           margin: const EdgeInsets.only(bottom: 10,),
-                                                                                          child: Text('${snapshot.data?.news?[index]?.newsDate}',
+                                                                                          child: Text('${snapshot.data?.news[index].newsDate}',
                                                                                               textAlign: TextAlign.left,
-                                                                                              style: TextStyle(
+                                                                                              style: const TextStyle(
                                                                                                 fontSize: 32.0,
                                                                                                 fontWeight: FontWeight.normal,
                                                                                                 fontFamily: 'CadillacSans',
@@ -183,7 +175,7 @@ class _NewsState extends State<News> {
                                                                                       children: [
                                                                                         Text.rich(
                                                                                           TextSpan (
-                                                                                              text: '${snapshot.data?.news?[index]?.newsName}'.toUpperCase(),
+                                                                                              text: '${snapshot.data?.news[index].newsName}'.toUpperCase(),
                                                                                               style: const TextStyle(fontSize: 14,fontWeight: FontWeight.normal, color: Colors.white, height: 1.5),
                                                                                               children: <InlineSpan>[
                                                                                                 TextSpan(
@@ -204,14 +196,14 @@ class _NewsState extends State<News> {
                                                                             Container (
                                                                                 width: 284,
                                                                                 height: 160,
-                                                                                decoration: BoxDecoration(
+                                                                                decoration: const BoxDecoration(
                                                                                   color: Color(0XffE4E6FF),
                                                                                   borderRadius: BorderRadius.all(Radius
                                                                                       .circular(20.0)),
                                                                                 ),
                                                                                 margin: const EdgeInsets.only(bottom: 10.0, top: 10),
                                                                                 child: (isLoadedImage &&_image.existsSync()) ? Image.file(_image, fit: BoxFit.cover, width: 284, height: 160) :
-                                                                                Text('no image',
+                                                                                const Text('no image',
                                                                                     textAlign: TextAlign.center,
                                                                                     style: TextStyle(
                                                                                       fontSize: 18.0,
@@ -223,9 +215,9 @@ class _NewsState extends State<News> {
                                                                             ),
                                                                             Container(
                                                                               margin: const EdgeInsets.only(bottom: 10,),
-                                                                              child: Text('${snapshot.data?.news?[index]?.newsDescr}',
+                                                                              child: Text('${snapshot.data?.news[index].newsDescr}',
                                                                                   textAlign: TextAlign.left,
-                                                                                  style: TextStyle(
+                                                                                  style: const TextStyle(
                                                                                     fontSize: 32.0,
                                                                                     fontWeight: FontWeight.normal,
                                                                                     fontFamily: 'CadillacSans',
@@ -272,7 +264,7 @@ class _NewsState extends State<News> {
             )
           ),
 
-          drawer: NavDrawer(),
+          drawer: const NavDrawer(),
         ),
 
     );

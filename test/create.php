@@ -73,7 +73,7 @@ if(isset($_POST["phone"]) && isset($_POST["email"])) {
         setcookie('uuid', $userId, time() + (3600 * 24 * 30), '/');
         
         //var_dump($newUser);
-print(json_encode($newUser));
+print(json_encode($newUser, JSON_UNESCAPED_SLASHES));
 // print('after add new user create.php');
 //  print($userId);
 
@@ -112,7 +112,7 @@ if ( $detect->isMobile() ) {
 //        var_dump($idExistUser);
         $existUser["id"] = strval($existUser["id"]);
 //        var_dump($existUser);
-        print(json_encode($existUser));
+        print(json_encode($existUser, JSON_UNESCAPED_SLASHES));
 
         return $existUser;
 

@@ -25,7 +25,7 @@ if(isset($_POST["bannerName"])) {
 
      $addedBanner[0]["id"] = strval($addedBanner[0]["id"]);
 //        var_dump($existUser);
-    print(json_encode($addedBanner[0]));
+    print(json_encode($addedBanner[0], JSON_UNESCAPED_SLASHES));
 
     return $addedBanner[0];
 

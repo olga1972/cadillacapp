@@ -4,35 +4,23 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_svg/svg.dart';
 // import 'package:flutter/src/material/input_border.dart';
-import 'package:flutter/src/material/material_localizations.dart';
 //import 'package:cadillac/NavBar.dart';
 
 //import 'package:cadillac/CustomAppBar.dart';
 
-import 'package:cadillac/pages/registrationPage.dart';
-import 'package:cadillac/pages/success-payment.dart';
-import 'package:cadillac/pages/payment.dart';
-import 'package:cadillac/pages/account.dart';
 import 'package:cadillac/pages/members.dart';
 import 'package:cadillac/pages/news.dart';
-import 'package:cadillac/pages/shop.dart';
 import 'package:cadillac/pages/partners.dart';
 import 'package:cadillac/pages/contacts.dart';
-import 'package:cadillac/pages/test.dart';
 
 import 'package:cadillac/NavDrawer.dart';
 import 'package:cadillac/widgets/titlePage.dart';
 import 'package:cadillac/widgets/socials.dart';
 // import 'package:cadillac/widgets/bannersList.dart';
 
-import 'package:url_launcher/link.dart';
-import 'package:url_launcher/url_launcher.dart';
 
-import 'package:cadillac/models/users.dart';
-import 'package:cadillac/models/products.dart';
 
 import 'dart:convert';
-import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
 import 'dart:io';
 
@@ -41,7 +29,7 @@ import '../variables.dart';
 import 'gift.dart';
 
 class Home extends StatefulWidget {
-  Home({Key? key}) : super(key: key);
+  const Home({Key? key}) : super(key: key);
 
   @override
   State<Home> createState() => _HomeState();
@@ -98,13 +86,13 @@ class _HomeState extends State<Home> {
         //initialRoute: '/account',
 
         routes: {
-          '/home': (context) => Home(),
+          '/home': (context) => const Home(),
           // '/account': (context) => Account(currentUser: currentUser,),
-          '/members': (context) => Members(),
+          '/members': (context) => const Members(),
           '/news': (context) => const News(),
           // '/shop': (context) => Shop(),
-          '/partners': (context) => Partners(),
-          '/contacts': (context) => Contacts(),
+          '/partners': (context) => const Partners(),
+          '/contacts': (context) => const Contacts(),
           '/gift': (context) => const Gift(),
           // '/test': (context) => Test()
 
@@ -123,7 +111,7 @@ class _HomeState extends State<Home> {
                     semanticsLabel: 'Icon burger',
                     height: 12.0),
                   onPressed: () { Scaffold.of(context).openDrawer(); },
-                  tooltip: MaterialLocalizations.of(context).openAppDrawerTooltip,
+                  // tooltip: MaterialLocalizations.of(context).openAppDrawerTooltip,
                 );
               },
             ),
@@ -243,19 +231,19 @@ class _HomeState extends State<Home> {
                                                 }
                                                 _image = File(
                                                     '${snapshot.data
-                                                        ?.banners?[index]
-                                                        ?.path}');
+                                                        ?.banners[index]
+                                                        .path}');
                                                 return Container (
                                                     width: 284,
                                                     height: 92,
-                                                    decoration: BoxDecoration(
+                                                    decoration: const BoxDecoration(
                                                       color: Color(0XffE4E6FF),
                                                       borderRadius: BorderRadius.all(Radius
                                                           .circular(20.0)),
                                                     ),
                                                     margin: const EdgeInsets.only(bottom: 10.0, top: 10, left: 10,right: 10),
                                                     child: (isLoadedImage &&_image.existsSync()) ? Image.file(_image, fit: BoxFit.cover, width: 284, height: 92) :
-                                                    Text('no image',
+                                                    const Text('no image',
                                                         textAlign: TextAlign.center,
                                                         style: TextStyle(
                                                           fontSize: 18.0,
@@ -277,7 +265,7 @@ class _HomeState extends State<Home> {
 
                                 const TitlePage(title: 'мы в соцсетях'),
 
-                                Socials(),
+                                const Socials(),
 
 
 
@@ -294,7 +282,7 @@ class _HomeState extends State<Home> {
 
           //body: Home(),
 
-          drawer: NavDrawer(),
+          drawer: const NavDrawer(),
 
 
 

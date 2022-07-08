@@ -1,12 +1,9 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
-import 'package:form_builder_image_picker/form_builder_image_picker.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
-import 'package:url_launcher/link.dart';
 import 'package:url_launcher/url_launcher.dart';
 // import 'package:cadillac/functions.dart';
 
@@ -56,7 +53,7 @@ class Payment extends StatelessWidget {
           // ),
 
             body: Center(
-                child: Container(
+                child: SizedBox(
                   width: 284,
                   child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -167,7 +164,7 @@ class Payment extends StatelessWidget {
                                                 borderSide: BorderSide.none,
                                                 borderRadius: BorderRadius.all(
                                                     Radius.circular(10))),
-                                            fillColor: Color(0XFFE4E6FF),
+                                            fillColor: const Color(0XFFE4E6FF),
                                             filled: true,
                                             hintText: "Введите номер карты",
                                             hintStyle: const TextStyle(
@@ -234,7 +231,7 @@ class Payment extends StatelessWidget {
                               Expanded(
                                   flex: 1,
                                   child: Container(
-                                      margin: EdgeInsets.only(left: 10),
+                                      margin: const EdgeInsets.only(left: 10),
 
                                     child: FormBuilderTextField(
                                       name: 'cvc',

@@ -1,8 +1,5 @@
-import 'dart:ui';
 import 'package:cadillac/pages/partners.dart';
 import 'package:cadillac/pages/shop.dart';
-import 'package:cadillac/widgets/uploadImage.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 // import 'generated/l10n.dart';
@@ -15,30 +12,22 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 
 
 
-import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'dart:async';
 
 // import 'package:image/image.dart';
 
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:form_builder_image_picker/form_builder_image_picker.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
-import 'package:form_builder_asset_picker/form_builder_asset_picker.dart';
 
-import 'package:image_picker/image_picker.dart';
 
-import 'package:url_launcher/link.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import 'package:cadillac/NavDrawer.dart';
 import 'package:cadillac/widgets/titlePage.dart';
-import 'package:cadillac/widgets/accordion.dart';
 
 import 'package:cadillac/variables.dart';
 import 'package:cadillac/common/theme_helper.dart';
@@ -47,13 +36,8 @@ import 'package:cadillac/pages/account.dart';
 import 'package:cadillac/pages/home.dart';
 
 import 'package:cadillac/models/users.dart';
-import 'dart:developer';
-import 'package:flutter/services.dart';
-import 'package:cadillac/env.dart';
 
 import 'contacts.dart';
-import 'members.dart';
-import 'news.dart';
 
 
 enum ImageSourceType { gallery, camera }
@@ -62,7 +46,7 @@ var uuid = '';
 
 class Edit extends StatefulWidget {
 
-  Edit({Key? key} ) : super(key: key);
+  const Edit({Key? key} ) : super(key: key);
   @override
   State<Edit> createState() => _EditState();
 }
@@ -155,26 +139,26 @@ class _EditState extends State<Edit> {
         theme: ThemeData(scaffoldBackgroundColor: const Color(0xFF181c33)),
         title: 'Cadillac',
         debugShowCheckedModeBanner: false,
-        localizationsDelegates: [
-          GlobalMaterialLocalizations.delegate,
-          GlobalWidgetsLocalizations.delegate,
-          GlobalCupertinoLocalizations.delegate,
-        ],
-        supportedLocales: [
-          Locale('en', ''),
-          // Английский, без кода страны Locale ( 'es' , '' ), // испанский, без кода страны ],
-        ],
+        // localizationsDelegates: const [
+        //   GlobalMaterialLocalizations.delegate,
+        //   GlobalWidgetsLocalizations.delegate,
+        //   GlobalCupertinoLocalizations.delegate,
+        // ],
+        // supportedLocales: const [
+        //   Locale('en', ''),
+        //   // Английский, без кода страны Locale ( 'es' , '' ), // испанский, без кода страны ],
+        // ],
 
 
 
         routes: {
-          '/home': (context) => Home(),
+          '/home': (context) => const Home(),
           // '/account': (context) => Account(currentUser: currentUser),
           //  '/members': (context) => Members(),
           //  '/news': (context) => const News(),
-          '/shop': (context) => Shop(),
-          '/partners': (context) => Partners(),
-          '/contacts': (context) => Contacts(),
+          '/shop': (context) => const Shop(),
+          '/partners': (context) => const Partners(),
+          '/contacts': (context) => const Contacts(),
 
         },
         home: Scaffold(
@@ -365,7 +349,7 @@ class _EditState extends State<Edit> {
                                                                 // previewMargin: EdgeInsets.symmetric(horizontal: 150),
                                                                 previewHeight: 140,
                                                                 previewWidth: 284,
-                                                                previewMargin: EdgeInsets.only(bottom: 0),
+                                                                previewMargin: const EdgeInsets.only(bottom: 0),
                                                                 iconColor: Colors.white,
                                                                 decoration: const InputDecoration(
                                                                   border: OutlineInputBorder(
@@ -619,7 +603,7 @@ class _EditState extends State<Edit> {
                                                                 name: 'cars',
                                                                 previewHeight: 140,
                                                                 previewWidth: 284,
-                                                                previewMargin: EdgeInsets.only(bottom: 0),
+                                                                previewMargin: const EdgeInsets.only(bottom: 0),
                                                                 iconColor: Colors.white,
 
                                                                 // galleryIcon: SvgPicture.asset(
@@ -794,7 +778,7 @@ class _EditState extends State<Edit> {
                                                                           MaterialPageRoute(
                                                                               builder: (
                                                                                   context) =>
-                                                                                  Account(userId: userId))
+                                                                                  Account())
                                                                       );
 
                                                                     } else {
@@ -838,7 +822,7 @@ class _EditState extends State<Edit> {
 
 
 
-          drawer: NavDrawer(),
+          drawer: const NavDrawer(),
         )
     );
   }
@@ -942,13 +926,13 @@ Future confirmDialog(BuildContext context) async {
         ),
         actions: <Widget>[
           Container (
-              padding: EdgeInsets.only(left: 20, right: 20, bottom: 20),
+              padding: const EdgeInsets.only(left: 20, right: 20, bottom: 20),
               child: Row (
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     MaterialButton(
                       padding: const EdgeInsets.all(14),
-                      color: Color(0xFFE4E6FF),
+                      color: const Color(0xFFE4E6FF),
                       elevation: 0,
                       shape: const RoundedRectangleBorder(
                         side: BorderSide.none,
@@ -964,12 +948,12 @@ Future confirmDialog(BuildContext context) async {
                         Navigator.pushReplacement(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => Account(userId: userId)));
+                                builder: (context) => Account()));
                       },
                     ),
                     MaterialButton(
                       padding: const EdgeInsets.all(14),
-                      color: Color(0xFFE4E6FF),
+                      color: const Color(0xFFE4E6FF),
                       elevation: 0,
                       shape: const RoundedRectangleBorder(
                         side: BorderSide.none,

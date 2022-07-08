@@ -4,7 +4,6 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'dart:async';
 
-import 'package:form_builder_image_picker/form_builder_image_picker.dart';
 
 class User {
   final String? userId;

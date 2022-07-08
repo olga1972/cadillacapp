@@ -2,9 +2,7 @@
 
 //import 'package:http/http.dart' as html;
 
-import 'dart:io';
 
-import 'package:cadillac/main.dart';
 import 'package:cadillac/pages/homeAdmin.dart';
 import 'package:cadillac/pages/partners.dart';
 import 'package:cadillac/pages/registrationAdmin.dart';
@@ -12,10 +10,8 @@ import 'package:cadillac/pages/shop.dart';
 import 'package:cadillac/pages/success-payment.dart';
 // import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:image_picker/image_picker.dart';
+//import 'package:flutter_localizations/flutter_localizations.dart';
 
-import 'package:path_provider/path_provider.dart';
 
 
 // import 'package:dio/dio.dart';
@@ -26,26 +22,17 @@ import 'package:path_provider/path_provider.dart';
 // import 'package:hive/hive.dart';
 
 
-import 'package:uuid/uuid.dart';
-import 'package:uuid/uuid_util.dart';
 
 import 'package:dio/dio.dart';
 import 'package:dio_cookie_manager/dio_cookie_manager.dart';
 import 'package:cookie_jar/cookie_jar.dart';
 
-import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-import 'dart:async';
-
-import 'package:flutter/services.dart';
-
-import 'package:http/http.dart' as http;
-import 'dart:convert';
-import 'dart:async';
 
 
-import 'package:cadillac/env.dart';
+
+
 //import 'package:cadillac/db/connect.php';
 
 
@@ -54,36 +41,25 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
-import 'package:form_builder_image_picker/form_builder_image_picker.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
-import 'package:form_builder_asset_picker/form_builder_asset_picker.dart';
 
-import 'package:url_launcher/link.dart';
-import 'package:url_launcher/url_launcher.dart';
 
-import 'package:cadillac/widgets/titlePage.dart';
-import 'package:cadillac/widgets/accordion.dart';
 
 import 'package:cadillac/variables.dart';
-import 'package:cadillac/common/theme_helper.dart';
 
 import 'package:cadillac/pages/account.dart';
 
 
 import 'package:cadillac/models/users.dart';
-import 'dart:developer';
-import 'package:flutter/services.dart';
 
 
 import 'contacts.dart';
 import 'home.dart';
-import 'members.dart';
-import 'news.dart';
 
 var uuid = '';
 
 class RegistrationPage extends StatefulWidget {
-  RegistrationPage({Key? key, }) : super(key: key);
+  const RegistrationPage({Key? key, }) : super(key: key);
 
   @override
   State<RegistrationPage> createState() => _RegistrationPageState();
@@ -170,12 +146,12 @@ class _RegistrationPageState extends State<RegistrationPage> {
       theme: ThemeData(scaffoldBackgroundColor: const Color(0xFF181c33)),
       title: 'Клуб Любителей Кадиллак в России',
       debugShowCheckedModeBanner: false,
-      localizationsDelegates: [
-        GlobalMaterialLocalizations.delegate,
-        GlobalWidgetsLocalizations.delegate,
-        GlobalCupertinoLocalizations.delegate,
-      ],
-      supportedLocales: [
+      // localizationsDelegates: const [
+      //   GlobalMaterialLocalizations.delegate,
+      //   GlobalWidgetsLocalizations.delegate,
+      //   GlobalCupertinoLocalizations.delegate,
+      // ],
+      supportedLocales: const [
         Locale('en', ''),
         // Английский, без кода страны Locale ( 'es' , '' ), // испанский, без кода страны ],
       ],
@@ -184,16 +160,16 @@ class _RegistrationPageState extends State<RegistrationPage> {
       //initialRoute: '/home',
 
       routes: {
-        '/home': (context) => Home(),
-        '/homeAdmin': (context) => HomeAdmin(),
-        '/account': (context) => Account(userId: userId),
+        '/home': (context) => const Home(),
+        '/homeAdmin': (context) => const HomeAdmin(),
+        '/account': (context) => Account(),
           // '/members': (context) => Members(),
           // '/news': (context) => const News(),
-          '/shop': (context) => Shop(),
-          '/partners': (context) => Partners(),
-          '/contacts': (context) => Contacts(),
+          '/shop': (context) => const Shop(),
+          '/partners': (context) => const Partners(),
+          '/contacts': (context) => const Contacts(),
           // '/success_payment': (context) => SuccessPayment(currentUser: currentUser),
-        '/success_payment': (context) => SuccessPayment(userId: userId)
+        '/success_payment': (context) => SuccessPayment()
       },
       home: Scaffold(
         body: Center (
@@ -420,7 +396,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                                             Navigator.pushReplacement(
                                                 context, MaterialPageRoute(
                                                 builder: (context) =>
-                                                    RegistrationAdmin(userId: uuid)
+                                                    RegistrationAdmin()
                                               // SuccessPayment(
                                               //     currentUser: user),
                                             )
@@ -429,7 +405,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                                             Navigator.pushReplacement(
                                                 context, MaterialPageRoute(
                                                 builder: (context) =>
-                                                    SuccessPayment(userId: uuid)
+                                                    SuccessPayment()
                                               // SuccessPayment(
                                               //     currentUser: user),
                                             )
@@ -559,7 +535,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
         List<String>? cookiesList = cookie?.split(';');
         cookiesList?.forEach((i)=>print(i.toLowerCase().trim()));
         userId = cookiesList?[0].split('=')[1];
-        print('userId: ${this.userId}');
+        print('userId: $userId');
 
         if (mounted && userId != null) {
           setState(() {

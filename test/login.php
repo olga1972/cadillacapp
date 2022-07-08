@@ -32,14 +32,14 @@ if(isset($_POST["phone"]) && isset($_POST["email"])){
             $userInfoArray[] = $row;
 //              echo "<td>" . $userid = $row["userId"];
         }
-        echo json_encode($userInfoArray);
+        echo json_encode($userInfoArray, JSON_UNESCAPED_SLASHES);
 
         mysqli_free_result($res);
     } else{
         echo "Ошибка: " . mysqli_error($link);
     }
 
-    return json_encode($userInfoArray);
+    return json_encode($userInfoArray, JSON_UNESCAPED_SLASHES);
 
 //     $return["message"] = 'Send all parameters.';
 }

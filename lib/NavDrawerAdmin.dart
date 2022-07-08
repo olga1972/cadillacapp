@@ -1,21 +1,13 @@
+import 'package:cadillac/pages/accountAdmin.dart';
 import 'package:cadillac/pages/homeAdmin.dart';
 import 'package:cadillac/pages/membersAdmin.dart';
 import 'package:cadillac/pages/newsAdmin.dart';
 import 'package:cadillac/pages/partnersAdmin.dart';
 import 'package:cadillac/pages/shopAdmin.dart';
-import 'package:cadillac/pages/test.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-import 'package:cadillac/pages/home.dart';
-import 'package:cadillac/pages/account.dart';
-import 'package:cadillac/pages/members.dart';
-import 'package:cadillac/pages/news.dart';
-import 'package:cadillac/pages/shop.dart';
-import 'package:cadillac/pages/partners.dart';
-import 'package:cadillac/pages/contacts.dart';
 
-import 'models/users.dart';
 
 //import 'models/user2.dart';
 
@@ -35,19 +27,19 @@ class NavDrawerAdmin extends StatefulWidget {
   //final currentUser = User();
   final userId;
   //const NavDrawer({Key? key, this.currentUser}) : super(key: key);
-  NavDrawerAdmin({Key? key, this.userId,}) : super(key: key);
+  const NavDrawerAdmin({Key? key, this.userId,}) : super(key: key);
 
   @override
   _NavDrawerAdminState createState() => _NavDrawerAdminState();
 }
 
 class _NavDrawerAdminState extends State<NavDrawerAdmin> {
-  Widget mainWidget = HomeAdmin();
+  Widget mainWidget = const HomeAdmin();
 
 
   final List<String> menuAdmin = ["главная", "аккаунт члена клуба", "члены автоклуба", "клубные новости", "клубная атрибутика и одежда", "партнеры"];
   final List<String> icons = ["home.svg", "account.svg", "members.svg", "news.svg", "clubwear.svg", "partners.svg"];
-  final List<Widget> pages = [HomeAdmin(), Account(userId: null,), MembersAdmin(), NewsAdmin(), ShopAdmin(), PartnersAdmin()];
+  final List<Widget> pages = [const HomeAdmin(), AccountAdmin(), const MembersAdmin(), const NewsAdmin(), const ShopAdmin(), const PartnersAdmin()];
 
   static get userId => null;
 

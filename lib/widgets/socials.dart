@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-import 'package:url_launcher/link.dart';
 import 'package:url_launcher/url_launcher.dart';
 // import 'package:flutter_webview_plugin/flutter_webview_plugin.dart';
 
 class Socials extends StatelessWidget {
-  Socials({Key? key}) : super(key: key);
+  const Socials({Key? key}) : super(key: key);
 
   // final Uri _urlWhatsApp = Uri.parse('https://www.whatsapp.com');
   // final Uri _urlVK = Uri.parse('https://www.vk.com');

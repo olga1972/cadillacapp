@@ -1,9 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/services.dart';
-import 'package:form_builder_image_picker/form_builder_image_picker.dart';
 import 'package:http/http.dart' as http;
-import 'package:image_picker/image_picker.dart';
 
 class UsersList {
   List<User> users;
@@ -92,21 +90,21 @@ class User {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['userId'] = this.userId;
-    data['phone'] = this.phone;
-    data['email'] = this.email;
-    data['username'] = this.username;
-    data['birthday'] = this.birthday;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['userId'] = userId;
+    data['phone'] = phone;
+    data['email'] = email;
+    data['username'] = username;
+    data['birthday'] = birthday;
 
-    data['login'] = this.login;
+    data['login'] = login;
     // data['password'] = this.password;
-    data['carname'] = this.carname;
-    data['path'] = this.path;
-    data['car1'] = this.car1;
-    data['car2'] = this.car2;
-    data['car3'] = this.car3;
+    data['carname'] = carname;
+    data['path'] = path;
+    data['car1'] = car1;
+    data['car2'] = car2;
+    data['car3'] = car3;
     return data;
   }
 }

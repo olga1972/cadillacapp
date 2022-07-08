@@ -1,12 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:cadillac/pages/home.dart';
-import 'package:cadillac/pages/account.dart';
-import 'package:cadillac/pages/members.dart';
-import 'package:cadillac/pages/news.dart';
-import 'package:cadillac/pages/shop.dart';
 
-import 'package:cadillac/pages/contacts.dart';
 
 import 'package:cadillac/NavDrawer.dart';
 import 'package:cadillac/widgets/titlePage.dart';
@@ -22,7 +16,7 @@ import '../models/partners.dart';
 import '../variables.dart';
 
 class Partners extends StatefulWidget {
-  Partners({Key? key}) : super(key: key);
+  const Partners({Key? key}) : super(key: key);
 
   @override
   State<Partners> createState() => _PartnersState();
@@ -73,7 +67,7 @@ class _PartnersState extends State<Partners> {
         title: 'Cadillac',
         debugShowCheckedModeBanner: false,
 
-        routes: {
+        routes: const {
           // '/home': (context) => const Home(),
           // '/account': (context) => Account(currentUser: currentUser),
           // '/members': (context) => Members(),
@@ -93,7 +87,7 @@ class _PartnersState extends State<Partners> {
                 return IconButton(
                   icon: SvgPicture.asset('assets/images/burger.svg'),
                   onPressed: () { Scaffold.of(context).openDrawer(); },
-                  tooltip: MaterialLocalizations.of(context).openAppDrawerTooltip,
+                  // tooltip: MaterialLocalizations.of(context).openAppDrawerTooltip,
                 );
               },
             ),
@@ -110,7 +104,7 @@ class _PartnersState extends State<Partners> {
                     crossAxisAlignment: CrossAxisAlignment
                         .center,
                     children: [
-                      Container (
+                      SizedBox (
                           width: 310,
                           //height: 830,
                           //margin: const EdgeInsets.only(bottom: 40),
@@ -136,7 +130,7 @@ class _PartnersState extends State<Partners> {
 
                             if (snapshot.hasData) {
                               return Center(
-                                child: Container(
+                                child: SizedBox(
                                     width: 310,
                                     height: 960,
                                     child: Column(
@@ -153,7 +147,7 @@ class _PartnersState extends State<Partners> {
                                                   title: 'партнеры автоклуба\ncadillac')
                                           ),
 
-                                          Container(
+                                          SizedBox(
                                               width: 310,
                                               // height: 960,
                                               child: ListView.builder(
@@ -161,7 +155,7 @@ class _PartnersState extends State<Partners> {
                                                       .vertical,
                                                   shrinkWrap: true,
                                                   itemCount: snapshot.data
-                                                      ?.partners?.length,
+                                                      ?.partners.length,
                                                   itemBuilder: (
                                                       BuildContext context,
                                                       int index) {
@@ -183,8 +177,8 @@ class _PartnersState extends State<Partners> {
                                                     }
                                                     _image = File(
                                                         '${snapshot.data
-                                                            ?.partners?[index]
-                                                            ?.path}');
+                                                            ?.partners[index]
+                                                            .path}');
 
                                                     return Container(
                                                         width: 284,
@@ -196,7 +190,7 @@ class _PartnersState extends State<Partners> {
                                                             fit: BoxFit.cover,
                                                             width: 284,
                                                             height: 160)
-                                                            : Text('no image',
+                                                            : const Text('no image',
                                                             textAlign: TextAlign
                                                                 .center,
                                                             style: TextStyle(
@@ -233,7 +227,7 @@ class _PartnersState extends State<Partners> {
             ),
           ),
 
-          drawer: NavDrawer(),
+          drawer: const NavDrawer(),
         )
     );
   }

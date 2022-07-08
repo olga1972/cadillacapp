@@ -1,10 +1,10 @@
 // import 'package:getwidget/getwidget.dart';
 
-List<String> images = [
-  "assets/images/cadillac-eldorado.png",
-  "assets/images/cadillac-escalada.png",
-  "assets/images/cadillac-orange.png",
-];
+// List<String> images = [
+//   "assets/images/cadillac-eldorado.png",
+//   "assets/images/cadillac-escalada.png",
+//   "assets/images/cadillac-orange.png",
+// ];
 
 // GFItemsCarousel (
 // rowCount: 3,
