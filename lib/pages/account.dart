@@ -301,7 +301,9 @@ class Account extends StatefulWidget {
               future: user,
               builder: (context, snapshot) {
                 print('snapshot.data?.path');
-
+                print(snapshot.data?.car1);
+                print(snapshot.data?.car2);
+                print(snapshot.data?.car3);
 
                 //getApplicationDirectoryPath();
                 // var str = "/data/user/0/com.cadillac.cadillac/cache/image_picker3644508664154176839.jpg";
@@ -336,10 +338,14 @@ class Account extends StatefulWidget {
 
 
                   int countImages;
-                  List<File> images = [];
-                  List<String> imagesWeb = [];
-                  if (platform == 'android' || platform == 'ios') {
+                  List<Uint8List> images = [];
+                  //List<String> imagesWeb = [];
+                  //if (platform == 'android' || platform == 'ios') {
+                    //print(platform);
                     late Uint8List bytes;
+                    late Uint8List bytesCar1;
+                    late Uint8List bytesCar2;
+                    late Uint8List bytesCar3;
                     var pathEncode = snapshot.data?.path;
                     var decode64 = base64.decode(pathEncode!);
                     print('decode64');
@@ -361,28 +367,44 @@ class Account extends StatefulWidget {
 
 
                     if (snapshot.data?.car1 != null) {
-                       car1 = File('${snapshot.data?.car1}');
-                      images.add( car1);
+                      var car1Encode = snapshot.data?.car1;
+                      var car1Decode64 = base64.decode(car1Encode!);
+                      bytesCar1 = car1Decode64;
+                      print('bytesCar1');
+                      print(bytesCar1);
+                      if (bytesCar1.isNotEmpty) {
+                        images.add(bytesCar1);
+                      } else {
+                        print('car1 no exist');
+                      }
                     }
 
                     if (snapshot.data?.car2 != null) {
-                        car2 = File('${snapshot.data?.car2}');
-                        if (car2.existsSync()) {
-                          images.add(car2);
-                        } else {
-                          print('car2 no exist');
-                        }
+                      var car2Encode = snapshot.data?.car2;
+                      var car2Decode64 = base64.decode(car2Encode!);
+                      bytesCar2 = car2Decode64;
+                      print('bytesCar2');
+                      print(bytesCar2);
+                      if (bytesCar2.isNotEmpty) {
+                        images.add(bytesCar2);
+                      } else {
+                       print('car2 no exist');
                       }
+                    }
 
 
                     if (snapshot.data?.car3 != null) {
-                        car3 = File('${snapshot.data?.car3}');
-                        if (car3.existsSync()) {
-                          images.add(car3);
-                        } else {
-                          print('car3 no exist');
-                        }
+                      var car3Encode = snapshot.data?.car3;
+                      var car3Decode64 = base64.decode(car3Encode!);
+                      bytesCar3 = car3Decode64;
+                      print('bytesCar3');
+                      print(bytesCar3);
+                      if (bytesCar3.isNotEmpty) {
+                        images.add(bytesCar3);
+                      } else {
+                        print('car3 no exist');
                       }
+                    }
 
                     print('images.length');
                     print(images.length);
@@ -391,43 +413,43 @@ class Account extends StatefulWidget {
                     // countImages = images.length;
                     // imageWeb = 'imageWeb';
 
-                  } else {
-                    late Uint8List bytes;
-                    var pathEncode = snapshot.data?.path;
-                    var decode64 = base64.decode(pathEncode!);
-                    print('decode64');
-                    //print(decode64);
-                    //print(encode64);
-                    //(encode64.runtimeType); //Uint8List
-                    bytes = decode64;
-
-                    // List<String> images = [];
-                    // imageWeb = snapshot.data?.path.toString() as String;
-                    // car1Web = snapshot.data?.car1.toString() as String;
-                    // car2Web = snapshot.data?.car2.toString() as String;
-                    // car3Web = snapshot.data?.car3.toString() as String;
-                    // if (imageWeb != '') {
-                    //   isLoadedImage = true;
-                    // } else {
-                    //   isLoadedImage = false;
-                    // }
-                    //
-                    // if (car1Web != '') {
-                    //   imagesWeb.add(car1Web);
-                    // }
-                    // if (car1Web != '' && car2Web != '') {
-                    //   imagesWeb.add(car1Web);
-                    //   imagesWeb.add(car2Web);
-                    // }
-                    // if (car1Web != '' && car2Web != '' && car3Web != '') {
-                    //   imagesWeb.add(car1Web);
-                    //   imagesWeb.add(car2Web);
-                    //   imagesWeb.add(car3Web);
-                    // }
-                    // print('images.length');
-                    // print(images.length);
-                    // countImages = imagesWeb.length;
-                  }
+                  // } else {
+                  //   late Uint8List bytes;
+                  //   var pathEncode = snapshot.data?.path;
+                  //   var decode64 = base64.decode(pathEncode!);
+                  //   print('decode64');
+                  //   //print(decode64);
+                  //   //print(encode64);
+                  //   //(encode64.runtimeType); //Uint8List
+                  //   bytes = decode64;
+                  //
+                  //   List<String> images = [];
+                  //   imageWeb = snapshot.data?.path.toString() as String;
+                  //   car1Web = snapshot.data?.car1.toString() as String;
+                  //   car2Web = snapshot.data?.car2.toString() as String;
+                  //   car3Web = snapshot.data?.car3.toString() as String;
+                  //   if (imageWeb != '') {
+                  //     isLoadedImage = true;
+                  //   } else {
+                  //     isLoadedImage = false;
+                  //   }
+                  //
+                  //   if (car1Web != '') {
+                  //     imagesWeb.add(car1Web);
+                  //   }
+                  //   if (car1Web != '' && car2Web != '') {
+                  //     imagesWeb.add(car1Web);
+                  //     imagesWeb.add(car2Web);
+                  //   }
+                  //   if (car1Web != '' && car2Web != '' && car3Web != '') {
+                  //     imagesWeb.add(car1Web);
+                  //     imagesWeb.add(car2Web);
+                  //     imagesWeb.add(car3Web);
+                  //   }
+                  //   print('images.length');
+                  //   print(images.length);
+                  //   countImages = imagesWeb.length;
+                  // }
 
                   return Center(
                       child: SizedBox(
@@ -739,111 +761,111 @@ class Account extends StatefulWidget {
                                                   )
                                               ),
 
-                                              // Container(
-                                              //   width: MediaQuery
-                                              //       .of(context)
-                                              //       .size
-                                              //       .width,
-                                              //   height: 200,
-                                              //   padding: EdgeInsets.zero,
-                                              //   margin: const EdgeInsets.only(
-                                              //       top: 10,
-                                              //       bottom: 30,
-                                              //       left: 0,
-                                              //       right: 0),
-                                              //   color: const Color(
-                                              //       0xFF181C33),
-                                              //   // child: Gallery()
-                                              //   child: countImages == 1 ?
-                                              //   Container(
-                                              //       decoration: const BoxDecoration(
-                                              //         borderRadius: BorderRadius
-                                              //             .all(
-                                              //             Radius.circular(20)),
-                                              //       ),
-                                              //       //margin: const EdgeInsets.only(left: 10,right: 10),
-                                              //       //child: Text('no image')
-                                              //       child: ClipRRect(
-                                              //           borderRadius: const BorderRadius
-                                              //               .all(
-                                              //               Radius.circular(
-                                              //                   20)),
-                                              //           child: Image.file(
-                                              //             images[0], width: 285,
-                                              //             height: 160,
-                                              //             // ${snapshot.data?.car}[index],
-                                              //             // centerSlice: Rect.fromPoints(const Offset(50.0, 0.0), const Offset(0, 0)),
-                                              //             fit: BoxFit.cover,
-                                              //             alignment: Alignment
-                                              //                 .centerLeft,
-                                              //           )
-                                              //       )
-                                              //   )
-                                              //       : Swiper(
-                                              //     //containerHeight: 160,
-                                              //     //containerWidth: 390,
-                                              //       layout: SwiperLayout.CUSTOM,
-                                              //       customLayoutOption:
-                                              //       CustomLayoutOption(
-                                              //           startIndex: -1,
-                                              //           stateCount: 2)
-                                              //         ..addTranslate([
-                                              //           const Offset(
-                                              //               -28.0, 0.0),
-                                              //           const Offset(
-                                              //               256.0, 0.0),
-                                              //           // const Offset(304.0, 0.0)
-                                              //         ]),
-                                              //       itemCount: countImages,
-                                              //       viewportFraction: 0.8,
-                                              //       itemHeight: 160,
-                                              //       itemWidth: 284,
-                                              //       // outer: true,
-                                              //       itemBuilder: (
-                                              //           BuildContext context,
-                                              //           int index) {
-                                              //         return Container(
-                                              //             decoration: const BoxDecoration(
-                                              //               borderRadius: BorderRadius
-                                              //                   .all(
-                                              //                   Radius.circular(
-                                              //                       20)),
-                                              //             ),
-                                              //             margin: const EdgeInsets
-                                              //                 .only(left: 10,
-                                              //                 right: 10),
-                                              //             child: Image.file(
-                                              //               images[index],
-                                              //               width: 285,
-                                              //               height: 160,
-                                              //               // ${snapshot.data?.car}[index],
-                                              //               // centerSlice: Rect.fromPoints(const Offset(50.0, 0.0), const Offset(0, 0)),
-                                              //               fit: BoxFit.cover,
-                                              //               alignment: Alignment
-                                              //                   .centerLeft,
-                                              //             )
-                                              //         );
-                                              //       },
-                                              //
-                                              //       // indicatorLayout: PageIndicatorLayout.COLOR,
-                                              //       // autoplay: true,
-                                              //
-                                              //       // itemWidth: 285.0,
-                                              //       pagination: const SwiperPagination(
-                                              //           margin: EdgeInsets
-                                              //               .fromLTRB(
-                                              //               0.0, 0.0, 0.0,
-                                              //               45.0),
-                                              //           builder: DotSwiperPaginationBuilder(
-                                              //               color: Colors.white,
-                                              //               activeColor: Color(
-                                              //                   0xFF8F97BF),
-                                              //               size: 7.0,
-                                              //               activeSize: 7.0
-                                              //           )
-                                              //       )
-                                              //   ),
-                                              // ),
+                                              Container(
+                                                width: MediaQuery
+                                                    .of(context)
+                                                    .size
+                                                    .width,
+                                                height: 200,
+                                                padding: EdgeInsets.zero,
+                                                margin: const EdgeInsets.only(
+                                                    top: 10,
+                                                    bottom: 30,
+                                                    left: 0,
+                                                    right: 0),
+                                                color: const Color(
+                                                    0xFF181C33),
+                                                // child: Gallery()
+                                                child: images.length == 1 ?
+                                                Container(
+                                                    decoration: const BoxDecoration(
+                                                      borderRadius: BorderRadius
+                                                          .all(
+                                                          Radius.circular(20)),
+                                                    ),
+                                                    //margin: const EdgeInsets.only(left: 10,right: 10),
+                                                    //child: Text('no image')
+                                                    child: ClipRRect(
+                                                        borderRadius: const BorderRadius
+                                                            .all(
+                                                            Radius.circular(
+                                                                20)),
+                                                        child: Image.memory(
+                                                          images[0], width: 285,
+                                                          height: 160,
+                                                          // ${snapshot.data?.car}[index],
+                                                          // centerSlice: Rect.fromPoints(const Offset(50.0, 0.0), const Offset(0, 0)),
+                                                          fit: BoxFit.cover,
+                                                          alignment: Alignment
+                                                              .centerLeft,
+                                                        )
+                                                    )
+                                                )
+                                                    : Swiper(
+                                                  //containerHeight: 160,
+                                                  //containerWidth: 390,
+                                                    layout: SwiperLayout.CUSTOM,
+                                                    customLayoutOption:
+                                                    CustomLayoutOption(
+                                                        startIndex: -1,
+                                                        stateCount: 2)
+                                                      ..addTranslate([
+                                                        const Offset(
+                                                            -28.0, 0.0),
+                                                        const Offset(
+                                                            256.0, 0.0),
+                                                        // const Offset(304.0, 0.0)
+                                                      ]),
+                                                    itemCount: images.length,
+                                                    viewportFraction: 0.8,
+                                                    itemHeight: 160,
+                                                    itemWidth: 284,
+                                                    // outer: true,
+                                                    itemBuilder: (
+                                                        BuildContext context,
+                                                        int index) {
+                                                      return Container(
+                                                          decoration: const BoxDecoration(
+                                                            borderRadius: BorderRadius
+                                                                .all(
+                                                                Radius.circular(
+                                                                    20)),
+                                                          ),
+                                                          margin: const EdgeInsets
+                                                              .only(left: 10,
+                                                              right: 10),
+                                                          child: Image.memory(
+                                                            images[index],
+                                                            width: 285,
+                                                            height: 160,
+                                                            // ${snapshot.data?.car}[index],
+                                                            // centerSlice: Rect.fromPoints(const Offset(50.0, 0.0), const Offset(0, 0)),
+                                                            fit: BoxFit.cover,
+                                                            alignment: Alignment
+                                                                .centerLeft,
+                                                          )
+                                                      );
+                                                    },
+
+                                                    // indicatorLayout: PageIndicatorLayout.COLOR,
+                                                    // autoplay: true,
+
+                                                    // itemWidth: 285.0,
+                                                    pagination: const SwiperPagination(
+                                                        margin: EdgeInsets
+                                                            .fromLTRB(
+                                                            0.0, 0.0, 0.0,
+                                                            45.0),
+                                                        builder: DotSwiperPaginationBuilder(
+                                                            color: Colors.white,
+                                                            activeColor: Color(
+                                                                0xFF8F97BF),
+                                                            size: 7.0,
+                                                            activeSize: 7.0
+                                                        )
+                                                    )
+                                                ),
+                                              ),
 
                                             ]
                                         )

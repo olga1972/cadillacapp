@@ -6,11 +6,13 @@
 import 'dart:io';
 import 'dart:convert';
 import 'dart:typed_data';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
 
 
@@ -135,37 +137,115 @@ List<int> data = [137, 80, 78, 71, 13, 10, 26, 10, 0, 0, 0, 13, 73, 72, 68, 82, 
                     .always,
                 child: Column(
                     children: [
-                      FormBuilderFilePicker(
-                          name: "images",
-                          decoration: InputDecoration(labelText: "Attachments"),
-                          maxFiles: null,
-                          previewImages: true,
-                          // onChanged: (val) => print(val),
-                          onChanged: (val) => {},
-                          selector: Row(
-                            children: <Widget>[
-                              Icon(Icons.file_upload),
-                              Text('Upload'),
-                            ],
-                          ),
-                          onFileLoading: (val) {
-                            // print(val);
-                          },
-                          // onSaved: (input) => data['name'] = input,
-                          onSaved: (
-                              value) =>
-                          {
-                            print('value'),
-                            print(value.runtimeType),
-                            images = value!,
+                      Stack(
+                        alignment: Alignment.center,
+                        children: [
 
-                          }
+
+                          Container(
+                            width: 284,
+                            height: 260,
+                            //rgin: EdgeInsets.only(top: 50),
+                            // alignment: Alignment.bottomCenter,
+                            // decoration: BoxDecoration(
+                            //   // borderRadius: BorderRadius
+                            //   //     .circular(30),
+                            //   //color: Color(0xff515569),
+                            //   shape: BoxShape.circle
+                            // ),
+
+
+                            child: FormBuilderFilePicker(
+                                name: "images",
+                                decoration: InputDecoration(
+                                  fillColor: Color(0xff515569),
+                                  iconColor: Colors.white,
+                                  contentPadding: EdgeInsets.all(0),
+                                  border: OutlineInputBorder(
+                                    borderSide: BorderSide.none,
+                                    //gapPadding: 40,
+                                  ),
+                                ),
+                                maxFiles: null,
+                                previewImages: true,
+                                onChanged: (val) => {},
+                                selector: Column(
+                                  children: [
+                                    Stack(
+                                        alignment: Alignment.center,
+                                        children: [
+                                          Container(
+                                            //dding: EdgeInsets.only(bottom: 40),
+                                            width: 96,
+                                            height: 96,
+                                            decoration: const BoxDecoration(
+                                                color: Color(0xFF515569),
+                                                borderRadius: BorderRadius.all(
+                                                    Radius.circular(48))
+                                            ),
+                                          ),
+                                          SvgPicture.asset(
+                                            'assets/images/image.svg',
+                                            semanticsLabel: 'Icon upload',
+                                            height: 18.0,),
+                                        ]
+                                    ),
+                                    Row(
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                        crossAxisAlignment: CrossAxisAlignment.center,
+                                        children: [
+                                          SizedBox(height: 40),
+                                          Text('Загрузить фото', style: TextStyle(
+                                            fontSize: 14.0,
+                                            fontWeight: FontWeight
+                                                .normal,
+                                            fontFamily: 'CadillacSans',
+                                            color: Color(0xFF515569),
+                                            height: 1.4//line-height : font-size
+                                          ),
+                                              textAlign: TextAlign.center),
+                                          Icon(Icons.file_upload,
+                                              semanticLabel: 'Icon upload',
+                                              size: 18.0, color: Color(0xFF515569)),
+                                          //)
+                                        ]
+                                    ),
+                                  ]
+                                ),
+
+                                // onFileLoading: (val) {
+                                //   // print(val);
+                                // },
+                                // onSaved: (input) => data['name'] = input,
+                                onSaved: (
+                                    value) =>
+                                {
+                                  print('value'),
+                                  print(value.runtimeType),
+                                  images = value!,
+
+                                }
+                            ),
+                          )
+
+                        ],
                       ),
+
+
+
+
+
+                        //]
+                      //)
+
+
+                     // ),
+
                       Container(
                           width: 284,
                           margin: const EdgeInsets
                               .only(
-                              top: 30,
+                              top: 100,
                               bottom: 45),
                           child: MaterialButton(
                             padding: const EdgeInsets
