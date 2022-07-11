@@ -1,7 +1,9 @@
+import 'dart:typed_data';
+
 import 'package:cadillac/pages/partners.dart';
 import 'package:cadillac/pages/shop.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
+//import 'package:flutter_localizations/flutter_localizations.dart';
 // import 'generated/l10n.dart';
 
 // import 'package:hive/hive.dart';
@@ -9,13 +11,14 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 
 // import 'package:uuid/uuid.dart';
 // import 'package:uuid/uuid_util.dart';
-
+import 'package:flutter_svg/svg.dart';
+import 'package:provider/provider.dart';
 
 
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'dart:async';
-
+import 'dart:io';
 // import 'package:image/image.dart';
 
 import 'package:flutter_form_builder/flutter_form_builder.dart';
@@ -37,9 +40,11 @@ import 'package:cadillac/pages/home.dart';
 
 import 'package:cadillac/models/users.dart';
 
-import 'accountAdmin.dart';
-import 'contacts.dart';
+import 'package:cadillac/pages/accountAdmin.dart';
+import 'package:cadillac/pages/contacts.dart';
+import 'package:cadillac/main.dart';
 
+import 'package:form_builder_file_picker/form_builder_file_picker.dart';
 
 enum ImageSourceType { gallery, camera }
 
@@ -47,18 +52,25 @@ var uuid = '';
 
 class EditAdmin extends StatefulWidget {
 
-  const EditAdmin({Key? key} ) : super(key: key);
+  EditAdmin({Key? key} ) : super(key: key);
+
+  late String path;
+
   @override
   State<EditAdmin> createState() => _EditAdminState();
 }
 
 class _EditAdminState extends State<EditAdmin> {
+  late String encode64;
 
+  dynamic user;
   @override
+
   initState()  {
     print('init state edit');
     super.initState();
     uuid = '';
+    encode64 = '';
     //uuid = userId;
 
 
@@ -103,6 +115,12 @@ class _EditAdminState extends State<EditAdmin> {
   // late XFile? photo;
   late List<dynamic> photo;
   late List<dynamic> cars;
+
+  late String platform;
+  late Uint8List? bytes;
+  late Uint8List? bytesCar1;
+  late Uint8List? bytesCar2;
+  late Uint8List? bytesCar3;
   // late final dynamic cars = new ApiImage (
   //     imageUrl: 'assets/images/cadillac-eldorado.png', id: '2');
   // late final cars = Cars ();
@@ -110,7 +128,7 @@ class _EditAdminState extends State<EditAdmin> {
   // final User userInfo;
 
   // var box = Hive.box<User>(HiveBoxes.user);
-
+  final List<String>? _allowedExtensions = ['png', 'jpg'];
 
   //User newUser = User();
 
@@ -135,6 +153,9 @@ class _EditAdminState extends State<EditAdmin> {
   Widget build(BuildContext context) {
     dynamic user;
     print('load edit account');
+    userId = Provider.of<Data>(context).data['userId'].toString();
+    platform = Provider.of<Data>(context).data['platform'].toString();
+    print(platform);
 
     return MaterialApp(
         theme: ThemeData(scaffoldBackgroundColor: const Color(0xFF2C335E)),
@@ -334,54 +355,112 @@ class _EditAdminState extends State<EditAdmin> {
                                                         ),
 
                                                         Container(
-                                                          //width: 140,
-                                                          width: 284,
-                                                          //margin: EdgeInsets.only(left: 20),
+                                                          width: 130,
                                                           decoration: const BoxDecoration(
-                                                              borderRadius: BorderRadius.all(Radius.circular(48))
-                                                          ),
-
-                                                          // child: uploadImage(maxImages: 1),
-
-                                                          child: FormBuilderImagePicker(
-                                                            name: 'photo',
-                                                            // previewHeight: 96,
-                                                            // previewWidth: 96,
-                                                            // previewMargin: EdgeInsets.symmetric(horizontal: 150),
-                                                            previewHeight: 140,
-                                                            previewWidth: 284,
-                                                            previewMargin: const EdgeInsets.only(bottom: 0),
-                                                            iconColor: Colors.white,
-                                                            decoration: const InputDecoration(
-                                                              border: OutlineInputBorder(
-                                                                  borderSide: BorderSide.none,
-                                                                  borderRadius: BorderRadius.all(
-                                                                      Radius.circular(20)
-                                                                  )
+                                                              borderRadius:
+                                                              BorderRadius.all(
+                                                                  Radius.circular(
+                                                                      48))),
+                                                          child:
+                                                          FormBuilderFilePicker(
+                                                              name: "photo",
+                                                              decoration:
+                                                              InputDecoration(
+                                                                fillColor: Color(
+                                                                    0xff515569),
+                                                                iconColor:
+                                                                Colors.white,
+                                                                contentPadding:
+                                                                EdgeInsets
+                                                                    .all(0),
+                                                                border:
+                                                                OutlineInputBorder(
+                                                                  borderSide:
+                                                                  BorderSide
+                                                                      .none,
+                                                                  //gapPadding: 40,
+                                                                ),
                                                               ),
-
-                                                              // labelText: 'Загрузить фото',
-                                                              // labelStyle: styleHelperText,
-                                                            ),
-                                                            maxImages: 1,
-                                                            onSaved: (
-                                                                value) =>
-                                                            //photo = value! as XFile?,
-                                                            photo = value!,
-                                                            // displayCustomType: (obj) =>
-                                                            // obj is ApiImage ? obj.imageUrl : obj,
-                                                            // initialValue: [
-                                                            //   'https://images.pexels.com/photos/7078045/pexels-photo-7078045.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260',
-                                                            //   const Text('this is an image\nas a widget !'),
-                                                            //   ApiImage(
-                                                            //     id: 'whatever',
-                                                            //     imageUrl:
-                                                            //     'https://images.pexels.com/photos/8311418/pexels-photo-8311418.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=750&w=1260',
-                                                            //   ),
-                                                            // ],
-
-                                                          ),
-
+                                                              maxFiles: null,
+                                                              previewImages: true,
+                                                              onChanged: (val) =>
+                                                              {},
+                                                              selector: Column(
+                                                                  crossAxisAlignment:
+                                                                  CrossAxisAlignment
+                                                                      .center,
+                                                                  children: [
+                                                                    Stack(
+                                                                        alignment:
+                                                                        Alignment
+                                                                            .center,
+                                                                        children: [
+                                                                          Container(
+                                                                            alignment:
+                                                                            Alignment.center,
+                                                                            width:
+                                                                            96,
+                                                                            height:
+                                                                            96,
+                                                                            decoration: const BoxDecoration(
+                                                                                color: Color(0xFF515569),
+                                                                                borderRadius: BorderRadius.all(Radius.circular(48))),
+                                                                          ),
+                                                                          SvgPicture
+                                                                              .asset(
+                                                                            'assets/images/image.svg',
+                                                                            semanticsLabel:
+                                                                            'Icon upload',
+                                                                            height:
+                                                                            18.0,
+                                                                          ),
+                                                                        ]),
+                                                                    Row(
+                                                                        mainAxisAlignment:
+                                                                        MainAxisAlignment
+                                                                            .center,
+                                                                        crossAxisAlignment:
+                                                                        CrossAxisAlignment
+                                                                            .center,
+                                                                        children: [
+                                                                          SizedBox(
+                                                                              height:
+                                                                              40),
+                                                                          Text(
+                                                                              'Загрузить фото',
+                                                                              style: TextStyle(
+                                                                                  fontSize: 14.0,
+                                                                                  fontWeight: FontWeight.normal,
+                                                                                  fontFamily: 'CadillacSans',
+                                                                                  color: Color(0xFF515569),
+                                                                                  height: 1.4 //line-height : font-size
+                                                                              ),
+                                                                              textAlign: TextAlign.center),
+                                                                          Icon(
+                                                                              Icons
+                                                                                  .file_upload,
+                                                                              semanticLabel:
+                                                                              'Icon upload',
+                                                                              size:
+                                                                              18.0,
+                                                                              color:
+                                                                              Color(0xFF515569)),
+                                                                          //)
+                                                                        ]),
+                                                                  ]),
+                                                              onFileLoading:
+                                                                  (val) {
+                                                                // print(val);
+                                                              },
+                                                              onSaved: (value) =>
+                                                              {
+                                                                print(
+                                                                    'value'),
+                                                                print(value
+                                                                    .runtimeType),
+                                                                photo =
+                                                                value!,
+                                                              }),
                                                         ),
 
 
@@ -599,47 +678,90 @@ class _EditAdminState extends State<EditAdmin> {
                                                         ),
 
                                                         //uploadImage(maxImages: 3),
-                                                        FormBuilderImagePicker(
-                                                            fit: BoxFit.contain,
-                                                            name: 'cars',
-                                                            previewHeight: 140,
-                                                            previewWidth: 284,
-                                                            previewMargin: const EdgeInsets.only(bottom: 0),
-                                                            iconColor: Colors.white,
-
-                                                            // galleryIcon: SvgPicture.asset(
-                                                            //   'assets/images/image2.svg',
-                                                            //   // height: 22.0,
-                                                            //   height: 10.0,
-                                                            //   color: Colors.white,
-                                                            // ),
-
-                                                            decoration: const InputDecoration(
-                                                              contentPadding: EdgeInsets.all(0),
-                                                              border: OutlineInputBorder(
-                                                                  borderSide: BorderSide.none,
-                                                                  borderRadius: BorderRadius.all(
-                                                                      Radius.circular(20)
-                                                                  )
+                                                        FormBuilderFilePicker(
+                                                            name: "cars",
+                                                            decoration:
+                                                            InputDecoration(
+                                                              fillColor:
+                                                              Color(0xff515569),
+                                                              iconColor: Colors.white,
+                                                              contentPadding:
+                                                              EdgeInsets.all(0),
+                                                              border:
+                                                              OutlineInputBorder(
+                                                                borderSide:
+                                                                BorderSide.none,
+                                                                //gapPadding: 40,
                                                               ),
-
-                                                              // filled: true,
-                                                              // fillColor: Color(0xFF515569),
-                                                              // labelText: 'Загрузить фото',
-                                                              // labelStyle: stylePlaceHolderText,
-
-
                                                             ),
-                                                            maxImages: 3,
-                                                            onSaved: (
-                                                                value) =>
-                                                            {
+                                                            maxFiles: null,
+                                                            previewImages: true,
+                                                            onChanged: (val) => {},
+                                                            selector: Column(
+                                                                children: [
+                                                                  Stack(
+                                                                      alignment:
+                                                                      Alignment
+                                                                          .center,
+                                                                      children: [
+                                                                        Container(
+                                                                          //dding: EdgeInsets.only(bottom: 40),
+                                                                          width: 284,
+                                                                          height: 160,
+                                                                          decoration: const BoxDecoration(
+                                                                              color: Color(
+                                                                                  0xFF515569),
+                                                                              shape: BoxShape
+                                                                                  .rectangle,
+                                                                              borderRadius:
+                                                                              BorderRadius.all(Radius.circular(10))),
+                                                                        ),
+                                                                        SvgPicture
+                                                                            .asset(
+                                                                          'assets/images/load.svg',
+                                                                          semanticsLabel:
+                                                                          'Icon upload',
+                                                                          height:
+                                                                          18.0,
+                                                                        ),
+                                                                        Positioned(
+                                                                          bottom: 0,
+                                                                          child: Row(
+                                                                              mainAxisAlignment:
+                                                                              MainAxisAlignment
+                                                                                  .center,
+                                                                              crossAxisAlignment:
+                                                                              CrossAxisAlignment.center,
+                                                                              children: [
+                                                                                SizedBox(
+                                                                                    height: 40),
+                                                                                Text(
+                                                                                    'Загрузить фото',
+                                                                                    style: TextStyle(fontSize: 14.0, fontWeight: FontWeight.normal, fontFamily: 'CadillacSans', color: Colors.white, height: 1.4 //line-height : font-size
+                                                                                    ),
+                                                                                    textAlign: TextAlign.center),
+                                                                                Icon(
+                                                                                  Icons.file_upload,
+                                                                                  semanticLabel:
+                                                                                  'Icon upload',
+                                                                                  size:
+                                                                                  18.0,
+                                                                                  color:
+                                                                                  Colors.white,
+                                                                                )
+                                                                              ]),
+                                                                        )
+                                                                      ]),
+                                                                ]),
+                                                            onFileLoading: (val) {
+                                                              // print(val);
+                                                            },
+                                                            onSaved: (value) => {
                                                               print('value'),
-                                                              print(value.runtimeType),
+                                                              print(value
+                                                                  .runtimeType),
                                                               cars = value!,
-
-                                                            }
-                                                        ),
+                                                            }),
 
                                                         Container(
                                                             width: 284,
@@ -691,45 +813,119 @@ class _EditAdminState extends State<EditAdmin> {
 
                                                                   debugPrint('Valid success edit');
 
-                                                                  print(photo[0].path); //путь к картинке в кеше
-                                                                  print(photo[0].path.runtimeType);
-                                                                  print(photo[0].path.toString());
-                                                                  path = await getpathImage(photo[0].path);
-
-                                                                  print(cars.length);
-                                                                  if(cars.length == 2) {
-                                                                    if(cars[0].path != null) {
-                                                                      car1 = await getpathImage(cars[0].path);
+                                                                  print(photo);
+                                                                  if (platform == 'android' ||
+                                                                      platform == 'ios') {
+                                                                    print(platform);
+                                                                    final bytes = File(photo[0].path).readAsBytesSync();
+                                                                    print(bytes);
+                                                                    print(bytes.runtimeType);
+                                                                    setState(() {
+                                                                      encode64 = base64.encode(bytes);
+                                                                    });
+                                                                    //var encode64 = base64.encode(bytes);
+                                                                    print(encode64);
+                                                                    print('cars.length');
+                                                                    print(cars.length);
+                                                                    if (cars.length ==  2) {
+                                                                      if (cars[0].path != null) {
+                                                                        final bytesCar1 = File(cars[0].path).readAsBytesSync();
+                                                                        car1 = base64.encode(bytesCar1);
+                                                                      } else {
+                                                                        car1 = '';
+                                                                      }
+                                                                      if (cars[1].path != null) {
+                                                                        final bytesCar2 = File(cars[1].path).readAsBytesSync();
+                                                                        car2 = base64.encode(bytesCar2);
+                                                                      } else {
+                                                                        car2 = '';
+                                                                      }
+                                                                      car3 = '';
+                                                                    } else if (cars.length == 3) {
+                                                                      if (cars[0].path != null) {
+                                                                        final bytesCar1 = File(cars[0].path).readAsBytesSync();
+                                                                        car1 = base64.encode(bytesCar1);
+                                                                      } else {
+                                                                        car1 = '';
+                                                                      }
+                                                                      if (cars[1].path != null) {
+                                                                        final bytesCar2 = File(cars[1].path).readAsBytesSync();
+                                                                        car2 = base64.encode(bytesCar2);
+                                                                      } else {
+                                                                        car2 = '';
+                                                                      }
+                                                                      if (cars[2].path != null) {
+                                                                        final bytesCar3 = File(cars[2].path).readAsBytesSync();
+                                                                        car3 = base64.encode(bytesCar3);
+                                                                      } else {
+                                                                        car3 = '';
+                                                                      }
                                                                     } else {
-                                                                      car1 = 'car1';
-                                                                    }
-                                                                    if(cars[1].path != null) {
-                                                                      car2 = await getpathImage(cars[1].path);
-                                                                    } else {
-                                                                      car2 = 'car2';
-                                                                    }
-                                                                    car3 = 'car3';
-                                                                  } else if (cars.length == 3) {
-                                                                    if(cars[0].path != null) {
-                                                                      car1 = await getpathImage(cars[0].path);
-                                                                    } else {
-                                                                      car1 = 'car1';
-                                                                    }
-                                                                    if(cars[1].path != null) {
-                                                                      car2 = await getpathImage(cars[1].path);
-                                                                    } else {
-                                                                      car2 = 'car2';
-                                                                    }
-                                                                    if(cars[2].path != null) {
-                                                                      car3 = await getpathImage(cars[2].path);
-                                                                    } else {
-                                                                      car3 = 'car3';
+                                                                      final bytesCar1 = File(cars[0].path).readAsBytesSync();
+                                                                      car1 = base64.encode(bytesCar1);
+                                                                      car2 = '';
+                                                                      car3 = '';
                                                                     }
                                                                   } else {
-                                                                    car1 = await getpathImage(cars[0].path);
-                                                                    car2 = 'car2';
-                                                                    car3 = 'car3';
+                                                                    print(platform);
+                                                                    //late Uint8List bytes;
+                                                                    bytes = photo[0].bytes;
+                                                                    print('cars.length');
+                                                                    print(cars.length);
+                                                                    if (cars.length ==  2) {
+                                                                      if (cars[0].bytes != null) {
+                                                                        final bytesCar1 = cars[0].bytes;
+                                                                        car1 = base64.encode(bytesCar1!);
+                                                                      } else {
+                                                                        car1 = '';
+                                                                      }
+                                                                      if (cars[1].bytes != null) {
+                                                                        final bytesCar2 = cars[1].bytes;
+                                                                        car2 = base64.encode(bytesCar2!);
+                                                                      } else {
+                                                                        car2 = '';
+                                                                      }
+                                                                      car3 = '';
+                                                                    } else if (cars.length == 3) {
+                                                                      if (cars[0].bytes != null) {
+                                                                        final bytesCar1 = cars[0].bytes;
+                                                                        car1 = base64.encode(bytesCar1!);
+                                                                      } else {
+                                                                        car1 = '';
+                                                                      }
+                                                                      if (cars[1].bytes != null) {
+                                                                        final bytesCar2 = cars[1].bytes;
+                                                                        car2 = base64.encode(bytesCar2);
+                                                                      } else {
+                                                                        car2 = '';
+                                                                      }
+                                                                      if (cars[2].bytes != null) {
+                                                                        final bytesCar3 = cars[2].bytes;
+                                                                        car3 = base64.encode(bytesCar3);
+                                                                      } else {
+                                                                        car3 = '';
+                                                                      }
+                                                                    } else {
+                                                                      final bytesCar1 = cars[0].bytes;
+                                                                      car1 = base64.encode(bytesCar1);
+                                                                      car2 = '';
+                                                                      car3 = '';
+                                                                    }
+                                                                    // bytesCar1 = cars[0].bytes;
+                                                                    // bytesCar2 = cars[1].bytes;
+                                                                    // bytesCar3 = cars[2].bytes;
+                                                                    // print(bytes);
+                                                                    // print(bytes.runtimeType);
+                                                                    //var encode64 = base64.encode(bytes!);
+                                                                    setState(() {
+                                                                      encode64 = base64.encode(bytes!);
+                                                                    });
+                                                                    // print('encode64');
+                                                                    // car1 = base64.encode(bytesCar1!);
+                                                                    // car2 = base64.encode(bytesCar2!);
+                                                                    // car3 = base64.encode(bytesCar3!);
                                                                   }
+
 
                                                                   print(_formKey
                                                                       .currentState?.fields.values

@@ -1,7 +1,10 @@
 // import 'dart:html';
+import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
+import 'package:flutter_svg/svg.dart';
+import 'package:form_builder_file_picker/form_builder_file_picker.dart';
 import 'package:form_builder_image_picker/form_builder_image_picker.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 
@@ -11,11 +14,14 @@ import 'package:cadillac/variables.dart';
 import 'package:cadillac/widgets/titlePage.dart';
 
 import 'package:http/http.dart' as http;
+import 'package:provider/provider.dart';
 import 'dart:convert';
 import 'dart:async';
+import 'dart:io';
 
 import '../NavDrawerAdmin.dart';
 import '../models/news.dart';
+import '../main.dart';
 import 'newsAdmin.dart';
 
 class AddNews extends StatefulWidget {
@@ -26,9 +32,12 @@ class AddNews extends StatefulWidget {
 }
 
 class _AddNewsState extends State<AddNews> {
+  late String encode64News;
+
   @override
   void initState() {
     super.initState();
+    encode64News = '';
   }
   final _newsKey = GlobalKey<FormBuilderState>();
 
@@ -43,8 +52,9 @@ class _AddNewsState extends State<AddNews> {
   late String newsDescr = 'descr';
   late String path;
 
-  late List<dynamic> photo;
-
+  late List<dynamic> newsImage;
+  late String platform;
+  late Uint8List? bytes;
   // final styleFormInput = const TextStyle(
   //   fontSize: 14.0,
   //   fontWeight: FontWeight.normal,
@@ -62,6 +72,9 @@ class _AddNewsState extends State<AddNews> {
 
   @override
   Widget build(BuildContext context) {
+    platform = Provider.of<Data>(context).data['platform'].toString();
+    print(platform);
+
     return MaterialApp(
         theme: ThemeData(scaffoldBackgroundColor: const Color(0xFF2C335E)),
         title: 'Cadillac',
@@ -333,32 +346,94 @@ class _AddNewsState extends State<AddNews> {
                                                   maxLines: null,
                                                 ),
 
-                                                FormBuilderImagePicker(
-                                                  name: 'photo',
-                                                  // previewHeight: 96,
-                                                  // previewWidth: 96,
-                                                  // previewMargin: EdgeInsets.symmetric(horizontal: 150),
-                                                  previewHeight: 140,
-                                                  previewWidth: 284,
-                                                  previewMargin: const EdgeInsets.only(bottom: 0),
-                                                  iconColor: Colors.white,
-                                                  decoration: const InputDecoration(
-                                                    border: OutlineInputBorder(
-                                                        borderSide: BorderSide.none,
-                                                        borderRadius: BorderRadius.all(
-                                                            Radius.circular(20)
-                                                        )
-                                                    ),
-
-                                                    // labelText: 'Загрузить фото',
-                                                    // labelStyle: styleHelperText,
-                                                  ),
-                                                  maxImages: 1,
-                                                  onSaved: (
-                                                      value) =>
-                                                  photo = value!,
-
+                                                SizedBox(
+                                                  height: 20
                                                 ),
+
+                                                FormBuilderFilePicker(
+                                                    name: "newsImage",
+                                                    decoration:
+                                                    InputDecoration(
+                                                      fillColor:
+                                                      Color(0xff515569),
+                                                      iconColor: Colors.white,
+                                                      contentPadding:
+                                                      EdgeInsets.all(0),
+                                                      border:
+                                                      OutlineInputBorder(
+                                                        borderSide:
+                                                        BorderSide.none,
+                                                        //gapPadding: 40,
+                                                      ),
+                                                    ),
+                                                    maxFiles: null,
+                                                    previewImages: true,
+                                                    onChanged: (val) => {},
+                                                    selector: Column(
+                                                        children: [
+                                                          Stack(
+                                                              alignment:
+                                                              Alignment
+                                                                  .center,
+                                                              children: [
+                                                                Container(
+                                                                  //dding: EdgeInsets.only(bottom: 40),
+                                                                  width: 284,
+                                                                  height: 160,
+                                                                  decoration: const BoxDecoration(
+                                                                      color: Color(
+                                                                          0xFF515569),
+                                                                      shape: BoxShape
+                                                                          .rectangle,
+                                                                      borderRadius:
+                                                                      BorderRadius.all(Radius.circular(10))),
+                                                                ),
+                                                                SvgPicture
+                                                                    .asset(
+                                                                  'assets/images/load.svg',
+                                                                  semanticsLabel:
+                                                                  'Icon upload',
+                                                                  height:
+                                                                  18.0,
+                                                                ),
+                                                                Positioned(
+                                                                  bottom: 0,
+                                                                  child: Row(
+                                                                      mainAxisAlignment:
+                                                                      MainAxisAlignment
+                                                                          .center,
+                                                                      crossAxisAlignment:
+                                                                      CrossAxisAlignment.center,
+                                                                      children: [
+                                                                        SizedBox(
+                                                                            height: 40),
+                                                                        Text(
+                                                                            'Загрузить фото',
+                                                                            style: TextStyle(fontSize: 14.0, fontWeight: FontWeight.normal, fontFamily: 'CadillacSans', color: Colors.white, height: 1.4 //line-height : font-size
+                                                                            ),
+                                                                            textAlign: TextAlign.center),
+                                                                        Icon(
+                                                                          Icons.file_upload,
+                                                                          semanticLabel:
+                                                                          'Icon upload',
+                                                                          size:
+                                                                          18.0,
+                                                                          color:
+                                                                          Colors.white,
+                                                                        )
+                                                                      ]),
+                                                                )
+                                                              ]),
+                                                        ]),
+                                                    onFileLoading: (val) {
+                                                      // print(val);
+                                                    },
+                                                    onSaved: (value) => {
+                                                      print('value'),
+                                                      print(value
+                                                          .runtimeType),
+                                                      newsImage = value!,
+                                                    }),
 
                                             //]
                                           //),
@@ -389,6 +464,28 @@ class _AddNewsState extends State<AddNews> {
                                                     false) {
                                                   confirmDialog(context);
                                                   debugPrint('News added');
+                                                  if (platform == 'android' ||
+                                                      platform == 'ios') {
+                                                    print(platform);
+                                                    final bytes = File(newsImage[0].path).readAsBytesSync();
+                                                    print(bytes);
+                                                    print(bytes.runtimeType);
+                                                    setState(() {
+                                                      encode64News = base64.encode(bytes);
+                                                    });
+                                                    //var encode64 = base64.encode(bytes);
+                                                    print(encode64News);
+
+
+                                                  } else {
+                                                    print(platform);
+                                                    //late Uint8List bytes;
+                                                    bytes = newsImage[0].bytes;
+
+                                                    setState(() {
+                                                      encode64News = base64.encode(bytes!);
+                                                    });
+                                                  }
                                                   final news = New(
                                                     id: id,
                                                     newsId: newsId,
@@ -396,7 +493,7 @@ class _AddNewsState extends State<AddNews> {
                                                     newsDate: newsDate,
                                                     newsLocation: newsLocation,
                                                     newsDescr: newsDescr,
-                                                    path: path
+                                                    path: encode64News
                                                   );
 
                                                   addNews(news);
@@ -440,6 +537,7 @@ class _AddNewsState extends State<AddNews> {
     dynamic newsDate = news.newsDate;
     dynamic newsLocation = news.newsLocation;
     dynamic newsDescr = news.newsDescr;
+    dynamic path = news.path;
 
     // String apiurl = "http://localhost/test/mail.php";
     String apiurl = baseUrl + "/test/add_news.php";
@@ -448,7 +546,8 @@ class _AddNewsState extends State<AddNews> {
       'newsName': newsName,
       'newsDate': newsDate,
       'newsLocation': newsLocation,
-      'newsDescr': newsDescr
+      'newsDescr': newsDescr,
+      'path': path
     }, headers: {
       'Accept': 'application/json, charset=utf-8',
       "Access-Control-Allow-Origin": "*",

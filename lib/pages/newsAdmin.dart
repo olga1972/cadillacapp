@@ -1,7 +1,6 @@
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
-
-
-
 
 import 'package:cadillac/NavDrawerAdmin.dart';
 import 'package:cadillac/widgets/titlePage.dart';
@@ -9,6 +8,7 @@ import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:flutter_svg/svg.dart';
 
 import 'dart:convert';
+import 'dart:async';
 import 'package:http/http.dart' as http;
 import 'dart:io';
 
@@ -25,15 +25,8 @@ class NewsAdmin extends StatefulWidget {
 }
 
 class _NewsAdminState extends State<NewsAdmin> {
-  int selectedIndex = 1;
 
   late Future<NewsList> newsList;
-  late Future<New> news;
-  // late File _img;
-  late String path = "assets/images/avatar.png";
-  bool isLoadedImage = false;
-  late File _image;
-  //late Future<New> deleteNews;
 
   @override
   void initState() {
@@ -44,6 +37,18 @@ class _NewsAdminState extends State<NewsAdmin> {
     //   _items = data["items"];
     // });
   }
+  int selectedIndex = 1;
+
+
+  late Future<New> news;
+  // late File _img;
+  late String path = "assets/images/avatar.png";
+  bool isLoadedImage = false;
+  late String currentNewsId;
+  //late File _image;
+  //late Future<New> deleteNews;
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -132,14 +137,20 @@ class _NewsAdminState extends State<NewsAdmin> {
                                                                 itemCount: snapshot.data?.news.length,
                                                                 itemBuilder: (context, index) {
                                                                   String currentNewsId;
-                                                                  var fileExtension = snapshot.data?.news[index].path.substring((snapshot.data?.news[index].path.length)! - 3);
-                                                                  if(fileExtension == 'jpg' || fileExtension == 'png' || fileExtension == 'svg') {
-                                                                    isLoadedImage = true;
-                                                                  } else {
-                                                                    isLoadedImage = false;
-                                                                  }
+                                                                  late Uint8List bytes;
 
-                                                                  _image = File('${snapshot.data?.news[index].path}');
+                                                                  var pathEncode = snapshot.data?.news[index].path;
+                                                                  var decode64 = base64.decode(pathEncode!);
+
+                                                                  bytes = decode64;
+
+
+                                                                  if (snapshot.data?.news[index].path != null) {
+                                                                  isLoadedImage = true;
+
+                                                                  } else {
+                                                                  isLoadedImage = false;
+                                                                  }
 
                                                                   return Container(
                                                                       width: 320,
@@ -334,7 +345,9 @@ class _NewsAdminState extends State<NewsAdmin> {
                                                                               margin: const EdgeInsets.only(
                                                                                   bottom: 10.0,
                                                                                   top: 10),
-                                                                                child: (isLoadedImage &&_image.existsSync()) ? Image.file(_image, fit: BoxFit.cover, width: 284, height: 160) :
+                                                                                child: isLoadedImage ? Image.memory(
+                                                                                    base64.decode(snapshot.data?.news[index].path ?? ''),
+                                                                                    fit: BoxFit.cover, width: 284, height: 160) :
                                                                                 const Text('no image',
                                                                                     textAlign: TextAlign.center,
                                                                                     style: TextStyle(
@@ -357,7 +370,7 @@ class _NewsAdminState extends State<NewsAdmin> {
                                                                                   textAlign: TextAlign
                                                                                       .left,
                                                                                   style: const TextStyle(
-                                                                                    fontSize: 32.0,
+                                                                                    fontSize: 16.0,
                                                                                     fontWeight: FontWeight
                                                                                         .normal,
                                                                                     fontFamily: 'CadillacSans',
@@ -473,7 +486,7 @@ Future<NewsList> getNewsList() async {
 print('getNewsList');
   const url = baseUrl + '/test/news_list.php';
   final response = await http.get(Uri.parse(url));
-  print('response members getUserLists');
+  print('response getNewsLists');
   print(response.body);
   if(response.statusCode == 200) {
     return NewsList.fromJson(json.decode(response.body));

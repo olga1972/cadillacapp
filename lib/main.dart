@@ -12,15 +12,22 @@
 // import 'package:sqflite/sqflite.dart';
 import 'package:cadillac/pages/account.dart';
 import 'package:cadillac/pages/accountAdmin.dart';
+import 'package:cadillac/pages/addBanners.dart';
+import 'package:cadillac/pages/addNews.dart';
+import 'package:cadillac/pages/addPartners.dart';
 import 'package:cadillac/pages/contacts.dart';
 import 'package:cadillac/pages/editAccount.dart';
 import 'package:cadillac/pages/editAccountAdmin.dart';
 import 'package:cadillac/pages/editAds.dart';
+import 'package:cadillac/pages/home.dart';
 import 'package:cadillac/pages/homeAdmin.dart';
 
 import 'package:cadillac/pages/members.dart';
+import 'package:cadillac/pages/membersAdmin.dart';
 import 'package:cadillac/pages/news.dart';
+import 'package:cadillac/pages/newsAdmin.dart';
 import 'package:cadillac/pages/partners.dart';
+import 'package:cadillac/pages/partnersAdmin.dart';
 import 'package:cadillac/pages/registrationAdmin.dart';
 import 'package:cadillac/pages/shop.dart';
 import 'package:cadillac/pages/success-payment.dart';
@@ -71,7 +78,7 @@ checkPlatform() {
 
 class Data extends ChangeNotifier {
   late final Map data = {
-    'userId': '871936c4-f009-11ec-a426-002590eb3418',
+    'userId': '77899126-ff7a-11ec-a426-002590eb3418',
     'platform': checkPlatform(),
     'isAuth': bool,
     'images' : List<PlatformFile>
@@ -179,18 +186,19 @@ class MyApp extends StatelessWidget {
 
 
         routes: {
-          '/home': (context) => const RegistrationPage(),
+          //'/home': (context) => const RegistrationPage(),
           //'/home': (context) => RegistrationAdmin(userId: '1aa71d78-f91c-11ec-a426-002590eb3418'),
           //'/home': (context) => Account(),
           '/homeAdmin': (context) => const HomeAdmin(),
           '/registrationAdmin': (context) => RegistrationAdmin(),
           //'/home': (context) => SuccessPayment(),
-          //'/home': (context) => cookies != null && cookies != '' ? AccountAdmin(userId: '1aa71d78-f91c-11ec-a426-002590eb3418') : RegistrationPage(),
+          //'/home': (context) =>  || cookies != null && cookies != '' ? Account() : RegistrationPage(),
+          '/home': (context) => userId!= null && userId != '' ? Account() : RegistrationPage(),
           //'/home': (context) => Test(),
           //'/home': (context) => AccountAdmin(userId:'f1c7fde2-ef1b-11ec-a426-002590eb3418'),
-          //'/home': (context) => Contacts(),
+          //'/home': (context) => AddBanners(),
           //'/home': (context) => Account(userId:userId),
-          //'/home': (context) => Home(),
+          //'/home': (context) => Members(),
           //'/home': (context) => Account(userId:'f1c7fde2-ef1b-11ec-a426-002590eb3418'),
           '/account': (context) => Account(),
           '/members': (context) => const Members(),
@@ -198,9 +206,9 @@ class MyApp extends StatelessWidget {
           '/shop': (context) => const Shop(),
           '/partners': (context) => const Partners(),
           '/contacts': (context) => const Contacts(),
-          '/edit': (context) => const Edit(),
+          '/edit': (context) => Edit(),
           '/editAds': (context) => const EditAds(),
-          '/editAdmin': (context) => const EditAdmin(),
+          '/editAdmin': (context) => EditAdmin(),
           '/test': (context) => const Test(),
           // '/card': (context) => Card(productId: 1),
           // '/success_payment': (context) => SuccessPayment(currentUser: currentUser),

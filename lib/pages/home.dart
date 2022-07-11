@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import 'package:card_swiper/card_swiper.dart';
 import 'package:flutter/material.dart';
 
@@ -166,7 +168,7 @@ class _HomeState extends State<Home> {
                                   //constraints: BoxConstraints(maxWidth: 284, maxHeight: 400),
                                   // width: MediaQuery.of(context).size.width,
                                   width: 284,
-                                  height: 200,
+                                  height: 107,
                                   padding: EdgeInsets.zero,
                                   margin: const EdgeInsets.only(top: 10, bottom: 30, left: 0, right: 0),
                                   color: const Color(0xFF181C33),
@@ -195,7 +197,7 @@ class _HomeState extends State<Home> {
                                             int countImages = snapshot.data
                                             !.banners.length;
                                             return Swiper(
-                                              // containerHeight: 92,
+                                              //containerHeight: 82,
                                               containerWidth: 284,
                                               // layout: SwiperLayout.CUSTOM,
                                               // customLayoutOption:
@@ -207,42 +209,37 @@ class _HomeState extends State<Home> {
                                               //   ]),
 
                                               viewportFraction: 1,
-                                              itemHeight: 92,
+                                              //itemHeight: 82,
                                               itemWidth: 284,
                                               autoplay: true,
                                               itemCount: countImages,
                                               // outer: true,
                                               itemBuilder: (BuildContext context, int index) {
-                                                var fileExtension = snapshot
-                                                    .data?.banners[index]
-                                                    .path.substring(
-                                                    (snapshot.data
-                                                        ?.banners[index]
-                                                        .path.length)! - 3);
-                                                if (fileExtension ==
-                                                    'jpg' ||
-                                                    fileExtension ==
-                                                        'png' ||
-                                                    fileExtension ==
-                                                        'svg') {
+                                                late Uint8List bytes;
+
+                                                var pathEncode = snapshot.data?.banners[index].path;
+                                                var decode64 = base64.decode(pathEncode!);
+
+                                                bytes = decode64;
+
+
+                                                if (snapshot.data?.banners[index].path != null) {
                                                   isLoadedImage = true;
+
                                                 } else {
                                                   isLoadedImage = false;
                                                 }
-                                                _image = File(
-                                                    '${snapshot.data
-                                                        ?.banners[index]
-                                                        .path}');
                                                 return Container (
                                                     width: 284,
-                                                    height: 92,
+                                                    height: 107,
                                                     decoration: const BoxDecoration(
                                                       color: Color(0XffE4E6FF),
                                                       borderRadius: BorderRadius.all(Radius
                                                           .circular(20.0)),
                                                     ),
                                                     margin: const EdgeInsets.only(bottom: 10.0, top: 10, left: 10,right: 10),
-                                                    child: (isLoadedImage &&_image.existsSync()) ? Image.file(_image, fit: BoxFit.cover, width: 284, height: 92) :
+                                                    child: isLoadedImage ?
+                                                    Image.memory(base64.decode(snapshot.data?.banners[index].path ?? ''), fit: BoxFit.cover, width: 284, height: 107) :
                                                     const Text('no image',
                                                         textAlign: TextAlign.center,
                                                         style: TextStyle(

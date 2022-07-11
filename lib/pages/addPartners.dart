@@ -1,8 +1,12 @@
 // import 'dart:html';
 
+import 'dart:typed_data';
+
 import 'package:cadillac/pages/partnersAdmin.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
+import 'package:flutter_svg/svg.dart';
+import 'package:form_builder_file_picker/form_builder_file_picker.dart';
 import 'package:form_builder_image_picker/form_builder_image_picker.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 
@@ -12,10 +16,13 @@ import 'package:cadillac/variables.dart';
 import 'package:cadillac/widgets/titlePage.dart';
 
 import 'package:http/http.dart' as http;
+import 'package:provider/provider.dart';
 import 'dart:convert';
 import 'dart:async';
+import 'dart:io';
 
 import '../NavDrawerAdmin.dart';
+import '../main.dart';
 import '../models/partners.dart';
 
 
@@ -28,9 +35,12 @@ class AddPartners extends StatefulWidget {
 }
 
 class _AddPartnersState extends State<AddPartners> {
+  late String encode64Partner;
+
   @override
   void initState() {
     super.initState();
+    encode64Partner = '';
   }
 
   final _partnersKey = GlobalKey<FormBuilderState>();
@@ -42,8 +52,11 @@ class _AddPartnersState extends State<AddPartners> {
   late List<dynamic> partnerImage;
 
   late String path;
+  late String platform;
+  late Uint8List? bytes;
 
-  late List<dynamic> photo;
+
+
   // final styleFormInput = const TextStyle(
   //   fontSize: 14.0,
   //   fontWeight: FontWeight.normal,
@@ -61,6 +74,9 @@ class _AddPartnersState extends State<AddPartners> {
 
   @override
   Widget build(BuildContext context) {
+    platform = Provider.of<Data>(context).data['platform'].toString();
+    print(platform);
+
     return MaterialApp(
         theme: ThemeData(scaffoldBackgroundColor: const Color(0xFF2C335E)),
         title: 'Cadillac',
@@ -177,32 +193,90 @@ class _AddPartnersState extends State<AddPartners> {
                                                       ]),
                                                       keyboardType: TextInputType.text),
                                                 ),
-                                                FormBuilderImagePicker(
-                                                  name: 'photo',
-                                                  // previewHeight: 96,
-                                                  // previewWidth: 96,
-                                                  // previewMargin: EdgeInsets.symmetric(horizontal: 150),
-                                                  previewHeight: 140,
-                                                  previewWidth: 284,
-                                                  previewMargin: const EdgeInsets.only(bottom: 0),
-                                                  iconColor: Colors.white,
-                                                  decoration: const InputDecoration(
-                                                    border: OutlineInputBorder(
-                                                        borderSide: BorderSide.none,
-                                                        borderRadius: BorderRadius.all(
-                                                            Radius.circular(20)
-                                                        )
+                                                FormBuilderFilePicker(
+                                                  name: "partnerImage",
+                                                  decoration:
+                                                  InputDecoration(
+                                                    fillColor:
+                                                    Color(0xff515569),
+                                                    iconColor: Colors.white,
+                                                    contentPadding:
+                                                    EdgeInsets.all(0),
+                                                    border:
+                                                    OutlineInputBorder(
+                                                      borderSide:
+                                                      BorderSide.none,
+                                                      //gapPadding: 40,
                                                     ),
-
-                                                    // labelText: 'Загрузить фото',
-                                                    // labelStyle: styleHelperText,
                                                   ),
-                                                  maxImages: 1,
-                                                  onSaved: (
-                                                      value) =>
-                                                  photo = value!,
-
-                                                ),
+                                                  maxFiles: null,
+                                                  previewImages: true,
+                                                  onChanged: (val) => {},
+                                                  selector: Column(
+                                                      children: [
+                                                        Stack(
+                                                            alignment:
+                                                            Alignment
+                                                                .center,
+                                                            children: [
+                                                              Container(
+                                                                //dding: EdgeInsets.only(bottom: 40),
+                                                                width: 284,
+                                                                height: 160,
+                                                                decoration: const BoxDecoration(
+                                                                    color: Color(
+                                                                        0xFF515569),
+                                                                    shape: BoxShape
+                                                                        .rectangle,
+                                                                    borderRadius:
+                                                                    BorderRadius.all(Radius.circular(10))),
+                                                              ),
+                                                              SvgPicture
+                                                                  .asset(
+                                                                'assets/images/load.svg',
+                                                                semanticsLabel:
+                                                                'Icon upload',
+                                                                height:
+                                                                18.0,
+                                                              ),
+                                                              Positioned(
+                                                                bottom: 0,
+                                                                child: Row(
+                                                                    mainAxisAlignment:
+                                                                    MainAxisAlignment
+                                                                        .center,
+                                                                    crossAxisAlignment:
+                                                                    CrossAxisAlignment.center,
+                                                                    children: [
+                                                                      SizedBox(
+                                                                          height: 40),
+                                                                      Text(
+                                                                          'Загрузить фото',
+                                                                          style: TextStyle(fontSize: 14.0, fontWeight: FontWeight.normal, fontFamily: 'CadillacSans', color: Colors.white, height: 1.4 //line-height : font-size
+                                                                          ),
+                                                                          textAlign: TextAlign.center),
+                                                                      Icon(
+                                                                        Icons.file_upload,
+                                                                        semanticLabel:
+                                                                        'Icon upload',
+                                                                        size:
+                                                                        18.0,
+                                                                        color:
+                                                                        Colors.white,
+                                                                      )
+                                                                    ]),
+                                                              )
+                                                            ]),
+                                                      ]),
+                                                  onFileLoading: (val) {
+                                                    // print(val);
+                                                  },
+                                                  onSaved: (value) => {
+                                                    print('value'),
+                                                    print(value
+                                                        .runtimeType),
+                                                    partnerImage = value!,
+                                                  }),
 
                                                 Container(
                                                   width: 284,
@@ -229,14 +303,35 @@ class _AddPartnersState extends State<AddPartners> {
                                                           false) {
                                                         confirmDialog(context);
                                                         debugPrint('Partner added');
+                                                        if (platform == 'android' ||
+                                                            platform == 'ios') {
+                                                          print(platform);
+                                                          final bytes = File(partnerImage[0].path).readAsBytesSync();
+                                                          print(bytes);
+                                                          print(bytes.runtimeType);
+                                                          setState(() {
+                                                            encode64Partner = base64.encode(bytes);
+                                                          });
+                                                          //var encode64 = base64.encode(bytes);
+                                                          print(encode64Partner);
 
-                                                        path = await getpathImage(partnerImage[0].path);
+
+                                                        } else {
+                                                          print(platform);
+                                                          //late Uint8List bytes;
+                                                          bytes = partnerImage[0].bytes;
+
+                                                          setState(() {
+                                                            encode64Partner = base64.encode(bytes!);
+                                                          });
+                                                        }
+
 
                                                         final partner = Partner(
                                                           id: id,
                                                           partnerId: partnerId,
                                                           partnerName: partnerName,
-                                                          path: path,
+                                                          path: encode64Partner,
 
                                                         );
 

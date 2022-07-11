@@ -36,7 +36,7 @@ class User {
   late final String birthday;
   late final String login;
   late final String carname;
-  late final String path;
+  late final String? path;
   late final String car1;
   late final String car2;
   late final String car3;

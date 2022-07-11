@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import 'package:card_swiper/card_swiper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
@@ -247,32 +249,26 @@ class _HomeAdminState extends State<HomeAdmin> {
                                       //   ]),
 
                                       viewportFraction: 1,
-                                      itemHeight: 92,
+                                      itemHeight: 107,
                                       itemWidth: 340,
                                       autoplay: true,
                                       itemCount: countImages,
                                       // outer: true,
                                       itemBuilder: (BuildContext context, int index) {
-                                        var fileExtension = snapshot
-                                            .data?.banners[index]
-                                            .path.substring(
-                                            (snapshot.data
-                                                ?.banners[index]
-                                                .path.length)! - 3);
-                                        if (fileExtension ==
-                                            'jpg' ||
-                                            fileExtension ==
-                                                'png' ||
-                                            fileExtension ==
-                                                'svg') {
+                                        late Uint8List bytes;
+
+                                        var pathEncode = snapshot.data?.banners[index].path;
+                                        var decode64 = base64.decode(pathEncode!);
+
+                                        bytes = decode64;
+
+
+                                        if (snapshot.data?.banners[index].path != null) {
                                           isLoadedImage = true;
+
                                         } else {
                                           isLoadedImage = false;
                                         }
-                                        _image = File(
-                                            '${snapshot.data
-                                                ?.banners[index]
-                                                .path}');
                                         return Container(
                                             width: 320,
                                             // height: 166,
@@ -292,24 +288,28 @@ class _HomeAdminState extends State<HomeAdmin> {
 
                                           Container (
                                             width: 284,
-                                            height: 92,
+                                            height: 107,
                                             decoration: const BoxDecoration(
                                               color: Color(0XffE4E6FF),
                                               borderRadius: BorderRadius.all(Radius
                                                   .circular(10.0)),
                                             ),
                                             margin: const EdgeInsets.only(bottom: 10.0, top: 10, left: 10,right: 40),
-                                            child: (isLoadedImage &&_image.existsSync()) ? ClipRRect(borderRadius: const BorderRadius.all(Radius
-                                                .circular(10.0)), child: Image.file(_image, fit: BoxFit.cover, width: 284, height: 92)) :
-                                            const Text('no image',
-                                                textAlign: TextAlign.center,
-                                                style: TextStyle(
-                                                  fontSize: 18.0,
-                                                  fontWeight: FontWeight.normal,
-                                                  fontFamily: 'CadillacSans',
-                                                  color: Color(0xFF8F97BF),
-                                                  height: 1.7, //line-height / font-size
-                                                ))
+                                              child: isLoadedImage ? Image.memory(
+                                                base64.decode(snapshot.data?.banners[index].path ?? ''),
+                                                fit: BoxFit.cover, height: 107)
+                                                  : Text('no image',
+                                                  textAlign: TextAlign
+                                                      .center,
+                                                  style: TextStyle(
+                                                    fontSize: 18.0,
+                                                    fontWeight: FontWeight
+                                                        .normal,
+                                                    fontFamily: 'CadillacSans',
+                                                    color: Color(
+                                                        0xFF8F97BF),
+                                                    height: 1.7, //line-height / font-size
+                                                  ))
                                           ),
                                           Column (
                                             children: [

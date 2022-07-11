@@ -1,12 +1,13 @@
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
-
-
 
 import 'package:cadillac/NavDrawer.dart';
 import 'package:cadillac/widgets/titlePage.dart';
 import 'package:flutter_svg/svg.dart';
 
 import 'dart:convert';
+import 'dart:async';
 import 'package:http/http.dart' as http;
 import 'dart:io';
 
@@ -23,8 +24,7 @@ class News extends StatefulWidget {
 class _NewsState extends State<News> {
 
   late Future<NewsList> newsList;
-  bool isLoadedImage = false;
-  late File _image;
+
 
   @override
   void initState() {
@@ -34,6 +34,9 @@ class _NewsState extends State<News> {
     //   _items = data["items"];
     // });
   }
+
+  bool isLoadedImage = false;
+  late String currentNewsId;
 
   @override
   Widget build(BuildContext context) {
@@ -72,10 +75,10 @@ class _NewsState extends State<News> {
           ),
 
           body: Center (
-              child: Column (
+              child: ListView (
                   children: [
-                    Expanded (
-                      child: SingleChildScrollView(
+                    Center(
+                      child: Container(
                           child: Column (
                           crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
@@ -114,22 +117,29 @@ class _NewsState extends State<News> {
                                                             const TitlePage(
                                                                 title: 'клубные новости'),
                                                           ),
-                                                          Container(
-                                                            //height: 780,
+                                                          SizedBox(
+                                                            height: 740,
                                                             child: ListView.builder(
                                                                 scrollDirection: Axis.vertical,
                                                                 shrinkWrap: true,
                                                                 // padding: const EdgeInsets.only(top: 38, bottom: 10),
                                                                 itemCount: snapshot.data?.news.length,
                                                                 itemBuilder: (context, index) {
-                                                                  var fileExtension = snapshot.data?.news[index].path.substring((snapshot.data?.news[index].path.length)! - 3);
-                                                                  if(fileExtension == 'jpg' || fileExtension == 'png' || fileExtension == 'svg') {
+                                                                  late Uint8List bytes;
+
+                                                                  var pathEncode = snapshot.data?.news[index].path;
+                                                                  var decode64 = base64.decode(pathEncode!);
+
+                                                                  bytes = decode64;
+
+
+                                                                  if (snapshot.data?.news[index].path != null) {
                                                                     isLoadedImage = true;
+
                                                                   } else {
                                                                     isLoadedImage = false;
                                                                   }
 
-                                                                  _image = File('${snapshot.data?.news[index].path}');
                                                                   return Container(
                                                                       width: 320,
                                                                       // height: 166,
@@ -202,7 +212,9 @@ class _NewsState extends State<News> {
                                                                                       .circular(20.0)),
                                                                                 ),
                                                                                 margin: const EdgeInsets.only(bottom: 10.0, top: 10),
-                                                                                child: (isLoadedImage &&_image.existsSync()) ? Image.file(_image, fit: BoxFit.cover, width: 284, height: 160) :
+                                                                                child: isLoadedImage ? Image.memory(
+                                                                                    base64.decode(snapshot.data?.news[index].path ?? ''),
+                                                                                    fit: BoxFit.cover, width: 284, height: 160) :
                                                                                 const Text('no image',
                                                                                     textAlign: TextAlign.center,
                                                                                     style: TextStyle(
@@ -218,7 +230,7 @@ class _NewsState extends State<News> {
                                                                               child: Text('${snapshot.data?.news[index].newsDescr}',
                                                                                   textAlign: TextAlign.left,
                                                                                   style: const TextStyle(
-                                                                                    fontSize: 32.0,
+                                                                                    fontSize: 16.0,
                                                                                     fontWeight: FontWeight.normal,
                                                                                     fontFamily: 'CadillacSans',
                                                                                     color: Color(0xFF8F97BF),

@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
 
 
@@ -55,7 +57,6 @@ class _PartnersState extends State<Partners> {
   //
   // get currentUser => null;
   bool isLoadedImage = false;
-  late File _image;
   late String currentPartnerId;
 
   @override
@@ -132,7 +133,7 @@ class _PartnersState extends State<Partners> {
                               return Center(
                                 child: SizedBox(
                                     width: 310,
-                                    height: 960,
+                                    //height: 1100,
                                     child: Column(
                                         mainAxisAlignment: MainAxisAlignment
                                             .start,
@@ -159,50 +160,49 @@ class _PartnersState extends State<Partners> {
                                                   itemBuilder: (
                                                       BuildContext context,
                                                       int index) {
-                                                    var fileExtension = snapshot
-                                                        .data?.partners[index]
-                                                        .path.substring(
-                                                        (snapshot.data
-                                                            ?.partners[index]
-                                                            .path.length)! - 3);
-                                                    if (fileExtension ==
-                                                        'jpg' ||
-                                                        fileExtension ==
-                                                            'png' ||
-                                                        fileExtension ==
-                                                            'svg') {
+                                                    late Uint8List bytes;
+
+                                                    var pathEncode = snapshot.data?.partners[index].path;
+                                                    var decode64 = base64.decode(pathEncode!);
+
+                                                    bytes = decode64;
+
+
+                                                    if (snapshot.data?.partners[index].path != null) {
                                                       isLoadedImage = true;
+
                                                     } else {
                                                       isLoadedImage = false;
                                                     }
-                                                    _image = File(
-                                                        '${snapshot.data
-                                                            ?.partners[index]
-                                                            .path}');
 
                                                     return Container(
                                                         width: 284,
                                                         margin: const EdgeInsets
                                                             .only(bottom: 30),
-                                                        child: (isLoadedImage &&
-                                                            _image.existsSync())
-                                                            ? Image.file(_image,
-                                                            fit: BoxFit.cover,
-                                                            width: 284,
-                                                            height: 160)
-                                                            : const Text('no image',
-                                                            textAlign: TextAlign
-                                                                .center,
-                                                            style: TextStyle(
-                                                              fontSize: 18.0,
-                                                              fontWeight: FontWeight
-                                                                  .normal,
-                                                              fontFamily: 'CadillacSans',
-                                                              color: Color(
-                                                                  0xFF8F97BF),
-                                                              height: 1.7, //line-height / font-size
-                                                            ))
-
+                                                        child: Flex(
+                                                            direction: Axis.vertical,
+                                                            mainAxisSize: MainAxisSize.min,
+                                                            children: [
+                                                              Flexible(
+                                                                  fit: FlexFit.loose,
+                                                                  child: isLoadedImage ? Image.memory(
+                                                                    base64.decode(snapshot.data?.partners[index].path ?? ''),
+                                                                    fit: BoxFit.cover,)
+                                                                      : Text('no image',
+                                                                      textAlign: TextAlign
+                                                                          .center,
+                                                                      style: TextStyle(
+                                                                        fontSize: 18.0,
+                                                                        fontWeight: FontWeight
+                                                                            .normal,
+                                                                        fontFamily: 'CadillacSans',
+                                                                        color: Color(
+                                                                            0xFF8F97BF),
+                                                                        height: 1.7, //line-height / font-size
+                                                                      ))
+                                                                )
+                                                            ]
+                                                        )
                                                     );
                                                   }
                                               )

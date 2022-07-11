@@ -1,5 +1,7 @@
 // import 'dart:html';
 
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
 
 
@@ -134,133 +136,162 @@ class _PartnersAdminState extends State<PartnersAdmin> {
                                     return Center(
                                       child: SizedBox(
                                       width: 310,
-                                      height: 960,
+                                      //height: 1100,
                                         child: Column(
                                           mainAxisAlignment: MainAxisAlignment.start,
                                           crossAxisAlignment: CrossAxisAlignment.center,
                                           children: [
 
-                                          Container(
-                                            margin: const EdgeInsets.only(
-                                            bottom: 20),
-                                              child: const TitlePage(title: 'партнеры автоклуба\ncadillac')
-                                          ),
+                                            Container(
+                                              margin: const EdgeInsets.only(
+                                              bottom: 20),
+                                                child: const TitlePage(title: 'партнеры автоклуба\ncadillac')
+                                            ),
 
-                                          SizedBox (
-                                              width: 310,
-                                              // height: 960,
-                                              child: ListView.builder (
-                                                  scrollDirection: Axis.vertical,
-                                                  shrinkWrap: true,
-                                                  itemCount: snapshot.data?.partners.length,
-                                                  itemBuilder: (BuildContext context, int index) {
-                                                    var fileExtension = snapshot.data?.partners[index].path.substring((snapshot.data?.partners[index].path.length)! - 3);
-                                                    if(fileExtension == 'jpg' || fileExtension == 'png' || fileExtension == 'svg') {
-                                                      isLoadedImage = true;
-                                                    } else {
-                                                      isLoadedImage = false;
-                                                    }
-                                                    _image = File('${snapshot.data?.partners[index].path}');
+                                            SizedBox (
+                                                width: 310,
+                                                //height: 1100,
+                                                child: ListView.builder (
+                                                    scrollDirection: Axis.vertical,
+                                                    shrinkWrap: true,
+                                                    itemCount: snapshot.data?.partners.length,
+                                                    itemBuilder: (BuildContext context, int index) {
+                                                      late Uint8List bytes;
 
-                                                    return Container (
-                                                      width: 284,
-                                                      height: 92,
-                                                      decoration: const BoxDecoration(
-                                                        //color: Color(0XffE4E6FF),
-                                                        borderRadius: BorderRadius.all(Radius
-                                                            .circular(10.0)),
-                                                      ),
-                                                      alignment: Alignment.center,
-                                                      margin: const EdgeInsets.only(bottom: 30, right: 30),
-                                                      child: Row(
-                                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                        crossAxisAlignment: CrossAxisAlignment.start,
-                                                        children: [
-                                                          Expanded(
-                                                            child: (isLoadedImage &&_image.existsSync()) ? Image.file(_image, fit: BoxFit.cover, width: 284, height: 160)
-                                                            :  const Text('no image',
-                                                                  textAlign: TextAlign.center,
-                                                                  style: TextStyle(
-                                                                    fontSize: 18.0,
-                                                                    fontWeight: FontWeight.normal,
-                                                                    fontFamily: 'CadillacSans',
-                                                                    color: Color(0xFF8F97BF),
-                                                                    height: 1.7, //line-height / font-size
-                                                                  ))
+                                                      var pathEncode = snapshot.data?.partners[index].path;
+                                                      var decode64 = base64.decode(pathEncode!);
 
+                                                      bytes = decode64;
+
+
+                                                      if (snapshot.data?.partners[index].path != null) {
+                                                        isLoadedImage = true;
+
+                                                      } else {
+                                                        isLoadedImage = false;
+                                                      }
+
+                                                      return
+                                                          Container (
+                                                          width: 310,
+                                                          //height: 92,
+                                                          decoration: const BoxDecoration(
+                                                            //color: Color(0XffE4E6FF),
+                                                            borderRadius: BorderRadius.all(Radius
+                                                                .circular(10.0)),
                                                           ),
+                                                          alignment: Alignment.center,
+                                                          margin: const EdgeInsets.only(bottom: 30,),
+                                                          // child: Row(
+                                                          //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                          //     crossAxisAlignment: CrossAxisAlignment.start,
+                                                          //     children: [
+                                                                child: Flex(
+                                                                    direction: Axis.vertical,
+                                                                    mainAxisSize: MainAxisSize.min,
+                                                              children: [
+                                                                Flexible(
+                                                                    fit: FlexFit.loose,
+                                                                    child: Row(
+                                                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                                                    children: [
+                                                                      isLoadedImage ? Image.memory(
+                                                                        base64.decode(snapshot.data?.partners[index].path ?? ''),
+                                                                        fit: BoxFit.cover, width: 270)
+                                                                          : Text('no image',
+                                                                          textAlign: TextAlign
+                                                                              .center,
+                                                                          style: TextStyle(
+                                                                            fontSize: 18.0,
+                                                                            fontWeight: FontWeight
+                                                                                .normal,
+                                                                            fontFamily: 'CadillacSans',
+                                                                            color: Color(
+                                                                                0xFF8F97BF),
+                                                                            height: 1.7, //line-height / font-size
+                                                                          )),
+                                                                      Container(
+                                                                        margin: const EdgeInsets.only(left: 15),
+                                                                        child: GestureDetector(
+                                                                          onTap: () {
+                                                                            confirmDialog(context);
+                                                                            setState(() {
+                                                                              // устанавливаем индекс выделенного элемента
+                                                                              selectedIndex = index;
+                                                                            });
+                                                                            print(snapshot.data?.partners[selectedIndex].partnerId);
+                                                                            var currentPartnerId = snapshot.data?.partners[selectedIndex].partnerId;
+                                                                            deletePartner(currentPartnerId);
 
-                                                          Container(
-                                                            margin: const EdgeInsets.only(left: 15),
-                                                            child: GestureDetector(
-                                                                onTap: () {
-                                                                  confirmDialog(context);
-                                                                  setState(() {
-                                                                  // устанавливаем индекс выделенного элемента
-                                                                  selectedIndex = index;
-                                                                  });
-                                                                print(snapshot.data?.partners[selectedIndex].partnerId);
-                                                                var currentPartnerId = snapshot.data?.partners[selectedIndex].partnerId;
-                                                                deletePartner(currentPartnerId);
+                                                                            Route route = MaterialPageRoute(
+                                                                                builder: (context) =>
+                                                                                const PartnersAdmin());
+                                                                            Navigator.push(context,route);
 
-                                                                Route route = MaterialPageRoute(
-                                                                builder: (context) =>
-                                                                const PartnersAdmin());
-                                                                Navigator.push(context,route);
+                                                                          },
+                                                                          child: SvgPicture.asset(
+                                                                            'assets/images/delete.svg',
+                                                                            semanticsLabel: 'Icon delete',
+                                                                            height: 20.0,
+                                                                          ),
 
-                                                                },
-                                                                child: SvgPicture.asset(
-                                                                'assets/images/delete.svg',
-                                                                semanticsLabel: 'Icon delete',
-                                                                height: 20.0,
+                                                                        ),
+
+                                                                      ),
+                                                                      Visibility(
+                                                                        visible: false,
+                                                                        child: FormBuilderTextField(
+                                                                          name: 'currentPartnerId',
+                                                                          initialValue: '${snapshot.data?.partners[selectedIndex].partnerId}',
+                                                                          onSaved: (value) => currentPartnerId = value!,
+                                                                        ),
+                                                                      ),
+                                                                    ]
+                                                                )
+
+
+
                                                                 ),
 
-                                                              ),
 
-                                                          ),
-                                                          Visibility(
-                                                            visible: false,
-                                                            child: FormBuilderTextField(
-                                                              name: 'currentPartnerId',
-                                                              initialValue: '${snapshot.data?.partners[selectedIndex].partnerId}',
-                                                              onSaved: (value) => currentPartnerId = value!,
-                                                            ),
-                                                          ),
-                                                        ]
-                                                      )
-                                                    );
+                                                              ]
+                                                            )
 
-                                                  }
-                                              )
-                                            ),
-                                          Container(
-                                              width: 310,
-                                              height: 20,
-                                              margin: const EdgeInsets.only(left: 15,),
-                                              alignment: const Alignment(1, 1),
-                                              child: GestureDetector(
-                                                  onLongPress: () {
-                                                    Route route = MaterialPageRoute(
-                                                        builder: (context) =>
-                                                            const AddPartners());
-                                                    Navigator.push(context,route);
-                                                  },
-                                                  child: SvgPicture
-                                                      .asset(
-                                                    'assets/images/add.svg',
-                                                    semanticsLabel: 'Icon add',
-                                                    height: 20.0,
-
-                                                  ),
+                                                      );
+                                                      }
                                                 )
+                                            ),
 
-                                          ),
 
-                                        ]
-                                    )
+                                            Container(
+                                                width: 310,
+                                                height: 20,
+                                                margin: const EdgeInsets.only(left: 15, bottom: 20),
+                                                alignment: const Alignment(1, 1),
+                                                child: GestureDetector(
+                                                    onLongPress: () {
+                                                      Route route = MaterialPageRoute(
+                                                          builder: (context) =>
+                                                              const AddPartners());
+                                                      Navigator.push(context,route);
+                                                    },
+                                                    child: SvgPicture
+                                                        .asset(
+                                                      'assets/images/add.svg',
+                                                      semanticsLabel: 'Icon add',
+                                                      height: 20.0,
 
-                                ),
-                              );
+                                                    ),
+                                                  )
+
+                                            ),
+
+                                          ]
+                                        )
+
+                                      ),
+                                    );
 
 
 

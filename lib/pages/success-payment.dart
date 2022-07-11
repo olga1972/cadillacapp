@@ -17,7 +17,7 @@ import 'package:flutter/material.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+//import 'package:shared_preferences/shared_preferences.dart';
 
 // import 'dart:html' as html;
 
@@ -25,6 +25,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import 'dart:async';
 import 'dart:io';
 // import 'package:image/image.dart';
 
@@ -47,10 +48,10 @@ import 'package:cadillac/pages/home.dart';
 
 import 'package:cadillac/models/users.dart';
 
-import '../main.dart';
-import 'contacts.dart';
+import 'package:cadillac/main.dart';
+import 'package:cadillac/pages/contacts.dart';
 
-import 'package:form_builder_asset_picker/form_builder_asset_picker.dart';
+//import 'package:form_builder_asset_picker/form_builder_asset_picker.dart';
 import 'package:form_builder_file_picker/form_builder_file_picker.dart';
 //import 'package:form_builder_file_picker/form_builder_asset_picker.dart';
 
@@ -71,7 +72,7 @@ class SuccessPayment extends StatefulWidget {
   //late dynamic userId;
   late String path;
 
-  get appDocPath => null;
+  //get appDocPath => null;
 
   @override
   State<SuccessPayment> createState() => _SuccessPaymentState();
@@ -113,15 +114,15 @@ class _SuccessPaymentState extends State<SuccessPayment> {
     // });
   }
 
-  getdata() async {
-    SharedPreferences preferences = await SharedPreferences.getInstance();
-    preferences.setString('userId', userId);
-    // print('get data account');
-    // userId = preferences.getString('userId')!;
-    //
-    // print(userId);
-    //return value;
-  }
+  // getdata() async {
+  //   SharedPreferences preferences = await SharedPreferences.getInstance();
+  //   preferences.setString('userId', userId);
+  //   // print('get data account');
+  //   // userId = preferences.getString('userId')!;
+  //   //
+  //   // print(userId);
+  //   //return value;
+  //}
 
   //XFile? file;
   //final String userUuId;
@@ -190,7 +191,6 @@ class _SuccessPaymentState extends State<SuccessPayment> {
     userId = Provider.of<Data>(context).data['userId'].toString();
     platform = Provider.of<Data>(context).data['platform'].toString();
     print(platform);
-    print(platform);
 
     //Uint8List? bytes = Uint8List.fromList(path);
 
@@ -203,10 +203,10 @@ class _SuccessPaymentState extends State<SuccessPayment> {
         //   GlobalWidgetsLocalizations.delegate,
         //   GlobalCupertinoLocalizations.delegate,
         // ],
-        supportedLocales: const [
-          Locale('en', ''),
-          // Английский, без кода страны Locale ( 'es' , '' ), // испанский, без кода страны ],
-        ],
+        // supportedLocales: const [
+        //   Locale('en', ''),
+        //   // Английский, без кода страны Locale ( 'es' , '' ), // испанский, без кода страны ],
+        // ],
         routes: {
           '/home': (context) => const Home(),
           // '/account': (context) => Account(currentUser: currentUser),
@@ -1118,8 +1118,7 @@ class _SuccessPaymentState extends State<SuccessPayment> {
                                                             print(
                                                                 "currentId: $id");
                                                             userId = uuid;
-                                                            userId =
-                                                                '871936c4-f009-11ec-a426-002590eb3418';
+                                                            //userId = '871936c4-f009-11ec-a426-002590eb3418';
                                                             // await contactsBox.put(userUuId, currentUser);
 
                                                             debugPrint(_formKey
@@ -1258,7 +1257,7 @@ class _SuccessPaymentState extends State<SuccessPayment> {
     if (response.statusCode == 200) {
       print('success success-payment');
 
-      getdata();
+      //getdata();
 
       var cookie = response.headers['set-cookie'];
       print('cookie: $cookie');
