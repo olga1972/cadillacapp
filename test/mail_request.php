@@ -2,19 +2,16 @@
 require_once 'connect.php';
 require_once 'funcs.php';
 // Файлы phpmailer
-//require_once ('./PHPMailer/PHPMailer.php');
-//require_once('./PhpMailer/PHPMailer.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/PHPMailer/PHPMailer.php');
 
+require_once($_SERVER['DOCUMENT_ROOT'].'/PHPMailer/PHPMailer.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/PHPMailer/SMTP.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/PHPMailer/Exception.php');
 
 global $link;
 // Переменные, которые отправляет пользователь
 clear();
-$admin = $_POST['email'];
-$subject = $_POST['subject'];
-
+$email = $_POST['email'];
+$phone = $_POST['phone'];
 $theme = $_POST['theme'];
 $message = $_POST['message'];
 $status = '';
@@ -37,14 +34,16 @@ $mail = new PHPMailer\PHPMailer\PHPMailer();
 //    $mail->SMTPSecure = 'ssl';
 //    $mail->Port       = 465;
     //$mail->Port = 465: 587;
+    $email = 'olga.sadyreva@gmail.com';  // письмо отправляется, если email действительный! 
 
     $mail->CharSet = "UTF-8";
-    $mail->setFrom('olga.sadyreva@gmail.com', 'Olga Sadyreva'); // Адрес самой почты и имя отправителя
+    //$mail->setFrom("olga.sadyreva@gmail.com", 'New user'); // Адрес самой почты и имя отправителя
+    $mail->setFrom($email, 'New user');
 
     // Получатель письма
     $mail->addAddress('admin@cadillac.fvds.ru');
     $mail->addAddress('olga.sadyreva@mail.ru'); // Ещё один, если нужен
-    $mail->Subject = 'Заявка';
+    $mail->Subject = 'Запрос на регистрацию в приложении';
     $mail->msgHTML("<html><body>
                 <h1>Здравствуйте!</h1>
                 <p>$theme</p>

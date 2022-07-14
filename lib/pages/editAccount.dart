@@ -50,6 +50,8 @@ import 'package:cadillac/pages/contacts.dart';
 
 import 'package:form_builder_file_picker/form_builder_file_picker.dart';
 
+import 'data.dart';
+
 enum ImageSourceType { gallery, camera }
 
 var uuid = '';
@@ -77,15 +79,7 @@ class _EditState extends State<Edit> {
     //uuid = userId;
 
 
-    var path = "assets/images/avatar.png";
-    // final file =
-    //     await ImagePicker().pickImage(source: ImageSource.gallery);
-    // setState(() => this.file = file);
-    //officesList = getOfficesList();
-    //officesList = readJson();
-    // usersList = getUsersList();
-    //usersList = readJson();
-    //print(usersList);
+    //var path = "assets/images/avatar.png";
     // setState(() {
     //   _items = data["items"];
     // });
@@ -94,7 +88,6 @@ class _EditState extends State<Edit> {
   //XFile? file;
   //final String userUuId;
   //late final dynamic currentUser;
-
   final _formKey = GlobalKey<FormBuilderState>();
 
 
@@ -107,15 +100,11 @@ class _EditState extends State<Edit> {
   late dynamic birthday;
   late dynamic type;
   late dynamic carname;
-  late String path = "assets/images/avatar.png";
+  late String path;
   late dynamic car1;
   late dynamic car2;
   late dynamic car3;
-  //late String path;
-  // late final dynamic token = '12345678';
-  // late final dynamic renewalToken = '12345678';
-  // late final dynamic photo = new ApiImage(imageUrl: 'assets/images/avatar.png', id: '1');
-  // late XFile? photo;
+
   late List<dynamic> photo;
   late List<dynamic> cars;
 
@@ -124,11 +113,6 @@ class _EditState extends State<Edit> {
   late Uint8List? bytesCar1;
   late Uint8List? bytesCar2;
   late Uint8List? bytesCar3;
-  // late final dynamic cars = new ApiImage (
-  //     imageUrl: 'assets/images/cadillac-eldorado.png', id: '2');
-  // late final cars = Cars ();
-
-  // final User userInfo;
 
   // var box = Hive.box<User>(HiveBoxes.user);
   final List<String>? _allowedExtensions = ['png', 'jpg'];
@@ -942,14 +926,14 @@ class _EditState extends State<Edit> {
                                                                         id: '1',
                                                                         userId: userId,
                                                                         login: login,
-                                                                        // password: password,
+                                                                        password: password,
                                                                         //photo: photo,
                                                                         username: username,
                                                                         birthday: birthday,
                                                                         carname: carname,
                                                                         phone: phone,
                                                                         email: email,
-                                                                        path: path,
+                                                                        path: encode64,
                                                                         car1: car1,
                                                                         car2: car2,
                                                                         car3: car3,
@@ -1053,7 +1037,17 @@ class _EditState extends State<Edit> {
 
     String apiurl = baseUrl + "/test/edit.php";
     // String apiurl = "http://localhost/test/edit.php";
-    var response = await http.post(Uri.parse(apiurl), body:{'login': login, 'username': username, 'birthday': birthday, 'carname': carname},headers: {'Accept':'application/json, charset=utf-8',"Access-Control-Allow-Origin": "*",
+    var response = await http.post(Uri.parse(apiurl), body:{
+      'userId': uuid,
+      'login': login,
+      'username': username,
+      'birthday': birthday,
+      'carname': carname,
+      'path': path,
+      'car1': car1,
+      'car2': car2,
+      'car3': car3,},
+        headers: {'Accept':'application/json, charset=utf-8',"Access-Control-Allow-Origin": "*",
       "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS"});
 
     // var response = await http.post(Uri.parse(apiurl), headers: {'Accept':'application/json, charset=utf-8',"Access-Control-Allow-Origin": "*",

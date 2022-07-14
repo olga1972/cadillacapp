@@ -17,14 +17,12 @@ class _AccordionState extends State<Accordion> {
   @override
   Widget build(BuildContext context) {
     return Stack (
-      alignment: Alignment.topCenter,
+        alignment: Alignment.topCenter,
+
         // width: 284,
         children: [
           MaterialButton(
-
-            // margin: const EdgeInsets.only(top: 30, bottom: 45),
             height: 48,
-
             minWidth: 284,
             padding: const EdgeInsets.fromLTRB(0, 12, 0, 21),
             color: Colors.white,
@@ -43,26 +41,26 @@ class _AccordionState extends State<Accordion> {
                 children: [
                   Container(
                     margin: const EdgeInsets.only(
-                        bottom: 10),
+                    bottom: 10),
                   ),
                   Text( "продолжить регистрацию".toUpperCase(),
                     style: const TextStyle(
-                        fontSize: 14, color: Color(0xFF12141F)),
+                    fontSize: 14, color: Color(0xFF12141F)),
                   ),
                   Container(
                     margin: const EdgeInsets.only(
-                        bottom: 10),
+                    bottom: 10),
                   ),
 
                 ]
             ),
+
             onPressed: () {
             },
             //: null,
           ),
           Container (
-            margin: const EdgeInsets.only(
-                top: 20),
+            margin: const EdgeInsets.only(top: 20),
 
             child:
               IconButton (

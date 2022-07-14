@@ -239,17 +239,21 @@ class _HomeState extends State<Home> {
                                                     ),
                                                     margin: const EdgeInsets.only(bottom: 10.0, top: 10, left: 10,right: 10),
                                                     child: isLoadedImage ?
-                                                    Image.memory(base64.decode(snapshot.data?.banners[index].path ?? ''), fit: BoxFit.cover, width: 284, height: 107) :
-                                                    const Text('no image',
-                                                        textAlign: TextAlign.center,
-                                                        style: TextStyle(
-                                                          fontSize: 18.0,
-                                                          fontWeight: FontWeight.normal,
-                                                          fontFamily: 'CadillacSans',
-                                                          color: Color(0xFF8F97BF),
-                                                          height: 1.7, //line-height / font-size
-                                                        ))
+                                                      ClipRRect(
+                                                        borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                                                        child: Image.memory(base64.decode(snapshot.data?.banners[index].path ?? ''), fit: BoxFit.cover, width: 284, height: 107)) :
+                                                          const Text('no image',
+                                                          textAlign: TextAlign.center,
+                                                          style: TextStyle(
+                                                            fontSize: 18.0,
+                                                            fontWeight: FontWeight.normal,
+                                                            fontFamily: 'CadillacSans',
+                                                            color: Color(0xFF8F97BF),
+                                                            height: 1.7, //line-height / font-size
+                                                          ))
+
                                                 );
+
                                               },
                                               // control: SwiperControl(),
                                             );

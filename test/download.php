@@ -1,6 +1,6 @@
 <?php
 // Initialize a file URL to the variable
-$file_path = 'http://localhost/app-release.apk';
+$file_path = 'https://cadillacapp.ru/test/download.php';
 $file_name = 'app-release.apk';
 
 

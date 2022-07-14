@@ -95,27 +95,28 @@ class _CardProductState extends State<CardProduct> {
           ),
 
           body: Center (
-            child: SizedBox (
+            child: Container (
             width: 284,
-
+            height: 870,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Container (
-                    width: 284,
-                    margin: const EdgeInsets.only(top: 30, bottom: 70),
-                    child: const TitlePage(title: 'клубная атрибутика'),
-                  ),
-                  Column (
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Container(
-                          width: 320,
-                          height: 279,
-                          padding: EdgeInsets.zero,
-                          margin: const EdgeInsets.only(top: 10, bottom: 30, left: 0, right: 0),
-                                child: Swiper(
+                  Expanded (
+                    child: SingleChildScrollView(
+                      child: Column(
+                          children: [
+                            Container (
+                              width: 284,
+                              margin: const EdgeInsets.only(top: 30, bottom: 70),
+                              child: const TitlePage(title: 'клубная атрибутика'),
+                            ),
+                            Container(
+                              width: 320,
+                              height: 279,
+                              padding: EdgeInsets.zero,
+                              margin: const EdgeInsets.only(top: 10, bottom: 30, left: 0, right: 0),
+                              child: Swiper(
 
                                   itemCount: 2,
                                   // control: SwiperControl(),
@@ -127,84 +128,89 @@ class _CardProductState extends State<CardProduct> {
                                   itemWidth: 332,
                                   autoplay: true,
                                   outer: true,
-                                    pagination: const SwiperPagination(
-                                        margin: EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 20.0),
-                                        builder: DotSwiperPaginationBuilder(
-                                            color: Colors.white,
-                                            activeColor: Color(0xFF8F97BF),
-                                            size: 7.0,
-                                            activeSize: 7.0
-                                        )
-                                    ),
-                                    itemBuilder: (BuildContext context, int index) {
-                                        return Container(
-                                          width: 332,
-                                          height: 279,
-                                          margin: const EdgeInsets.only(left: 0, right: 10),
-                                          decoration: const BoxDecoration(
-                                            color: Colors.transparent,
-                                            borderRadius: BorderRadius.all(Radius.circular(10)),),
-                                          child: Image.asset(
-                                            images[index],
+                                  pagination: const SwiperPagination(
+                                      margin: EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 20.0),
+                                      builder: DotSwiperPaginationBuilder(
+                                          color: Colors.white,
+                                          activeColor: Color(0xFF8F97BF),
+                                          size: 7.0,
+                                          activeSize: 7.0
+                                      )
+                                  ),
+                                  itemBuilder: (BuildContext context, int index) {
+                                    return Container(
+                                        width: 332,
+                                        height: 279,
+                                        margin: const EdgeInsets.only(left: 0, right: 10),
+                                        decoration: const BoxDecoration(
+                                          color: Colors.transparent,
+                                          borderRadius: BorderRadius.all(Radius.circular(10)),),
+                                        child: ClipRRect(
+                                          borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                                          child: Image.asset(images[index],
                                             //centerSlice: Rect.fromPoints(const Offset(0.0, 0.0), const Offset(0, 0)),
                                             fit: BoxFit.contain,
                                             // alignment: Alignment.topLeft,
                                           ),
+                                        )
 
-                                        );
-                                    }
-                                ),
-                            ),
-                        Container (
-                          margin: const EdgeInsets.only(bottom: 20),
-                          child: Text("Блокнот".toUpperCase(),
-                            style: const TextStyle(
-                                fontSize: 24,
-                                color: Color(0xFF8F97BF)
-                            ),
-                            textAlign: TextAlign.left,
-                          )
-                        ),
-
-                        Row(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: const [
-                              Text("3700 ",
-                                style: TextStyle(
-                                  fontSize: 24,
-                                  color: Colors.white,
-                                ),
-                                textAlign: TextAlign.center,
+                                    );
+                                  }
                               ),
-                              Icon( Icons.currency_ruble,
-                                color: Colors.white,
-                                size: 24,),
-                            ]
-                        ),
-                        Container (
-                          child: Column (
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Container (
-                                  margin: const EdgeInsets.only(top: 100, bottom: 15),
-                                  child: Text("Хотите такой блокнот?".toUpperCase(),
-                                    style: const TextStyle(
-                                        fontSize: 14,
-                                        color: Colors.white
+                            ),
+                            Container (
+                                margin: const EdgeInsets.only(bottom: 20),
+                                child: Text("Блокнот".toUpperCase(),
+                                  style: const TextStyle(
+                                      fontSize: 24,
+                                      color: Color(0xFF8F97BF)
+                                  ),
+                                  textAlign: TextAlign.left,
+                                )
+                            ),
+
+                            Row(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: const [
+                                  Text("3700 ",
+                                    style: TextStyle(
+                                      fontSize: 24,
+                                      color: Colors.white,
                                     ),
                                     textAlign: TextAlign.center,
-                                  )
-                              ),
-                              Container (
-                                margin: const EdgeInsets.only(bottom: 15),
-                                child: const TitlePage(title: 'Напишите нам'),
-                              ),
-                              const Socials()
-                            ]
-                        )
-                    )
+                                  ),
+                                  Icon( Icons.currency_ruble,
+                                    color: Colors.white,
+                                    size: 24,),
+                                ]
+                            ),
+                            Container (
+                                child: Column (
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Container (
+                                          margin: const EdgeInsets.only(top: 100, bottom: 15),
+                                          child: Text("Хотите такой блокнот?".toUpperCase(),
+                                            style: const TextStyle(
+                                                fontSize: 14,
+                                                color: Colors.white
+                                            ),
+                                            textAlign: TextAlign.center,
+                                          )
+                                      ),
+                                      Container (
+                                        margin: const EdgeInsets.only(bottom: 15),
+                                        child: const TitlePage(title: 'Напишите нам'),
+                                      ),
+                                      const Socials()
+                                    ]
+                                )
+                            )
+                            //crossAxisAlignment: CrossAxisAlignment.start,
 
-                      ]
+                          ]
+                      )
+                    )
                   )
 
               ]

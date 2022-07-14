@@ -16,7 +16,7 @@ $stmt = mysqli_stmt_init($link);
 $users = get_all_users(); //array
 //print('post');
 //var_dump($_POST);
-if(isset($_POST["login"])) {
+if(isset($_POST["login"]) && isset($_POST["password"])) {
 
 
     clear();
@@ -25,7 +25,8 @@ if(isset($_POST["login"])) {
 
     foreach ($users as $user) {
         $current_user_email = array_values($user)[3];
-        if ($current_user_email != $login) {
+        $current_user_password = array_values($user)[12];
+        if ($current_user_email != $login && $current_user_password != $password) {
             continue;
         } else {
 // если email = login, находим пользователя по логину обновляем данные

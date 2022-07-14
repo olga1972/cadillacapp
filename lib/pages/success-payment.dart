@@ -53,6 +53,8 @@ import 'package:cadillac/pages/contacts.dart';
 
 //import 'package:form_builder_asset_picker/form_builder_asset_picker.dart';
 import 'package:form_builder_file_picker/form_builder_file_picker.dart';
+
+import 'data.dart';
 //import 'package:form_builder_file_picker/form_builder_asset_picker.dart';
 
 enum ImageSourceType { gallery, camera }
@@ -83,6 +85,7 @@ class _SuccessPaymentState extends State<SuccessPayment> {
   late String encode64;
 
   dynamic user;
+  dynamic findedUser;
 
   @override
   initState() {
@@ -94,8 +97,8 @@ class _SuccessPaymentState extends State<SuccessPayment> {
     encode64 = '';
     //uuid = userId;
 
-    var path = "assets/images/avatar.png";
-    print(path);
+    //var path = "assets/images/avatar.png";
+    //print(path);
     print(uuid);
 
     // setState(() {
@@ -133,14 +136,14 @@ class _SuccessPaymentState extends State<SuccessPayment> {
 
   late dynamic userId = uuid;
   late dynamic login = "test@mail.ru";
-  late dynamic username;
+  late dynamic username = 'username';
   late dynamic email = 'test@test';
   late dynamic phone = '5555';
   late dynamic password;
   late dynamic birthday;
   late dynamic type;
   late dynamic carname;
-  late String path = "assets/images/avatar.png";
+  late String path;
   late String car1;
   late String car2;
   late String car3;
@@ -191,6 +194,7 @@ class _SuccessPaymentState extends State<SuccessPayment> {
     userId = Provider.of<Data>(context).data['userId'].toString();
     platform = Provider.of<Data>(context).data['platform'].toString();
     print(platform);
+    print(userId);
 
     //Uint8List? bytes = Uint8List.fromList(path);
 
@@ -356,9 +360,9 @@ class _SuccessPaymentState extends State<SuccessPayment> {
                                               (val) {
                                                 if (val == null) {
                                                   return 'Поле password не может быть пустым';
-                                                } else if (val.length < 8) {
+                                                } else if (val.length < 10) {
                                                   // return 'Invalid email address';
-                                                  return 'Минимум 8 символов';
+                                                  return 'Минимум 10 символов';
                                                 } else {
                                                   return null;
                                                 }
@@ -955,13 +959,13 @@ class _SuccessPaymentState extends State<SuccessPayment> {
                                                                 platform == 'ios') {
                                                               print(platform);
                                                               final bytes = File(photo[0].path).readAsBytesSync();
-                                                              print(bytes);
-                                                              print(bytes.runtimeType);
+                                                              //print(bytes);
+                                                              //print(bytes.runtimeType);
                                                               setState(() {
                                                                 encode64 = base64.encode(bytes);
                                                               });
                                                               //var encode64 = base64.encode(bytes);
-                                                              print(encode64);
+                                                              //print(encode64);
                                                               print('cars.length');
                                                               print(cars.length);
                                                               if (cars.length ==  2) {
@@ -1083,7 +1087,7 @@ class _SuccessPaymentState extends State<SuccessPayment> {
                                                                   birthday,
                                                               login: login,
                                                               carname: carname,
-                                                              // password: password,
+                                                              password: password,
                                                               // path: imageName,
                                                               path: encode64,
                                                               car1: car1,
@@ -1093,7 +1097,7 @@ class _SuccessPaymentState extends State<SuccessPayment> {
                                                             //currentUser = editUser(user);
                                                             // editUser(
                                                             //     currentUser);
-
+                                                            findedUser = await getUserbyEmail(currentUser);
                                                             user =
                                                                 await editUser(
                                                                     currentUser);
@@ -1102,10 +1106,10 @@ class _SuccessPaymentState extends State<SuccessPayment> {
                                                                 'after editUser success');
                                                             print(
                                                                 'state: $uuid');
-                                                            print(user.path);
-                                                            print(user.car1);
-                                                            print(user.car2);
-                                                            print(user.car3);
+                                                            // print(user.path);
+                                                            // print(user.car1);
+                                                            // print(user.car2);
+                                                            // print(user.car3);
 
                                                             //var userId;
                                                             //print(editUser.userId)
@@ -1114,10 +1118,10 @@ class _SuccessPaymentState extends State<SuccessPayment> {
 
                                                             //print(
                                                             //"editUser: ${editUser.userId}");
-                                                            dynamic id = uuid;
-                                                            print(
-                                                                "currentId: $id");
-                                                            userId = uuid;
+                                                            // dynamic id = uuid;
+                                                            // print(
+                                                            //     "currentId: $id");
+                                                            //userId = uuid;
                                                             //userId = '871936c4-f009-11ec-a426-002590eb3418';
                                                             // await contactsBox.put(userUuId, currentUser);
 
@@ -1127,6 +1131,7 @@ class _SuccessPaymentState extends State<SuccessPayment> {
                                                                 .toString());
 
                                                             // debugPrint(box.get('phone2').toString());
+                                                            Provider.of<Data>(context, listen: false).updateAccount(2);
 
                                                             Navigator.pushReplacement(
                                                                 context,
@@ -1207,14 +1212,88 @@ class _SuccessPaymentState extends State<SuccessPayment> {
     return url;
   }
 
+  getUserbyEmail(User user) async {
+
+      print('func getUserbyEmail');
+      print(user.username);
+      //print('user.userId');
+      dynamic login = user.login;
+      dynamic password  = user.password;
+      // dynamic photo = user.photo;
+      dynamic username = user.username;
+      dynamic birthday = user.birthday;
+      dynamic carname = user.carname;
+      dynamic path = user.path;
+      dynamic car1, car2, car3;
+      if (user.car1 != 'null') car1 = user.car1;
+      if (user.car2 != 'null') car2 = user.car2;
+      if (user.car3 != 'null') car3 = user.car3;
+
+      String apiurl = baseUrl + "/test/get_user_by_email.php";
+      // String apiurl = "http://localhost/test/edit.php";
+      var response = await http.post(Uri.parse(apiurl), body: {
+        'login': login,
+        'username': username,
+        'birthday': birthday,
+        'carname': carname,
+        'path': path,
+        'car1': car1 != '' ? car1 : '',
+        'car2': car2 != '' ? car2 : '',
+        'car3': car3 != '' ? car3 : '',
+        'password': password
+      }, headers: {
+        'Accept': 'application/json, charset=utf-8',
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS"
+      });
+      if (response.statusCode == 200) {
+        print('success getUserbyEmail');
+
+        //print(json.decode(response.body));
+        //return response.body; //это правильно
+
+        final userJson = json.decode(response.body);
+        // //final userJson = response.body;
+        // print('userJson success');
+        // print(userJson);
+        var data = User.fromJson(userJson);
+
+        Provider.of<Data>(context, listen: false).updateUserId(data.userId);
+        print('data.userId');
+        // print(data.userId);
+        // setState(() {
+        //   uuid = data.userId;
+        // });
+        // if (mounted && userId != null) {
+        //   setState(() {
+        //     uuid = data.userId;
+        //   });
+        // }
+        //getCookie(data.userId);
+        return(data);
+        //return User.fromJson(userJson);
+//return response.body;
+        // return User.fromJson(jsonDecode(response.body));
+        // setState(() {
+        //   showprogress = false; //don't show progress indicator
+        //   error = true;
+        //   errormsg = jsondata["message"];
+        // });
+
+      } else {
+        throw Exception('Error: ${response.reasonPhrase}');
+      }
+
+  }
+
   // Future<String> editUser() async {
   editUser(User user) async {
     print('func editUser success');
     //print('user.userId');
     //print(userId);
-    print(user.path);
+    //print(user.car1);
     dynamic login = user.login;
-    // dynamic password  = user.password;
+    dynamic password  = user.password;
     // dynamic photo = user.photo;
     dynamic username = user.username;
     dynamic birthday = user.birthday;
@@ -1224,22 +1303,26 @@ class _SuccessPaymentState extends State<SuccessPayment> {
     if (user.car1 != 'null') car1 = user.car1;
     if (user.car2 != 'null') car2 = user.car2;
     if (user.car3 != 'null') car3 = user.car3;
-    print(car1);
-    print('uuid: $uuid'); //null
-    print(user.userId); //null
+    print('after if');
+    print(password.runtimeType);
+    print('username: ${username}');
+
+    // print('uuid: $uuid'); //null
+    print(userId = Provider.of<Data>(context, listen: false).data['userId'].toString()); //null
 
     String apiurl = baseUrl + "/test/edit.php";
     // String apiurl = "http://localhost/test/edit.php";
     var response = await http.post(Uri.parse(apiurl), body: {
-      'userId': uuid,
+      'userId': Provider.of<Data>(context, listen: false).data['userId'].toString(),
       'login': login,
       'username': username,
       'birthday': birthday,
       'carname': carname,
       'path': path,
-      'car1': car1,
-      'car2': car2,
-      'car3': car3,
+      'car1': car1 != '' ? car1 : '',
+      'car2': car2 != '' ? car2 : '',
+      'car3': car3 != '' ? car3 : '',
+      'password': password
     }, headers: {
       'Accept': 'application/json, charset=utf-8',
       "Access-Control-Allow-Origin": "*",
@@ -1259,9 +1342,9 @@ class _SuccessPaymentState extends State<SuccessPayment> {
 
       //getdata();
 
-      var cookie = response.headers['set-cookie'];
-      print('cookie: $cookie');
-      print(path);
+      // var cookie = response.headers['set-cookie'];
+      // print('cookie: $cookie');
+      // print(path);
       // var uuid = const Uuid();
       // id = uuid.v1();
       print(response.body);
@@ -1269,23 +1352,23 @@ class _SuccessPaymentState extends State<SuccessPayment> {
 
       final userJson = json.decode(response.body);
       //final userJson = response.body;
-      print('userJson success');
-      print(userJson);
+      //print('userJson success');
+
       var data = User.fromJson(userJson);
-      print('data.userId');
-      print(data.userId);
-      setState(() {
-        uuid = data.userId;
-      });
+      print(data.username);
+      // print('data.userId');
+      // print(data.userId);
+      // setState(() {
+      //   uuid = data.userId;
+      // });
       // if (mounted && userId != null) {
       //   setState(() {
       //     uuid = data.userId;
       //   });
       // }
       //getCookie(data.userId);
-      //return(data);
-      return User.fromJson(userJson);
-
+      return(data);
+//
       // return User.fromJson(jsonDecode(response.body));
       // setState(() {
       //   showprogress = false; //don't show progress indicator

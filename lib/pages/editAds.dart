@@ -1,4 +1,5 @@
 // import 'dart:html';
+import 'dart:typed_data';
 
 import 'package:cadillac/pages/addBanners.dart';
 import 'package:flutter/material.dart';
@@ -155,13 +156,20 @@ class _EditAdsState extends State<EditAds> {
                                                               shrinkWrap: true,
                                                               itemCount: snapshot.data?.banners.length,
                                                               itemBuilder: (BuildContext context, int index) {
-                                                                var fileExtension = snapshot.data?.banners[index].path.substring((snapshot.data?.banners[index].path.length)! - 3);
-                                                                if(fileExtension == 'jpg' || fileExtension == 'png' || fileExtension == 'svg') {
+                                                                late Uint8List bytes;
+
+                                                                var pathEncode = snapshot.data?.banners[index].path;
+                                                                var decode64 = base64.decode(pathEncode!);
+
+                                                                bytes = decode64;
+
+
+                                                                if (snapshot.data?.banners[index].path != null) {
                                                                   isLoadedImage = true;
+
                                                                 } else {
                                                                   isLoadedImage = false;
                                                                 }
-                                                                _image = File('${snapshot.data?.banners[index].path}');
 
                                                                 return Container (
                                                                     width: 284,
@@ -182,8 +190,12 @@ class _EditAdsState extends State<EditAds> {
                                                                         children: [
                                                                           SizedBox(
                                                                               width: 230,
-                                                                              child: (isLoadedImage &&_image.existsSync()) ? ClipRRect(borderRadius: const BorderRadius.all(Radius
-                                                                                  .circular(10.0)), child: Image.file(_image, fit: BoxFit.cover, width: 284, height: 92))
+                                                                              child: isLoadedImage ? ClipRRect(
+                                                                                  borderRadius: const BorderRadius.all(Radius
+                                                                                  .circular(10.0)),
+                                                                                  child: Image.memory(
+                                                                                      base64.decode(snapshot.data?.banners[index].path ?? ''),
+                                                                                      fit: BoxFit.cover, width: 284, height: 107))
                                                                                   :  const Text('no image',
                                                                                   textAlign: TextAlign.center,
                                                                                   style: TextStyle(

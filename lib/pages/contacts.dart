@@ -1,5 +1,7 @@
 // import 'dart:html';
 
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:flutter_svg/svg.dart';
@@ -370,26 +372,20 @@ class _ContactsState extends State<Contacts> {
                                         itemCount: countImages,
                                         // outer: true,
                                         itemBuilder: (BuildContext context, int index) {
-                                          var fileExtension = snapshot
-                                              .data?.partners[index]
-                                              .path.substring(
-                                              (snapshot.data
-                                                  ?.partners[index]
-                                                  .path.length)! - 3);
-                                          if (fileExtension ==
-                                              'jpg' ||
-                                              fileExtension ==
-                                                  'png' ||
-                                              fileExtension ==
-                                                  'svg') {
+                                          late Uint8List bytes;
+
+                                          var pathEncode = snapshot.data?.partners[index].path;
+                                          var decode64 = base64.decode(pathEncode!);
+
+                                          bytes = decode64;
+
+
+                                          if (snapshot.data?.partners[index].path != null) {
                                             isLoadedImage = true;
+
                                           } else {
                                             isLoadedImage = false;
                                           }
-                                          _image = File(
-                                              '${snapshot.data
-                                                  ?.partners[index]
-                                                  .path}');
                                           return Container (
                                               width: 284,
                                               height: 160,
@@ -399,7 +395,10 @@ class _ContactsState extends State<Contacts> {
                                                     .circular(20.0)),
                                               ),
                                               margin: const EdgeInsets.only(bottom: 10.0, top: 10, left: 10,right: 10),
-                                              child: (isLoadedImage &&_image.existsSync()) ? Image.file(_image, fit: BoxFit.cover, width: 284, height: 160) :
+                                              child: isLoadedImage ?
+                                              ClipRRect(
+                                                  borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                                                  child: Image.memory(base64.decode(snapshot.data?.partners[index].path ?? ''), fit: BoxFit.cover, width: 284, height: 107)) :
                                               const Text('no image',
                                                   textAlign: TextAlign.center,
                                                   style: TextStyle(

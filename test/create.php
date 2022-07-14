@@ -32,10 +32,12 @@ if(isset($_POST["phone"]) && isset($_POST["email"])) {
     foreach ($users as $user) {
 //        print('user='); //[0] id, [1] userId, [2] phone, [3] email
         $current_user_email = array_values($user)[3];
+        //$current_user_id = array_values($user)[1];
 
 //        var_dump($user);
 //        var_dump(array_values($user)[3]);
         if ($current_user_email !== $email) {
+            // if ($current_user_id !== $userId) {
 //            print("такого ящика нет");
 
             continue;

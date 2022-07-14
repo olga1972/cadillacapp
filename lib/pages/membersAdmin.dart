@@ -21,6 +21,7 @@ import 'dart:io';
 import '../NavDrawerAdmin.dart';
 import '../variables.dart';
 import 'accountAdmin.dart';
+import 'addUser.dart';
 import 'homeAdmin.dart';
 
 class MembersAdmin extends StatefulWidget {
@@ -117,8 +118,8 @@ class _MembersAdminState extends State<MembersAdmin> {
 
                                           var users = snapshot.data?.users;
                                           final List<User>? usersList = snapshot.data?.users;
-                                          print('members');
-                                          print(usersList);
+                                          // print('members');
+                                          // print(usersList);
                                           if (snapshot.connectionState != ConnectionState.done) {
                                             return const Center(child: CircularProgressIndicator());
                                           }
@@ -153,8 +154,8 @@ class _MembersAdminState extends State<MembersAdmin> {
                                                                 // padding: const EdgeInsets.only(top: 38, bottom: 10),
                                                                 itemCount: snapshot.data?.users.length,
                                                                 itemBuilder: (context, index) {
-                                                                print('path snapshot');
-                                                                print(snapshot.data?.users[index].path);
+                                                                // print('path snapshot');
+                                                                // print(snapshot.data?.users[index].path);
 
                                                                 List<Uint8List> images = [];
                                                                 late Uint8List bytes;
@@ -176,8 +177,8 @@ class _MembersAdminState extends State<MembersAdmin> {
                                                                 var car1Encode = snapshot.data?.users[index].car1;
                                                                 var car1Decode64 = base64.decode(car1Encode!);
                                                                 bytesCar1 = car1Decode64;
-                                                                print('bytesCar1');
-                                                                print(bytesCar1);
+                                                                // print('bytesCar1');
+                                                                // print(bytesCar1);
                                                                 // if (bytesCar1.isNotEmpty) {
                                                                 //   images.add(bytesCar1);
                                                                 // } else {
@@ -395,7 +396,29 @@ class _MembersAdminState extends State<MembersAdmin> {
                                         }
                                     ),
 
-                                  )
+                                  ),
+                                  Container(
+                                      width: 310,
+                                      height: 20,
+                                      margin: const EdgeInsets.only(left: 15, bottom: 20),
+                                      alignment: const Alignment(1, 1),
+                                      child: GestureDetector(
+                                        onLongPress: () {
+                                          Route route = MaterialPageRoute(
+                                              builder: (context) =>
+                                              const AddUser());
+                                          Navigator.push(context,route);
+                                        },
+                                        child: SvgPicture
+                                            .asset(
+                                          'assets/images/add.svg',
+                                          semanticsLabel: 'Icon add',
+                                          height: 20.0,
+
+                                        ),
+                                      )
+
+                                  ),
                                 ]
                             )
                         )
@@ -414,8 +437,8 @@ Future<UsersList> getUsersList() async {
   // const url = 'http://localhost/test/users_list.php';
   const url = baseUrl + '/test/users_list.php';
   final response = await http.get(Uri.parse(url));
-  print('response members getUserLists');
-  print(response.body);
+  //print('response members getUserLists');
+  //print(response.body);
   if(response.statusCode == 200) {
     return UsersList.fromJson(json.decode(response.body));
   } else {

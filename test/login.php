@@ -1,15 +1,16 @@
 <?php
-$db = "users"; //database name
-$dbuser = "root"; //database username
-$dbpassword = "root"; //database password
-$dbhost = "localhost"; //database host
+require_once 'connect.php';
+// $db = "users"; //database name
+// $dbuser = "root"; //database username
+// $dbpassword = "root"; //database password
+// $dbhost = "localhost"; //database host
 
 //  $return["error"] = false;
 //  $return["message"] = "";
 //  $return["success"] = false;
 
-$link = mysqli_connect($dbhost, $dbuser, $dbpassword, $db);
-mysqli_set_charset($link,"utf8");
+// $link = mysqli_connect($dbhost, $dbuser, $dbpassword, $db);
+// mysqli_set_charset($link,"utf8");
 
 if(isset($_POST["phone"]) && isset($_POST["email"])){
     $phone = mysqli_real_escape_string($link, $_POST["phone"]);

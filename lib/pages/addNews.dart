@@ -22,6 +22,7 @@ import 'dart:io';
 import '../NavDrawerAdmin.dart';
 import '../models/news.dart';
 import '../main.dart';
+import 'data.dart';
 import 'newsAdmin.dart';
 
 class AddNews extends StatefulWidget {

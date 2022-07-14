@@ -1,7 +1,7 @@
 <?php
 //функция очистки входных данных
 function clear(){
-	global $link;
+    global $link;
 	foreach ($_POST as $key => $value) {
 		$_POST[$key] = mysqli_real_escape_string($link, $value);
 	}
@@ -14,9 +14,9 @@ function add_user() {
     extract($_POST);
 //var_dump($_POST);
 
-    mysqli_stmt_prepare($stmt, "INSERT INTO users (userId, phone, email) VALUES(uuid(), ?, ?)");
-//    mysqli_stmt_prepare($stmt, "INSERT INTO users (userId, phone, email) VALUES(?, ?, ?)");
-    mysqli_stmt_bind_param($stmt, 'ss',  $phone, $email);
+    // mysqli_stmt_prepare($stmt, "INSERT INTO users (userId, phone, email) VALUES(uuid(), ?, ?)");
+    mysqli_stmt_prepare($stmt, "INSERT INTO users (userId, phone, email, password) VALUES(?, ?, ?, ?)");
+    mysqli_stmt_bind_param($stmt, 'ssss',  $userId, $phone, $email, $password);
     mysqli_stmt_execute($stmt);
     mysqli_stmt_get_result($stmt);
     //print(mysqli_stmt_errno($stmt));
@@ -50,7 +50,7 @@ function get_user_by_login() {
     // print($path);
 
     $stmt = mysqli_stmt_init($link);
-    mysqli_stmt_prepare($stmt,"UPDATE users SET username = ?, birthday = ?, login = ?, carname = ?, path = ?, car1 = ?, car2 = ?, car3 = ? WHERE email = ?");
+    mysqli_stmt_prepare($stmt,"UPDATE users SET username = ?, birthday = ?, login = ?, carname = ?, path = ?, car1 = ?, car2 = ?, car3 = ?  WHERE email = ?");
     mysqli_stmt_bind_param($stmt,'sssssssss', $username, $birthday, $login, $carname, $path, $car1, $car2, $car3, $login);
     mysqli_stmt_execute($stmt);
     mysqli_stmt_get_result($stmt);
@@ -61,8 +61,10 @@ function get_user_by_login() {
         // print(gettype($path));
         // $file = file_get_contents($path);
         // file_put_contents($file, $filename);
-
-    setcookie('uuid', $userId, time() + (3600 * 24 * 30), '/');
+    //if($userId) {
+        //setcookie('uuid', $userId, time() + (3600 * 24 * 30), '/');
+    //}
+    
 //    echo $_COOKIE["userId"];
 }
 
@@ -112,11 +114,12 @@ function get_user_by_email() {
 //Выбор всех полей по  email
 function get_user_all() {
 
-    extract($_POST);
+    extract($_POST); // only login
 
     global $link;
     global $stmt;
-    mysqli_stmt_prepare($stmt,"SELECT * FROM users WHERE email = ?");
+    //mysqli_stmt_prepare($stmt,"SELECT * FROM users WHERE email = ?");
+    mysqli_stmt_prepare($stmt,"SELECT * FROM users WHERE login = ?");
     mysqli_stmt_bind_param($stmt,'s', $login);
     mysqli_stmt_execute($stmt);
     $mysqli_result = mysqli_stmt_get_result($stmt);
@@ -141,7 +144,8 @@ function get_user_all() {
 //        unset($userInfoArray[0]['id']);
 //        echo(json_encode($userInfoArray[0]));
         $userInfoArray[0]["id"] = strval($userInfoArray[0]["id"]);
-        // var_dump($userInfoArray[0]);
+        
+        //var_dump($userInfoArray[0]);
         return $userInfoArray[0];
 //        print('новый пользователь');
 //        print($new_user);
@@ -319,7 +323,7 @@ function get_all_users(){
 function get_all_users_json(){
 
 	global $link;
-	$query = "SELECT * FROM users";
+	$query = "SELECT * FROM users  WHERE username != 'username'";
 	$result = mysqli_query($link, $query);
     //$users = mysqli_fetch_all($result);
     $users = array();
@@ -408,8 +412,8 @@ function add_news() {
     extract($_POST);
 //var_dump($_POST);
 
-    mysqli_stmt_prepare($stmt, "INSERT INTO news (newsId, newsName, newsDate, newsLocation, newsDescr) VALUES(uuid(), ?, ?, ?, ?)");
-    mysqli_stmt_bind_param($stmt, 'ssss',  $newsName, $newsDate, $newsLocation, $newsDescr);
+    mysqli_stmt_prepare($stmt, "INSERT INTO news (newsId, newsName, newsDate, newsLocation, newsDescr, path) VALUES(uuid(), ?, ?, ?, ?, ?)");
+    mysqli_stmt_bind_param($stmt, 'sssss',  $newsName, $newsDate, $newsLocation, $newsDescr, $path);
     mysqli_stmt_execute($stmt);
     mysqli_stmt_get_result($stmt);
     

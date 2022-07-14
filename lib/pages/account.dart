@@ -1,4 +1,5 @@
 //import 'dart:html';
+
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
@@ -21,7 +22,7 @@ import '../../models/users.dart';
 
 import 'package:cadillac/variables.dart';
 import 'dart:io';
-
+import 'package:intl/intl.dart';
 
 import 'package:cadillac/pages/home.dart';
 
@@ -37,6 +38,7 @@ import 'package:cadillac/widgets/titlePage.dart';
 import 'package:card_swiper/card_swiper.dart';
 
 import '../main.dart';
+import 'data.dart';
 import 'gift.dart';
 import 'editAccount.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -101,7 +103,7 @@ class Account extends StatefulWidget {
     initState()  {
     print('init state account');
     super.initState();
-    userId = '';
+    //userId = '';
   }
 
     // getdata() async {
@@ -199,11 +201,15 @@ class Account extends StatefulWidget {
     //userId = '871936c4-f009-11ec-a426-002590eb3418';
     // userId = Provider.of<Map>(context)['userId'].toString();
     // platform = Provider.of<Map>(context)['platform'].toString();
-    userId = Provider.of<Data>(context).data['userId'].toString();
+    userId = Provider.of<Data>(context, listen: false).data['userId'].toString();
+    print(userId);
     platform = Provider.of<Data>(context).data['platform'].toString();
-    print(platform);
+    // print(platform);
+    // print('userId from provider');
+    // print(userId);
 
     user = getUser(userId);
+
     //print('userId: ${currentId}');
 
     // var str = "/data/user/0/com.cadillac.cadillac/cache/image_picker3644508664154176839.jpg";
@@ -294,10 +300,10 @@ class Account extends StatefulWidget {
           body: FutureBuilder<User>(
               future: user,
               builder: (context, snapshot) {
-                print('snapshot.data?.path');
-                print(snapshot.data?.car1);
-                print(snapshot.data?.car2);
-                print(snapshot.data?.car3);
+                // print('snapshot.data?.path');
+                // print(snapshot.data?.car1);
+                // print(snapshot.data?.car2);
+                // print(snapshot.data?.car3);
 
                 //getApplicationDirectoryPath();
                 // var str = "/data/user/0/com.cadillac.cadillac/cache/image_picker3644508664154176839.jpg";
@@ -342,8 +348,8 @@ class Account extends StatefulWidget {
                     late Uint8List bytesCar3;
                     var pathEncode = snapshot.data?.path;
                     var decode64 = base64.decode(pathEncode!);
-                    print('decode64');
-                    print(decode64);
+                    // print('decode64');
+                    // print(decode64);
                     //print(encode64);
                     //(encode64.runtimeType); //Uint8List
                     bytes = decode64;
@@ -364,8 +370,8 @@ class Account extends StatefulWidget {
                       var car1Encode = snapshot.data?.car1;
                       var car1Decode64 = base64.decode(car1Encode!);
                       bytesCar1 = car1Decode64;
-                      print('bytesCar1');
-                      print(bytesCar1);
+                      // print('bytesCar1');
+                      // print(bytesCar1);
                       if (bytesCar1.isNotEmpty) {
                         images.add(bytesCar1);
                       } else {
@@ -377,8 +383,8 @@ class Account extends StatefulWidget {
                       var car2Encode = snapshot.data?.car2;
                       var car2Decode64 = base64.decode(car2Encode!);
                       bytesCar2 = car2Decode64;
-                      print('bytesCar2');
-                      print(bytesCar2);
+                      // print('bytesCar2');
+                      // print(bytesCar2);
                       if (bytesCar2.isNotEmpty) {
                         images.add(bytesCar2);
                       } else {
@@ -391,8 +397,8 @@ class Account extends StatefulWidget {
                       var car3Encode = snapshot.data?.car3;
                       var car3Decode64 = base64.decode(car3Encode!);
                       bytesCar3 = car3Decode64;
-                      print('bytesCar3');
-                      print(bytesCar3);
+                      // print('bytesCar3');
+                      // print(bytesCar3);
                       if (bytesCar3.isNotEmpty) {
                         images.add(bytesCar3);
                       } else {
@@ -541,14 +547,21 @@ class Account extends StatefulWidget {
 
                                                                         ),
                                                                         onPressed: () {
-                                                                          Route route = MaterialPageRoute(
-                                                                              builder: (
-                                                                                  context) => const Gift());
-                                                                          Navigator
-                                                                              .push(
-                                                                              context,
-                                                                              route);
-                                                                        },
+
+                                                                          if(getDate(snapshot.data?.birthday)) {
+                                                                            Route route = MaterialPageRoute(
+                                                                                builder: (
+                                                                                    context) => const Gift());
+                                                                            Navigator
+                                                                                .push(
+                                                                                context,
+                                                                                route);
+
+                                                                          } else {
+                                                                            alertDialog(context);
+                                                                          }
+                                                                      }
+
                                                                       )
                                                                   ),
 
@@ -804,15 +817,19 @@ class Account extends StatefulWidget {
                                                           margin: const EdgeInsets
                                                               .only(left: 10,
                                                               right: 10),
-                                                          child: Image.memory(
-                                                            images[index],
-                                                            width: 284,
-                                                            height: 160,
-                                                            // ${snapshot.data?.car}[index],
-                                                            // centerSlice: Rect.fromPoints(const Offset(50.0, 0.0), const Offset(0, 0)),
-                                                            fit: BoxFit.cover,
-                                                            alignment: Alignment
-                                                                .centerLeft,
+                                                          child: ClipRRect(
+                                                            borderRadius: BorderRadius.all(Radius
+                                                                .circular(10.0)),
+                                                            child: Image.memory(
+                                                              images[index],
+                                                              width: 284,
+                                                              height: 160,
+                                                              // ${snapshot.data?.car}[index],
+                                                              // centerSlice: Rect.fromPoints(const Offset(50.0, 0.0), const Offset(0, 0)),
+                                                              fit: BoxFit.cover,
+                                                              alignment: Alignment
+                                                                  .centerLeft,
+                                                            )
                                                           )
                                                       );
                                                     },
@@ -882,6 +899,8 @@ Future<User> getUser(userId) async {
   print('userId: $userId');
 
 
+
+
   //String apiurl = "http://localhost/test/get_user.php";
   String apiurl = baseUrl + "/test/get_user.php"; // get jsonplaceholder
   // final response = await http.post(Uri.parse(apiurl), body:{'userId': userId});
@@ -903,9 +922,9 @@ Future<User> getUser(userId) async {
     // print(response);
     final userJson = json.decode(response.body);
     print(User.fromJson(userJson).username);
-    print(User.fromJson(userJson).path.runtimeType);
-    print('userJson["path"]');
-    print(userJson["path"]);
+    // print(User.fromJson(userJson).path.runtimeType);
+    // print('userJson["path"]');
+    // print(userJson["path"]);
 
 
     // print(base64.decode(userJson["path"]));
@@ -936,4 +955,66 @@ Future<User> getUser(userId) async {
   } else {
     throw Exception('Error fetching users');
   }
+}
+
+getDate(date) {
+  print('getDate');
+  DateTime now = DateTime.now();
+  var formatter = DateFormat('dd.MM');
+  String formattedDate = formatter.format(now);
+  print(formattedDate); // 26.01.2016
+print(date);
+  String currentDate = date.substring(0, date.length - 5);
+  print(currentDate);
+  if(formattedDate == currentDate) {
+    return true;
+  } else {
+    return false;
+  }
+
+}
+
+Future alertDialog(BuildContext context) async {
+  return showDialog(
+    context: context,
+    barrierDismissible: false, // user must tap button for close dialog!
+    builder: (BuildContext context) {
+      return AlertDialog(
+        // title: Text('Подтвердите ваш заказ'),
+        content: Text('Подарок вы получите в свой день рождения!'.toUpperCase(),
+          textAlign: TextAlign.center,
+          style: styleTextAlertDialog,
+        ),
+        actions: <Widget>[
+          Container (
+              padding: const EdgeInsets.only(left: 20, right: 20, bottom: 20),
+              child: Row (
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    MaterialButton(
+                      padding: const EdgeInsets.all(14),
+                      color: const Color(0xFFE4E6FF),
+                      elevation: 0,
+                      shape: const RoundedRectangleBorder(
+                        side: BorderSide.none,
+                        borderRadius: BorderRadius.all(Radius.circular(10),
+                        ),),
+                      child: Text(
+                        'Закрыть'.toUpperCase(),
+                        textAlign: TextAlign.left,
+                        style: styleTextAlertDialog,
+                      ),
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                      },
+                    )
+                  ]
+              )
+          )
+
+
+        ],
+      );
+    },
+  );
 }

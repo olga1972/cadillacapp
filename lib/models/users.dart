@@ -40,6 +40,7 @@ class User {
   late final String car1;
   late final String car2;
   late final String car3;
+  late final String password;
 
   User({
     required this.id,
@@ -54,6 +55,7 @@ class User {
     required this.car1,
     required this.car2,
     required this.car3,
+    required this.password,
     //this.photo,
   });
 
@@ -70,7 +72,8 @@ class User {
       path: json['path'] as String,
       car1: json['car1'] as String,
       car2: json['car2'] as String,
-      car3: json['car3'] as String
+      car3: json['car3'] as String,
+      password: json['password'] as String
     );
   }
 
@@ -97,14 +100,13 @@ class User {
     data['email'] = email;
     data['username'] = username;
     data['birthday'] = birthday;
-
     data['login'] = login;
-    // data['password'] = this.password;
     data['carname'] = carname;
     data['path'] = path;
     data['car1'] = car1;
     data['car2'] = car2;
     data['car3'] = car3;
+    data['password'] = password;
     return data;
   }
 }

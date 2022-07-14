@@ -13,7 +13,7 @@ import '../../models/users.dart';
 
 import 'package:cadillac/variables.dart';
 import 'dart:io';
-
+import 'package:intl/intl.dart';
 
 import 'package:cadillac/pages/homeAdmin.dart';
 import 'package:cadillac/pages/membersAdmin.dart';
@@ -27,6 +27,7 @@ import 'package:card_swiper/card_swiper.dart';
 
 import '../NavDrawerAdmin.dart';
 import '../main.dart';
+import 'data.dart';
 import 'editAccountAdmin.dart';
 import 'gift.dart';
 
@@ -178,8 +179,8 @@ class AccountAdmin extends StatefulWidget {
                 late Uint8List bytesCar3;
                 var pathEncode = snapshot.data?.path;
                 var decode64 = base64.decode(pathEncode!);
-                print('decode64');
-                print(decode64);
+                // print('decode64');
+                // print(decode64);
                 //print(encode64);
                 //(encode64.runtimeType); //Uint8List
                 bytes = decode64;
@@ -200,8 +201,8 @@ class AccountAdmin extends StatefulWidget {
                   var car1Encode = snapshot.data?.car1;
                   var car1Decode64 = base64.decode(car1Encode!);
                   bytesCar1 = car1Decode64;
-                  print('bytesCar1');
-                  print(bytesCar1);
+                  // print('bytesCar1');
+                  // print(bytesCar1);
                   if (bytesCar1.isNotEmpty) {
                     images.add(bytesCar1);
                   } else {
@@ -213,8 +214,8 @@ class AccountAdmin extends StatefulWidget {
                   var car2Encode = snapshot.data?.car2;
                   var car2Decode64 = base64.decode(car2Encode!);
                   bytesCar2 = car2Decode64;
-                  print('bytesCar2');
-                  print(bytesCar2);
+                  // print('bytesCar2');
+                  // print(bytesCar2);
                   if (bytesCar2.isNotEmpty) {
                     images.add(bytesCar2);
                   } else {
@@ -227,8 +228,8 @@ class AccountAdmin extends StatefulWidget {
                   var car3Encode = snapshot.data?.car3;
                   var car3Decode64 = base64.decode(car3Encode!);
                   bytesCar3 = car3Decode64;
-                  print('bytesCar3');
-                  print(bytesCar3);
+                  // print('bytesCar3');
+                  // print(bytesCar3);
                   if (bytesCar3.isNotEmpty) {
                     images.add(bytesCar3);
                   } else {
@@ -421,15 +422,21 @@ class AccountAdmin extends StatefulWidget {
                                                                         height: 22.0,
 
                                                                       ),
-                                                                      onPressed: () {
-                                                                        Route route = MaterialPageRoute(
-                                                                            builder: (
-                                                                                context) => const Gift());
-                                                                        Navigator
-                                                                            .push(
-                                                                            context,
-                                                                            route);
-                                                                      },
+                                                                        onPressed: () {
+
+                                                                          if(getDate(snapshot.data?.birthday)) {
+                                                                            Route route = MaterialPageRoute(
+                                                                                builder: (
+                                                                                    context) => const Gift());
+                                                                            Navigator
+                                                                                .push(
+                                                                                context,
+                                                                                route);
+
+                                                                          } else {
+                                                                            alertDialog(context);
+                                                                          }
+                                                                        }
                                                                     )
                                                                 ),
 
@@ -733,37 +740,13 @@ class AccountAdmin extends StatefulWidget {
 
 }
 
-Future<bool> saveUser(User user) async {
-  final SharedPreferences prefs = await SharedPreferences.getInstance();
-
-  prefs.setString("userId", user.userId);
-  // prefs.setString("name", user.name);
-  // prefs.setString("email", user.email);
-  // prefs.setString("phone", user.phone);
-  // prefs.setString("type", user.type);
-  // prefs.setString("token", user.token);
-  // prefs.setString("renewalToken", user.renewalToken);
-  //
-  // print("object prefere");
-  // print(user.renewalToken);
-
-  return true;
-  // return prefs.commit();
-
-}
-// Future<User> getUser() async {
-//   final SharedPreferences prefs = await SharedPreferences.getInstance();
-//   dynamic userId = prefs.getString("userId");
-//   return userId;
-//
-// }
 
 Future<User> getUser(userId) async {
   // final SharedPreferences prefs = await SharedPreferences.getInstance();
   // dynamic userId = prefs.getString("userId");
 
-  //print('getUser');
-  //print('userId: $userId');
+  print('getUser admin');
+  print('userId: $userId');
 
 
   //String apiurl = "http://localhost/test/get_user.php";
@@ -787,9 +770,9 @@ Future<User> getUser(userId) async {
     // print(response);
     final userJson = json.decode(response.body);
     print(User.fromJson(userJson).username);
-    print(User.fromJson(userJson).path.runtimeType);
-    print('userJson["path"]');
-    print(userJson["path"]);
+    // print(User.fromJson(userJson).path.runtimeType);
+    // print('userJson["path"]');
+    // print(userJson["path"]);
 
 
     // print(base64.decode(userJson["path"]));
@@ -900,6 +883,67 @@ Future confirmDialog(BuildContext context) async {
                         ),),
                       child: Text(
                         'Нет'.toUpperCase(),
+                        textAlign: TextAlign.left,
+                        style: styleTextAlertDialog,
+                      ),
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                      },
+                    )
+                  ]
+              )
+          )
+
+
+        ],
+      );
+    },
+  );
+}
+getDate(date) {
+  print('getDate');
+  DateTime now = DateTime.now();
+  var formatter = DateFormat('dd.MM');
+  String formattedDate = formatter.format(now);
+  print(formattedDate); // 26.01.2016
+  print(date);
+  String currentDate = date.substring(0, date.length - 5);
+  print(currentDate);
+  if(formattedDate == currentDate) {
+    return true;
+  } else {
+    return false;
+  }
+
+}
+
+Future alertDialog(BuildContext context) async {
+  return showDialog(
+    context: context,
+    barrierDismissible: false, // user must tap button for close dialog!
+    builder: (BuildContext context) {
+      return AlertDialog(
+        // title: Text('Подтвердите ваш заказ'),
+        content: Text('Подарок вы получите в свой день рождения!'.toUpperCase(),
+          textAlign: TextAlign.center,
+          style: styleTextAlertDialog,
+        ),
+        actions: <Widget>[
+          Container (
+              padding: const EdgeInsets.only(left: 20, right: 20, bottom: 20),
+              child: Row (
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    MaterialButton(
+                      padding: const EdgeInsets.all(14),
+                      color: const Color(0xFFE4E6FF),
+                      elevation: 0,
+                      shape: const RoundedRectangleBorder(
+                        side: BorderSide.none,
+                        borderRadius: BorderRadius.all(Radius.circular(10),
+                        ),),
+                      child: Text(
+                        'Закрыть'.toUpperCase(),
                         textAlign: TextAlign.left,
                         style: styleTextAlertDialog,
                       ),

@@ -52,6 +52,8 @@ import 'package:cadillac/pages/contacts.dart';
 
 import 'package:form_builder_file_picker/form_builder_file_picker.dart';
 
+import 'data.dart';
+
 
 
 enum ImageSourceType { gallery, camera }
@@ -107,7 +109,7 @@ class _RegistrationAdminState extends State<RegistrationAdmin> {
 
   final _formKey = GlobalKey<FormBuilderState>();
 
-  dynamic userId = uuid;
+  dynamic userId = '1aa71d78-f91c-11ec-a426-002590eb3418';
   late dynamic login = "test@mail.ru";
   late dynamic username;
   late dynamic email = 'test@test';
@@ -160,7 +162,7 @@ class _RegistrationAdminState extends State<RegistrationAdmin> {
   Widget build(BuildContext context) {
     dynamic user;
 
-    userId = Provider.of<Data>(context).data['userId'].toString();
+    //userId = Provider.of<Data>(context).data['userId'].toString();
     platform = Provider.of<Data>(context).data['platform'].toString();
     print(platform);
 
@@ -367,9 +369,9 @@ class _RegistrationAdminState extends State<RegistrationAdmin> {
                                                               return 'Поле password не может быть пустым';
                                                             } else
                                                             if (val.length <
-                                                                8) {
+                                                                10) {
                                                               // return 'Invalid email address';
-                                                              return 'Минимум 8 символов';
+                                                              return 'Минимум 10 символов';
                                                             } else {
                                                               return null;
                                                             }
@@ -943,19 +945,21 @@ class _RegistrationAdminState extends State<RegistrationAdmin> {
                                                               debugPrint(
                                                                   'Valid success payment admin');
 
+                                                              Provider.of<Data>(context, listen: false).updateAccount(2);
+
 
                                                               print(photo);
                                                               if (platform == 'android' ||
                                                                   platform == 'ios') {
                                                                 print(platform);
                                                                 final bytes = File(photo[0].path).readAsBytesSync();
-                                                                print(bytes);
-                                                                print(bytes.runtimeType);
+                                                                // print(bytes);
+                                                                // print(bytes.runtimeType);
                                                                 setState(() {
                                                                   encode64 = base64.encode(bytes);
                                                                 });
                                                                 //var encode64 = base64.encode(bytes);
-                                                                print(encode64);
+                                                                // print(encode64);
                                                                 print('cars.length');
                                                                 print(cars.length);
                                                                 if (cars.length ==  2) {
@@ -1073,7 +1077,7 @@ class _RegistrationAdminState extends State<RegistrationAdmin> {
                                                                 birthday: birthday,
                                                                 login: login,
                                                                 carname: carname,
-                                                                // password: password,
+                                                                password: password,
                                                                 // path: imageName,
                                                                 path: encode64,
                                                                 car1: car1,
@@ -1117,6 +1121,7 @@ class _RegistrationAdminState extends State<RegistrationAdmin> {
                                                                       .toString());
 
                                                               // debugPrint(box.get('phone2').toString());
+                                                              Provider.of<Data>(context, listen: false).updateAccount(1);
 
                                                               Navigator
                                                                   .pushReplacement(
@@ -1269,7 +1274,7 @@ class _RegistrationAdminState extends State<RegistrationAdmin> {
     String apiurl = baseUrl + "/test/edit.php";
     // String apiurl = "http://localhost/test/edit.php";
     var response = await http.post(Uri.parse(apiurl),
-        body:{'userId': uuid,'login': login, 'username': username, 'birthday': birthday, 'carname': carname, 'path': path, 'car1': car1,'car2': car2,'car3': car3,},
+        body:{'userId': userId,'login': login, 'username': username, 'birthday': birthday, 'carname': carname, 'path': path, 'car1': car1,'car2': car2,'car3': car3,},
         headers: {'Accept':'application/json, charset=utf-8',
           "Access-Control-Allow-Origin": "*",
       "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS"});

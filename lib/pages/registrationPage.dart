@@ -12,6 +12,7 @@ import 'package:cadillac/pages/success-payment.dart';
 import 'package:flutter/material.dart';
 //import 'package:flutter_localizations/flutter_localizations.dart';
 
+import 'package:cadillac/pages/data.dart';
 
 
 // import 'package:dio/dio.dart';
@@ -51,12 +52,22 @@ import 'package:cadillac/pages/account.dart';
 
 
 import 'package:cadillac/models/users.dart';
+import 'package:provider/provider.dart';
+import 'package:provider/provider.dart';
+import 'package:provider/provider.dart';
+import 'package:provider/provider.dart';
+import 'package:provider/provider.dart';
 
 
+import '../main.dart';
+import 'accountAdmin.dart';
 import 'contacts.dart';
+import 'data.dart';
 import 'home.dart';
 
 var uuid = '';
+late bool isAuth;
+
 
 class RegistrationPage extends StatefulWidget {
   const RegistrationPage({Key? key, }) : super(key: key);
@@ -72,11 +83,11 @@ class _RegistrationPageState extends State<RegistrationPage> {
   void initState() {
     super.initState();
 
+
     setState(() {
       uuid = '';
+      isAuth = false;
     });
-
-
   }
 
 
@@ -85,12 +96,19 @@ class _RegistrationPageState extends State<RegistrationPage> {
 
   late dynamic userId;
   late dynamic login;
-  late dynamic name = 'ewrew';
-  late dynamic email =' dgferger';
+  late dynamic username = 'ewrew';
+  late dynamic email = ' dgferger';
   late dynamic phone = 'erterert';
-  final dynamic password ='123';
+  final dynamic password = '123';
   final dynamic birthday = '111';
   late dynamic carname = 'carname';
+  late dynamic path = 'path';
+  late dynamic car1 = 'car1';
+  late dynamic car2 = 'car2';
+  late dynamic car3 = 'car3';
+
+  late dynamic userIdFromProvider;
+
   //late String path = "assets/images/avatar.png";
   // late dynamic type;
   // final dynamic token = '1111';
@@ -102,6 +120,8 @@ class _RegistrationPageState extends State<RegistrationPage> {
     "assets/images/cadillac-orange.png",
   ];*/
 
+  var cookie;
+  var counter;
 
   // dynamic id;
 
@@ -116,12 +136,17 @@ class _RegistrationPageState extends State<RegistrationPage> {
   dynamic newUser;
   dynamic user;
 
+
   //final directory = getApplicationDocumentsDirectory();
 
 
   //User newUser = User(); нужен только импорт модели юзер
   //User newUser = User();
-
+  // _checkIsAuth(BuildContext context) {
+  //   print('_checkIsAuth');
+  //   print(Provider.of<Data>(context).data['userId'].toString());
+  //   //Provider.of<Data>(context, listen: false ).checkIsAuth();
+  // }
   // void dispose() {
   //   // _nameController.dispose();
   //   // _phoneController.dispose();
@@ -134,362 +159,468 @@ class _RegistrationPageState extends State<RegistrationPage> {
   //   // _passFocus.dispose();
   //
   // }
+  // updateAccount(value) {
+  //   print('update account');
+  //   // data["userId"] = value;
+  //   // //data["isAuth"] = true;
+  //   // notifyListeners();
+  // }
 
   @override
   Widget build(BuildContext context) {
+    print('registr page');
+    print(isAuth);
+    //userId = Provider.of<Data>(context, listen: false).data['userId'].toString();
+    // platform = Provider.of<Data>(context).data['platform'].toString();
+    // print(platform);
+    // print('userId from provider');
+    // print(userId);
+    counter = Provider
+        .of<Data>(context)
+        .data['counter'].toString();
+    print('counter');
+    print(counter);
+    if (counter == 1) {
+      Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+              builder:
+                  (context) =>
+                  SuccessPayment()));
+    } else if (counter == 1) {
+      Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+              builder:
+                  (context) =>
+                  Account()));
+    }
+
+
+    userIdFromProvider = Provider
+        .of<Data>(context, listen: false)
+        .data['userId'].toString();
+    print(Provider
+        .of<Data>(context, listen: false)
+        .data['userId'].toString());
+    Future.delayed(Duration.zero, () {
+      //user = getUser('e02b9830-01c2-11ed-8ee7-a37307107e52');
+      // try{
+      //   //user = getUser(Provider.of<Data>(context, listen: false).data['userId'].toString());
+      //   user = getUser('e02b9830-01c2-11ed-8ee7-a37307107e52');
+      //   print('try');
+      //   Navigator.pushReplacement(
+      //       context,
+      //       MaterialPageRoute(
+      //           builder:
+      //               (context) =>
+      //               Account()));
+      //
+      // }
+      // catch(e){
+      //   print("Возникло исключение $e");
+      // }
+
+
+// print('after try');
+//         print(isAuth);
+      // print('snapshot');
+      // print(user.userId);
+
+      // Navigator.pushReplacement(
+      //     context,
+      //     MaterialPageRoute(
+      //         builder:
+      //             (context) =>
+      //             Account()));
+      //_checkIsAuth(context);
+      //print(Provider.of<Data>(context, listen: false).data['userId'].toString());
+
+      // cookie = Provider.of<Data>(context, listen: false).data['userId'].toString();
+      // counter = Provider.of<Data>(context, listen: false).data['counter'].toString();
+      // print(cookie);
+      // if(cookie != null && counter == 1) {
+      //   print('cookie yes');
+      //
+      //   Provider.of<Data>(context, listen: false).data['userId'].toString();
+      //   //print(Provider.of<Data>(context).data['userId'].toString());
+      //   print(Provider.of<Data>(context, listen: false).data['userId'].toString());
+      //   print(Provider.of<Data>(context, listen: false).data['counter'].toString());
+      //   print(Provider.of<Data>(context, listen: false).data['isAuth'].toString());
+      //
+      //   //updateAccount(Provider.of<Data>(context).data['userId'].toString());
+      //   Navigator.pushReplacement(
+      //       context,
+      //       MaterialPageRoute(
+      //           builder:
+      //               (context) =>
+      //               Account()));
+      // } else {
+      //   print('cookie no');
+      //   print(Provider.of<Data>(context, listen: false).data['userId'].toString());
+      //   print(Provider.of<Data>(context, listen: false).data['counter'].toString());
+      //   print(Provider.of<Data>(context, listen: false).data['isAuth'].toString());
+      // }
+    });
+
 
     //currentUser = addUser();
     //print(currentUser);
     //getCookie();
 
     return MaterialApp(
-      theme: ThemeData(scaffoldBackgroundColor: const Color(0xFF181c33)),
-      title: 'Клуб Любителей Кадиллак в России',
-      debugShowCheckedModeBanner: false,
-      // localizationsDelegates: const [
-      //   GlobalMaterialLocalizations.delegate,
-      //   GlobalWidgetsLocalizations.delegate,
-      //   GlobalCupertinoLocalizations.delegate,
-      // ],
-      supportedLocales: const [
-        Locale('en', ''),
-        // Английский, без кода страны Locale ( 'es' , '' ), // испанский, без кода страны ],
-      ],
+        theme: ThemeData(scaffoldBackgroundColor: const Color(0xFF181c33)),
+        title: 'Клуб Любителей Кадиллак в России',
+        debugShowCheckedModeBanner: false,
+        // localizationsDelegates: const [
+        //   GlobalMaterialLocalizations.delegate,
+        //   GlobalWidgetsLocalizations.delegate,
+        //   GlobalCupertinoLocalizations.delegate,
+        // ],
+        supportedLocales: const [
+          Locale('en', ''),
+          // Английский, без кода страны Locale ( 'es' , '' ), // испанский, без кода страны ],
+        ],
 
 
-      //initialRoute: '/home',
+        //initialRoute: '/home',
 
-      routes: {
-        '/home': (context) => const Home(),
-        '/homeAdmin': (context) => const HomeAdmin(),
-        '/account': (context) => Account(),
+        routes: {
+          '/home': (context) => const Home(),
+          '/homeAdmin': (context) => const HomeAdmin(),
+          '/account': (context) => Account(),
           // '/members': (context) => Members(),
           // '/news': (context) => const News(),
           '/shop': (context) => const Shop(),
           '/partners': (context) => const Partners(),
           '/contacts': (context) => const Contacts(),
           // '/success_payment': (context) => SuccessPayment(currentUser: currentUser),
-        '/success_payment': (context) => SuccessPayment()
-      },
-      home: Scaffold(
-        body: Center (
-          child: Container (
-              width: 284,
-              margin: const EdgeInsets.only(top: 70),
-              child: Column (
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Expanded (
-                        child: SingleChildScrollView (
+          '/success_payment': (context) => SuccessPayment()
+        },
+        home: Scaffold(
+          body: Center(
+            child: Container(
+                width: 284,
+                margin: const EdgeInsets.only(top: 70),
+                child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Expanded(
+                          child: SingleChildScrollView(
 
                               child: Column(
-                                children: [
-                                  Container (
-                                    margin: const EdgeInsets.only(bottom: 70, top: 70),
-                                    child: SvgPicture.asset(
-                                      'assets/images/LOGO.svg',
-                                      //fit: BoxFit.fill,
-                                      height: 103.0,
-                                      color: Colors.white,
+                                  children: [
+                                    Container(
+                                      margin: const EdgeInsets.only(bottom: 70,
+                                          top: 70),
+                                      child: SvgPicture.asset(
+                                        'assets/images/LOGO.svg',
+                                        //fit: BoxFit.fill,
+                                        height: 103.0,
+                                        color: Colors.white,
+                                      ),
+                                      // child: SvgPicture.network(
+                                      //   'assets/images/LOGO.svg',
+                                      //   height: 103.0,
+                                      //   color: Colors.white,
+                                      // ),
                                     ),
-                                    // child: SvgPicture.network(
-                                    //   'assets/images/LOGO.svg',
-                                    //   height: 103.0,
-                                    //   color: Colors.white,
-                                    // ),
-                                  ),
 
-                                  FormBuilder(
-                                      key: _formKey,
-                                      autovalidateMode: AutovalidateMode.always,
-                                      child: Column(
-                                          crossAxisAlignment: CrossAxisAlignment.start,
-                                          children: <Widget>[
-                                            Container(
-                                              margin: const EdgeInsets.only(bottom: 10),
-                                              child: Text('ваш email'.toUpperCase(),
-                                                textAlign: TextAlign.left,
-                                                style: styleTitleFormInput,
-                                              ),
-                                            ),
-
-                                            FormBuilderTextField(
-                                                name: 'email',
-                                                autofocus: true,
-                                                cursorWidth: 1.0,
-                                                cursorColor: Colors.white,
-                                                style: styleFormInput,
-                                                // decoration: ThemeHelper().textInputDecoration('', 'Введите ваш email', 'Введите ваш email'),
-                                                decoration: const InputDecoration(
-                                                  contentPadding: EdgeInsets.all(16),
-                                                  border: OutlineInputBorder(
-                                                      borderSide: BorderSide.none,
-                                                      borderRadius: BorderRadius.all(Radius.circular(10))
-                                                  ),
-
-                                                  fillColor: Color(0XFF515569),
-                                                  filled: true,
-                                                  hintText: "Введите ваш email",
-                                                  hintStyle: TextStyle(
-                                                    color: Colors.white60,
-                                                  ),
+                                    FormBuilder(
+                                        key: _formKey,
+                                        autovalidateMode: AutovalidateMode
+                                            .always,
+                                        child: Column(
+                                            crossAxisAlignment: CrossAxisAlignment
+                                                .start,
+                                            children: <Widget>[
+                                              Container(
+                                                margin: const EdgeInsets.only(
+                                                    bottom: 10),
+                                                child: Text(
+                                                  'ваш email'.toUpperCase(),
+                                                  textAlign: TextAlign.left,
+                                                  style: styleTitleFormInput,
                                                 ),
-                                                // onChanged: _onChanged,
-
-                                                valueTransformer: (text) => num.tryParse(text!),
-                                                autovalidateMode: AutovalidateMode.always,
-                                                // validator: _validateEmail,
-                                                controller: _emailController,
-                                                onSaved: (value) => email = value!,
-                                                validator: FormBuilderValidators.compose([
-                                                  // FormBuilderValidators.required(context, errorText: 'Обязательное поле'),
-                                                      (val) {
-                                                    if (val == '') {
-                                                      return 'Поле email не может быть пустым';
-                                                    } else if (!_emailController.text.contains('@')) {
-                                                      // return 'Invalid email address';
-                                                      return 'Неверный email адрес';
-                                                    } else {
-                                                      return null;
-                                                    }
-                                                  }
-
-                                                  // FormBuilderValidators.max(context, 20),
-                                                  // FormBuilderValidators.email(context),
-                                                ]),
-                                                keyboardType: TextInputType.emailAddress
-                                            ),
-
-                                            Container(
-                                              margin: const EdgeInsets.only(top: 10, bottom: 10),
-                                              child: Text('ваш номер телефона'.toUpperCase(),
-                                                textAlign: TextAlign.left,
-                                                style: styleTitleFormInput,
                                               ),
-                                            ),
 
-                                            FormBuilderTextField(
-                                                name: 'phone',
-                                                cursorWidth: 1.0,
-                                                cursorColor: Colors.white,
-                                                style: styleFormInput,
-                                                inputFormatters: [maskFormatterPhone],
-                                                // decoration: ThemeHelper().textInputDecoration('+7 ___-___-__-__', '', ''),
-                                                autovalidateMode: AutovalidateMode.always,
-                                                decoration: const InputDecoration(
-                                                  contentPadding: EdgeInsets.all(16),
-                                                  border: OutlineInputBorder(
-                                                      borderSide: BorderSide.none,
-                                                      borderRadius: BorderRadius.all(Radius.circular(10))
+                                              FormBuilderTextField(
+                                                  name: 'email',
+                                                  autofocus: true,
+                                                  cursorWidth: 1.0,
+                                                  cursorColor: Colors.white,
+                                                  style: styleFormInput,
+                                                  // decoration: ThemeHelper().textInputDecoration('', 'Введите ваш email', 'Введите ваш email'),
+                                                  decoration: const InputDecoration(
+                                                    contentPadding: EdgeInsets
+                                                        .all(16),
+                                                    border: OutlineInputBorder(
+                                                        borderSide: BorderSide
+                                                            .none,
+                                                        borderRadius: BorderRadius
+                                                            .all(
+                                                            Radius.circular(10))
+                                                    ),
+
+                                                    fillColor: Color(
+                                                        0XFF515569),
+                                                    filled: true,
+                                                    hintText: "Введите ваш email",
+                                                    hintStyle: TextStyle(
+                                                      color: Colors.white60,
+                                                    ),
                                                   ),
+                                                  // onChanged: _onChanged,
 
-                                                  fillColor: Color(0XFF515569),
-                                                  filled: true,
-                                                  hintText: "+7 ___-___-__-__",
-                                                  hintStyle: TextStyle(
-                                                    color: Colors.white60,
-                                                  ),
-                                                ),
-                                                // onChanged: _onChanged,
-
-                                                // valueTransformer: (text) => num.tryParse(text),
-                                                // validator: (value) => _validatePhoneNumber(value!)
-                                                //     ? null
-                                                //     : 'Phone number must be entered as (###)###-####',
-
-                                                validator: FormBuilderValidators.compose([
-                                                      (val) {
-                                                    if (val == null) {
-                                                      return 'Поле phone не может быть пустым';
-                                                      // } else if (!_emailController.text.contains('@')) {
-                                                      //   // return 'Invalid email address';
-                                                      //   return 'Неверный email адрес';
-                                                    } else {
-                                                      return null;
+                                                  valueTransformer: (text) =>
+                                                      num.tryParse(text!),
+                                                  autovalidateMode: AutovalidateMode
+                                                      .always,
+                                                  // validator: _validateEmail,
+                                                  controller: _emailController,
+                                                  onSaved: (value) =>
+                                                  email = value!,
+                                                  validator: FormBuilderValidators
+                                                      .compose([
+                                                    // FormBuilderValidators.required(context, errorText: 'Обязательное поле'),
+                                                        (val) {
+                                                      if (val == '') {
+                                                        return 'Поле email не может быть пустым';
+                                                      } else
+                                                      if (!_emailController.text
+                                                          .contains('@')) {
+                                                        // return 'Invalid email address';
+                                                        return 'Неверный email адрес';
+                                                      } else {
+                                                        return null;
+                                                      }
                                                     }
-                                                  }
-                                                  // FormBuilderValidators.required(context),
-                                                  // FormBuilderValidators.numeric(context),
-                                                  // FormBuilderValidators.max(context, 70),
-                                                ]),
-                                                onSaved: (value) => phone = value!,
-                                                keyboardType: TextInputType.phone
-                                            ),
-                                          ]
-                                      )
-                                  ),
-                                  Container(
-                                    width: 284,
-                                    margin: const EdgeInsets.only(top: 30, bottom: 45),
-                                    child: MaterialButton(
-                                      padding: const EdgeInsets.all(17),
-                                      color: const Color.fromARGB(255, 255, 255, 255),
-                                      // textColor: const Color(0xFF12141F),
-                                      child: Text.rich(
-                                        TextSpan (
-                                            text: 'войти/'.toUpperCase(),
-                                            style: const TextStyle(fontSize: 14,fontWeight: FontWeight.w500, color: Color(0xFF12141F), height: 1.14),
-                                            children: <InlineSpan>[
-                                              TextSpan(
-                                                text: 'стать членом \nавтоклуба cadillac'.toUpperCase(),
-                                                style: const TextStyle(fontSize: 14,fontWeight: FontWeight.normal, color: Color(0xFF12141F), height: 1.14),
-                                              )
+
+                                                    // FormBuilderValidators.max(context, 20),
+                                                    // FormBuilderValidators.email(context),
+                                                  ]),
+                                                  keyboardType: TextInputType
+                                                      .emailAddress
+                                              ),
+
+                                              Container(
+                                                margin: const EdgeInsets.only(
+                                                    top: 10, bottom: 10),
+                                                child: Text('ваш номер телефона'
+                                                    .toUpperCase(),
+                                                  textAlign: TextAlign.left,
+                                                  style: styleTitleFormInput,
+                                                ),
+                                              ),
+
+                                              FormBuilderTextField(
+                                                  name: 'phone',
+                                                  cursorWidth: 1.0,
+                                                  cursorColor: Colors.white,
+                                                  style: styleFormInput,
+                                                  inputFormatters: [
+                                                    maskFormatterPhone
+                                                  ],
+                                                  // decoration: ThemeHelper().textInputDecoration('+7 ___-___-__-__', '', ''),
+                                                  autovalidateMode: AutovalidateMode
+                                                      .always,
+                                                  decoration: const InputDecoration(
+                                                    contentPadding: EdgeInsets
+                                                        .all(16),
+                                                    border: OutlineInputBorder(
+                                                        borderSide: BorderSide
+                                                            .none,
+                                                        borderRadius: BorderRadius
+                                                            .all(
+                                                            Radius.circular(10))
+                                                    ),
+
+                                                    fillColor: Color(
+                                                        0XFF515569),
+                                                    filled: true,
+                                                    hintText: "+7 ___-___-__-__",
+                                                    hintStyle: TextStyle(
+                                                      color: Colors.white60,
+                                                    ),
+                                                  ),
+                                                  // onChanged: _onChanged,
+
+                                                  // valueTransformer: (text) => num.tryParse(text),
+                                                  // validator: (value) => _validatePhoneNumber(value!)
+                                                  //     ? null
+                                                  //     : 'Phone number must be entered as (###)###-####',
+
+                                                  validator: FormBuilderValidators
+                                                      .compose([
+                                                        (val) {
+                                                      if (val == null) {
+                                                        return 'Поле phone не может быть пустым';
+                                                        // } else if (!_emailController.text.contains('@')) {
+                                                        //   // return 'Invalid email address';
+                                                        //   return 'Неверный email адрес';
+                                                      } else {
+                                                        return null;
+                                                      }
+                                                    }
+                                                    // FormBuilderValidators.required(context),
+                                                    // FormBuilderValidators.numeric(context),
+                                                    // FormBuilderValidators.max(context, 70),
+                                                  ]),
+                                                  onSaved: (value) =>
+                                                  phone = value!,
+                                                  keyboardType: TextInputType
+                                                      .phone
+                                              ),
                                             ]
+                                        )
+                                    ),
+                                    Container(
+                                      width: 284,
+                                      margin: const EdgeInsets.only(top: 30,
+                                          bottom: 45),
+                                      child: MaterialButton(
+                                        padding: const EdgeInsets.all(17),
+                                        color: const Color.fromARGB(
+                                            255, 255, 255, 255),
+                                        // textColor: const Color(0xFF12141F),
+                                        child: Text.rich(
+                                          TextSpan(
+                                              text: 'войти/'.toUpperCase(),
+                                              style: const TextStyle(
+                                                  fontSize: 14,
+                                                  fontWeight: FontWeight.w500,
+                                                  color: Color(0xFF12141F),
+                                                  height: 1.14),
+                                              children: <InlineSpan>[
+                                                TextSpan(
+                                                  text: 'стать членом \nавтоклуба cadillac'
+                                                      .toUpperCase(),
+                                                  style: const TextStyle(
+                                                      fontSize: 14,
+                                                      fontWeight: FontWeight
+                                                          .normal,
+                                                      color: Color(0xFF12141F),
+                                                      height: 1.14),
+                                                )
+                                              ]
+                                          ),
                                         ),
-                                      ),
 
-                                      shape: const RoundedRectangleBorder(
-                                        side: BorderSide.none,
-                                        borderRadius: BorderRadius.all(Radius.circular(10),
+                                        shape: const RoundedRectangleBorder(
+                                          side: BorderSide.none,
+                                          borderRadius: BorderRadius.all(
+                                            Radius.circular(10),
+                                          ),
                                         ),
-                                      ),
-                                      onPressed: () async {
-                                        debugPrint('onPressed');
-                                        if (_formKey.currentState?.saveAndValidate() ?? false) {
-                                          if (true) {
-                                            // Either invalidate using Form Key
-                                            _formKey.currentState?.invalidateField(
-                                                name: 'email',
-                                                errorText: 'Email already taken.');
-                                            // OR invalidate using Field Key
-                                            // _emailFieldKey.currentState?.invalidate('Email already taken.');
-                                          }
+                                        onPressed: () async {
+                                          debugPrint('onPressed');
+                                          confirmDialog(context);
+                                          Provider.of<Data>(context, listen: false).updateAccount(1);
 
-                                          debugPrint('Valid registr');
+                                          if (_formKey.currentState
+                                              ?.saveAndValidate() ?? false) {
+                                            if (true) {
+                                              // Either invalidate using Form Key
+                                              _formKey.currentState
+                                                  ?.invalidateField(
+                                                  name: 'email',
+                                                  errorText: 'Email already taken.');
+                                              // OR invalidate using Field Key
+                                              // _emailFieldKey.currentState?.invalidate('Email already taken.');
 
-                                          _formKey.currentState?.save();
-                                          //User user = User(name: 'Konstantin', age: 34);
-                                          // var uuid = const Uuid();
-                                          // var userId = uuid.v1();
+                                            }
 
-                                          final user = User(
-                                              id: '1',
-                                              userId: 'userId',
-                                              email: email,
-                                              phone : phone,
-                                              username: 'username',
-                                              birthday: 'birthday',
-                                              login: email,
-                                              carname: carname,
-                                              path: 'path',
-                                              car1: 'car1',
-                                              car2: 'car2',
-                                              car3: 'car3',
-                                              //photo: null,
-                                              // password: 'password',
-                                              // login: email
-                                          );
+                                            debugPrint('Valid registr');
 
 
 
-                                          currentUser = await addUser(user);
-                                          //newUser = addUser();
-                                          //print(currentUser.getUser());
-                                      //addUser(user);
-                                          debugPrint('after addUser registr');
-                                          print('state: $uuid');
-                                          print(currentUser.userId);
+                                            _formKey.currentState?.save();
+                                            //User user = User(name: 'Konstantin', age: 34);
+                                            // var uuid = const Uuid();
+                                            // var userId = uuid.v1();
+                                            debugPrint(
+                                                'Request for registration send');
 
-                                          // Navigator.of(context).pop();
-                                          if(currentUser.email == 'admin@admin')  {
-                                            Navigator.pushReplacement(
-                                                context, MaterialPageRoute(
-                                                builder: (context) =>
-                                                    RegistrationAdmin()
-                                              // SuccessPayment(
-                                              //     currentUser: user),
-                                            )
-                                            );
                                           } else {
-                                            Navigator.pushReplacement(
-                                                context, MaterialPageRoute(
-                                                builder: (context) =>
-                                                    SuccessPayment()
-                                              // SuccessPayment(
-                                              //     currentUser: user),
-                                            )
-                                            );
+                                            debugPrint('Invalid');
                                           }
+                                          // debugPrint(_formKey.currentState?.value.toString());
 
+                                          // Box<User> contactsBox = Hive.box<User>(HiveBoxes.user);
+                                          // contactsBox.add(User(email: email, phone: phone));
+                                          // userBox.putAll({email: email, phone : phone});
+                                          // print('Email: ${userBox.getAt(0)?.email}');
 
-                                        } else {
-                                          debugPrint('Invalid');
-                                        }
-                                        // debugPrint(_formKey.currentState?.value.toString());
-
-                                        // Box<User> contactsBox = Hive.box<User>(HiveBoxes.user);
-                                        // contactsBox.add(User(email: email, phone: phone));
-                                        // userBox.putAll({email: email, phone : phone});
-                                        // print('Email: ${userBox.getAt(0)?.email}');
-
-                                      },
+                                        },
+                                      ),
                                     ),
-                                  ),
-                                  Container(
-                                    margin: const EdgeInsets.only(top: 10, bottom: 10),
-                                    child: Text('Скачать'.toUpperCase(),
-                                      textAlign: TextAlign.left,
-                                      style: styleTitleFormInput,
+                                    Container(
+                                      margin: const EdgeInsets.only(top: 10,
+                                          bottom: 10),
+                                      child: Text('Скачать'.toUpperCase(),
+                                        textAlign: TextAlign.left,
+                                        style: styleTitleFormInput,
+                                      ),
                                     ),
-                                  ),
 
-                                  Column(
-                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                      mainAxisSize: MainAxisSize.min,
-                                      children: [
-                                        MaterialButton(
+                                    Column(
+                                        mainAxisAlignment: MainAxisAlignment
+                                            .spaceBetween,
+                                        mainAxisSize: MainAxisSize.min,
+                                        children: [
+                                          MaterialButton(
 
 
-                                          padding: const EdgeInsets.all(17),
-                                          // color: const Color(0xFF515569),
-                                          child:  Image.asset(
-                                            'assets/images/app01.png',
-                                            fit: BoxFit.contain,
-                                            height: 48,
-                                          ),
-                                          // shape: const RoundedRectangleBorder(
-                                          //   side: BorderSide.none,
-                                          //   borderRadius: BorderRadius.all(Radius.circular(10),
-                                          //   ),
-                                          //),
-                                          onPressed: () {
-                                            downLoadApp();
-                                            // Navigator
-                                            //     .pushReplacement(
-                                            //     context,
-                                            //     MaterialPageRoute(
-                                            //         builder: (context) =>
-                                            //             Home()
-                                            //     ));
-                                          }),
+                                              padding: const EdgeInsets.all(17),
+                                              // color: const Color(0xFF515569),
+                                              child: Image.asset(
+                                                'assets/images/app1.png',
+                                                fit: BoxFit.contain,
+                                                height: 58,
+                                              ),
+                                              // shape: const RoundedRectangleBorder(
+                                              //   side: BorderSide.none,
+                                              //   borderRadius: BorderRadius.all(Radius.circular(10),
+                                              //   ),
+                                              //),
+                                              onPressed: () {
+                                                downLoadApp();
+                                                // Navigator
+                                                //     .pushReplacement(
+                                                //     context,
+                                                //     MaterialPageRoute(
+                                                //         builder: (context) =>
+                                                //             Home()
+                                                //     ));
+                                              }),
 
-                                        MaterialButton(
-                                          //width: 110,
+                                          MaterialButton(
+                                            //width: 110,
 
-                                          padding: const EdgeInsets.all(17),
-                                          // color: const Color(0xFF515569),
+                                            padding: const EdgeInsets.all(17),
+                                            // color: const Color(0xFF515569),
 
-                                          child: Image.asset(
-                                              'assets/images/app02.png',
+                                            child: Image.asset(
+                                              'assets/images/app2.png',
                                               fit: BoxFit.contain,
-                                              height: 48,
+                                              height: 58,
+                                            ),
+                                            onPressed: () {},
                                           ),
-                                           onPressed: () {  },
-                                        ),
 
-                                      ]
-                                  ),
-                                ]
+                                        ]
+                                    ),
+                                  ]
                               )
                           )
-                        )
+                      )
 
-                  ]
-              )
+                    ]
+                )
+            ),
           ),
-        ),
-      )
+        )
     );
   }
 
@@ -505,74 +636,318 @@ class _RegistrationPageState extends State<RegistrationPage> {
     }
   }
 
-  addUser(User user) async {
+  // addUser(User user) async {
+  //   // var uuid = const Uuid();
+  //   // var id = uuid.v1();
+  //   print('func addUser registr');
+  //
+  //   dynamic phone = user.phone;
+  //   dynamic email = user.email;
+  //   //dynamic path = user.path;
+  //   //(path);
+  //   dynamic userId = user.userId;
+  //
+  //
+  //   String apiurl = baseUrl + "/test/create.php";
+  //   //print(baseUrl + "/test/create.php");
+  //   //String apiurl = "http://localhost/test/create.php";
+  //   // var response = await http.post(Uri.parse(apiurl),body:{'userId': userId,'phone': phone,'email': email});
+  //   var response = await http.post(Uri.parse(apiurl), headers: {
+  //     'Accept': 'application/json, charset=utf-8',
+  //     "Access-Control-Allow-Origin": "*",
+  //     "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS"
+  //   },
+  //       body: {
+  //         'userId': userId,
+  //         'path': 'path',
+  //         'phone': phone,
+  //         'email': email
+  //       });
+  //
+  //   // final response = await http.post(Uri.parse(apiurl));
+  //   //print(User.fromJson(jsonDecode(response.body)));
+  //
+  //   if (response.statusCode == 200) {
+  //     print('success registr code');
+  //     cookie = response.headers['set-cookie'];
+  //     print('cookie: $cookie');
+  //     List<String>? cookiesList = cookie?.split(';');
+  //     cookiesList?.forEach((i) => print(i.toLowerCase().trim()));
+  //     userId = cookiesList?[0].split('=')[1];
+  //
+  //     updateAccount(userId);
+  //     print(Provider
+  //         .of<Data>(context, listen: false)
+  //         .data['userId'].toString());
+  //     print('userId: $userId');
+  //
+  //     if (mounted && userId != null) {
+  //       setState(() {
+  //         uuid = userId;
+  //         isAuth = true;
+  //       });
+  //     }
+  //     //Provider.of<Data>(context, listen: false).updateAccount(uuid);
+  //     // var uuid = const Uuid();
+  //     // var id = uuid.v1();
+  //     print(response.statusCode);
+  //     print(response.body);
+  //     print(json.decode(response.body));
+  //     final userJson = json.decode(response.body);
+  //     //final userJson = response.body;
+  //     print('userJson registr');
+  //     // print(userJson);
+  //
+  //     dynamic data = User.fromJson(userJson);
+  //     // return User.fromJson(userJson);
+  //     return data;
+  //
+  //     //return response.body; //это правильно
+  //     //return User.fromJson(currentUser); // error
+  //     //return User.fromJson(jsonDecode(response.body));
+  //     // setState(() {
+  //     //   showprogress = false; //don't show progress indicator
+  //     //   error = true;
+  //     //   errormsg = jsondata["message"];
+  //     // });
+  //
+  //   } else {
+  //     print('error');
+  //     throw Exception(
+  //         'We were not able to successfully download the json data.');
+  //   }
+  //   //return response.body;
+  //   //return User.fromJson(json.decode(response.body));
+  // }
 
-    // var uuid = const Uuid();
-    // var id = uuid.v1();
-    print('func addUser registr');
-    // print(id);
-    dynamic phone = user.phone;
-    dynamic email = user.email;
-    //dynamic path = user.path;
-    //(path);
-    //dynamic userId = user.userId;
+  Future confirmDialog(BuildContext context) async {
+    return showDialog(
+      context: context,
+      barrierDismissible: false, // user must tap button for close dialog!
+      builder: (BuildContext context) {
+        return AlertDialog(
+          content: Text('Подтвердить регистрацию?'.toUpperCase(),
+            textAlign: TextAlign.center,
+            style: styleTextAlertDialog,
+          ),
+          actions: <Widget>[
+            Container (
+                padding: const EdgeInsets.only(left: 20, right: 20, bottom: 20),
+                child: Row (
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      MaterialButton(
+                        padding: const EdgeInsets.all(14),
+                        color: const Color(0xFFE4E6FF),
+                        elevation: 0,
+                        shape: const RoundedRectangleBorder(
+                          side: BorderSide.none,
+                          borderRadius: BorderRadius.all(Radius.circular(10),
+                          ),),
+                        child: Text(
+                          'Да'.toUpperCase(),
+                          textAlign: TextAlign.left,
+                          style: styleTextAlertDialog,
+                        ),
+                        onPressed: () async {
+                          //Provider.of<Data>(context).data['isAuth'].toString();
+                          // Provider.of<Data>(
+                          //     context, listen: false)
+                          //     .checkIsAuth(true, 1);
+                          // if (user.email !=
+                          //     'admin@admin') {
+                          //   // currentUser = await addUser(user);
+                          // }
+
+                          //newUser = addUser();
+                          //print(currentUser.getUser());
+                          //addUser(user);
+
+                          // print('state: $uuid');
+                          // print(currentUser.userId);
+
+                          // Navigator.of(context).pop();
+                          if (email ==
+                              'admin@admin' && counter == 0) {
+                            Navigator.pushReplacement(
+                                context, MaterialPageRoute(
+                                builder: (context) =>
+                                    RegistrationAdmin()
+                              // SuccessPayment(
+                              //     currentUser: user),
+                            )
+                            );
+                          } else if (email ==
+                              'admin@admin' && counter == 1) {
+                            Navigator.pushReplacement(
+                                context, MaterialPageRoute(
+                                builder: (context) =>
+                                    AccountAdmin()
+                              // SuccessPayment(
+                              //     currentUser: user),
+                            )
+                            );
+                          } else {
+                            if(counter == 0) {
+                              final request = Request(
+                                email: email,
+                                phone: phone,
+                                theme: 'Запрос на регистрацию',
+                                message: 'Хочу зарегистрироваться в приложении Cadillac',
+                              );
+                              send(request);
+
+                              Navigator.of(context).pop();
+                              Navigator.pushReplacement(
+                                  context, MaterialPageRoute(
+                                  builder: (context) =>
+                                      SuccessPayment()
+                                // SuccessPayment(
+                                //     currentUser: user),
+                              )
+                              );
+                            } else if(counter == 1) {
+                              Navigator.pushReplacement(
+                                  context, MaterialPageRoute(
+                                  builder: (context) =>
+                                      SuccessPayment()
+                                // SuccessPayment(
+                                //     currentUser: user),
+                              )
+                              );
+                            } else {
+                              Navigator.pushReplacement(
+                                  context, MaterialPageRoute(
+                                  builder: (context) =>
+                                      Account()
+                                // SuccessPayment(
+                                //     currentUser: user),
+                              )
+                              );
+                            }
+
+                          }
+                        },
+                      ),
+                      MaterialButton(
+                        padding: const EdgeInsets.all(14),
+                        color: const Color(0xFFE4E6FF),
+                        elevation: 0,
+                        shape: const RoundedRectangleBorder(
+                          side: BorderSide.none,
+                          borderRadius: BorderRadius.all(Radius.circular(10),
+                          ),),
+                        child: Text(
+                          'Нет'.toUpperCase(),
+                          textAlign: TextAlign.left,
+                          style: styleTextAlertDialog,
+                        ),
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                        },
+                      )
+                    ]
+                )
+            )
 
 
-    String apiurl = baseUrl + "/test/create.php";
-    //print(baseUrl + "/test/create.php");
-    //String apiurl = "http://localhost/test/create.php";
-    // var response = await http.post(Uri.parse(apiurl),body:{'userId': userId,'phone': phone,'email': email});
-    var response = await http.post(Uri.parse(apiurl), headers: {'Accept':'application/json, charset=utf-8',"Access-Control-Allow-Origin": "*",
-    "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS"}, body:{'path': 'path', 'phone': phone,'email': email});
-
-    // final response = await http.post(Uri.parse(apiurl));
-    //print(User.fromJson(jsonDecode(response.body)));
-
-    if(response.statusCode == 200){
-        print('success registr code');
-        var cookie = response.headers['set-cookie'];
-        print('cookie: $cookie');
-        List<String>? cookiesList = cookie?.split(';');
-        cookiesList?.forEach((i)=>print(i.toLowerCase().trim()));
-        userId = cookiesList?[0].split('=')[1];
-        print('userId: $userId');
-
-        if (mounted && userId != null) {
-          setState(() {
-            uuid = userId;
-          });
-        }
-
-        // var uuid = const Uuid();
-        // var id = uuid.v1();
-        print(response.statusCode);
-        print(response.body);
-        print(json.decode(response.body));
-        final userJson = json.decode(response.body);
-        //final userJson = response.body;
-        print('userJson registr');
-        // print(userJson);
-
-        dynamic data = User.fromJson(userJson);
-        // return User.fromJson(userJson);
-        return data;
-
-        //return response.body; //это правильно
-        //return User.fromJson(currentUser); // error
-        //return User.fromJson(jsonDecode(response.body));
-        // setState(() {
-        //   showprogress = false; //don't show progress indicator
-        //   error = true;
-        //   errormsg = jsondata["message"];
-        // });
-
-    }else{
-      print('error');
-      throw Exception('We were not able to successfully download the json data.');
-    }
-    //return response.body;
-    //return User.fromJson(json.decode(response.body));
+          ],
+        );
+      },
+    );
   }
+
+  Future getUser(userId) async {
+    print('getUser registr page');
+    print('userId: $userId');
+    //String apiurl = "http://localhost/test/get_user.php";
+    String apiurl = baseUrl + "/test/get_user.php"; // get jsonplaceholder
+
+
+    final response = await http.post(
+        Uri.parse(apiurl), body: {'userId': userId},
+        headers: {
+          'Accept': 'application/json, charset=utf-8',
+          "Access-Control-Allow-Origin": "http://localhost:59369",
+          "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS"
+        });
+    if (response.statusCode == 200) {
+      print(response.statusCode);
+      print(response.body);
+      print(response);
+      final userJson = json.decode(response.body);
+      // var data = User.fromJson(userJson);
+      // print('data.userId');
+      // print(data.userId);
+      //
+      print("Response status: ${response.statusCode}");
+      print("Response body: ${response.body}");
+      //
+      return User.fromJson(userJson);
+      //return(data);
+      //return true;
+      return userJson.map((json) => User.fromJson(userJson));
+    } else {
+      throw Exception('Error fetching users');
+    }
+  }
+
+  send(Request request) async {
+    dynamic email = request.email;
+    dynamic phone = request.phone;
+    dynamic theme = request.theme;
+    dynamic message = request.message;
+
+    // String apiurl = "http://localhost/test/mail_request.php";
+    String apiurl = baseUrl + "/test/mail_request.php";
+
+    var response = await http.post(Uri.parse(apiurl), body: {
+      'email': email,
+      'phone': phone,
+      'theme': theme,
+      'message': message
+    }, headers: {
+      'Accept': 'application/json, charset=utf-8',
+      "Access-Control-Allow-Origin": "*",
+      "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS"
+    });
+
+    if (response.statusCode == 200) {
+      print('email for registration send');
+      // var uuid = const Uuid();
+      // id = uuid.v1();
+      print(response.body);
+      return response.body;
+      // return User.fromJson(jsonDecode(response.body));
+      // setState(() {
+      //   showprogress = false; //don't show progress indicator
+      //   error = true;
+      //   errormsg = jsondata["message"];
+      // });
+
+    } else {
+      throw Exception('Error: ${response.reasonPhrase}');
+    }
+  }
+
+
+}
+
+class Request {
+  late final String email;
+  late final String phone;
+  late final String theme;
+  late final String message;
+
+  Request({
+    required this.email,
+    required this.phone,
+    required this.theme,
+    required this.message,
+  });
+}
+
+
 
   getCookie() async {
     print('get cookie');
@@ -603,7 +978,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
   void _onChanged() {
   }
 
-}
+
 
 downLoadApp() async {
 
@@ -624,3 +999,5 @@ downLoadApp() async {
   }
 
 }
+
+

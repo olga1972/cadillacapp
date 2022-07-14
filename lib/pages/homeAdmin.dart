@@ -270,108 +270,111 @@ class _HomeAdminState extends State<HomeAdmin> {
                                           isLoadedImage = false;
                                         }
                                         return Container(
-                                            width: 320,
-                                            // height: 166,
-                                            margin: const EdgeInsets.only(top: 10,bottom: 10,),
+                                          width: 320,
+                                          margin: const EdgeInsets.only(top: 10,bottom: 10,),
 
-                                        child: Column(
-                                        mainAxisAlignment: MainAxisAlignment
-                                            .center,
-                                        crossAxisAlignment: CrossAxisAlignment
-                                            .start,
-                                        children: [
-                                        Stack(
-                                        alignment: Alignment.centerRight,
-                                        clipBehavior: Clip
-                                            .none,
-                                        children: [
 
-                                          Container (
-                                            width: 284,
-                                            height: 107,
-                                            decoration: const BoxDecoration(
-                                              color: Color(0XffE4E6FF),
-                                              borderRadius: BorderRadius.all(Radius
-                                                  .circular(10.0)),
-                                            ),
-                                            margin: const EdgeInsets.only(bottom: 10.0, top: 10, left: 10,right: 40),
-                                              child: isLoadedImage ? Image.memory(
-                                                base64.decode(snapshot.data?.banners[index].path ?? ''),
-                                                fit: BoxFit.cover, height: 107)
-                                                  : Text('no image',
-                                                  textAlign: TextAlign
-                                                      .center,
-                                                  style: TextStyle(
-                                                    fontSize: 18.0,
-                                                    fontWeight: FontWeight
-                                                        .normal,
-                                                    fontFamily: 'CadillacSans',
-                                                    color: Color(
-                                                        0xFF8F97BF),
-                                                    height: 1.7, //line-height / font-size
-                                                  ))
-                                          ),
-                                          Column (
+                                          child: Column(
+                                          mainAxisAlignment: MainAxisAlignment
+                                              .center,
+                                          crossAxisAlignment: CrossAxisAlignment
+                                              .start,
+                                          children: [
+                                          Stack(
+                                            alignment: Alignment.centerRight,
+                                            clipBehavior: Clip
+                                                .none,
                                             children: [
-                                            Container (
-                                              margin: const EdgeInsets.only(bottom: 30.0),
-                                              child: GestureDetector(
-                                                onTap: () {
-                                                confirmDialog(context);
-                                                setState(() {
-                                                // устанавливаем индекс выделенного элемента
-                                                selectedIndex = index;
-                                                });
-                                                print(snapshot.data?.banners[selectedIndex].bannerId);
-                                                var currentBannerId = snapshot.data?.banners[selectedIndex].bannerId;
-                                                deleteBanner(currentBannerId);
-
-                                                Route route = MaterialPageRoute(
-                                                builder: (context) =>
-                                                const HomeAdmin());
-                                                Navigator.push(context,route);
-
-                                                },
-                                                child: SvgPicture.asset(
-                                                'assets/images/delete.svg',
-                                                semanticsLabel: 'Icon delete',
-                                                height: 20.0,
-
-
+                                              Container (
+                                                  width: 284,
+                                                  height: 100,
+                                                  decoration: const BoxDecoration(
+                                                    color: Color(0XffE4E6FF),
+                                                    borderRadius: BorderRadius.all(Radius
+                                                        .circular(10.0)),
+                                                  ),
+                                                  margin: const EdgeInsets.only(bottom: 10.0, top: 10, left: 10,right: 40),
+                                                  child: isLoadedImage ? ClipRRect(
+                                                      borderRadius: BorderRadius.circular(10),
+                                                      child: Image.memory(
+                                                      base64.decode(snapshot.data?.banners[index].path ?? ''),
+                                                      fit: BoxFit.cover, width: 245, height: 107))
+                                                      : Text('no image',
+                                                      textAlign: TextAlign
+                                                          .center,
+                                                      style: TextStyle(
+                                                        fontSize: 18.0,
+                                                        fontWeight: FontWeight
+                                                            .normal,
+                                                        fontFamily: 'CadillacSans',
+                                                        color: Color(
+                                                            0xFF8F97BF),
+                                                        height: 1.7, //line-height / font-size
+                                                      ))
                                               ),
-                                              ),
-                                            ),
+                                              Column (
+                                                  children: [
+                                                    Container (
+                                                      margin: const EdgeInsets.only(bottom: 30.0),
+                                                      child: GestureDetector(
+                                                        onTap: () {
+                                                          confirmDialog(context);
+                                                          setState(() {
+                                                            // устанавливаем индекс выделенного элемента
+                                                            selectedIndex = index;
+                                                          });
+                                                          print(snapshot.data?.banners[selectedIndex].bannerId);
+                                                          var currentBannerId = snapshot.data?.banners[selectedIndex].bannerId;
+                                                          deleteBanner(currentBannerId);
+
+                                                          Route route = MaterialPageRoute(
+                                                              builder: (context) =>
+                                                              const HomeAdmin());
+                                                          Navigator.push(context,route);
+
+                                                        },
+                                                        child: SvgPicture.asset(
+                                                          'assets/images/delete.svg',
+                                                          semanticsLabel: 'Icon delete',
+                                                          height: 20.0,
 
 
-                                            GestureDetector(
-                                              onTap: () {
-                                              Route route = MaterialPageRoute(
-                                              builder: (context) =>
-                                              const AddBanners());
-                                              Navigator.push(context,route);
-                                              },
-                                              child: SvgPicture
-                                                  .asset(
-                                              'assets/images/add.svg',
-                                              semanticsLabel: 'Icon add',
-                                              height: 20.0,
+                                                        ),
+                                                      ),
+                                                    ),
 
-                                              ),
-                                            ),
-                                            Visibility(
-                                              visible: false,
-                                              child: FormBuilderTextField(
-                                              name: 'currentBannerId',
-                                              initialValue: '${snapshot.data?.banners[selectedIndex].bannerId}',
-                                              onSaved: (value) => currentBannerId = value!,
-                                              ),
-                                            ),
+
+                                                    GestureDetector(
+                                                      onTap: () {
+                                                        Route route = MaterialPageRoute(
+                                                            builder: (context) =>
+                                                            const AddBanners());
+                                                        Navigator.push(context,route);
+                                                      },
+                                                      child: SvgPicture
+                                                          .asset(
+                                                        'assets/images/add.svg',
+                                                        semanticsLabel: 'Icon add',
+                                                        height: 20.0,
+
+                                                      ),
+                                                    ),
+                                                    Visibility(
+                                                      visible: false,
+                                                      child: FormBuilderTextField(
+                                                        name: 'currentBannerId',
+                                                        initialValue: '${snapshot.data?.banners[selectedIndex].bannerId}',
+                                                        onSaved: (value) => currentBannerId = value!,
+                                                      ),
+                                                    ),
+                                                  ]
+                                              )
                                             ]
-                                            )
-                                        ]
-                                    )
-                                        ]
-                                        )
+                                          ),
+
+
+                                            ]
+                                          )
                                         );
                                       },
                                       // control: SwiperControl(),

@@ -101,11 +101,16 @@ class _CardProductAdminState extends State<CardProductAdmin> {
             ),
 
             body: Center (
-                child: ListView (
-                    children: [
-                      SizedBox (
-                        width: 284,
-                        child: Column(
+              child: Container (
+                width: 320,
+                height: 870,
+                child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                      Expanded (
+                        child: SingleChildScrollView(
+                          child: Column(
                             mainAxisAlignment: MainAxisAlignment.start,
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
@@ -152,12 +157,14 @@ class _CardProductAdminState extends State<CardProductAdmin> {
                                               decoration: const BoxDecoration(
                                                 color: Colors.transparent,
                                                 borderRadius: BorderRadius.all(Radius.circular(10)),),
-                                              child: Image.asset(
-                                                images[index],
-                                                //centerSlice: Rect.fromPoints(const Offset(0.0, 0.0), const Offset(0, 0)),
-                                                fit: BoxFit.contain,
-                                                // alignment: Alignment.topLeft,
-                                              ),
+                                                child: ClipRRect(
+                                                  borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                                                  child: Image.asset(images[index],
+                                                    //centerSlice: Rect.fromPoints(const Offset(0.0, 0.0), const Offset(0, 0)),
+                                                    fit: BoxFit.contain,
+                                                    // alignment: Alignment.topLeft,
+                                                  ),
+                                                )
 
                                             );
                                           }
@@ -300,7 +307,9 @@ class _CardProductAdminState extends State<CardProductAdmin> {
                           ]
                       )
                     )
+                )
             ]
+    )
     )
     )
     )

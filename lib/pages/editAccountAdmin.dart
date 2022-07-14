@@ -46,6 +46,8 @@ import 'package:cadillac/main.dart';
 
 import 'package:form_builder_file_picker/form_builder_file_picker.dart';
 
+import 'data.dart';
+
 enum ImageSourceType { gallery, camera }
 
 var uuid = '';
@@ -939,7 +941,7 @@ class _EditAdminState extends State<EditAdmin> {
                                                                     id: '1',
                                                                     userId: userId,
                                                                     login: login,
-                                                                    // password: password,
+                                                                    password: password,
                                                                     //photo: photo,
                                                                     username: username,
                                                                     birthday: birthday,

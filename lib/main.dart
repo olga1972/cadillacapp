@@ -10,17 +10,25 @@
 // import 'package:cadillac/task_model.dart';
 // import 'package:build_runner/build_runner.dart';
 // import 'package:sqflite/sqflite.dart';
+
+//import 'dart:js';
+
 import 'package:cadillac/pages/account.dart';
 import 'package:cadillac/pages/accountAdmin.dart';
 import 'package:cadillac/pages/addBanners.dart';
 import 'package:cadillac/pages/addNews.dart';
 import 'package:cadillac/pages/addPartners.dart';
+import 'package:cadillac/pages/cardProduct.dart';
+import 'package:cadillac/pages/cardProductAdmin.dart';
 import 'package:cadillac/pages/contacts.dart';
 import 'package:cadillac/pages/editAccount.dart';
 import 'package:cadillac/pages/editAccountAdmin.dart';
 import 'package:cadillac/pages/editAds.dart';
 import 'package:cadillac/pages/home.dart';
 import 'package:cadillac/pages/homeAdmin.dart';
+
+import 'package:cadillac/pages/data.dart';
+import 'package:cadillac/pages/login.dart';
 
 import 'package:cadillac/pages/members.dart';
 import 'package:cadillac/pages/membersAdmin.dart';
@@ -37,6 +45,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:form_builder_asset_picker/form_builder_asset_picker.dart';
 import 'package:provider/provider.dart';
+import 'package:uuid/uuid.dart';
 //import 'package:http/browser_client.dart';
 import 'dart:async';
 //import 'dart:html' as html;
@@ -76,24 +85,30 @@ checkPlatform() {
   }
 }
 
-class Data extends ChangeNotifier {
-  late final Map data = {
-    'userId': '77899126-ff7a-11ec-a426-002590eb3418',
-    'platform': checkPlatform(),
-    'isAuth': bool,
-    'images' : List<PlatformFile>
-  };
 
-  void updateAccount(value) {
-    data["images"] = value;
-    notifyListeners();
-  }
-}
+// class Data extends ChangeNotifier {
+//   late final Map data = {
+//     // 'userId': '77899126-ff7a-11ec-a426-002590eb3418',
+//     //'userId': '7b791032-010c-11ed-a426-002590eb3418',
+//     //userId': Uuid().v1(),
+//     'userId': '',
+//
+//     'platform': checkPlatform(),
+//     'isAuth': false,
+//     //'images' : List<PlatformFile>
+//   };
+//
+//   void updateAccount(value) {
+//     print('update account');
+//     data["userId"] = value;
+//     //data["isAuth"] = true;
+//     notifyListeners();
+//   }
+//
+// }
 
 Future<void> main() async {
   runApp(MyApp());
-
-
 
 //   var dio = Dio();
 //   // List<Cookie> cookies = [
@@ -126,40 +141,25 @@ Future<void> main() async {
 }
 
 class MyApp extends StatelessWidget {
-  //final currentUser;
-
   MyApp({Key? key,}) : super(key: key);
-  // final currentUser = User(
-  //     id: '1',
-  //     userId: '1111',
-  //     email: 'olga.sadyreva@mail.ru',
-  //     phone: '9221238853',
-  //     username: 'Olga',
-  //     birthday: '19.04.1972',
-  //     login: 'olga.sadyreva@mail.ru',
-  //     photo: '',
-  //     // password: '11111',
-  //     carname: 'wwww',
-  //     // login: 'wwwww'
-  //     );
-
-
-
   static get platform => checkPlatform();
 
-  get userId => null;
-  //get currentUser => null;
   late String cookies;
+  //get userId => null;
   //final String data = '8f87d509-fb7e-11ec-a426-002590eb3418'; a@a - mobile
   //final String data = '871936c4-f009-11ec-a426-002590eb3418'; z@z - web
 
-
-
-
-
-
   @override
   Widget build(BuildContext context) {
+    bool isAuth = false;
+
+    // if(_checkIsAuth(context)) {
+    //   isAuth = true;
+    // } else {
+    //   isAuth = false;
+    // }
+
+
 
     //при сборке под web ошибка
     // if (IO.Platform.isAndroid) {
@@ -172,9 +172,20 @@ class MyApp extends StatelessWidget {
       // cookies = html.window.document.cookie!;
       // print(cookies);
     //}
-
+    // return MultiProvider(
+    //     providers: [
+    //       ChangeNotifierProvider.value(
+    //         value: Data(),
+    //       ),
+    //     ],
+    //     child: MaterialApp(
     return ChangeNotifierProvider<Data> (
       create: (context) => Data(),
+        //builder: (context) => return Data(),
+        //lazy: false,
+        // builder: (context, child) {
+        //   return Text(context.watch<Data>().toString());
+        // },
       child: MaterialApp(
         theme: ThemeData (
           // primarySwatch: Colors.blue,
@@ -186,14 +197,16 @@ class MyApp extends StatelessWidget {
 
 
         routes: {
-          //'/home': (context) => const RegistrationPage(),
+          //'/home': (context) => RegistrationPage(),
+          '/home': (context) => SuccessPayment(),
+          //'/home': (context) => MembersAdmin(),
           //'/home': (context) => RegistrationAdmin(userId: '1aa71d78-f91c-11ec-a426-002590eb3418'),
-          //'/home': (context) => Account(),
+          //'/home': (context) => Shop(),
           '/homeAdmin': (context) => const HomeAdmin(),
           '/registrationAdmin': (context) => RegistrationAdmin(),
-          //'/home': (context) => SuccessPayment(),
-          //'/home': (context) =>  || cookies != null && cookies != '' ? Account() : RegistrationPage(),
-          '/home': (context) => userId!= null && userId != '' ? Account() : RegistrationPage(),
+          //'/home': (context) => Contacts(),
+          //'/home': (context) =>  isAuth ? Account() : RegistrationPage(),
+          //'/home': (context) => isAuth ? Account() : RegistrationPage(),
           //'/home': (context) => Test(),
           //'/home': (context) => AccountAdmin(userId:'f1c7fde2-ef1b-11ec-a426-002590eb3418'),
           //'/home': (context) => AddBanners(),
@@ -259,6 +272,8 @@ class MyApp extends StatelessWidget {
     );
 
   }
+
+
 }
 
 class MyHomePage extends StatefulWidget {
@@ -272,15 +287,13 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
 
-  late Future<UsersList> usersList;
+  //late Future<UsersList> usersList;
 
   @override
   void initState() {
     print('init state main');
     super.initState();
-
-    // var usersList = getUsersList();
-    // print("usersList: ${getUsersList()}");
+    //_checkIsAuth(context);
   }
 
   @override
@@ -300,71 +313,14 @@ class _MyHomePageState extends State<MyHomePage> {
           softWrap: true,
         ),
 
-        // body: FutureBuilder<UsersList>(
-        //   future: usersList,
-        //   builder: (context, snapshot) {
-        //     print(snapshot.data);
-        //     if (snapshot.hasData) {
-        //       return ListView.builder(
-        //           itemCount: snapshot.data?.users?.length,
-        //           itemBuilder: (context, index) {
-        //             return Card(
-        //               child: ListTile(
-        //                 // title: Text('${snapshot.data?.users[index].email}'),
-        //                 title: Text('users'),
-        //               ),
-        //             );
-        //           }
-        //       );
-        //     } else if (snapshot.hasError) {
-        //       return const Text('Error');
-        //     }
-        //     return const Center(child: CircularProgressIndicator());
-        //   },
-        //
-        // ),
-
-        //drawer: NavDrawer(),
-
 
     );
   }
-  // Future<String> getTestString() async {
-  //   if (_client is BrowserClient)
-  //     (_client as BrowserClient).withCredentials = true;
-  //   await _client.get('https://localhost/api/login');
-  //   await _client.get('https://localhost/api/login');
-  //   return 'blah';
-  // }
-  // Future<UsersList> getUsersList() async {
-  //   // const url = 'https://about.google/static/data/locations.json';
-  //   // const url = 'http://localhost/test/users_list.php';
-  //   const url = baseUrl + '/users_list.php';
-  //   final response = await http.get(Uri.parse(url));
-  //
-  //   if(response.statusCode == 200) {
-  //     return UsersList.fromJson(json.decode(response.body));
-  //   } else {
-  //     throw Exception('Error: ${response.reasonPhrase}');
-  //   }
-  // }
 
-  // Future<UsersList> getUsersList() async {
-  //   var url = "http://localhost/test/users_list.php";
-  //   final response = await http.get(Uri.parse(url));
-  //   final items = json.decode(response.body).cast<Map<String, dynamic>>();
-  //   List<UsersList> user = items.map<User>((json) {
-  //     return User.fromJson(json);
-  //   }).toList();
-  //
-  //   // return user;
-  //   if (response.statusCode == 200) {
-  //     return UsersList.fromJson(json.decode(response.body));
-  //   } else {
-  //     throw Exception('Error: ${response.reasonPhrase}');
-  //   }
-  // }
+
+
 }
+
 
 
 

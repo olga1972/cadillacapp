@@ -24,6 +24,7 @@ import 'dart:io';
 import '../NavDrawerAdmin.dart';
 import '../main.dart';
 import '../models/partners.dart';
+import 'data.dart';
 
 
 class AddPartners extends StatefulWidget {

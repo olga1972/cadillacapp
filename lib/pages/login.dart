@@ -3,6 +3,8 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
+
+import '../variables.dart';
 //import http package manually
 
 class LoginPage extends StatefulWidget{
@@ -21,8 +23,9 @@ class _LoginPage extends State<LoginPage>{
   final _email = TextEditingController();
 
   startLogin() async {
+    String apiurl = baseUrl + "/test/login.php";
     // String apiurl = "http://192.168.31.213/test/login.php"; //api url
-    String apiurl = "http://localhost/test/login.php"; //api url
+    //String apiurl = "http://localhost/test/login.php"; //api url
     //dont use http://localhost , because emulator don't get that address
     //insted use your local IP address or use live URL
     //hit "ipconfig" in windows or "ip a" in linux to get you local IP
@@ -41,6 +44,7 @@ class _LoginPage extends State<LoginPage>{
 
     if(response.statusCode == 200){
       var jsondata = json.decode(response.body);
+      print(jsondata);
       if(jsondata["error"]){
         setState(() {
           showprogress = false; //don't show progress indicator

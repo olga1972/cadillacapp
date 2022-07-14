@@ -32,7 +32,7 @@ dependencies:
 #  flutter_bloc: ^8.0.1
   flutter_localizations:
     sdk: flutter
-#  intl: ^0.17.0
+  intl: ^0.17.0
   flutter_svg: ^0.23.0+1
 
 #  path_provider: ^2.0.9
@@ -137,10 +137,13 @@ flutter:
 
     - family: CadillacSans
       fonts:
-        - asset: fonts/CadillacSans-Book.ttf
-        - asset: fonts/CadillacSans-SemiBold.ttf
-        - asset: fonts/CadillacSans-ExtraBold.ttf
-
+        - asset: assets/fonts/CadillacSans-Book.ttf
           weight: 400
+        - asset: assets/fonts/CadillacSans-SemiBold.ttf
+          weight: 500
+        - asset: assets/fonts/CadillacSans-ExtraBold.ttf
+          weight: 700
+
+
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
