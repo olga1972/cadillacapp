@@ -16,6 +16,7 @@ import '../models/news.dart';
 
 import '../variables.dart';
 import 'addNews.dart';
+import 'editAds.dart';
 
 class NewsAdmin extends StatefulWidget {
   const NewsAdmin({Key? key}) : super(key: key);
@@ -84,6 +85,39 @@ class _NewsAdminState extends State<NewsAdmin> {
               );
             },
           ),
+            actions: <Widget> [
+              Container (
+                width: 160,
+                margin: const EdgeInsets.only(top: 22, right: 18.0),
+                child: const Text('Редактировать рекламу',
+                  textAlign: TextAlign.right,
+                  style: TextStyle(
+                    fontSize: 14.0,
+                    fontWeight: FontWeight
+                        .normal,
+                    fontFamily: 'CadillacSans',
+                    color: Colors.white,
+                    //height: 1.4, //line-height : font-size
+                  ),
+                ),
+              ),
+
+              IconButton(
+                alignment: Alignment.centerLeft,
+                padding: const EdgeInsets.all(0),
+                iconSize: 22.0,
+                icon: SvgPicture.asset(
+                  'assets/images/edit.svg',
+                  semanticsLabel: 'Icon edit',
+                  height: 15.0,
+                ),
+                onPressed: () {
+                  Route route = MaterialPageRoute(
+                      builder: (context) => const EditAds());
+                  Navigator.push(context,route);
+                },
+              ),
+            ]
         ),
 
         body: Center (

@@ -84,6 +84,7 @@ class _RegistrationAdminState extends State<RegistrationAdmin> {
   late String encode64;
 
   dynamic user;
+  dynamic findedUser;
 
   @override
   initState()  {
@@ -95,8 +96,8 @@ class _RegistrationAdminState extends State<RegistrationAdmin> {
     encode64 = '';
     //uuid = userId;
 
-    var path = "assets/images/avatar.png";
-    print(path);
+    // var path = "assets/images/avatar.png";
+    // print(path);
     print(uuid);
 
     // setState(() {
@@ -109,7 +110,7 @@ class _RegistrationAdminState extends State<RegistrationAdmin> {
 
   final _formKey = GlobalKey<FormBuilderState>();
 
-  dynamic userId = '1aa71d78-f91c-11ec-a426-002590eb3418';
+  late dynamic userId;
   late dynamic login = "test@mail.ru";
   late dynamic username;
   late dynamic email = 'test@test';
@@ -162,9 +163,10 @@ class _RegistrationAdminState extends State<RegistrationAdmin> {
   Widget build(BuildContext context) {
     dynamic user;
 
-    //userId = Provider.of<Data>(context).data['userId'].toString();
+    userId = Provider.of<Data>(context).data['userId'].toString();
     platform = Provider.of<Data>(context).data['platform'].toString();
     print(platform);
+    print(userId);
 
     return MaterialApp(
         theme: ThemeData(scaffoldBackgroundColor: const Color(0xFF2C335E)),
@@ -1089,17 +1091,17 @@ class _RegistrationAdminState extends State<RegistrationAdmin> {
                                                               // editUser(
                                                               //     currentUser);
 
-
+                                                              findedUser = await getUserbyEmail(currentUser);
                                                               user = await editUser(
                                                                   currentUser);
 
                                                               print(
                                                                   'after editUser success');
-                                                              print('state: $uuid');
-                                                              print(user.path);
-                                                              print(user.car1);
-                                                              print(user.car2);
-                                                              print(user.car3);
+                                                              // print('state: $uuid');
+                                                              // print(user.path);
+                                                              // print(user.car1);
+                                                              // print(user.car2);
+                                                              // print(user.car3);
 
                                                               //var userId;
                                                               //print(editUser.userId)
@@ -1111,7 +1113,7 @@ class _RegistrationAdminState extends State<RegistrationAdmin> {
                                                               // dynamic id = uuid;
                                                               // print(
                                                               //     "currentId: ${id}");
-                                                              userId = user.userId;
+                                                              //userId = user.userId;
                                                               // await contactsBox.put(userUuId, currentUser);
 
                                                               debugPrint(
@@ -1121,9 +1123,9 @@ class _RegistrationAdminState extends State<RegistrationAdmin> {
                                                                       .toString());
 
                                                               // debugPrint(box.get('phone2').toString());
-                                                              Provider.of<Data>(context, listen: false).updateAccount(1);
+                                                              Provider.of<Data>(context, listen: false).updateAccount(2);
 
-                                                              Navigator
+                                                              await Navigator
                                                                   .pushReplacement(
                                                                   context,
                                                                   MaterialPageRoute(
@@ -1219,6 +1221,80 @@ class _RegistrationAdminState extends State<RegistrationAdmin> {
     return url;
   }
 
+  getUserbyEmail(User user) async {
+
+    print('func getUserbyEmail');
+    print(user.username);
+    //print('user.userId');
+    dynamic login = user.login;
+    dynamic password  = user.password;
+    // dynamic photo = user.photo;
+    dynamic username = user.username;
+    dynamic birthday = user.birthday;
+    dynamic carname = user.carname;
+    dynamic path = user.path;
+    dynamic car1, car2, car3;
+    if (user.car1 != 'null') car1 = user.car1;
+    if (user.car2 != 'null') car2 = user.car2;
+    if (user.car3 != 'null') car3 = user.car3;
+
+    String apiurl = baseUrl + "/test/get_user_by_email.php";
+    // String apiurl = "http://localhost/test/edit.php";
+    var response = await http.post(Uri.parse(apiurl), body: {
+      'login': login,
+      'username': username,
+      'birthday': birthday,
+      'carname': carname,
+      'path': path,
+      'car1': car1 != '' ? car1 : '',
+      'car2': car2 != '' ? car2 : '',
+      'car3': car3 != '' ? car3 : '',
+      'password': password
+    }, headers: {
+      'Accept': 'application/json, charset=utf-8',
+      "Access-Control-Allow-Origin": "*",
+      "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS"
+    });
+    if (response.statusCode == 200) {
+      print('success getUserbyEmail');
+
+      print(response.body);
+      //return response.body; //это правильно
+
+      final userJson = json.decode(response.body);
+      // //final userJson = response.body;
+      // print('userJson success');
+      // print(userJson);
+      var data = User.fromJson(userJson);
+      print(data.userId);
+      Provider.of<Data>(context, listen: false).updateUserId(data.userId);
+      print('data.userId');
+      // print(data.userId);
+      // setState(() {
+      //   uuid = data.userId;
+      // });
+      // if (mounted && userId != null) {
+      //   setState(() {
+      //     uuid = data.userId;
+      //   });
+      // }
+      //getCookie(data.userId);
+      return(data);
+      //return User.fromJson(userJson);
+//return response.body;
+      // return User.fromJson(jsonDecode(response.body));
+      // setState(() {
+      //   showprogress = false; //don't show progress indicator
+      //   error = true;
+      //   errormsg = jsondata["message"];
+      // });
+
+    } else {
+      throw Exception('Error: ${response.reasonPhrase}');
+    }
+
+  }
+
   // Future<String> editUser() async {
   editUser(User user) async {
     print('func editUser success');
@@ -1226,7 +1302,7 @@ class _RegistrationAdminState extends State<RegistrationAdmin> {
     //print(userId);
     print(user.path);
     dynamic login = user.login;
-    // dynamic password  = user.password;
+    dynamic password  = user.password;
     // dynamic photo = user.photo;
     dynamic username = user.username;
     dynamic birthday = user.birthday;
@@ -1273,16 +1349,22 @@ class _RegistrationAdminState extends State<RegistrationAdmin> {
 
     String apiurl = baseUrl + "/test/edit.php";
     // String apiurl = "http://localhost/test/edit.php";
-    var response = await http.post(Uri.parse(apiurl),
-        body:{'userId': userId,'login': login, 'username': username, 'birthday': birthday, 'carname': carname, 'path': path, 'car1': car1,'car2': car2,'car3': car3,},
-        headers: {'Accept':'application/json, charset=utf-8',
-          "Access-Control-Allow-Origin": "*",
-      "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS"});
-
-    // var response = await http.post(Uri.parse(apiurl), headers: {'Accept':'application/json, charset=utf-8',"Access-Control-Allow-Origin": "*",
-    //   "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS"}, body:{'phone': phone,'email': email});
-    // var response = await http.post(Uri.parse(apiurl), headers: {'Accept':'application/json',"Access-Control-Allow-Origin": "*",
-    //       "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS"});
+    var response = await http.post(Uri.parse(apiurl), body:
+    { 'userId': userId,
+      'login': login,
+      'username': username,
+      'birthday': birthday,
+      'carname': carname,
+      'path': path,
+      'car1': car1,
+      'car2': car2,
+      'car3': car3,
+      'password': 'password'},
+    headers: {
+      'Accept':'application/json, charset=utf-8',
+      "Access-Control-Allow-Origin": "*",
+      "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS"
+    });
     print('after response success');
     // print("response.body success: ${jsonDecode(response.body)}");  SyntaxError: Unexpected end of JSON input
 
@@ -1295,7 +1377,7 @@ class _RegistrationAdminState extends State<RegistrationAdmin> {
 
       var cookie = response.headers['set-cookie'];
       print('cookie: $cookie'); //null
-      print(path);
+      //print(path);
       // var uuid = const Uuid();
       // id = uuid.v1();
       print(response.body);

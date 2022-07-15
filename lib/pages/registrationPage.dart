@@ -514,37 +514,33 @@ class _RegistrationPageState extends State<RegistrationPage> {
                                           ),
                                         ),
                                         onPressed: () async {
-                                          debugPrint('onPressed');
-                                          confirmDialog(context);
-                                          Provider.of<Data>(context, listen: false).updateAccount(1);
 
                                           if (_formKey.currentState
                                               ?.saveAndValidate() ?? false) {
-                                            if (true) {
-                                              // Either invalidate using Form Key
-                                              _formKey.currentState
-                                                  ?.invalidateField(
-                                                  name: 'email',
-                                                  errorText: 'Email already taken.');
-                                              // OR invalidate using Field Key
-                                              // _emailFieldKey.currentState?.invalidate('Email already taken.');
+                                            debugPrint('valid');
 
-                                            }
-
-                                            debugPrint('Valid registr');
-
-
-
-                                            _formKey.currentState?.save();
-                                            //User user = User(name: 'Konstantin', age: 34);
-                                            // var uuid = const Uuid();
-                                            // var userId = uuid.v1();
-                                            debugPrint(
-                                                'Request for registration send');
+                                          if(email == 'admin@admin') {
+                                              Provider.of<Data>(context, listen: false).updateAccount(1);
+                                              Navigator.pushReplacement(
+                                              context, MaterialPageRoute(
+                                              builder: (context) =>
+                                                RegistrationAdmin()
+                                           ));
 
                                           } else {
-                                            debugPrint('Invalid');
+                                            confirmDialog(context);
                                           }
+
+                                          } else {
+                                            debugPrint(
+                                                'Invalid');
+                                          }
+
+
+
+
+
+
                                           // debugPrint(_formKey.currentState?.value.toString());
 
                                           // Box<User> contactsBox = Hive.box<User>(HiveBoxes.user);
@@ -750,45 +746,6 @@ class _RegistrationPageState extends State<RegistrationPage> {
                           style: styleTextAlertDialog,
                         ),
                         onPressed: () async {
-                          //Provider.of<Data>(context).data['isAuth'].toString();
-                          // Provider.of<Data>(
-                          //     context, listen: false)
-                          //     .checkIsAuth(true, 1);
-                          // if (user.email !=
-                          //     'admin@admin') {
-                          //   // currentUser = await addUser(user);
-                          // }
-
-                          //newUser = addUser();
-                          //print(currentUser.getUser());
-                          //addUser(user);
-
-                          // print('state: $uuid');
-                          // print(currentUser.userId);
-
-                          // Navigator.of(context).pop();
-                          if (email ==
-                              'admin@admin' && counter == 0) {
-                            Navigator.pushReplacement(
-                                context, MaterialPageRoute(
-                                builder: (context) =>
-                                    RegistrationAdmin()
-                              // SuccessPayment(
-                              //     currentUser: user),
-                            )
-                            );
-                          } else if (email ==
-                              'admin@admin' && counter == 1) {
-                            Navigator.pushReplacement(
-                                context, MaterialPageRoute(
-                                builder: (context) =>
-                                    AccountAdmin()
-                              // SuccessPayment(
-                              //     currentUser: user),
-                            )
-                            );
-                          } else {
-                            if(counter == 0) {
                               final request = Request(
                                 email: email,
                                 phone: phone,
@@ -796,38 +753,23 @@ class _RegistrationPageState extends State<RegistrationPage> {
                                 message: 'Хочу зарегистрироваться в приложении Cadillac',
                               );
                               send(request);
+                              Provider.of<Data>(context, listen: false).updateAccount(1);
 
                               Navigator.of(context).pop();
-                              Navigator.pushReplacement(
-                                  context, MaterialPageRoute(
-                                  builder: (context) =>
-                                      SuccessPayment()
-                                // SuccessPayment(
-                                //     currentUser: user),
-                              )
-                              );
-                            } else if(counter == 1) {
-                              Navigator.pushReplacement(
-                                  context, MaterialPageRoute(
-                                  builder: (context) =>
-                                      SuccessPayment()
-                                // SuccessPayment(
-                                //     currentUser: user),
-                              )
-                              );
-                            } else {
-                              Navigator.pushReplacement(
-                                  context, MaterialPageRoute(
-                                  builder: (context) =>
-                                      Account()
-                                // SuccessPayment(
-                                //     currentUser: user),
-                              )
-                              );
-                            }
 
+                              await Navigator.pushReplacement(
+                              context, MaterialPageRoute(
+                              builder: (context) =>
+                              SuccessPayment()
+                              ));
+
+                              _formKey.currentState?.save();
+                              //User user = User(name: 'Konstantin', age: 34);
+                              // var uuid = const Uuid();
+                              // var userId = uuid.v1();
+                              debugPrint(
+                              'Request for registration send');
                           }
-                        },
                       ),
                       MaterialButton(
                         padding: const EdgeInsets.all(14),
@@ -844,6 +786,11 @@ class _RegistrationPageState extends State<RegistrationPage> {
                         ),
                         onPressed: () {
                           Navigator.of(context).pop();
+                          Navigator.pushReplacement(
+                              context, MaterialPageRoute(
+                              builder: (context) =>
+                                  RegistrationPage()
+                          ));
                         },
                       )
                     ]
@@ -876,15 +823,16 @@ class _RegistrationPageState extends State<RegistrationPage> {
       print(response.body);
       print(response);
       final userJson = json.decode(response.body);
-      // var data = User.fromJson(userJson);
+      var data = User.fromJson(userJson);
+      Provider.of<Data>(context, listen: false).updateUserId(data.userId);
       // print('data.userId');
       // print(data.userId);
       //
       print("Response status: ${response.statusCode}");
       print("Response body: ${response.body}");
       //
-      return User.fromJson(userJson);
-      //return(data);
+      //return User.fromJson(userJson);
+      return(data);
       //return true;
       return userJson.map((json) => User.fromJson(userJson));
     } else {

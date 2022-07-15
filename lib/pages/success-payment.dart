@@ -99,7 +99,7 @@ class _SuccessPaymentState extends State<SuccessPayment> {
 
     //var path = "assets/images/avatar.png";
     //print(path);
-    print(uuid);
+    //print(uuid);
 
     // setState(() {
     //     userId = userId;
@@ -134,7 +134,8 @@ class _SuccessPaymentState extends State<SuccessPayment> {
   final _formKey = GlobalKey<FormBuilderState>();
   //final List<String>? _allowedExtensions = ['png', 'pdf'];
 
-  late dynamic userId = uuid;
+  //late dynamic userId = uuid;
+  late dynamic userId;
   late dynamic login = "test@mail.ru";
   late dynamic username = 'username';
   late dynamic email = 'test@test';
@@ -1133,7 +1134,7 @@ class _SuccessPaymentState extends State<SuccessPayment> {
                                                             // debugPrint(box.get('phone2').toString());
                                                             Provider.of<Data>(context, listen: false).updateAccount(2);
 
-                                                            Navigator.pushReplacement(
+                                                            await Navigator.pushReplacement(
                                                                 context,
                                                                 MaterialPageRoute(
                                                                     builder:
@@ -1249,7 +1250,7 @@ class _SuccessPaymentState extends State<SuccessPayment> {
       if (response.statusCode == 200) {
         print('success getUserbyEmail');
 
-        //print(json.decode(response.body));
+        print(response.body);
         //return response.body; //это правильно
 
         final userJson = json.decode(response.body);
@@ -1257,7 +1258,7 @@ class _SuccessPaymentState extends State<SuccessPayment> {
         // print('userJson success');
         // print(userJson);
         var data = User.fromJson(userJson);
-
+        print(data.userId);
         Provider.of<Data>(context, listen: false).updateUserId(data.userId);
         print('data.userId');
         // print(data.userId);
@@ -1308,7 +1309,7 @@ class _SuccessPaymentState extends State<SuccessPayment> {
     print('username: ${username}');
 
     // print('uuid: $uuid'); //null
-    print(userId = Provider.of<Data>(context, listen: false).data['userId'].toString()); //null
+    //print(userId = Provider.of<Data>(context, listen: false).data['userId'].toString()); //null
 
     String apiurl = baseUrl + "/test/edit.php";
     // String apiurl = "http://localhost/test/edit.php";

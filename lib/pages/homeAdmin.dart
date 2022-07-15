@@ -129,6 +129,39 @@ class _HomeAdminState extends State<HomeAdmin> {
                 );
               }
           ),
+            actions: <Widget> [
+              Container (
+                width: 160,
+                margin: const EdgeInsets.only(top: 22, right: 18.0),
+                child: const Text('Редактировать рекламу',
+                  textAlign: TextAlign.right,
+                  style: TextStyle(
+                    fontSize: 14.0,
+                    fontWeight: FontWeight
+                        .normal,
+                    fontFamily: 'CadillacSans',
+                    color: Colors.white,
+                    //height: 1.4, //line-height : font-size
+                  ),
+                ),
+              ),
+
+              IconButton(
+                alignment: Alignment.centerLeft,
+                padding: const EdgeInsets.all(0),
+                iconSize: 22.0,
+                icon: SvgPicture.asset(
+                  'assets/images/edit.svg',
+                  semanticsLabel: 'Icon edit',
+                  height: 15.0,
+                ),
+                onPressed: () {
+                  Route route = MaterialPageRoute(
+                      builder: (context) => const EditAds());
+                  Navigator.push(context,route);
+                },
+              ),
+            ]
         ),
 
         body: Center (
@@ -143,45 +176,45 @@ class _HomeAdminState extends State<HomeAdmin> {
                   child: SingleChildScrollView(
                     child: Column(
                       children: [
-                        Align(
-                          alignment: Alignment.centerRight,
-                          child: Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                            children: [
-                              Container (
-                                width: 160,
-                                margin: const EdgeInsets.only(right: 18.0),
-                                child: const Text('Редактировать рекламу',
-                                textAlign: TextAlign.right,
-                                style: TextStyle(
-                                fontSize: 14.0,
-                                fontWeight: FontWeight
-                                    .normal,
-                                fontFamily: 'CadillacSans',
-                                color: Colors.white,
-                                //height: 1.4, //line-height : font-size
-                                ),
-                                ),
-                              ),
-
-                              IconButton(
-                                alignment: Alignment.centerLeft,
-                                padding: const EdgeInsets.all(0),
-                                iconSize: 22.0,
-                                icon: SvgPicture.asset(
-                                'assets/images/edit.svg',
-                                semanticsLabel: 'Icon edit',
-                                height: 15.0,
-                                ),
-                                onPressed: () {
-                                Route route = MaterialPageRoute(
-                                    builder: (context) => const EditAds());
-                                Navigator.push(context,route);
-                                },
-                              ),
-                            ]
-                          ),
-                        ),
+                        // Align(
+                        //   alignment: Alignment.centerRight,
+                        //   child: Row(
+                        //   mainAxisAlignment: MainAxisAlignment.end,
+                        //     children: [
+                        //       Container (
+                        //         width: 160,
+                        //         margin: const EdgeInsets.only(right: 18.0),
+                        //         child: const Text('Редактировать рекламу',
+                        //         textAlign: TextAlign.right,
+                        //         style: TextStyle(
+                        //         fontSize: 14.0,
+                        //         fontWeight: FontWeight
+                        //             .normal,
+                        //         fontFamily: 'CadillacSans',
+                        //         color: Colors.white,
+                        //         //height: 1.4, //line-height : font-size
+                        //         ),
+                        //         ),
+                        //       ),
+                        //
+                        //       IconButton(
+                        //         alignment: Alignment.centerLeft,
+                        //         padding: const EdgeInsets.all(0),
+                        //         iconSize: 22.0,
+                        //         icon: SvgPicture.asset(
+                        //         'assets/images/edit.svg',
+                        //         semanticsLabel: 'Icon edit',
+                        //         height: 15.0,
+                        //         ),
+                        //         onPressed: () {
+                        //         Route route = MaterialPageRoute(
+                        //             builder: (context) => const EditAds());
+                        //         Navigator.push(context,route);
+                        //         },
+                        //       ),
+                        //     ]
+                        //   ),
+                        // ),
 
                         Container(
                           width: 284,

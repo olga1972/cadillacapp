@@ -3,7 +3,7 @@ import 'package:uuid/uuid.dart';
 
 import '../main.dart';
 
-class Data extends ChangeNotifier {
+class Data with ChangeNotifier {
   bool isAuth = false;
   int counter = 0;
 //   var _count = 0
@@ -18,8 +18,8 @@ class Data extends ChangeNotifier {
   late final Map data = {
     // 'userId': '77899126-ff7a-11ec-a426-002590eb3418',
     //'userId': '7b791032-010c-11ed-a426-002590eb3418',
-    'userId': Uuid().v1(),
-    //'userId': '',
+    //'userId': Uuid().v1(),
+    'userId': '',
     'counter': 0,
     'platform': checkPlatform(),
     'isAuth': false,

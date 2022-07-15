@@ -69,6 +69,7 @@ class _EditState extends State<Edit> {
   late String encode64;
 
   dynamic user;
+  dynamic findedUser;
 
   @override
   initState()  {
@@ -91,11 +92,11 @@ class _EditState extends State<Edit> {
   final _formKey = GlobalKey<FormBuilderState>();
 
 
-  late dynamic userId = uuid;
+  late dynamic userId;
   late dynamic username;
   late dynamic email = 'test@test';
   late dynamic phone = '5555';
-  late dynamic password = '1111';
+  late dynamic password;
   late dynamic login = 'test@test';
   late dynamic birthday;
   late dynamic type;
@@ -143,6 +144,7 @@ class _EditState extends State<Edit> {
     userId = Provider.of<Data>(context).data['userId'].toString();
     platform = Provider.of<Data>(context).data['platform'].toString();
     print(platform);
+    print(userId);
 
     return MaterialApp(
         theme: ThemeData(scaffoldBackgroundColor: const Color(0xFF181c33)),
@@ -810,7 +812,7 @@ class _EditState extends State<Edit> {
                                                                           encode64 = base64.encode(bytes);
                                                                         });
                                                                         //var encode64 = base64.encode(bytes);
-                                                                        print(encode64);
+                                                                        //print(encode64);
                                                                         print('cars.length');
                                                                         print(cars.length);
                                                                         if (cars.length ==  2) {
@@ -917,9 +919,9 @@ class _EditState extends State<Edit> {
                                                                       print(_formKey
                                                                           .currentState?.fields.values
                                                                       );
-                                                                      setState(() {
-                                                                        path: photo[0].path;
-                                                                      });
+                                                                      // setState(() {
+                                                                      //   path: photo[0].path;
+                                                                      // });
                                                                       //photo =new ApiImage();
                                                                       //final user = User(email: email, phone :phone);
                                                                       dynamic currentUser = User(
@@ -940,6 +942,8 @@ class _EditState extends State<Edit> {
 
                                                                       );
                                                                       //currentUser = editUser(user);
+                                                                      findedUser = await getUserbyEmail(currentUser);
+
                                                                       user = await editUser(currentUser);
                                                                       print('after editUser');
                                                                       print('user success');
@@ -956,14 +960,14 @@ class _EditState extends State<Edit> {
                                                                           ?.value
                                                                           .toString());
 
-                                                                      Navigator
-                                                                          .pushReplacement(
-                                                                          context,
-                                                                          MaterialPageRoute(
-                                                                              builder: (
-                                                                                  context) =>
-                                                                                  Account())
-                                                                      );
+                                                                      // Navigator
+                                                                      //     .pushReplacement(
+                                                                      //     context,
+                                                                      //     MaterialPageRoute(
+                                                                      //         builder: (
+                                                                      //             context) =>
+                                                                      //             Account())
+                                                                      // );
 
                                                                     } else {
                                                                       debugPrint(
@@ -1015,12 +1019,86 @@ class _EditState extends State<Edit> {
     return url;
   }
 
+  getUserbyEmail(User user) async {
+
+    print('func getUserbyEmail');
+    print(user.username);
+    //print('user.userId');
+    dynamic login = user.login;
+    dynamic password  = user.password;
+    // dynamic photo = user.photo;
+    dynamic username = user.username;
+    dynamic birthday = user.birthday;
+    dynamic carname = user.carname;
+    dynamic path = user.path;
+    dynamic car1, car2, car3;
+    if (user.car1 != 'null') car1 = user.car1;
+    if (user.car2 != 'null') car2 = user.car2;
+    if (user.car3 != 'null') car3 = user.car3;
+
+    String apiurl = baseUrl + "/test/get_user_by_email.php";
+    // String apiurl = "http://localhost/test/edit.php";
+    var response = await http.post(Uri.parse(apiurl), body: {
+      'login': login,
+      'username': username,
+      'birthday': birthday,
+      'carname': carname,
+      'path': path,
+      'car1': car1 != '' ? car1 : '',
+      'car2': car2 != '' ? car2 : '',
+      'car3': car3 != '' ? car3 : '',
+      'password': password
+    }, headers: {
+      'Accept': 'application/json, charset=utf-8',
+      "Access-Control-Allow-Origin": "*",
+      "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS"
+    });
+    if (response.statusCode == 200) {
+      print('success getUserbyEmail');
+
+      //print(json.decode(response.body));
+      //return response.body; //это правильно
+
+      final userJson = json.decode(response.body);
+      // //final userJson = response.body;
+      // print('userJson success');
+      // print(userJson);
+      var data = User.fromJson(userJson);
+
+      Provider.of<Data>(context, listen: false).updateUserId(data.userId);
+      print('data.userId');
+      // print(data.userId);
+      // setState(() {
+      //   uuid = data.userId;
+      // });
+      // if (mounted && userId != null) {
+      //   setState(() {
+      //     uuid = data.userId;
+      //   });
+      // }
+      //getCookie(data.userId);
+      return(data);
+      //return User.fromJson(userJson);
+//return response.body;
+      // return User.fromJson(jsonDecode(response.body));
+      // setState(() {
+      //   showprogress = false; //don't show progress indicator
+      //   error = true;
+      //   errormsg = jsondata["message"];
+      // });
+
+    } else {
+      throw Exception('Error: ${response.reasonPhrase}');
+    }
+
+  }
+
   // Future<String> editUser() async {
   editUser(User user) async {
     print('func editUser edit');
     // print(user.login);
     dynamic login = user.login;
-    // dynamic password  = user.password;
+    dynamic password  = user.password;
     // dynamic photo = user.photo;
     dynamic username = user.username;
     dynamic birthday = user.birthday;
@@ -1030,25 +1108,30 @@ class _EditState extends State<Edit> {
     if(user.car1 != 'null') car1 = user.car1;
     if(user.car2 != 'null') car2 = user.car2;
     if(user.car3 != 'null') car3 = user.car3;
-    print(car1);
-    print('uuid: $uuid'); //null
-    print(user.userId); //null
+    //(car1);
+    //print('uuid: $uuid'); //null
+    //print(user.userId); //null
 
 
     String apiurl = baseUrl + "/test/edit.php";
     // String apiurl = "http://localhost/test/edit.php";
     var response = await http.post(Uri.parse(apiurl), body:{
-      'userId': uuid,
+      'userId': Provider.of<Data>(context, listen: false).data['userId'].toString(),
       'login': login,
       'username': username,
       'birthday': birthday,
       'carname': carname,
       'path': path,
-      'car1': car1,
-      'car2': car2,
-      'car3': car3,},
-        headers: {'Accept':'application/json, charset=utf-8',"Access-Control-Allow-Origin": "*",
-      "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS"});
+      'car1': car1 != '' ? car1 : '',
+      'car2': car2 != '' ? car2 : '',
+      'car3': car3 != '' ? car3 : '',
+      'password': password
+    },
+        headers: {
+      'Accept':'application/json, charset=utf-8',
+      "Access-Control-Allow-Origin": "*",
+      "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS"
+    });
 
     // var response = await http.post(Uri.parse(apiurl), headers: {'Accept':'application/json, charset=utf-8',"Access-Control-Allow-Origin": "*",
     //   "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS"}, body:{'phone': phone,'email': email});
@@ -1071,12 +1154,13 @@ class _EditState extends State<Edit> {
       print(userJson);
 
       var data = User.fromJson(userJson);
-      print('data.userId');
-      print(data.userId);
-      setState(() {
-        uuid = data.userId;
-      });
-      return User.fromJson(userJson);
+      //print('data.userId');
+      //print(data.userId);
+      // setState(() {
+      //   uuid = data.userId;
+      // });
+      //return User.fromJson(userJson);
+      return data;
       // return User.fromJson(jsonDecode(response.body));
       // setState(() {
       //   showprogress = false; //don't show progress indicator
@@ -1160,7 +1244,16 @@ Future confirmDialog(BuildContext context) async {
                       ),
                       onPressed: () {
                         Navigator.of(context).pop();
+                        Navigator
+                            .pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                                builder: (
+                                    context) =>
+                                    Account())
+                        );
                       },
+
                     )
                   ]
               )

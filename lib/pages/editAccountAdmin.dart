@@ -66,6 +66,7 @@ class _EditAdminState extends State<EditAdmin> {
   late String encode64;
 
   dynamic user;
+  dynamic findedUser;
   @override
 
   initState()  {
@@ -76,7 +77,7 @@ class _EditAdminState extends State<EditAdmin> {
     //uuid = userId;
 
 
-    var path = "assets/images/avatar.png";
+    //var path = "assets/images/avatar.png";
     // final file =
     //     await ImagePicker().pickImage(source: ImageSource.gallery);
     // setState(() => this.file = file);
@@ -97,11 +98,11 @@ class _EditAdminState extends State<EditAdmin> {
   final _formKey = GlobalKey<FormBuilderState>();
 
 
-  late dynamic userId = uuid;
+  late dynamic userId;
   late dynamic username;
   late dynamic email = 'test@test';
   late dynamic phone = '5555';
-  late dynamic password = '1111';
+  late dynamic password;
   late dynamic login = 'test@test';
   late dynamic birthday;
   late dynamic type;
@@ -158,6 +159,7 @@ class _EditAdminState extends State<EditAdmin> {
     userId = Provider.of<Data>(context).data['userId'].toString();
     platform = Provider.of<Data>(context).data['platform'].toString();
     print(platform);
+    print(userId);
 
     return MaterialApp(
         theme: ThemeData(scaffoldBackgroundColor: const Color(0xFF2C335E)),
@@ -311,9 +313,9 @@ class _EditAdminState extends State<EditAdmin> {
                                                         (val) {
                                                       if (val == null) {
                                                         return 'Поле password не может быть пустым';
-                                                      } else if (val.length < 8) {
+                                                      } else if (val.length < 10) {
                                                         // return 'Invalid email address';
-                                                        return 'Минимум 8 символов';
+                                                        return 'Минимум 10 символов';
                                                       } else {
                                                         return null;
                                                       }
@@ -813,20 +815,21 @@ class _EditAdminState extends State<EditAdmin> {
                                                                   //   // _emailFieldKey.currentState?.invalidate('Email already taken.');
                                                                   // }
 
-                                                                  debugPrint('Valid success edit');
+                                                                  debugPrint('Valid success edit admin');
+                                                                  Provider.of<Data>(context, listen: false).updateAccount(2);
 
                                                                   print(photo);
                                                                   if (platform == 'android' ||
                                                                       platform == 'ios') {
                                                                     print(platform);
                                                                     final bytes = File(photo[0].path).readAsBytesSync();
-                                                                    print(bytes);
-                                                                    print(bytes.runtimeType);
+                                                                    // print(bytes);
+                                                                    // print(bytes.runtimeType);
                                                                     setState(() {
                                                                       encode64 = base64.encode(bytes);
                                                                     });
                                                                     //var encode64 = base64.encode(bytes);
-                                                                    print(encode64);
+                                                                    //print(encode64);
                                                                     print('cars.length');
                                                                     print(cars.length);
                                                                     if (cars.length ==  2) {
@@ -932,9 +935,11 @@ class _EditAdminState extends State<EditAdmin> {
                                                                   print(_formKey
                                                                       .currentState?.fields.values
                                                                   );
-                                                                  setState(() {
-                                                                    path: photo[0].path;
-                                                                  });
+
+                                                                  print(userId);
+                                                                  // setState(() {
+                                                                  //   path: photo[0].path;
+                                                                  // });
                                                                   //photo =new ApiImage();
                                                                   //final user = User(email: email, phone :phone);
                                                                   dynamic currentUser = User(
@@ -948,20 +953,22 @@ class _EditAdminState extends State<EditAdmin> {
                                                                     carname: carname,
                                                                     phone: phone,
                                                                     email: email,
-                                                                    path: path,
+                                                                    path: encode64,
                                                                     car1: car1,
                                                                     car2: car2,
                                                                     car3: car3,
 
                                                                   );
                                                                   //currentUser = editUser(user);
+                                                                  findedUser = await getUserbyEmail(currentUser);
+
                                                                   user = await editUser(currentUser);
                                                                   print('after editUser');
-                                                                  print('user success');
+                                                                  // print('user success');
 
-                                                                  dynamic id = uuid;
-                                                                  print("currentUser: ${currentUser.userId}");
-                                                                  userId = uuid;
+                                                                  //dynamic id = uuid;
+                                                                  // print("currentUser: ${currentUser.userId}");
+                                                                  //userId = uuid;
 
                                                                   // await contactsBox.put(userUuId, currentUser);
 
@@ -971,14 +978,16 @@ class _EditAdminState extends State<EditAdmin> {
                                                                       ?.value
                                                                       .toString());
 
-                                                                  Navigator
-                                                                      .pushReplacement(
-                                                                      context,
-                                                                      MaterialPageRoute(
-                                                                          builder: (
-                                                                              context) =>
-                                                                              AccountAdmin())
-                                                                  );
+                                                                  Provider.of<Data>(context, listen: false).updateAccount(2);
+
+                                                                  // Navigator
+                                                                  //     .pushReplacement(
+                                                                  //     context,
+                                                                  //     MaterialPageRoute(
+                                                                  //         builder: (
+                                                                  //             context) =>
+                                                                  //             AccountAdmin())
+                                                                  // );
 
                                                                 } else {
                                                                   debugPrint(
@@ -1030,12 +1039,86 @@ class _EditAdminState extends State<EditAdmin> {
     return url;
   }
 
+  getUserbyEmail(User user) async {
+
+    print('func getUserbyEmail');
+    print(user.username);
+    //print('user.userId');
+    dynamic login = user.login;
+    dynamic password  = user.password;
+    // dynamic photo = user.photo;
+    dynamic username = user.username;
+    dynamic birthday = user.birthday;
+    dynamic carname = user.carname;
+    dynamic path = user.path;
+    dynamic car1, car2, car3;
+    if (user.car1 != 'null') car1 = user.car1;
+    if (user.car2 != 'null') car2 = user.car2;
+    if (user.car3 != 'null') car3 = user.car3;
+
+    String apiurl = baseUrl + "/test/get_user_by_email.php";
+    // String apiurl = "http://localhost/test/edit.php";
+    var response = await http.post(Uri.parse(apiurl), body: {
+      'login': login,
+      'username': username,
+      'birthday': birthday,
+      'carname': carname,
+      'path': path,
+      'car1': car1 != '' ? car1 : '',
+      'car2': car2 != '' ? car2 : '',
+      'car3': car3 != '' ? car3 : '',
+      'password': password
+    }, headers: {
+      'Accept': 'application/json, charset=utf-8',
+      "Access-Control-Allow-Origin": "*",
+      "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS"
+    });
+    if (response.statusCode == 200) {
+      print('success getUserbyEmail');
+
+      //print(json.decode(response.body));
+      //return response.body; //это правильно
+
+      final userJson = json.decode(response.body);
+      // //final userJson = response.body;
+      // print('userJson success');
+      // print(userJson);
+      var data = User.fromJson(userJson);
+
+      Provider.of<Data>(context, listen: false).updateUserId(data.userId);
+      print('data.userId');
+      // print(data.userId);
+      // setState(() {
+      //   uuid = data.userId;
+      // });
+      // if (mounted && userId != null) {
+      //   setState(() {
+      //     uuid = data.userId;
+      //   });
+      // }
+      //getCookie(data.userId);
+      return(data);
+      //return User.fromJson(userJson);
+//return response.body;
+      // return User.fromJson(jsonDecode(response.body));
+      // setState(() {
+      //   showprogress = false; //don't show progress indicator
+      //   error = true;
+      //   errormsg = jsondata["message"];
+      // });
+
+    } else {
+      throw Exception('Error: ${response.reasonPhrase}');
+    }
+
+  }
+
   // Future<String> editUser() async {
   editUser(User user) async {
     print('func editUser edit');
     // print(user.login);
     dynamic login = user.login;
-    // dynamic password  = user.password;
+    dynamic password  = user.password;
     // dynamic photo = user.photo;
     dynamic username = user.username;
     dynamic birthday = user.birthday;
@@ -1045,15 +1128,30 @@ class _EditAdminState extends State<EditAdmin> {
     if(user.car1 != 'null') car1 = user.car1;
     if(user.car2 != 'null') car2 = user.car2;
     if(user.car3 != 'null') car3 = user.car3;
-    print(car1);
-    print('uuid: $uuid'); //null
-    print(user.userId); //null
+    //print(car1);
+    //print('uuid: $uuid'); //null
+    //print(user.userId); //null
 
 
     String apiurl = baseUrl + "/test/edit.php";
     // String apiurl = "http://localhost/test/edit.php";
-    var response = await http.post(Uri.parse(apiurl), body:{'login': login, 'username': username, 'birthday': birthday, 'carname': carname},headers: {'Accept':'application/json, charset=utf-8',"Access-Control-Allow-Origin": "*",
-      "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS"});
+    var response = await http.post(Uri.parse(apiurl), body:{
+      'userId': Provider.of<Data>(context, listen: false).data['userId'].toString(),
+      'login': login,
+      'username': username,
+      'birthday': birthday,
+      'carname': carname,
+      'path': path,
+      'car1': car1 != '' ? car1 : '',
+      'car2': car2 != '' ? car2 : '',
+      'car3': car3 != '' ? car3 : '',
+      'password': password
+    },headers: {
+      'Accept':'application/json, charset=utf-8',
+      "Access-Control-Allow-Origin": "*",
+      "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS"
+    });
+
 
     // var response = await http.post(Uri.parse(apiurl), headers: {'Accept':'application/json, charset=utf-8',"Access-Control-Allow-Origin": "*",
     //   "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS"}, body:{'phone': phone,'email': email});
@@ -1072,16 +1170,17 @@ class _EditAdminState extends State<EditAdmin> {
       //return response.body;
       final userJson = json.decode(response.body);
       //final userJson = response.body;
-      print('userJson edit');
-      print(userJson);
+      //print('userJson edit');
+      //print(userJson);
 
       var data = User.fromJson(userJson);
-      print('data.userId');
-      print(data.userId);
-      setState(() {
-        uuid = data.userId;
-      });
-      return User.fromJson(userJson);
+      //print('data.userId');
+      // print(data.userId);
+      // setState(() {
+      //   uuid = data.userId;
+      // });
+      //return User.fromJson(userJson);
+      return data;
       // return User.fromJson(jsonDecode(response.body));
       // setState(() {
       //   showprogress = false; //don't show progress indicator
@@ -1142,12 +1241,12 @@ Future confirmDialog(BuildContext context) async {
                         textAlign: TextAlign.left,
                         style: styleTextAlertDialog,
                       ),
-                      onPressed: () {
-                        var userId;
-                        Navigator.pushReplacement(
+                      onPressed: () async {
+
+                        await Navigator.pushReplacement(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => Account()));
+                                builder: (context) => AccountAdmin()));
                       },
                     ),
                     MaterialButton(
@@ -1163,8 +1262,16 @@ Future confirmDialog(BuildContext context) async {
                         textAlign: TextAlign.left,
                         style: styleTextAlertDialog,
                       ),
-                      onPressed: () {
+                      onPressed: () async {
                         Navigator.of(context).pop();
+                        await Navigator
+                            .pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                                builder: (
+                                    context) =>
+                                    AccountAdmin())
+                        );
                       },
                     )
                   ]

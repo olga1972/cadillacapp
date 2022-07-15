@@ -197,8 +197,8 @@ class MyApp extends StatelessWidget {
 
 
         routes: {
-          //'/home': (context) => RegistrationPage(),
-          '/home': (context) => SuccessPayment(),
+          '/home': (context) => RegistrationPage(),
+          //'/home': (context) => Account(),
           //'/home': (context) => MembersAdmin(),
           //'/home': (context) => RegistrationAdmin(userId: '1aa71d78-f91c-11ec-a426-002590eb3418'),
           //'/home': (context) => Shop(),
@@ -229,7 +229,7 @@ class MyApp extends StatelessWidget {
           //   currentUser: currentUser),
         },
 
-        //home: MyHomePage(title: 'Cadillac'),
+        home: MyHomePage(title: 'Cadillac'),
         // onGenerateRoute: (settings) {
         //   switch (settings.name) {
         //     case '/':
