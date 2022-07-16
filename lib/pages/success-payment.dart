@@ -687,9 +687,26 @@ class _SuccessPaymentState extends State<SuccessPayment> {
                                                       inputFormatters: [
                                                         maskFormatterPhone
                                                       ],
-                                                      decoration: ThemeHelper()
-                                                          .textInputDecoration(
-                                                              '', '', ''),
+                                                      decoration: const InputDecoration(
+                                                        contentPadding: EdgeInsets
+                                                            .all(16),
+                                                        border: OutlineInputBorder(
+                                                            borderSide: BorderSide
+                                                                .none,
+                                                            borderRadius: BorderRadius
+                                                                .all(
+                                                                Radius.circular(10))
+                                                        ),
+
+                                                        fillColor: Color(
+                                                            0XFF515569),
+                                                        filled: true,
+                                                        hintText: "+7 ___-___-__-__",
+                                                        hintStyle: TextStyle(
+                                                          color: Colors.white60,
+                                                        ),
+                                                      ),
+
                                                       // onSaved: (value) =>
                                                       // newUser.phone = value!,
                                                       // onChanged: _onChanged,

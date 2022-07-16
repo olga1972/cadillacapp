@@ -41,6 +41,6 @@ foreach ($users as $user) {
         }
 
    
-return json_encode($findedUser, JSON_UNESCAPED_SLASHES);
+//return json_encode($findedUser, JSON_UNESCAPED_SLASHES);
 
 

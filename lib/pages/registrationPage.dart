@@ -57,6 +57,7 @@ import 'package:provider/provider.dart';
 import 'package:provider/provider.dart';
 import 'package:provider/provider.dart';
 import 'package:provider/provider.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 
 import '../main.dart';
@@ -136,6 +137,9 @@ class _RegistrationPageState extends State<RegistrationPage> {
   dynamic newUser;
   dynamic user;
 
+  final Uri url1 = Uri.parse('https://cadillacapp.ru/test/download.php');
+  // final Uri url2 = Uri.parse('https://cadillacapp.ru/test/download2.php');
+
 
   //final directory = getApplicationDocumentsDirectory();
 
@@ -180,6 +184,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
         .data['counter'].toString();
     print('counter');
     print(counter);
+    var minHeight = MediaQuery.of(context).size.height;
     if (counter == 1) {
       Navigator.pushReplacement(
           context,
@@ -307,8 +312,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       Expanded(
-                          child: SingleChildScrollView(
-
+                         child: SingleChildScrollView(
                               child: Column(
                                   children: [
                                     Container(
@@ -534,6 +538,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                                           } else {
                                             debugPrint(
                                                 'Invalid');
+                                            errorMessage(context);
                                           }
 
 
@@ -581,7 +586,8 @@ class _RegistrationPageState extends State<RegistrationPage> {
                                               //   ),
                                               //),
                                               onPressed: () {
-                                                downLoadApp();
+                                                launchURL(url1);
+                                                //downLoadApp();
                                                 // Navigator
                                                 //     .pushReplacement(
                                                 //     context,
@@ -602,7 +608,9 @@ class _RegistrationPageState extends State<RegistrationPage> {
                                               fit: BoxFit.contain,
                                               height: 58,
                                             ),
-                                            onPressed: () {},
+                                            onPressed: () {
+                                              //launchURL(url2);
+                                            },
                                           ),
 
                                         ]
@@ -804,6 +812,57 @@ class _RegistrationPageState extends State<RegistrationPage> {
     );
   }
 
+  Future errorMessage(BuildContext context) async {
+    return showDialog(
+      context: context,
+      barrierDismissible: false, // user must tap button for close dialog!
+      builder: (BuildContext context) {
+        return AlertDialog(
+          content: Text('Все поля формы обязательны для заполнения'.toUpperCase(),
+            textAlign: TextAlign.center,
+            style: styleTextAlertDialog,
+          ),
+          actions: <Widget>[
+            Container (
+                padding: const EdgeInsets.only(left: 20, right: 20, bottom: 20),
+                child: Row (
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      MaterialButton(
+                          padding: const EdgeInsets.all(14),
+                          color: const Color(0xFFE4E6FF),
+                          elevation: 0,
+                          shape: const RoundedRectangleBorder(
+                            side: BorderSide.none,
+                            borderRadius: BorderRadius.all(Radius.circular(10),
+                            ),),
+                          child: Text(
+                            'Да'.toUpperCase(),
+                            textAlign: TextAlign.left,
+                            style: styleTextAlertDialog,
+                          ),
+                          onPressed: () async {
+                            Navigator.of(context).pop();
+
+                            // await Navigator.pushReplacement(
+                            //     context, MaterialPageRoute(
+                            //     builder: (context) =>
+                            //         SuccessPayment()
+                            // ));
+                          }
+                      ),
+
+                    ]
+                )
+            )
+
+
+          ],
+        );
+      },
+    );
+  }
+
   Future getUser(userId) async {
     print('getUser registr page');
     print('userId: $userId');
@@ -949,3 +1008,13 @@ downLoadApp() async {
 }
 
 
+
+
+void launchURL(url) async {
+  if (!await launchUrl(url)) throw 'Could not launch $url';
+  // const url = 'https://www.google.com';  //наша ссылка
+  // if (await canLaunchUrl(url)) {  //проверяем наличие браузера на устройстве
+  //   await launchUrl(url, forceWebView: true);   //true если открываем в приложении, false открываем в браузере
+  // } else {
+  //   throw 'Could not launch $url';
+}

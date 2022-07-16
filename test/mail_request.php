@@ -48,6 +48,8 @@ $mail = new PHPMailer\PHPMailer\PHPMailer();
                 <h1>Здравствуйте!</h1>
                 <p>$theme</p>
                 <p>$message</p>
+                <p>$email</p>
+                <p>$phone</p>
                 </html></body>");
 
 // Отправляем
