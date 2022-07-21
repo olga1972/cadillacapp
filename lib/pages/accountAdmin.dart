@@ -486,7 +486,7 @@ class AccountAdmin extends StatefulWidget {
           Text(
           '${snapshot
               .data
-              ?.email}'
+              ?.birthday}'
               .toUpperCase(),
           textAlign: TextAlign
               .left,
@@ -737,7 +737,7 @@ class AccountAdmin extends StatefulWidget {
 
           // itemWidth: 285.0,
           pagination: const SwiperPagination(
-          margin: EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 45.0),
+          margin: EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 15.0),
           builder: DotSwiperPaginationBuilder(
           color: Colors.white,
           activeColor: Color(0xFF8F97BF),
@@ -811,29 +811,7 @@ Future<User> getUser(userId) async {
     // print(response);
     final userJson = json.decode(response.body);
     print(User.fromJson(userJson).username);
-    // print(User.fromJson(userJson).path.runtimeType);
-    // print('userJson["path"]');
-    // print(userJson["path"]);
 
-
-    // print(base64.decode(userJson["path"]));
-    // userJson["path"] = base64.decode(userJson["path"]);
-
-    //path = await getpathImage(photo[0].path);
-
-    //set fileName => userJson.path;
-    // var fileName = userJson.path;
-    // print(fileName);
-
-    //imageData = base64.decode(userJson.path);
-    //print(imageData);
-    //userJson.path = bytes;
-    // var userId = userJson.userId;  // error load account
-    // print('userId')
-    // print(userId);
-    //final userJson = response.body;
-    // print('userJson');
-    // print(userJson);
 
     var data = User.fromJson(userJson);
 
@@ -973,7 +951,7 @@ Future alertDialog(BuildContext context) async {
           Container (
               padding: const EdgeInsets.only(left: 20, right: 20, bottom: 20),
               child: Row (
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  mainAxisAlignment: MainAxisAlignment.end,
                   children: [
                     MaterialButton(
                       padding: const EdgeInsets.all(14),

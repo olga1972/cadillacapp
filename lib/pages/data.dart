@@ -6,6 +6,8 @@ import '../main.dart';
 class Data with ChangeNotifier {
   bool isAuth = false;
   int counter = 0;
+  String cookies = '';
+  bool isAdmin = false;
 //   var _count = 0
 // int get getCounter {
 //  return _count;
@@ -23,8 +25,21 @@ class Data with ChangeNotifier {
     'counter': 0,
     'platform': checkPlatform(),
     'isAuth': false,
+    'cookies': '',
+    'isAdmin': false,
     //'images' : List<PlatformFile>
   };
+
+  void setCookie(value) {
+    print('set cookie');
+    data["cookie"] = value;
+    notifyListeners();
+  }
+
+  void checkIsAdmin(value) {
+    data["isAdmin"] = value;
+    notifyListeners();
+  }
 
   void updateAccount(value) {
     print('update account');

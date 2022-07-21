@@ -943,217 +943,217 @@ class _RegistrationAdminState extends State<RegistrationAdmin> {
                                                             ),
                                                           ),
                                                           onPressed: () async {
-                                                            if (_formKey
-                                                                .currentState
-                                                                ?.saveAndValidate() ??
-                                                                false) {
-                                                              // if (true) {
-                                                              //   // Either invalidate using Form Key
-                                                              //   _formKey
-                                                              //       .currentState
-                                                              //       ?.invalidateField(
-                                                              //       name: 'email',
-                                                              //       errorText: 'Email already taken.');
-                                                              //   // OR invalidate using Field Key
-                                                              //   // _emailFieldKey.currentState?.invalidate('Email already taken.');
-                                                              // }
-
-                                                              debugPrint(
-                                                                  'Valid success payment admin');
-
-                                                              Provider.of<Data>(context, listen: false).updateAccount(2);
-
-
-                                                              print(photo);
-                                                              if (platform == 'android' ||
-                                                                  platform == 'ios') {
-                                                                print(platform);
-                                                                final bytes = File(photo[0].path).readAsBytesSync();
-                                                                // print(bytes);
-                                                                // print(bytes.runtimeType);
-                                                                setState(() {
-                                                                  encode64 = base64.encode(bytes);
-                                                                });
-                                                                //var encode64 = base64.encode(bytes);
-                                                                // print(encode64);
-                                                                print('cars.length');
-                                                                print(cars.length);
-                                                                if (cars.length ==  2) {
-                                                                  if (cars[0].path != null) {
-                                                                    final bytesCar1 = File(cars[0].path).readAsBytesSync();
-                                                                    car1 = base64.encode(bytesCar1);
-                                                                  } else {
-                                                                    car1 = '';
-                                                                  }
-                                                                  if (cars[1].path != null) {
-                                                                    final bytesCar2 = File(cars[1].path).readAsBytesSync();
-                                                                    car2 = base64.encode(bytesCar2);
-                                                                  } else {
-                                                                    car2 = '';
-                                                                  }
-                                                                  car3 = '';
-                                                                } else if (cars.length == 3) {
-                                                                  if (cars[0].path != null) {
-                                                                    final bytesCar1 = File(cars[0].path).readAsBytesSync();
-                                                                    car1 = base64.encode(bytesCar1);
-                                                                  } else {
-                                                                    car1 = '';
-                                                                  }
-                                                                  if (cars[1].path != null) {
-                                                                    final bytesCar2 = File(cars[1].path).readAsBytesSync();
-                                                                    car2 = base64.encode(bytesCar2);
-                                                                  } else {
-                                                                    car2 = '';
-                                                                  }
-                                                                  if (cars[2].path != null) {
-                                                                    final bytesCar3 = File(cars[2].path).readAsBytesSync();
-                                                                    car3 = base64.encode(bytesCar3);
-                                                                  } else {
-                                                                    car3 = '';
-                                                                  }
-                                                                } else {
-                                                                  final bytesCar1 = File(cars[0].path).readAsBytesSync();
-                                                                  car1 = base64.encode(bytesCar1);
-                                                                  car2 = '';
-                                                                  car3 = '';
-                                                                }
-                                                              } else {
-                                                                print(platform);
-                                                                //late Uint8List bytes;
-                                                                bytes = photo[0].bytes;
-                                                                print('cars.length');
-                                                                print(cars.length);
-                                                                if (cars.length ==  2) {
-                                                                  if (cars[0].bytes != null) {
-                                                                    final bytesCar1 = cars[0].bytes;
-                                                                    car1 = base64.encode(bytesCar1!);
-                                                                  } else {
-                                                                    car1 = '';
-                                                                  }
-                                                                  if (cars[1].bytes != null) {
-                                                                    final bytesCar2 = cars[1].bytes;
-                                                                    car2 = base64.encode(bytesCar2!);
-                                                                  } else {
-                                                                    car2 = '';
-                                                                  }
-                                                                  car3 = '';
-                                                                } else if (cars.length == 3) {
-                                                                  if (cars[0].bytes != null) {
-                                                                    final bytesCar1 = cars[0].bytes;
-                                                                    car1 = base64.encode(bytesCar1!);
-                                                                  } else {
-                                                                    car1 = '';
-                                                                  }
-                                                                  if (cars[1].bytes != null) {
-                                                                    final bytesCar2 = cars[1].bytes;
-                                                                    car2 = base64.encode(bytesCar2);
-                                                                  } else {
-                                                                    car2 = '';
-                                                                  }
-                                                                  if (cars[2].bytes != null) {
-                                                                    final bytesCar3 = cars[2].bytes;
-                                                                    car3 = base64.encode(bytesCar3);
-                                                                  } else {
-                                                                    car3 = '';
-                                                                  }
-                                                                } else {
-                                                                  final bytesCar1 = cars[0].bytes;
-                                                                  car1 = base64.encode(bytesCar1);
-                                                                  car2 = '';
-                                                                  car3 = '';
-                                                                }
-                                                                // bytesCar1 = cars[0].bytes;
-                                                                // bytesCar2 = cars[1].bytes;
-                                                                // bytesCar3 = cars[2].bytes;
-                                                                // print(bytes);
-                                                                // print(bytes.runtimeType);
-                                                                //var encode64 = base64.encode(bytes!);
-                                                                setState(() {
-                                                                  encode64 = base64.encode(bytes!);
-                                                                });
-                                                                // print('encode64');
-                                                                // car1 = base64.encode(bytesCar1!);
-                                                                // car2 = base64.encode(bytesCar2!);
-                                                                // car3 = base64.encode(bytesCar3!);
-                                                              }
-                                                              print(
-                                                                  _formKey
-                                                                      .currentState
-                                                                      ?.fields
-                                                              );
-
-                                                              print(userId);
-                                                              //final user = User(email: email, phone :phone);
-                                                              dynamic currentUser = User(
-                                                                id: '1',
-                                                                userId: userId,
-                                                                phone: phone,
-                                                                email: email,
-                                                                username: username,
-                                                                birthday: birthday,
-                                                                login: login,
-                                                                carname: carname,
-                                                                password: password,
-                                                                // path: imageName,
-                                                                path: encode64,
-                                                                car1: car1,
-                                                                car2: car2,
-                                                                car3: car3,
-
-                                                              );
-                                                              //currentUser = editUser(user);
-                                                              // editUser(
-                                                              //     currentUser);
-
-                                                              findedUser = await getUserbyEmail(currentUser);
-                                                              user = await editUser(
-                                                                  currentUser);
-
-                                                              print(
-                                                                  'after editUser success');
-                                                              // print('state: $uuid');
-                                                              // print(user.path);
-                                                              // print(user.car1);
-                                                              // print(user.car2);
-                                                              // print(user.car3);
-
-                                                              //var userId;
-                                                              //print(editUser.userId)
-                                                              //print(editUser(currentUser));
-                                                              //print(editUser(currentUser).userId);
-
-                                                              //print(
-                                                              //"editUser: ${editUser.userId}");
-                                                              // dynamic id = uuid;
-                                                              // print(
-                                                              //     "currentId: ${id}");
-                                                              //userId = user.userId;
-                                                              // await contactsBox.put(userUuId, currentUser);
-
-                                                              debugPrint(
-                                                                  _formKey
-                                                                      .currentState
-                                                                      ?.value
-                                                                      .toString());
-
-                                                              // debugPrint(box.get('phone2').toString());
-                                                              Provider.of<Data>(context, listen: false).updateAccount(2);
-
-                                                              await Navigator
-                                                                  .pushReplacement(
-                                                                  context,
-                                                                  MaterialPageRoute(
-                                                                      builder: (
-                                                                          context) =>
-                                                                          AccountAdmin())
-                                                              );
-                                                              // Home());
-
+                                                            if(_formKey.currentState?.validate() == false){
+                                                            debugPrint('Invalid');
+                                                            errorMessage(context);
                                                             } else {
-                                                              showAlertDialog(context); //не работает почему-то
-                                                              debugPrint(
-                                                                  'Invalid');
+                                                              if (_formKey
+                                                                  .currentState
+                                                                  ?.saveAndValidate() ??
+                                                                  false) {
+                                                                // if (true) {
+                                                                //   // Either invalidate using Form Key
+                                                                //   _formKey
+                                                                //       .currentState
+                                                                //       ?.invalidateField(
+                                                                //       name: 'email',
+                                                                //       errorText: 'Email already taken.');
+                                                                //   // OR invalidate using Field Key
+                                                                //   // _emailFieldKey.currentState?.invalidate('Email already taken.');
+                                                                // }
 
+                                                                debugPrint(
+                                                                    'Valid success payment admin');
+
+                                                                Provider.of<Data>(context, listen: false).updateAccount(2);
+
+
+                                                                print(photo);
+                                                                if (platform == 'android' ||
+                                                                    platform == 'ios') {
+                                                                  print(platform);
+                                                                  final bytes = File(photo[0].path).readAsBytesSync();
+                                                                  // print(bytes);
+                                                                  // print(bytes.runtimeType);
+                                                                  setState(() {
+                                                                    encode64 = base64.encode(bytes);
+                                                                  });
+                                                                  //var encode64 = base64.encode(bytes);
+                                                                  // print(encode64);
+                                                                  print('cars.length');
+                                                                  print(cars.length);
+                                                                  if (cars.length ==  2) {
+                                                                    if (cars[0].path != null) {
+                                                                      final bytesCar1 = File(cars[0].path).readAsBytesSync();
+                                                                      car1 = base64.encode(bytesCar1);
+                                                                    } else {
+                                                                      car1 = '';
+                                                                    }
+                                                                    if (cars[1].path != null) {
+                                                                      final bytesCar2 = File(cars[1].path).readAsBytesSync();
+                                                                      car2 = base64.encode(bytesCar2);
+                                                                    } else {
+                                                                      car2 = '';
+                                                                    }
+                                                                    car3 = '';
+                                                                  } else if (cars.length == 3) {
+                                                                    if (cars[0].path != null) {
+                                                                      final bytesCar1 = File(cars[0].path).readAsBytesSync();
+                                                                      car1 = base64.encode(bytesCar1);
+                                                                    } else {
+                                                                      car1 = '';
+                                                                    }
+                                                                    if (cars[1].path != null) {
+                                                                      final bytesCar2 = File(cars[1].path).readAsBytesSync();
+                                                                      car2 = base64.encode(bytesCar2);
+                                                                    } else {
+                                                                      car2 = '';
+                                                                    }
+                                                                    if (cars[2].path != null) {
+                                                                      final bytesCar3 = File(cars[2].path).readAsBytesSync();
+                                                                      car3 = base64.encode(bytesCar3);
+                                                                    } else {
+                                                                      car3 = '';
+                                                                    }
+                                                                  } else {
+                                                                    final bytesCar1 = File(cars[0].path).readAsBytesSync();
+                                                                    car1 = base64.encode(bytesCar1);
+                                                                    car2 = '';
+                                                                    car3 = '';
+                                                                  }
+                                                                } else {
+                                                                  print(platform);
+                                                                  //late Uint8List bytes;
+                                                                  bytes = photo[0].bytes;
+                                                                  print('cars.length');
+                                                                  print(cars.length);
+                                                                  if (cars.length ==  2) {
+                                                                    if (cars[0].bytes != null) {
+                                                                      final bytesCar1 = cars[0].bytes;
+                                                                      car1 = base64.encode(bytesCar1!);
+                                                                    } else {
+                                                                      car1 = '';
+                                                                    }
+                                                                    if (cars[1].bytes != null) {
+                                                                      final bytesCar2 = cars[1].bytes;
+                                                                      car2 = base64.encode(bytesCar2!);
+                                                                    } else {
+                                                                      car2 = '';
+                                                                    }
+                                                                    car3 = '';
+                                                                  } else if (cars.length == 3) {
+                                                                    if (cars[0].bytes != null) {
+                                                                      final bytesCar1 = cars[0].bytes;
+                                                                      car1 = base64.encode(bytesCar1!);
+                                                                    } else {
+                                                                      car1 = '';
+                                                                    }
+                                                                    if (cars[1].bytes != null) {
+                                                                      final bytesCar2 = cars[1].bytes;
+                                                                      car2 = base64.encode(bytesCar2);
+                                                                    } else {
+                                                                      car2 = '';
+                                                                    }
+                                                                    if (cars[2].bytes != null) {
+                                                                      final bytesCar3 = cars[2].bytes;
+                                                                      car3 = base64.encode(bytesCar3);
+                                                                    } else {
+                                                                      car3 = '';
+                                                                    }
+                                                                  } else {
+                                                                    final bytesCar1 = cars[0].bytes;
+                                                                    car1 = base64.encode(bytesCar1);
+                                                                    car2 = '';
+                                                                    car3 = '';
+                                                                  }
+                                                                  // bytesCar1 = cars[0].bytes;
+                                                                  // bytesCar2 = cars[1].bytes;
+                                                                  // bytesCar3 = cars[2].bytes;
+                                                                  // print(bytes);
+                                                                  // print(bytes.runtimeType);
+                                                                  //var encode64 = base64.encode(bytes!);
+                                                                  setState(() {
+                                                                    encode64 = base64.encode(bytes!);
+                                                                  });
+                                                                  // print('encode64');
+                                                                  // car1 = base64.encode(bytesCar1!);
+                                                                  // car2 = base64.encode(bytesCar2!);
+                                                                  // car3 = base64.encode(bytesCar3!);
+                                                                }
+                                                                print(
+                                                                    _formKey
+                                                                        .currentState
+                                                                        ?.fields
+                                                                );
+
+                                                                print(userId);
+                                                                //final user = User(email: email, phone :phone);
+                                                                dynamic currentUser = User(
+                                                                  id: '1',
+                                                                  userId: userId,
+                                                                  phone: phone,
+                                                                  email: email,
+                                                                  username: username,
+                                                                  birthday: birthday,
+                                                                  login: login,
+                                                                  carname: carname,
+                                                                  password: password,
+                                                                  // path: imageName,
+                                                                  path: encode64,
+                                                                  car1: car1,
+                                                                  car2: car2,
+                                                                  car3: car3,
+
+                                                                );
+                                                                //currentUser = editUser(user);
+                                                                // editUser(
+                                                                //     currentUser);
+
+                                                                findedUser = await getUserbyEmail(currentUser);
+                                                                user = await editUser(
+                                                                    currentUser);
+
+                                                                print(
+                                                                    'after editUser success');
+                                                                // print('state: $uuid');
+                                                                // print(user.path);
+                                                                // print(user.car1);
+                                                                // print(user.car2);
+                                                                // print(user.car3);
+
+                                                                //var userId;
+                                                                //print(editUser.userId)
+                                                                //print(editUser(currentUser));
+                                                                //print(editUser(currentUser).userId);
+
+                                                                //print(
+                                                                //"editUser: ${editUser.userId}");
+                                                                // dynamic id = uuid;
+                                                                // print(
+                                                                //     "currentId: ${id}");
+                                                                //userId = user.userId;
+                                                                // await contactsBox.put(userUuId, currentUser);
+
+                                                                debugPrint(
+                                                                    _formKey
+                                                                        .currentState
+                                                                        ?.value
+                                                                        .toString());
+
+                                                                // debugPrint(box.get('phone2').toString());
+                                                                Provider.of<Data>(context, listen: false).updateAccount(2);
+
+                                                                await Navigator
+                                                                    .pushReplacement(
+                                                                    context,
+                                                                    MaterialPageRoute(
+                                                                        builder: (
+                                                                            context) =>
+                                                                            AccountAdmin())
+                                                                );
+                                                                // Home());
+
+                                                              }
                                                             }
 
                                                             // Navigator
@@ -1473,51 +1473,54 @@ void _launchURL() async {
   //   throw 'Could not launch $url';
 }
 
-showAlertDialog(BuildContext context) {
 
-  AlertDialog alert = AlertDialog(
-    //title: Text("Simple Alert"),
-    content: Text('Вы заполнилил не все поля формы'.toUpperCase(),
-      textAlign: TextAlign.center,
-      style: styleTextAlertDialog,
-    ),
-    actions: <Widget>[
-      Container (
-          padding: const EdgeInsets.only(left: 20, right: 20, bottom: 20),
-          child: Row (
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                MaterialButton(
-                  padding: const EdgeInsets.all(14),
-                  color: const Color(0xFFE4E6FF),
-                  elevation: 0,
-                  shape: const RoundedRectangleBorder(
-                    side: BorderSide.none,
-                    borderRadius: BorderRadius.all(Radius.circular(10),
-                    ),),
-                  child: Text(
-                    'Ок'.toUpperCase(),
-                    textAlign: TextAlign.left,
-                    style: styleTextAlertDialog,
-                  ),
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                  },
-                ),
-
-              ]
-          )
-      )
-
-
-    ],
-  );
-
-  // show the dialog
-  showDialog(
+Future errorMessage(BuildContext context) async {
+  return showDialog(
     context: context,
+    barrierDismissible: false, // user must tap button for close dialog!
     builder: (BuildContext context) {
-      return alert;
+      return AlertDialog(
+        content: Text('Все поля формы обязательны для заполнения'.toUpperCase(),
+          textAlign: TextAlign.center,
+          style: styleTextAlertDialog,
+        ),
+        actions: <Widget>[
+          Container (
+              padding: const EdgeInsets.only(left: 20, right: 20, bottom: 20),
+              child: Row (
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    MaterialButton(
+                        padding: const EdgeInsets.all(14),
+                        color: const Color(0xFFE4E6FF),
+                        elevation: 0,
+                        shape: const RoundedRectangleBorder(
+                          side: BorderSide.none,
+                          borderRadius: BorderRadius.all(Radius.circular(10),
+                          ),),
+                        child: Text(
+                          'Закрыть'.toUpperCase(),
+                          textAlign: TextAlign.right,
+                          style: styleTextAlertDialog,
+                        ),
+                        onPressed: () async {
+                          Navigator.of(context).pop();
+
+                          // await Navigator.pushReplacement(
+                          //     context, MaterialPageRoute(
+                          //     builder: (context) =>
+                          //         SuccessPayment()
+                          // ));
+                        }
+                    ),
+
+                  ]
+              )
+          )
+
+
+        ],
+      );
     },
   );
 }

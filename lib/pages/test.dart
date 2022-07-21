@@ -166,292 +166,299 @@ List<int> data = [137, 80, 78, 71, 13, 10, 26, 10, 0, 0, 0, 13, 73, 72, 68, 82, 
           children: [
             //Text('${counter}'),
           Text('${Provider.of<Data>(context, listen: false).data['counter']}'),
-          MaterialButton(
-              padding: const EdgeInsets.all(14),
-              color: const Color(0xFFE4E6FF),
-              elevation: 0,
-              shape: const RoundedRectangleBorder(
-                side: BorderSide.none,
-                borderRadius: BorderRadius.all(Radius.circular(10),
-                ),),
-              child: Text(
-                'Закрыть'.toUpperCase(),
-                textAlign: TextAlign.left,
-                style: styleTextAlertDialog,
-              ),
-              onPressed: () {
-                Provider.of<Data>(context, listen: false).updateAccount(1);
-              },
+          // MaterialButton(
+          //     padding: const EdgeInsets.all(14),
+          //     color: const Color(0xFFE4E6FF),
+          //     elevation: 0,
+          //     shape: const RoundedRectangleBorder(
+          //       side: BorderSide.none,
+          //       borderRadius: BorderRadius.all(Radius.circular(10),
+          //       ),),
+          //     child: Text(
+          //       'Закрыть'.toUpperCase(),
+          //       textAlign: TextAlign.left,
+          //       style: styleTextAlertDialog,
+          //     ),
+          //     onPressed: () {
+          //       Provider.of<Data>(context, listen: false).updateAccount(1);
+          //     },
 
-            // FormBuilder(
-            //     key: _formKey,
-            //     autovalidateMode: AutovalidateMode
-            //         .always,
-            //     child: Column(
-            //         children: [
-            //           Stack(
-            //             alignment: Alignment.center,
-            //             children: [
-            //
-            //
-            //               Container(
-            //                 width: 284,
-            //                 height: 260,
-            //                 //rgin: EdgeInsets.only(top: 50),
-            //                 // alignment: Alignment.bottomCenter,
-            //                 // decoration: BoxDecoration(
-            //                 //   // borderRadius: BorderRadius
-            //                 //   //     .circular(30),
-            //                 //   //color: Color(0xff515569),
-            //                 //   shape: BoxShape.circle
-            //                 // ),
-            //
-            //
-            //                 child: FormBuilderFilePicker(
-            //                     name: "images",
-            //                     decoration: InputDecoration(
-            //                       isCollapsed: true,
-            //                       fillColor: Color(0xff515569),
-            //                       iconColor: Colors.white,
-            //                       contentPadding: EdgeInsets.all(0),
-            //                       helperStyle: TextStyle(color: Colors.red,),
-            //                       counter: null,
-            //                       counterStyle: TextStyle(color: Colors.blue, height: double.minPositive,),
-            //                       prefix: null,
-            //                       prefixIcon: null,
-            //                       prefixStyle: TextStyle(color: Colors.yellow,),
-            //                       helperText: "uuuuu",
-            //                       counterText: "oooooo",
-            //                       labelText: "eeeee",
-            //                       hintText: "hhhh",
-            //
-            //
-            //                       border: OutlineInputBorder(
-            //                         borderSide: BorderSide.none,
-            //                         //gapPadding: 40,
-            //                       ),
-            //                     ),
-            //                     maxFiles: 3,
-            //
-            //                     previewImages: true,
-            //                     onChanged: (val) => {},
-            //                     selector: Column(
-            //                       children: [
-            //                         Stack(
-            //                             alignment: Alignment.center,
-            //                             children: [
-            //                               Container(
-            //                                 //dding: EdgeInsets.only(bottom: 40),
-            //                                 width: 96,
-            //                                 height: 96,
-            //                                 decoration: const BoxDecoration(
-            //                                     color: Color(0xFF515569),
-            //                                     borderRadius: BorderRadius.all(
-            //                                         Radius.circular(48))
-            //                                 ),
-            //                               ),
-            //                               SvgPicture.asset(
-            //                                 'assets/images/image.svg',
-            //                                 semanticsLabel: 'Icon upload',
-            //                                 height: 18.0,),
-            //                             ]
-            //                         ),
-            //                         Row(
-            //                           mainAxisAlignment: MainAxisAlignment.center,
-            //                             crossAxisAlignment: CrossAxisAlignment.center,
-            //                             children: [
-            //                               SizedBox(height: 40),
-            //                               Text('Загрузить фото', style: TextStyle(
-            //                                 fontSize: 14.0,
-            //                                 fontWeight: FontWeight
-            //                                     .normal,
-            //                                 fontFamily: 'CadillacSans',
-            //                                 color: Color(0xFF515569),
-            //                                 height: 1.4//line-height : font-size
-            //                               ),
-            //                                   textAlign: TextAlign.center),
-            //                               Icon(Icons.file_upload,
-            //                                   semanticLabel: 'Icon upload',
-            //                                   size: 18.0, color: Color(0xFF515569)),
-            //                               //)
-            //                             ]
-            //                         ),
-            //                       ]
-            //                     ),
-            //
-            //                     // onFileLoading: (val) {
-            //                     //   // print(val);
-            //                     // },
-            //                     // onSaved: (input) => data['name'] = input,
-            //                     onSaved: (
-            //                         value) =>
-            //                     {
-            //                       print('value'),
-            //                       print(value.runtimeType),
-            //                       images = value!,
-            //
-            //                     }
-            //                 ),
-            //               )
-            //
-            //             ],
-            //           ),
-            //
-            //
-            //
-            //
-            //
-            //             //]
-            //           //)
-            //
-            //
-            //          // ),
-            //
-            //           Container(
-            //               width: 284,
-            //               margin: const EdgeInsets
-            //                   .only(
-            //                   top: 100,
-            //                   bottom: 45),
-            //               child: MaterialButton(
-            //                 padding: const EdgeInsets
-            //                     .all(
-            //                     17),
-            //                 color: const Color
-            //                     .fromARGB(
-            //                     255,
-            //                     255,
-            //                     255,
-            //                     255),
-            //                 // textColor: const Color(0xFF12141F),
-            //                 child: Text(
-            //                   "зарегистрироваться"
-            //                       .toUpperCase(),
-            //                   style: const TextStyle(
-            //                       fontSize: 14,
-            //                       color: Color(
-            //                           0xFF12141F)),
-            //                 ),
-            //
-            //                 shape: const RoundedRectangleBorder(
-            //                   side: BorderSide
-            //                       .none,
-            //                   borderRadius: BorderRadius
-            //                       .all(
-            //                     Radius
-            //                         .circular(
-            //                         10),
-            //                   ),
-            //                 ),
-            //                 onPressed: () async {
-            //                   if (_formKey
-            //                       .currentState
-            //                       ?.saveAndValidate() ??
-            //                       false) {
-            //
-            //                     _formKey.currentState?.save();
-            //                     // Provider.of<Data>(context, listen: false).updateAccount(data["images"]);
-            //                     _formKey.currentState?.reset();
-            //
-            //
-            //                     debugPrint(
-            //                         'Valid test');
-            //
-            //                     // debugPrint(
-            //                     //     _formKey
-            //                     //         .currentState
-            //                     //         ?.value
-            //                     //         .toString());
-            //
-            //                     //var bytes;
-            //                     debugPrint(_formKey
-            //                         .currentState
-            //                         ?.value.toString());
-            //                     //for androd
-            //                     if(platform == 'android') {
-            //                       print('android');
-            //                       path = images[0].path;
-            //
-            //                       final bytes = File(path!).readAsBytesSync();
-            //                       print(bytes);
-            //                       var decode64 = base64.encode(bytes);
-            //                       print(decode64);
-            //                       //print(data['images'][0].path); //error
-            //                     } else if (platform == 'ios') {
-            //                       print('ios');
-            //                       path = images[0].path;
-            //
-            //                       final bytes = File(path!).readAsBytesSync();
-            //                       print(bytes);
-            //                       var decode64 = base64.encode(bytes);
-            //                       print(decode64);
-            //                     } else {
-            //                       print('windows');
-            //                       //print(images[0].bytes);
-            //                       bytes = images[0].bytes;
-            //                       print(bytes);
-            //                       print(bytes.runtimeType);
-            //                       var decode64 = base64.encode(bytes!);
-            //                       print('decode64');
-            //                       print(decode64);
-            //                       print(decode64.runtimeType); //string
-            //                       var encode64 = base64.decode(decode64);
-            //                       print('encode64');
-            //                       print(encode64);
-            //                       print(encode64.runtimeType); //Uint8List
-            //                       //Image = base64.encode(bytes);
-            //                       //myImage = bytes;
-            //
-            //                     }
-            //
-            //
-            //                     // Navigator
-            //                     //     .pushReplacement(
-            //                     //     context,
-            //                     //     MaterialPageRoute(
-            //                     //         builder: (
-            //                     //             context) =>
-            //                     //             Test2())
-            //                     // );
-            //                     // Home());
-            //
-            //                   } else {
-            //                     debugPrint(
-            //                         'Invalid');
-            //                   }
-            //
-            //                   // Navigator
-            //                   //     .pushReplacement(
-            //                   //     context,
-            //                   //     MaterialPageRoute(
-            //                   //         builder: (
-            //                   //             context) =>
-            //                   //             Account())
-            //                   // );
-            //
-            //                 },
-            //               )
-            //           ),
-            //           bytes != null? Image.memory(
-            //               bytes!,
-            //             fit: BoxFit
-            //                 .cover,
-            //             width: 96,
-            //             height: 96)
-            //
-            //           // : path != null ? Image.file(
-            //           //     File(path!),
-            //           //     fit: BoxFit
-            //           //         .cover,
-            //           //     width: 96,
-            //           //     height: 96)
-            //               : Text('no image')
-            //
-            //
-            //         ]
-            //     )
-            // )
-          )]
+            FormBuilder(
+                key: _formKey,
+                autovalidateMode: AutovalidateMode
+                    .always,
+                child: Column(
+                    children: [
+                      Stack(
+                        alignment: Alignment.center,
+                        children: [
+
+
+                            Container(
+
+                              width: 284,
+                              height: 260,
+
+                              //margin: EdgeInsets.only(top: 50),
+                              // alignment: Alignment.bottomCenter,
+                              // decoration: BoxDecoration(
+                              //   // borderRadius: BorderRadius
+                              //   //     .circular(30),
+                              //   //color: Color(0xff515569),
+                              //   shape: BoxShape.circle
+                              // ),
+
+
+                              child: FormBuilderFilePicker(
+                                  name: "images",
+                                  decoration: InputDecoration(
+
+                                    isCollapsed: true,
+                                    fillColor: Color(0xff515569),
+                                    iconColor: Colors.white,
+                                    contentPadding: EdgeInsets.all(0),
+                                    //helperStyle: TextStyle(color: Colors.red,),
+                                    counterText: 'counter',
+                                    semanticCounterText: 'rrrrr',
+                                    //counter: null,
+                                    //counterStyle: TextStyle(color: Colors.blue, height: double.minPositive,),
+                                    prefix: null,
+                                    prefixIcon: null,
+                                    prefixStyle: TextStyle(color: Colors.yellow,),
+                                    helperText: "uuuuu",
+
+                                    labelText: "eeeee",
+                                    hintText: "hhhh",
+
+
+                                    border: OutlineInputBorder(
+                                      borderSide: BorderSide.none,
+                                      //gapPadding: 40,
+                                    ),
+                                  ),
+                                  maxFiles: 3,
+
+                                  previewImages: true,
+                                  onChanged: (val) => {},
+                                  selector: Column(
+                                      children: [
+                                        Stack(
+                                            alignment: Alignment.center,
+                                            children: [
+                                              Container(
+                                                //dding: EdgeInsets.only(bottom: 40),
+                                                width: 96,
+                                                height: 96,
+                                                decoration: const BoxDecoration(
+                                                    color: Color(0xFF515569),
+                                                    borderRadius: BorderRadius.all(
+                                                        Radius.circular(48))
+                                                ),
+                                              ),
+                                              SvgPicture.asset(
+                                                'assets/images/image.svg',
+                                                semanticsLabel: 'Icon upload',
+                                                height: 18.0,),
+                                            ]
+                                        ),
+                                        Row(
+                                            mainAxisAlignment: MainAxisAlignment.center,
+                                            crossAxisAlignment: CrossAxisAlignment.center,
+                                            children: [
+                                              SizedBox(height: 40),
+                                              Text('Загрузить фото', style: TextStyle(
+                                                  fontSize: 14.0,
+                                                  fontWeight: FontWeight
+                                                      .normal,
+                                                  fontFamily: 'CadillacSans',
+                                                  color: Color(0xFF515569),
+                                                  height: 1.4//line-height : font-size
+                                              ),
+                                                  textAlign: TextAlign.center),
+                                              Icon(Icons.file_upload,
+                                                  semanticLabel: 'Icon upload',
+                                                  size: 18.0, color: Color(0xFF515569)),
+                                              //)
+                                            ]
+                                        ),
+                                      ]
+                                  ),
+
+                                  // onFileLoading: (val) {
+                                  //   // print(val);
+                                  // },
+                                  // onSaved: (input) => data['name'] = input,
+                                  onSaved: (
+                                      value) =>
+                                  {
+                                    print('value'),
+                                    print(value.runtimeType),
+                                    //images = value!,
+
+                                  }
+                              ),
+                            )
+
+
+
+                        ],
+                      ),
+
+
+
+
+
+                        //]
+                      //)
+
+
+                     // ),
+
+                      Container(
+                          width: 284,
+                          margin: const EdgeInsets
+                              .only(
+                              top: 100,
+                              bottom: 45),
+                          child: MaterialButton(
+                            padding: const EdgeInsets
+                                .all(
+                                17),
+                            color: const Color
+                                .fromARGB(
+                                255,
+                                255,
+                                255,
+                                255),
+                            // textColor: const Color(0xFF12141F),
+                            child: Text(
+                              "зарегистрироваться"
+                                  .toUpperCase(),
+                              style: const TextStyle(
+                                  fontSize: 14,
+                                  color: Color(
+                                      0xFF12141F)),
+                            ),
+
+                            shape: const RoundedRectangleBorder(
+                              side: BorderSide
+                                  .none,
+                              borderRadius: BorderRadius
+                                  .all(
+                                Radius
+                                    .circular(
+                                    10),
+                              ),
+                            ),
+                            onPressed: () async {
+                              // if (_formKey
+                              //     .currentState
+                              //     ?.saveAndValidate() ??
+                              //     false) {
+                              //
+                              //   _formKey.currentState?.save();
+                              //   // Provider.of<Data>(context, listen: false).updateAccount(data["images"]);
+                              //   _formKey.currentState?.reset();
+                              //
+                              //
+                              //   debugPrint(
+                              //       'Valid test');
+                              //
+                              //   // debugPrint(
+                              //   //     _formKey
+                              //   //         .currentState
+                              //   //         ?.value
+                              //   //         .toString());
+                              //
+                              //   //var bytes;
+                              //   debugPrint(_formKey
+                              //       .currentState
+                              //       ?.value.toString());
+                              //   //for androd
+                              //   if(platform == 'android') {
+                              //     print('android');
+                              //     path = images[0].path;
+                              //
+                              //     final bytes = File(path!).readAsBytesSync();
+                              //     print(bytes);
+                              //     var decode64 = base64.encode(bytes);
+                              //     print(decode64);
+                              //     //print(data['images'][0].path); //error
+                              //   } else if (platform == 'ios') {
+                              //     print('ios');
+                              //     path = images[0].path;
+                              //
+                              //     final bytes = File(path!).readAsBytesSync();
+                              //     print(bytes);
+                              //     var decode64 = base64.encode(bytes);
+                              //     print(decode64);
+                              //   } else {
+                              //     print('windows');
+                              //     //print(images[0].bytes);
+                              //     bytes = images[0].bytes;
+                              //     print(bytes);
+                              //     print(bytes.runtimeType);
+                              //     var decode64 = base64.encode(bytes!);
+                              //     print('decode64');
+                              //     print(decode64);
+                              //     print(decode64.runtimeType); //string
+                              //     var encode64 = base64.decode(decode64);
+                              //     print('encode64');
+                              //     print(encode64);
+                              //     print(encode64.runtimeType); //Uint8List
+                              //     //Image = base64.encode(bytes);
+                              //     //myImage = bytes;
+                              //
+                              //   }
+                              //
+                              //
+                              //   // Navigator
+                              //   //     .pushReplacement(
+                              //   //     context,
+                              //   //     MaterialPageRoute(
+                              //   //         builder: (
+                              //   //             context) =>
+                              //   //             Test2())
+                              //   // );
+                              //   // Home());
+                              //
+                              // } else {
+                              //   debugPrint(
+                              //       'Invalid');
+                              //}
+
+                              // Navigator
+                              //     .pushReplacement(
+                              //     context,
+                              //     MaterialPageRoute(
+                              //         builder: (
+                              //             context) =>
+                              //             Account())
+                              // );
+
+                            },
+                          )
+                      ),
+                      // bytes != null? Image.memory(
+                      //     bytes!,
+                      //   fit: BoxFit
+                      //       .cover,
+                      //   width: 96,
+                      //   height: 96)
+                      //
+                      // // : path != null ? Image.file(
+                      // //     File(path!),
+                      // //     fit: BoxFit
+                      // //         .cover,
+                      // //     width: 96,
+                      // //     height: 96)
+                      //     : Text('no image')
+
+
+                    ]
+                )
+            )
+          ]
         )
         // platform == 'android' ?
         // Image.file(

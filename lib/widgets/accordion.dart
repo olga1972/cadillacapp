@@ -56,9 +56,15 @@ class _AccordionState extends State<Accordion> {
             ),
 
             onPressed: () {
+              setState(() {
+                _showContent = !_showContent;
+              });
             },
+
             //: null,
+
           ),
+
           Container (
             margin: const EdgeInsets.only(top: 20),
 
@@ -79,7 +85,7 @@ class _AccordionState extends State<Accordion> {
             ),
             _showContent
                 ? Container(
-                    margin: const EdgeInsets.only(top: 60, bottom: 10),
+                    margin: const EdgeInsets.only(top: 70, bottom: 10),
                     padding: const EdgeInsets.symmetric(vertical: 0, horizontal: 0 ),
                     color: const Color(0xFF181C33),
                     child: widget.content

@@ -143,8 +143,8 @@ Future<void> main() async {
 class MyApp extends StatelessWidget {
   MyApp({Key? key,}) : super(key: key);
   static get platform => checkPlatform();
-
   late String cookies;
+
   //get userId => null;
   //final String data = '8f87d509-fb7e-11ec-a426-002590eb3418'; a@a - mobile
   //final String data = '871936c4-f009-11ec-a426-002590eb3418'; z@z - web
@@ -152,7 +152,8 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     bool isAuth = false;
-
+    //cookies = Provider.of<Data>(context).data['cookies'].toString();
+    //print('cookies main');
     // if(_checkIsAuth(context)) {
     //   isAuth = true;
     // } else {
@@ -197,7 +198,7 @@ class MyApp extends StatelessWidget {
 
 
         routes: {
-          '/home': (context) => RegistrationPage(),
+          '/home': (context) => Provider.of<Data>(context).data['cookies'].toString() != ''? Account() : RegistrationPage(),
           //'/home': (context) => Account(),
           //'/home': (context) => MembersAdmin(),
           //'/home': (context) => RegistrationAdmin(userId: '1aa71d78-f91c-11ec-a426-002590eb3418'),

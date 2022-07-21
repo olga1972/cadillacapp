@@ -572,7 +572,7 @@ print(context);
                                                                   Text(
                                                                       '${snapshot
                                                                           .data
-                                                                          ?.email}'
+                                                                          ?.birthday}'
                                                                           .toUpperCase(),
                                                                       textAlign: TextAlign
                                                                           .left,
@@ -847,7 +847,7 @@ print(context);
                                                         margin: EdgeInsets
                                                             .fromLTRB(
                                                             0.0, 0.0, 0.0,
-                                                            45.0),
+                                                            15.0),
                                                         builder: DotSwiperPaginationBuilder(
                                                             color: Colors.white,
                                                             activeColor: Color(
@@ -996,7 +996,7 @@ Future alertDialog(BuildContext context) async {
           Container (
               padding: const EdgeInsets.only(left: 20, right: 20, bottom: 20),
               child: Row (
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  mainAxisAlignment: MainAxisAlignment.end,
                   children: [
                     MaterialButton(
                       padding: const EdgeInsets.all(14),
