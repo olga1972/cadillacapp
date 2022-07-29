@@ -240,10 +240,10 @@ class _NewsAdminState extends State<NewsAdmin> {
                                                                                               var currentNewsId = snapshot.data?.news[selectedIndex].newsId;
                                                                                               deleteNews(currentNewsId);
 
-                                                                                              Route route = MaterialPageRoute(
-                                                                                                  builder: (context) =>
-                                                                                                      const NewsAdmin());
-                                                                                              Navigator.push(context,route);
+                                                                                              // Route route = MaterialPageRoute(
+                                                                                              //     builder: (context) =>
+                                                                                              //         const NewsAdmin());
+                                                                                              // Navigator.push(context,route);
 
                                                                                             },
                                                                                             child: SvgPicture.asset(
@@ -481,7 +481,7 @@ Future confirmDialog(BuildContext context) async {
                         style: styleTextAlertDialog,
                       ),
                       onPressed: () {
-                        var userId;
+
                         Navigator.pushReplacement(
                             context,
                             MaterialPageRoute(

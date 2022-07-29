@@ -15,7 +15,7 @@ $phone = $_POST['phone'];
 $theme = $_POST['theme'];
 $message = $_POST['message'];
 $status = '';
-
+print($email);
 
 // Настройки PHPMailer
 $mail = new PHPMailer\PHPMailer\PHPMailer();

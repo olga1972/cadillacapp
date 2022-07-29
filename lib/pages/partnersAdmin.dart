@@ -224,10 +224,10 @@ class _PartnersAdminState extends State<PartnersAdmin> {
                                                                             var currentPartnerId = snapshot.data?.partners[selectedIndex].partnerId;
                                                                             deletePartner(currentPartnerId);
 
-                                                                            Route route = MaterialPageRoute(
-                                                                                builder: (context) =>
-                                                                                const PartnersAdmin());
-                                                                            Navigator.push(context,route);
+                                                                            // Route route = MaterialPageRoute(
+                                                                            //     builder: (context) =>
+                                                                            //     const PartnersAdmin());
+                                                                            // Navigator.push(context,route);
 
                                                                           },
                                                                           child: SvgPicture.asset(

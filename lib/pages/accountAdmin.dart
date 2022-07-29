@@ -622,10 +622,11 @@ class AccountAdmin extends StatefulWidget {
           15),
           margin: const EdgeInsets.only(
           top: 10, bottom: 25),
-          child: const Text(
-          '379379379379',
+          child: Text(
+              '${snapshot.data?.id}'.toString().padLeft(4, '0')
+                  .toUpperCase(),
           textAlign: TextAlign.left,
-          style: TextStyle(
+          style: const TextStyle(
           fontSize: 16.0,
           fontWeight: FontWeight
               .w600,

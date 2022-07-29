@@ -297,10 +297,10 @@ class _AddBannersState extends State<AddBanners> {
                                                       ),
                                                     ),
                                                     onPressed: () async{
-
+                                                      confirmDialog(context);
                                                       if (_bannersKey.currentState?.saveAndValidate() ??
                                                           false) {
-                                                        confirmDialog(context);
+
                                                         debugPrint('banner added');
                                                         if (platform == 'android' ||
                                                             platform == 'ios') {
@@ -335,14 +335,6 @@ class _AddBannersState extends State<AddBanners> {
 
                                                         addBanner(newBanner);
 
-                                                        Navigator
-                                                            .pushReplacement(
-                                                            context,
-                                                            MaterialPageRoute(
-                                                                builder: (
-                                                                    context) =>
-                                                                    const HomeAdmin()
-                                                            ));
                                                       } else {
                                                         debugPrint('Error');
                                                       }
@@ -451,7 +443,7 @@ Future confirmDialog(BuildContext context) async {
                         style: styleTextAlertDialog,
                       ),
                       onPressed: () {
-                        var partnerId;
+
                         Navigator.pushReplacement(
                             context,
                             MaterialPageRoute(

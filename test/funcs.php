@@ -15,7 +15,7 @@ function add_user() {
 //var_dump($_POST);
 
     // mysqli_stmt_prepare($stmt, "INSERT INTO users (userId, phone, email) VALUES(uuid(), ?, ?)");
-    mysqli_stmt_prepare($stmt, "INSERT INTO users (userId, phone, email, password, date_register, date_expired) VALUES(?, ?, ?, ?, ?, ?)");
+    mysqli_stmt_prepare($stmt, "INSERT INTO users (userId, phone, email, password, dateRegister, dateExpired) VALUES(?, ?, ?, ?, ?, ?)");
     mysqli_stmt_bind_param($stmt, 'ssssss',  $userId, $phone, $email, $password, $dateRegister, $dateExpired);
     mysqli_stmt_execute($stmt);
     mysqli_stmt_get_result($stmt);
@@ -196,8 +196,8 @@ function get_user($userId) {
         
 
         $userInfoArray[0]["id"] = strval($userInfoArray[0]["id"]);
-
-//        var_dump($userInfoArray[0]);
+        
+        
         print(json_encode($userInfoArray[0], JSON_UNESCAPED_SLASHES));
         return $userInfoArray[0];
 //        print('новый пользователь');

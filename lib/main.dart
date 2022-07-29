@@ -211,7 +211,7 @@ class MyApp extends StatelessWidget {
           //'/home': (context) => isAuth ? Account() : RegistrationPage(),
           //'/home': (context) => Test(),
           //'/home': (context) => AccountAdmin(userId:'f1c7fde2-ef1b-11ec-a426-002590eb3418'),
-          //'/home': (context) => AddBanners(),
+          //'/home': (context) => AddNews(),
           //'/home': (context) => Account(userId:userId),
           //'/home': (context) => Members(),
           //'/home': (context) => Account(userId:'f1c7fde2-ef1b-11ec-a426-002590eb3418'),

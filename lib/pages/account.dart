@@ -208,7 +208,7 @@ print(context);
     // print('userId from provider');
     // print(userId);
 
-    user = getUser(userId);
+    user = getUser(userId, context);
 
     //print('userId: ${currentId}');
 
@@ -325,20 +325,8 @@ print(context);
                 }
 
                 if (snapshot.hasData) {
-                  // Image example. Put your data string
-                  //String base64Image = "snapshot.data?.path";
-                  //String? base64Image = snapshot.data?.path;
-                  //bytes = [];
-                  // Image image1;
-                  // var hasLocalImage =
-                  // File('${widget.appDocPath}/background_image').existsSync();
-                  // //if (hasLocalImage) {
-                  //   var bytes =
-                  //   File('${widget.appDocPath}/background_image').readAsBytesSync();
-                  //   image1 = Image.memory(bytes);
-                  //}
 
-
+                  //print(123.toString().padLeft(10, '0'));
 
 
                   //int countImages;
@@ -412,48 +400,6 @@ print(context);
 
                     print('images.length');
                     print(images.length);
-
-
-                    // countImages = images.length;
-                    // imageWeb = 'imageWeb';
-
-                  // } else {
-                  //   late Uint8List bytes;
-                  //   var pathEncode = snapshot.data?.path;
-                  //   var decode64 = base64.decode(pathEncode!);
-                  //   print('decode64');
-                  //   //print(decode64);
-                  //   //print(encode64);
-                  //   //(encode64.runtimeType); //Uint8List
-                  //   bytes = decode64;
-                  //
-                  //   List<String> images = [];
-                  //   imageWeb = snapshot.data?.path.toString() as String;
-                  //   car1Web = snapshot.data?.car1.toString() as String;
-                  //   car2Web = snapshot.data?.car2.toString() as String;
-                  //   car3Web = snapshot.data?.car3.toString() as String;
-                  //   if (imageWeb != '') {
-                  //     isLoadedImage = true;
-                  //   } else {
-                  //     isLoadedImage = false;
-                  //   }
-                  //
-                  //   if (car1Web != '') {
-                  //     imagesWeb.add(car1Web);
-                  //   }
-                  //   if (car1Web != '' && car2Web != '') {
-                  //     imagesWeb.add(car1Web);
-                  //     imagesWeb.add(car2Web);
-                  //   }
-                  //   if (car1Web != '' && car2Web != '' && car3Web != '') {
-                  //     imagesWeb.add(car1Web);
-                  //     imagesWeb.add(car2Web);
-                  //     imagesWeb.add(car3Web);
-                  //   }
-                  //   print('images.length');
-                  //   print(images.length);
-                  //   countImages = imagesWeb.length;
-                  // }
 
                   return Center(
                       child: SizedBox(
@@ -709,10 +655,11 @@ print(context);
                                                     15),
                                                 margin: const EdgeInsets.only(
                                                     top: 10, bottom: 25),
-                                                child: const Text(
-                                                    '379379379379',
+                                                child: Text(
+                                                  '${snapshot.data?.id}'.toString().padLeft(4, '0')
+                                                      .toUpperCase(),
                                                     textAlign: TextAlign.left,
-                                                    style: TextStyle(
+                                                    style: const TextStyle(
                                                       fontSize: 16.0,
                                                       fontWeight: FontWeight
                                                           .w600,
@@ -901,7 +848,7 @@ print(context);
 
 }
 
-Future<User> getUser(userId) async {
+Future<User> getUser(userId, context) async {
   print('getUser');
   print('userId: $userId');
 
@@ -928,7 +875,11 @@ Future<User> getUser(userId) async {
 
     // print(response);
     final userJson = json.decode(response.body);
+    print('username');
     print(User.fromJson(userJson).username);
+    print('dateExpired');
+    print(User.fromJson(userJson).dateExpired);
+    checkAccount(User.fromJson(userJson).dateExpired, context);
     // print(User.fromJson(userJson).path.runtimeType);
     // print('userJson["path"]');
     // print(userJson["path"]);
@@ -954,9 +905,9 @@ Future<User> getUser(userId) async {
     // print(userJson);
 
     var data = User.fromJson(userJson);
-
-    return User.fromJson(userJson);
-    //return(data);
+print(data.dateExpired);
+    //return User.fromJson(userJson);
+    return(data);
 
     //return userJson.map((json) => User.fromJson(userJson));
   } else {
@@ -979,6 +930,29 @@ print(date);
     return false;
   }
 
+}
+
+checkAccount(dateExpired, context) {
+  print('check account');
+  print(dateExpired);
+
+  DateTime expired = new DateFormat("yyyy-MM-dd hh:mm").parse(dateExpired);
+  print(expired);
+  DateTime dateNow = DateTime.now().toLocal();
+  print(dateNow);
+  //String timestampNow = "${dateNow.year.toString()}-${dateNow.month.toString().padLeft(2,'0')}-${dateNow.day.toString().padLeft(2,'0')} ${dateNow.hour.toString().padLeft(2, '0')}:${dateNow.minute.toString().padLeft(2, '0')}";
+  //print(timestampNow);
+  // print(now);
+  var difference = expired.difference(dateNow);
+  print('difference');
+  print(difference.inDays);
+  if(difference.inDays <= 5) {
+    print('invalid');
+    warningDialog(context, difference.inDays);
+
+  } else {
+    print('valid');
+  }
 }
 
 Future alertDialog(BuildContext context) async {
@@ -1013,6 +987,65 @@ Future alertDialog(BuildContext context) async {
                       ),
                       onPressed: () {
                         Navigator.of(context).pop();
+                      },
+                    )
+                  ]
+              )
+          )
+
+
+        ],
+      );
+    },
+  );
+}
+
+Future warningDialog(context, difference) async {
+  late String days;
+  if(difference == 5) {
+    days = 'дней';
+  } else if(difference == 1){
+    days = 'день';
+  } else {
+    days = 'дня';
+  }
+
+  return showDialog(
+    context: context,
+    barrierDismissible: false, // user must tap button for close dialog!
+    builder: (BuildContext context) {
+      return AlertDialog(
+        title: Text('Уведомление'.toUpperCase(), textAlign: TextAlign.center),
+        content: Text('Оплаченный период членства в автоклубе Cadillac заканчивается через ${difference} ${days}! \nОбратитесь к администатору клуба!'.toUpperCase(),
+          textAlign: TextAlign.center,
+          style: styleTextAlertDialog,
+        ),
+        actions: <Widget>[
+          Container (
+              padding: const EdgeInsets.only(left: 20, right: 20, bottom: 20),
+              child: Row (
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    MaterialButton(
+                      padding: const EdgeInsets.all(14),
+                      color: const Color(0xFFE4E6FF),
+                      elevation: 0,
+                      shape: const RoundedRectangleBorder(
+                        side: BorderSide.none,
+                        borderRadius: BorderRadius.all(Radius.circular(10),
+                        ),),
+                      child: Text(
+                        'Закрыть'.toUpperCase(),
+                        textAlign: TextAlign.left,
+                        style: styleTextAlertDialog,
+                      ),
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                        Navigator.pushReplacement(
+                            context, MaterialPageRoute(
+                            builder: (context) =>
+                                Account()
+                        ));
                       },
                     )
                   ]

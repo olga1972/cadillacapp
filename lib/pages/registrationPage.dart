@@ -525,35 +525,46 @@ class _RegistrationPageState extends State<RegistrationPage> {
                                                   }
                                                 } else {
                                                   print('user');
-                                                  switch (counter) {
-                                                    case 0:
-                                                      {
-                                                        Provider.of<Data>(context, listen: false).updateAccount(1);
-                                                        Navigator.pushReplacement(
-                                                            context, MaterialPageRoute(
-                                                            builder: (context) =>
-                                                                SuccessPayment()
-                                                        ));
-                                                        break;
-                                                      }
-                                                    case 1:
-                                                      {
-                                                        Provider.of<Data>(context, listen: false).updateAccount(2);
-                                                        Navigator.pushReplacement(
-                                                            context, MaterialPageRoute(
-                                                            builder: (context) =>
-                                                                Account()
-                                                        ));
-                                                        break;
-                                                      }
-                                                    default:
-                                                      confirmDialog(context);
+                                                  confirmDialog(context);
+                                                  // final request = Request(
+                                                  //   email: email,
+                                                  //   phone: phone,
+                                                  //   theme: 'Запрос на регистрацию',
+                                                  //   message: 'Хочу зарегистрироваться в приложении Cadillac',
+                                                  // );
+                                                  // print(counter);
+                                                  // if(counter == '0') {
+                                                  //   send(request);
+                                                  // }
+                                                  // switch (counter) {
+                                                  //   case 0:
+                                                  //     {
+                                                  //       Provider.of<Data>(context, listen: false).updateAccount(1);
+                                                  //       Navigator.pushReplacement(
+                                                  //           context, MaterialPageRoute(
+                                                  //           builder: (context) =>
+                                                  //               SuccessPayment()
+                                                  //       ));
+                                                  //       break;
+                                                  //     }
+                                                  //   case 1:
+                                                  //     {
+                                                  //       Provider.of<Data>(context, listen: false).updateAccount(2);
+                                                  //       Navigator.pushReplacement(
+                                                  //           context, MaterialPageRoute(
+                                                  //           builder: (context) =>
+                                                  //               Account()
+                                                  //       ));
+                                                  //       break;
+                                                  //     }
+                                                  //   default:
+                                                  //     confirmDialog(context);
                                                   // Navigator.pushReplacement(
                                                   //     context, MaterialPageRoute(
                                                   //     builder: (context) =>
                                                   //         RegistrationPage()
                                                   // ));
-                                                  }
+                                                  //}
                                                 }
                                               }
                                             }
@@ -759,22 +770,63 @@ class _RegistrationPageState extends State<RegistrationPage> {
                               style: styleTextAlertDialog,
                             ),
                             onPressed: () async {
-                              final request = Request(
-                                email: email,
-                                phone: phone,
-                                theme: 'Запрос на регистрацию',
-                                message: 'Хочу зарегистрироваться в приложении Cadillac',
-                              );
-                              send(request);
-                              Provider.of<Data>(context, listen: false).updateAccount(1);
+                              print('onpresssed');
+                              print(counter);
+                              print(email);
+                              switch (counter) {
+                                case '0':
+                                  {
+                                    print('case 0');
+                                    final request = Request(
+                                      email: email,
+                                      phone: phone,
+                                      theme: 'Запрос на регистрацию',
+                                      message: 'Хочу зарегистрироваться в приложении Cadillac',
+                                    );
+                                    print(counter);
 
-                              Navigator.of(context).pop();
+                                    send(request);
 
-                              await Navigator.pushReplacement(
-                                  context, MaterialPageRoute(
-                                  builder: (context) =>
-                                      SuccessPayment()
-                              ));
+                                    Provider.of<Data>(context, listen: false).updateAccount(1);
+
+
+                                    Navigator.of(context).pop();
+
+                                    await Navigator.pushReplacement(
+                                        context, MaterialPageRoute(
+                                        builder: (context) =>
+                                            SuccessPayment()
+                                    ));
+                                    break;
+                                  }
+                                case '1':
+                                  {
+                                    print('case 1');
+                                    Provider.of<Data>(context, listen: false).updateAccount(2);
+                                    await Navigator.pushReplacement(
+                                        context, MaterialPageRoute(
+                                        builder: (context) =>
+                                            SuccessPayment()
+                                    ));
+                                    break;
+                                  }
+                                case '2':
+                                  {
+                                    print('case 2');
+                                    await Navigator.pushReplacement(
+                                        context, MaterialPageRoute(
+                                        builder: (context) =>
+                                            Account()
+                                    ));
+                                    break;
+                                  }
+                                // default:
+                                //   {
+                                //     print('case default');
+                                //     await Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => SuccessPayment()));
+                                //   }
+                        //   confirmDialog(context);
+                                }
 
                               _formKey.currentState?.save();
                               //User user = User(name: 'Konstantin', age: 34);
@@ -904,7 +956,8 @@ class _RegistrationPageState extends State<RegistrationPage> {
       }
     }
 
-    send(Request request) async {
+    Future send(Request request) async {
+    print('send');
       dynamic email = request.email;
       dynamic phone = request.phone;
       dynamic theme = request.theme;

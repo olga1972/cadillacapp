@@ -460,10 +460,11 @@ class _AddNewsState extends State<AddNews> {
                                                 ),
                                               ),
                                               onPressed: () {
+                                                confirmDialog(context);
 
                                                 if (_newsKey.currentState?.saveAndValidate() ??
                                                     false) {
-                                                  confirmDialog(context);
+
                                                   debugPrint('News added');
                                                   if (platform == 'android' ||
                                                       platform == 'ios') {
@@ -499,14 +500,14 @@ class _AddNewsState extends State<AddNews> {
 
                                                   addNews(news);
 
-                                                  Navigator
-                                                      .pushReplacement(
-                                                      context,
-                                                      MaterialPageRoute(
-                                                          builder: (
-                                                              context) =>
-                                                              const NewsAdmin()
-                                                      ));
+                                                  // Navigator
+                                                  //     .pushReplacement(
+                                                  //     context,
+                                                  //     MaterialPageRoute(
+                                                  //         builder: (
+                                                  //             context) =>
+                                                  //             const NewsAdmin()
+                                                  //     ));
                                                 } else {
                                                   debugPrint('Error');
                                                 }
@@ -614,7 +615,6 @@ Future confirmDialog(BuildContext context) async {
                         style: styleTextAlertDialog,
                       ),
                       onPressed: () {
-                        var userId;
                         Navigator.pushReplacement(
                             context,
                             MaterialPageRoute(

@@ -299,10 +299,11 @@ class _AddPartnersState extends State<AddPartners> {
                                                       ),
                                                     ),
                                                     onPressed: () async{
+                                                      confirmDialog(context);
 
                                                       if (_partnersKey.currentState?.saveAndValidate() ??
                                                           false) {
-                                                        confirmDialog(context);
+
                                                         debugPrint('Partner added');
                                                         if (platform == 'android' ||
                                                             platform == 'ios') {
@@ -338,14 +339,14 @@ class _AddPartnersState extends State<AddPartners> {
 
                                                         addPartner(partner);
 
-                                                        Navigator
-                                                            .pushReplacement(
-                                                            context,
-                                                            MaterialPageRoute(
-                                                                builder: (
-                                                                    context) =>
-                                                                    const PartnersAdmin()
-                                                            ));
+                                                        // Navigator
+                                                        //     .pushReplacement(
+                                                        //     context,
+                                                        //     MaterialPageRoute(
+                                                        //         builder: (
+                                                        //             context) =>
+                                                        //             const PartnersAdmin()
+                                                        //     ));
                                                       } else {
                                                         debugPrint('Error');
                                                       }
@@ -453,7 +454,6 @@ Future confirmDialog(BuildContext context) async {
                         style: styleTextAlertDialog,
                       ),
                       onPressed: () {
-                        var partnerId;
                         Navigator.pushReplacement(
                             context,
                             MaterialPageRoute(
@@ -475,6 +475,7 @@ Future confirmDialog(BuildContext context) async {
                       ),
                       onPressed: () {
                         Navigator.of(context).pop();
+
                       },
                     )
                   ]
