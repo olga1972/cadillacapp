@@ -1102,22 +1102,24 @@ class _SuccessPaymentState extends State<SuccessPayment> {
                                                               dynamic
                                                                   currentUser =
                                                                   User(
-                                                                id: '1',
-                                                                userId: userId,
-                                                                phone: phone,
-                                                                email: email,
-                                                                username:
-                                                                    username,
-                                                                birthday:
-                                                                    birthday,
-                                                                login: login,
-                                                                carname: carname,
-                                                                password: password,
-                                                                // path: imageName,
-                                                                path: encode64,
-                                                                car1: car1,
-                                                                car2: car2,
-                                                                car3: car3,
+                                                                      id: '1',
+                                                                      userId: userId,
+                                                                      phone: phone,
+                                                                      email: email,
+                                                                      username:
+                                                                          username,
+                                                                      birthday:
+                                                                          birthday,
+                                                                      login: login,
+                                                                      carname: carname,
+                                                                      password: password,
+                                                                      // path: imageName,
+                                                                      path: encode64,
+                                                                      car1: car1,
+                                                                      car2: car2,
+                                                                      car3: car3,
+                                                                      dateRegister: 'dateRegister',
+                                                                      dateExpired: 'dateExpired'
                                                               );
                                                               //currentUser = editUser(user);
                                                               // editUser(
@@ -1251,6 +1253,11 @@ class _SuccessPaymentState extends State<SuccessPayment> {
       if (user.car1 != 'null') car1 = user.car1;
       if (user.car2 != 'null') car2 = user.car2;
       if (user.car3 != 'null') car3 = user.car3;
+      dynamic dateRegister = user.dateRegister;
+      dynamic dateExpired = user.dateExpired;
+      print('user');
+      print(login);
+
 
       String apiurl = baseUrl + "/test/get_user_by_email.php";
       // String apiurl = "http://localhost/test/edit.php";
@@ -1263,7 +1270,9 @@ class _SuccessPaymentState extends State<SuccessPayment> {
         'car1': car1 != '' ? car1 : '',
         'car2': car2 != '' ? car2 : '',
         'car3': car3 != '' ? car3 : '',
-        'password': password
+        'password': password,
+        'dateRegister': dateRegister,
+        'dateExpired': dateExpired,
       }, headers: {
         'Accept': 'application/json, charset=utf-8',
         "Access-Control-Allow-Origin": "*",

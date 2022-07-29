@@ -15,8 +15,8 @@ function add_user() {
 //var_dump($_POST);
 
     // mysqli_stmt_prepare($stmt, "INSERT INTO users (userId, phone, email) VALUES(uuid(), ?, ?)");
-    mysqli_stmt_prepare($stmt, "INSERT INTO users (userId, phone, email, password) VALUES(?, ?, ?, ?)");
-    mysqli_stmt_bind_param($stmt, 'ssss',  $userId, $phone, $email, $password);
+    mysqli_stmt_prepare($stmt, "INSERT INTO users (userId, phone, email, password, date_register, date_expired) VALUES(?, ?, ?, ?, ?, ?)");
+    mysqli_stmt_bind_param($stmt, 'ssssss',  $userId, $phone, $email, $password, $dateRegister, $dateExpired);
     mysqli_stmt_execute($stmt);
     mysqli_stmt_get_result($stmt);
     //print(mysqli_stmt_errno($stmt));
@@ -115,6 +115,7 @@ function get_user_by_email() {
 function get_user_all() {
 
     extract($_POST); // only login
+//var_dump($_POST);
 
     global $link;
     global $stmt;
@@ -124,7 +125,7 @@ function get_user_all() {
     mysqli_stmt_execute($stmt);
     $mysqli_result = mysqli_stmt_get_result($stmt);
 
-//    print(mysqli_stmt_errno($stmt));
+//print(mysqli_stmt_errno($stmt));
 //    $newUser = mysqli_fetch_all($mysqli_result);
 
 //    var_dump($newUser);
@@ -457,7 +458,7 @@ function delete_news() {
     global $stmt;
     clear();
     extract($_POST);
-    var_dump($_POST);
+    //var_dump($_POST);
 
     mysqli_stmt_prepare($stmt,"DELETE FROM news WHERE newsId = ?");
     mysqli_stmt_bind_param($stmt,'s', $newsId);
@@ -470,7 +471,7 @@ function delete_user() {
     global $stmt;
     clear();
     extract($_POST);
-    var_dump($_POST);
+    //var_dump($_POST);
 
     mysqli_stmt_prepare($stmt,"DELETE FROM users WHERE userId = ?");
     mysqli_stmt_bind_param($stmt,'s', $userId);
@@ -556,7 +557,7 @@ function delete_partner() {
     global $stmt;
     clear();
     extract($_POST);
-    var_dump($_POST);
+    //var_dump($_POST);
 
     mysqli_stmt_prepare($stmt,"DELETE FROM partners WHERE partnerId = ?");
     mysqli_stmt_bind_param($stmt,'s', $partnerId);
@@ -640,7 +641,7 @@ function delete_banner() {
     global $stmt;
     clear();
     extract($_POST);
-    var_dump($_POST);
+    //var_dump($_POST);
 
     mysqli_stmt_prepare($stmt,"DELETE FROM banners WHERE bannerId = ?");
     mysqli_stmt_bind_param($stmt,'s', $bannerId);

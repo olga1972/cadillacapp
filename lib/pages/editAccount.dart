@@ -956,6 +956,8 @@ class _EditState extends State<Edit> {
                                                                         car1: car1,
                                                                         car2: car2,
                                                                         car3: car3,
+                                                                        dateRegister: 'dateRegister',
+                                                                        dateExpired: 'dateExpired'
 
                                                                       );
                                                                       //currentUser = editUser(user);

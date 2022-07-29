@@ -76,6 +76,10 @@ class _AddUserState extends State<AddUser> {
 
   late String platform;
   late String text;
+  late String dateRegister;
+  late String dateNowRegister;
+  late String dateExpired;
+  late String dateYearExpired;
 
 
   //late final password;
@@ -112,6 +116,14 @@ class _AddUserState extends State<AddUser> {
         .data['platform'].toString();
     print(platform);
     print(newPassword);
+    DateTime dateNowRegister = DateTime.now().toLocal();
+    print(dateNowRegister);
+    String timestampRegister = "${dateNowRegister.year.toString()}-${dateNowRegister.month.toString().padLeft(2,'0')}-${dateNowRegister.day.toString().padLeft(2,'0')} ${dateNowRegister.hour.toString().padLeft(2, '0')}:${dateNowRegister.minute.toString().padLeft(2, '0')}";
+    print(timestampRegister);
+    DateTime dateYearExpired = DateTime(dateNowRegister.year + 1, dateNowRegister.month, dateNowRegister.day, dateNowRegister.hour, dateNowRegister.minute);
+    print(dateYearExpired);
+    String timestampExpired = "${dateYearExpired.year.toString()}-${dateYearExpired.month.toString().padLeft(2,'0')}-${dateYearExpired.day.toString().padLeft(2,'0')} ${dateYearExpired.hour.toString().padLeft(2, '0')}:${dateYearExpired.minute.toString().padLeft(2, '0')}";
+
 
     return MaterialApp(
         theme: ThemeData(scaffoldBackgroundColor: const Color(0xFF2C335E)),
@@ -183,7 +195,7 @@ class _AddUserState extends State<AddUser> {
                                                         .only(
                                                         bottom: 10),
                                                     child: Text(
-                                                      'ваш email'.toUpperCase(),
+                                                      'email'.toUpperCase(),
                                                       textAlign: TextAlign.left,
                                                       style: styleTitleFormInput,
                                                     ),
@@ -195,7 +207,7 @@ class _AddUserState extends State<AddUser> {
                                                       cursorWidth: 1.0,
                                                       cursorColor: Colors.white,
                                                       style: styleFormInput,
-                                                      // decoration: ThemeHelper().textInputDecoration('', 'Введите ваш email', 'Введите ваш email'),
+                                                      // decoration: ThemeHelper().textInputDecoration('', 'Введите email', 'Введите email'),
                                                       decoration: const InputDecoration(
                                                         contentPadding: EdgeInsets
                                                             .all(16),
@@ -211,7 +223,7 @@ class _AddUserState extends State<AddUser> {
                                                         fillColor: Color(
                                                             0XFF515569),
                                                         filled: true,
-                                                        hintText: "Введите ваш email",
+                                                        hintText: "Введите email",
                                                         hintStyle: TextStyle(
                                                           color: Colors.white60,
                                                         ),
@@ -256,7 +268,7 @@ class _AddUserState extends State<AddUser> {
                                                         .only(
                                                         top: 10, bottom: 10),
                                                     child: Text(
-                                                      'ваш номер телефона'
+                                                      'номер телефона'
                                                           .toUpperCase(),
                                                       textAlign: TextAlign.left,
                                                       style: styleTitleFormInput,
@@ -326,7 +338,7 @@ class _AddUserState extends State<AddUser> {
                                                     margin: const EdgeInsets
                                                         .only(
                                                         top: 10, bottom: 10),
-                                                    child: Text('ваш пароль'
+                                                    child: Text('пароль'
                                                         .toUpperCase(),
                                                       textAlign: TextAlign.left,
                                                       style: styleTitleFormInput,
@@ -381,6 +393,120 @@ class _AddUserState extends State<AddUser> {
                                                           .visiblePassword
 
                                                   ),
+
+                                                  Container(
+                                                    margin: const EdgeInsets
+                                                        .only(
+                                                        top: 10, bottom: 10),
+                                                    child: Text(
+                                                      'дата регистрации'
+                                                          .toUpperCase(),
+                                                      textAlign: TextAlign.left,
+                                                      style: styleTitleFormInput,
+                                                    ),
+                                                  ),
+
+                                                  FormBuilderTextField(
+                                                      name: 'dateRegister',
+                                                      cursorWidth: 1.0,
+                                                      cursorColor: Colors.white,
+                                                      style: styleFormInput,
+                                                      initialValue: timestampRegister,
+                                                      // decoration: ThemeHelper().textInputDecoration('+7 ___-___-__-__', '', ''),
+                                                      autovalidateMode: AutovalidateMode
+                                                          .always,
+                                                      decoration: const InputDecoration(
+                                                        contentPadding: EdgeInsets
+                                                            .all(16),
+                                                        border: OutlineInputBorder(
+                                                            borderSide: BorderSide
+                                                                .none,
+                                                            borderRadius: BorderRadius
+                                                                .all(
+                                                                Radius.circular(
+                                                                    10))
+                                                        ),
+
+                                                        fillColor: Color(
+                                                            0XFF515569),
+                                                        filled: true,
+
+                                                      ),
+                                                      // onChanged: _onChanged,
+
+                                                      // valueTransformer: (text) => num.tryParse(text),
+                                                      // validator: (value) => _validatePhoneNumber(value!)
+                                                      //     ? null
+                                                      //     : 'Phone number must be entered as (###)###-####',
+
+                                                      validator: FormBuilderValidators
+                                                          .compose([
+                                                            (val) {
+                                                              return null;
+                                                        }
+                                                        // FormBuilderValidators.required(context),
+                                                        // FormBuilderValidators.numeric(context),
+                                                        // FormBuilderValidators.max(context, 70),
+                                                      ]),
+                                                      onSaved: (value) =>
+                                                      dateRegister = value!,
+                                                      keyboardType: TextInputType
+                                                          .text
+                                                  ),
+
+                                                  Visibility(
+                                                    visible: true,
+                                                    child: FormBuilderTextField(
+                                                        name: 'dateExpired',
+                                                        cursorWidth: 1.0,
+                                                        cursorColor: Colors.white,
+                                                        style: styleFormInput,
+                                                        initialValue: timestampExpired,
+                                                        // decoration: ThemeHelper().textInputDecoration('+7 ___-___-__-__', '', ''),
+                                                        autovalidateMode: AutovalidateMode
+                                                            .always,
+                                                        decoration: const InputDecoration(
+                                                          contentPadding: EdgeInsets
+                                                              .all(16),
+                                                          border: OutlineInputBorder(
+                                                              borderSide: BorderSide
+                                                                  .none,
+                                                              borderRadius: BorderRadius
+                                                                  .all(
+                                                                  Radius.circular(
+                                                                      10))
+                                                          ),
+
+                                                          fillColor: Color(
+                                                              0XFF515569),
+                                                          filled: true,
+
+                                                        ),
+                                                        // onChanged: _onChanged,
+
+                                                        // valueTransformer: (text) => num.tryParse(text),
+                                                        // validator: (value) => _validatePhoneNumber(value!)
+                                                        //     ? null
+                                                        //     : 'Phone number must be entered as (###)###-####',
+
+                                                        validator: FormBuilderValidators
+                                                            .compose([
+                                                              (val) {
+                                                            return null;
+                                                          }
+                                                          // FormBuilderValidators.required(context),
+                                                          // FormBuilderValidators.numeric(context),
+                                                          // FormBuilderValidators.max(context, 70),
+                                                        ]),
+                                                        onSaved: (value) =>
+                                                        dateExpired = value!,
+                                                        keyboardType: TextInputType
+                                                            .text
+                                                    ),
+                                                  ),
+
+
+
                                                   Container(
                                                       width: 284,
                                                       margin:
@@ -447,7 +573,9 @@ class _AddUserState extends State<AddUser> {
                                                                 car1: 'car1',
                                                                 car2: 'car2',
                                                                 car3: 'car3',
-                                                                password: password
+                                                                password: password,
+                                                                dateRegister: dateRegister,
+                                                                dateExpired: dateExpired,
 
                                                             );
                                                             //currentUser = editUser(user);
@@ -532,6 +660,8 @@ class _AddUserState extends State<AddUser> {
     dynamic phone = user.phone;
     dynamic email = user.email;
     dynamic password = user.password;
+    dynamic dateRegister = user.dateRegister;
+    dynamic dateExpired = user.dateExpired;
     //dynamic path = user.path;
     //(path);
     dynamic userId = user.userId;
@@ -550,7 +680,9 @@ class _AddUserState extends State<AddUser> {
           'userId': userId,
           'password': password,
           'phone': phone,
-          'email': email
+          'email': email,
+          'dateRegister': dateRegister,
+          'dateExpired': dateExpired,
         });
 
     // final response = await http.post(Uri.parse(apiurl));
@@ -636,7 +768,7 @@ class _AddUserState extends State<AddUser> {
       barrierDismissible: false, // user must tap button for close dialog!
       builder: (BuildContext context) {
         return AlertDialog(
-          // title: Text('Подтвердите ваш заказ'),
+          // title: Text('Подтвердите заказ'),
           content: Text('Добавить пользователя'.toUpperCase(),
             textAlign: TextAlign.center,
             style: styleTextAlertDialog,

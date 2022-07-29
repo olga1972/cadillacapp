@@ -41,6 +41,8 @@ class User {
   late final String car2;
   late final String car3;
   late final String password;
+  late final dynamic dateRegister;
+  late final dynamic dateExpired;
 
   User({
     required this.id,
@@ -56,6 +58,8 @@ class User {
     required this.car2,
     required this.car3,
     required this.password,
+    required this.dateRegister,
+    required this.dateExpired
     //this.photo,
   });
 
@@ -73,7 +77,9 @@ class User {
       car1: json['car1'] as String,
       car2: json['car2'] as String,
       car3: json['car3'] as String,
-      password: json['password'] as String
+      password: json['password'] as String,
+      dateRegister: json['dateRegister'] as dynamic,
+      dateExpired: json['dateExpired'] as dynamic,
     );
   }
 
@@ -107,6 +113,8 @@ class User {
     data['car2'] = car2;
     data['car3'] = car3;
     data['password'] = password;
+    data['dateRegister'] = dateRegister;
+    data['dateExpired'] = dateExpired;
     return data;
   }
 }

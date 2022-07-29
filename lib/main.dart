@@ -40,6 +40,7 @@ import 'package:cadillac/pages/registrationAdmin.dart';
 import 'package:cadillac/pages/shop.dart';
 import 'package:cadillac/pages/success-payment.dart';
 import 'package:cadillac/pages/test.dart';
+import 'package:cadillac/widgets/titlePage.dart';
 import 'package:flutter/foundation.dart';
 
 import 'package:flutter/material.dart';
@@ -302,17 +303,62 @@ class _MyHomePageState extends State<MyHomePage> {
 
     return Scaffold(
         // body:Home(),
-        body: Text('2Став владельцем Cadillac, \nвы не просто приобретаете \nавтомобиль класса-люкс, \nвы вступаете в элитное сообщество, единомышленников, объединённых общими ценностями и интересами.'.toUpperCase(),
-          style:const TextStyle (
-            fontSize: 14.0,
-            fontWeight: FontWeight.normal,
-            fontFamily: 'CadillacSans',
-            color: Color(0xFF8F97BF),
-            height: 1.7, //line-height : font-size
-          ),
-          textAlign: TextAlign.center,
-          softWrap: true,
-        ),
+        body: Center(
+          child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Container(
+                  width: 284,
+                  margin: const EdgeInsets.only(
+                      bottom: 58),
+                  child: const TitlePage(
+                      title: 'главная'),
+                ),
+                Text('Став владельцем Cadillac, \nвы не просто приобретаете \nавтомобиль класса-люкс, \nвы вступаете в элитное сообщество, единомышленников, объединённых общими ценностями и интересами.'.toUpperCase(),
+                  style:const TextStyle (
+                    fontSize: 14.0,
+                    fontWeight: FontWeight.normal,
+                    fontFamily: 'CadillacSans',
+                    color: Color(0xFF8F97BF),
+                    height: 1.7, //line-height : font-size
+                  ),
+                  textAlign: TextAlign.center,
+                  softWrap: true,
+                ),
+                SizedBox(
+                    height: 40
+                ),
+                MaterialButton(
+                  padding: const EdgeInsets.all(17),
+                  color: const Color.fromARGB(255, 255, 255, 255),
+                  // textColor: const Color(0xFF12141F),
+                  child: Text(
+                    "На страницу регистрации".toUpperCase(),
+                    style: const TextStyle(
+                    fontSize: 14,
+                    color: Color(0xFF12141F)),
+                  ),
+
+                  shape: const RoundedRectangleBorder(
+                    side: BorderSide.none,
+                    borderRadius:
+                    BorderRadius.all(
+                    Radius.circular(10),
+                    ),
+                    ),
+                  onPressed: () async {
+                    Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                            builder:
+                                (context) =>
+                                RegistrationPage()));
+                  }
+            )
+              ]
+          )
+        )
 
 
     );
