@@ -43,6 +43,10 @@ import 'gift.dart';
 import 'editAccount.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'package:dio/dio.dart';
+import 'package:dio_cookie_manager/dio_cookie_manager.dart';
+import 'package:cookie_jar/cookie_jar.dart';
+
 //class Account extends StatelessWidget {
 class Account extends StatefulWidget {
   // final User currentUser;
@@ -207,6 +211,22 @@ print(context);
     // print(platform);
     // print('userId from provider');
     // print(userId);
+
+    List<Cookie> cookies = [
+      Cookie("uuid", "$userId")
+    ];
+
+    var dio =  Dio();
+    var cookieJar=CookieJar();
+    dio.interceptors.add(CookieManager(cookieJar));
+
+    //Save cookies
+    cookieJar.saveFromResponse(Uri.parse(baseUrl), cookies);
+
+    print(cookies);
+    var response = getCookie();
+    print('cookies account');
+    print(response);
 
     user = getUser(userId, context);
 
@@ -913,6 +933,36 @@ print(data.dateExpired);
   } else {
     throw Exception('Error fetching users');
   }
+}
+
+getCookie() async {
+  print('get cookie');
+  var dio =  Dio();
+  var cookieJar=CookieJar();
+  dio.interceptors.add(CookieManager(cookieJar));
+
+  // Get cookies
+  var cookies = cookieJar.loadForRequest(Uri.parse("https://cadillacapp.ru/"));
+  print(cookies);
+  // second request with the cookie
+  print(dio.get("https://cadillacapp.ru/"));
+
+  var response = await dio.get("https://cadillacapp.ru/");
+  print(response);
+
+  return response;
+  //dynamic cookies = {"uuid", "9265988f-e70d-11ec-af6a-00ff21c5bb0a"};
+
+
+  // List<Cookie> cookies = [
+  //   new Cookie("uuid", "9265988f-e70d-11ec-af6a-00ff21c5bb0a"),
+  //   // ....
+  // ];
+
+  //Save cookies
+  //cookieJar.saveFromResponse(Uri.parse("http://localhost"), cookies);
+  //print(cookies);
+  //await dio.get(baseUrl);
 }
 
 getDate(date) {

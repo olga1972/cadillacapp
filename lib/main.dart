@@ -70,6 +70,8 @@ import 'package:cadillac/pages/registrationPage.dart';
 
 
 
+
+
 checkPlatform() {
   String platform;
 
@@ -110,6 +112,10 @@ checkPlatform() {
 
 Future<void> main() async {
   runApp(MyApp());
+
+
+  // second request with the cookie
+  //await dio.get("https://cadillacapp.ru/");
 
 //   var dio = Dio();
 //   // List<Cookie> cookies = [
@@ -153,6 +159,11 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     bool isAuth = false;
+
+    // Cookie. getCookie(uuid);
+    // Cookie getCookie(String name) => _client.send(
+    //     _handler.cookies.buildGetCookieRequest(name),
+    //         (response) => _handler.cookies.parseGetCookieResponse(response, name));
     //cookies = Provider.of<Data>(context).data['cookies'].toString();
     //print('cookies main');
     // if(_checkIsAuth(context)) {

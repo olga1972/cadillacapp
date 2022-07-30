@@ -168,9 +168,14 @@ class _RegistrationPageState extends State<RegistrationPage> {
   //   // notifyListeners();
   // }
 
+
   @override
   Widget build(BuildContext context) {
+
     print('registr page');
+
+    var cookies = getCookie();
+    print(cookies);
     print(isAuth);
     //userId = Provider.of<Data>(context, listen: false).data['userId'].toString();
     // platform = Provider.of<Data>(context).data['platform'].toString();
@@ -1015,8 +1020,21 @@ class Request {
 
   getCookie() async {
     print('get cookie');
-    var dio = Dio();
-    dynamic cookies = {"uuid", "9265988f-e70d-11ec-af6a-00ff21c5bb0a"};
+    var dio =  Dio();
+    var cookieJar=CookieJar();
+    dio.interceptors.add(CookieManager(cookieJar));
+
+    // Get cookies
+    var cookies = cookieJar.loadForRequest(Uri.parse("https://cadillacapp.ru/"));
+    print(cookies);
+    // second request with the cookie
+    print(dio.get("https://cadillacapp.ru/"));
+
+    var response = await dio.get("https://cadillacapp.ru/");
+    print(response);
+
+    return response;
+    //dynamic cookies = {"uuid", "9265988f-e70d-11ec-af6a-00ff21c5bb0a"};
 
 
       // List<Cookie> cookies = [
@@ -1024,18 +1042,10 @@ class Request {
       //   // ....
       // ];
 
-
-      var cookieJar = PersistCookieJar();
-      dio.interceptors.add(CookieManager(cookieJar));
       //Save cookies
       //cookieJar.saveFromResponse(Uri.parse("http://localhost"), cookies);
-
-    //Get cookies
-      cookieJar.loadForRequest(Uri.parse(baseUrl));
-      print(cookieJar.loadForRequest(Uri.parse(baseUrl)));
-
       //print(cookies);
-      await dio.get(baseUrl);
+      //await dio.get(baseUrl);
   }
 
 
