@@ -411,7 +411,7 @@ class AccountAdmin extends StatefulWidget {
           height: 36,
           margin: const EdgeInsets
               .only(
-          right: 18.0,),
+          right: 28.0,),
           alignment: Alignment
               .centerLeft,
           child: SvgPicture
@@ -523,8 +523,8 @@ class AccountAdmin extends StatefulWidget {
 
           'assets/images/edit.svg',
           semanticsLabel: 'Icon edit',
-          height: 15.0,
-
+          height: 22.0,
+            color: Color(0xFF515569),
           ),
           onPressed: () {
           Route route = MaterialPageRoute(

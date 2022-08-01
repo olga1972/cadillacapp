@@ -64,6 +64,7 @@ import 'package:cadillac/pages/home.dart';
 
 var uuid = '';
 late bool isAuth;
+//late bool isShowConfirmRegister;
 
 
 class RegistrationPage extends StatefulWidget {
@@ -84,6 +85,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
     setState(() {
       uuid = '';
       isAuth = false;
+
     });
   }
 
@@ -120,6 +122,8 @@ class _RegistrationPageState extends State<RegistrationPage> {
   var cookie;
   var counter;
   var isAdmin;
+  var isShowConfirmRegister;
+
 
   // dynamic id;
 
@@ -175,13 +179,16 @@ class _RegistrationPageState extends State<RegistrationPage> {
     print('registr page');
 
     var cookies = getCookie();
-    print(cookies);
-    print(isAuth);
+    // print(cookies);
+    // print(isAuth);
     //userId = Provider.of<Data>(context, listen: false).data['userId'].toString();
     // platform = Provider.of<Data>(context).data['platform'].toString();
     // print(platform);
     // print('userId from provider');
-    // print(userId);
+    //
+    isShowConfirmRegister = Provider
+        .of<Data>(context)
+        .data['isShowConfirmRegister'].toString();
     isAdmin = Provider
         .of<Data>(context)
         .data['isAdmin'].toString();
@@ -190,6 +197,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
         .data['counter'].toString();
     print('counter');
     print(counter);
+    print(isShowConfirmRegister);
     var minHeight = MediaQuery
         .of(context)
         .size
@@ -530,7 +538,21 @@ class _RegistrationPageState extends State<RegistrationPage> {
                                                   }
                                                 } else {
                                                   print('user');
-                                                  confirmDialog(context);
+                                                  print(isShowConfirmRegister);
+
+                                                  if(isShowConfirmRegister == 'false') {
+                                                    Provider.of<Data>(context, listen: false).checkIsShowConfirmRegister(true);
+                                                    confirmDialog(context);
+
+                                                  } else {
+
+                                                    Provider.of<Data>(context, listen: false).updateAccount(2);
+                                                      Navigator.pushReplacement(
+                                                          context, MaterialPageRoute(
+                                                          builder: (context) =>
+                                                              SuccessPayment()
+                                                      ));
+                                                  }
                                                   // final request = Request(
                                                   //   email: email,
                                                   //   phone: phone,
@@ -1026,12 +1048,12 @@ class Request {
 
     // Get cookies
     var cookies = cookieJar.loadForRequest(Uri.parse("https://cadillacapp.ru/"));
-    print(cookies);
+    //print(cookies);
     // second request with the cookie
-    print(dio.get("https://cadillacapp.ru/"));
+    //print(dio.get("https://cadillacapp.ru/"));
 
     var response = await dio.get("https://cadillacapp.ru/");
-    print(response);
+    //print(response);
 
     return response;
     //dynamic cookies = {"uuid", "9265988f-e70d-11ec-af6a-00ff21c5bb0a"};

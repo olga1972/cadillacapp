@@ -37,6 +37,7 @@ import 'package:cadillac/pages/newsAdmin.dart';
 import 'package:cadillac/pages/partners.dart';
 import 'package:cadillac/pages/partnersAdmin.dart';
 import 'package:cadillac/pages/registrationAdmin.dart';
+import 'package:cadillac/pages/renewAccount.dart';
 import 'package:cadillac/pages/shop.dart';
 import 'package:cadillac/pages/success-payment.dart';
 import 'package:cadillac/pages/test.dart';
@@ -210,9 +211,9 @@ class MyApp extends StatelessWidget {
 
 
         routes: {
-          '/home': (context) => Provider.of<Data>(context).data['cookies'].toString() != ''? Account() : RegistrationPage(),
+          //'/home': (context) => Provider.of<Data>(context).data['cookies'].toString() != ''? Account() : RegistrationPage(),
           //'/home': (context) => Account(),
-          //'/home': (context) => MembersAdmin(),
+          '/home': (context) => MembersAdmin(),
           //'/home': (context) => RegistrationAdmin(userId: '1aa71d78-f91c-11ec-a426-002590eb3418'),
           //'/home': (context) => Shop(),
           '/homeAdmin': (context) => const HomeAdmin(),
@@ -236,6 +237,7 @@ class MyApp extends StatelessWidget {
           '/editAds': (context) => const EditAds(),
           '/editAdmin': (context) => EditAdmin(),
           '/test': (context) => const Test(),
+          '/renewAccount': (context) => const RenewAccount(),
           // '/card': (context) => Card(productId: 1),
           // '/success_payment': (context) => SuccessPayment(currentUser: currentUser),
           // '/success_payment': (context) => SuccessPayment(

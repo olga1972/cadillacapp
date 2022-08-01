@@ -47,6 +47,7 @@ class _ShopAdminState extends State<ShopAdmin> {
   @override
   Widget build(BuildContext context) {
     RouteSettings settings = ModalRoute.of(context)!.settings;
+    var width = MediaQuery.of(context).size.width - 130;
     return MaterialApp(
         theme: ThemeData(scaffoldBackgroundColor: const Color(0xFF2C335E)),
         title: 'Cadillac',
@@ -86,13 +87,13 @@ class _ShopAdminState extends State<ShopAdmin> {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         Container (
-                          width: 390,
+                          width: MediaQuery.of(context).size.width,
                           margin: const EdgeInsets.only(top: 30, bottom: 20),
                           child: const TitlePage(title: 'клубная атрибутика'),
                         ),
                         Container (
                             alignment: Alignment.topCenter,
-                            width: 390,
+                            width: MediaQuery.of(context).size.width,
                             child: Column (
                               mainAxisAlignment: MainAxisAlignment.start,
                               crossAxisAlignment: CrossAxisAlignment.start,
@@ -121,7 +122,7 @@ class _ShopAdminState extends State<ShopAdmin> {
 
                                       Container (
                                         // width: MediaQuery.of(context).size.width,
-                                          width: 250,
+                                          width: width,
                                           height: 200,
 
                                           //padding: EdgeInsets.only(bottom: 10),
@@ -142,7 +143,7 @@ class _ShopAdminState extends State<ShopAdmin> {
                                               //allowImplicitScrolling: true,
                                               // duration: 3,
                                               //containerHeight: 160,
-                                              containerWidth: 280,
+                                              //containerWidth: 280,
                                               viewportFraction: 0.43,
                                               itemHeight: 200,
                                               itemWidth: 98,
@@ -282,7 +283,7 @@ class _ShopAdminState extends State<ShopAdmin> {
 
                                       Container (
                                         // width: MediaQuery.of(context).size.width,
-                                          width: 250,
+                                          width: width,
                                           height: 200,
 
                                           //padding: EdgeInsets.only(bottom: 10),
@@ -303,7 +304,7 @@ class _ShopAdminState extends State<ShopAdmin> {
                                               //allowImplicitScrolling: true,
                                               // duration: 3,
                                               //containerHeight: 160,
-                                              containerWidth: 280,
+                                              //containerWidth: 280,
                                               viewportFraction: 0.43,
                                               itemHeight: 200,
                                               itemWidth: 98,
@@ -443,7 +444,7 @@ class _ShopAdminState extends State<ShopAdmin> {
 
                                       Container (
                                         // width: MediaQuery.of(context).size.width,
-                                          width: 250,
+                                          width: width,
                                           height: 200,
 
                                           //padding: EdgeInsets.only(bottom: 10),
@@ -464,7 +465,7 @@ class _ShopAdminState extends State<ShopAdmin> {
                                               //allowImplicitScrolling: true,
                                               // duration: 3,
                                               //containerHeight: 160,
-                                              containerWidth: 280,
+                                              //containerWidth: 280,
                                               viewportFraction: 0.43,
                                               itemHeight: 200,
                                               itemWidth: 98,
@@ -604,7 +605,7 @@ class _ShopAdminState extends State<ShopAdmin> {
 
                                       Container (
                                         // width: MediaQuery.of(context).size.width,
-                                          width: 250,
+                                          width: width,
                                           height: 200,
 
                                           //padding: EdgeInsets.only(bottom: 10),
@@ -625,7 +626,7 @@ class _ShopAdminState extends State<ShopAdmin> {
                                               //allowImplicitScrolling: true,
                                               // duration: 3,
                                               //containerHeight: 160,
-                                              containerWidth: 280,
+                                              //containerWidth: 280,
                                               viewportFraction: 0.43,
                                               itemHeight: 200,
                                               itemWidth: 98,

@@ -204,6 +204,7 @@ class _MembersState extends State<Members> {
                                                                       Flexible(
                                                                           fit: FlexFit.loose,
                                                                           child: Column (
+                                                                            crossAxisAlignment: CrossAxisAlignment.start,
                                                                             children: [
                                                                               Container(
                                                                                 margin: const EdgeInsets
@@ -262,34 +263,45 @@ class _MembersState extends State<Members> {
                                                                               ),
 
                                                                               Row(
-                                                                                  mainAxisAlignment: MainAxisAlignment
-                                                                                      .end,
                                                                                   children: [
-                                                                                    Text('${snapshot.data?.users[index].carname}'.toUpperCase(),
-                                                                                        // Text('cadillac'.toUpperCase(),
-                                                                                        style: const TextStyle(
-                                                                                          fontSize: 14.0,
-                                                                                          fontWeight: FontWeight
-                                                                                              .normal,
-                                                                                          fontFamily: 'CadillacSans',
-                                                                                          color: Color(
-                                                                                              0xFF12141F),
-                                                                                          // height: 1.7, //line-height / font-size
-                                                                                        )
+                                                                                    SizedBox(
+                                                                                      width: 106,
                                                                                     ),
                                                                                     Container(
-                                                                                      // height: 15,
+                                                                                      width: 157,
+                                                                                      child: Row(
+                                                                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                                                          children: [
+                                                                                            Flexible(
+                                                                                              flex: 3,
+                                                                                              child: Text('${snapshot.data?.users[index].carname}'.toUpperCase(),
 
-                                                                                      margin: const EdgeInsets
-                                                                                          .only(left: 42.0,),
-                                                                                      alignment: Alignment
-                                                                                          .centerLeft,
-                                                                                      child: SvgPicture.asset(
-                                                                                          'assets/images/cadillac.svg',
-                                                                                          semanticsLabel: 'Icon car',
-                                                                                          height: 15.0
-                                                                                      ),
-                                                                                    ),
+                                                                                                style: const TextStyle(
+                                                                                                  fontSize: 14.0,
+                                                                                                  fontWeight: FontWeight
+                                                                                                      .normal,
+                                                                                                  fontFamily: 'CadillacSans',
+                                                                                                  color: Color(
+                                                                                                      0xFF12141F),
+                                                                                                  // height: 1.7, //line-height / font-size
+                                                                                                ),
+                                                                                                //textAlign: TextAlign.left,
+                                                                                              ),),
+                                                                                            Flexible(
+                                                                                              flex: 1,
+                                                                                              //width: 30,
+                                                                                              //margin: const EdgeInsets.only(left: 42.0,),
+                                                                                              //alignment: Alignment.centerRight,
+                                                                                              child: SvgPicture.asset(
+                                                                                                  'assets/images/cadillac.svg',
+                                                                                                  semanticsLabel: 'Icon car',
+                                                                                                  height: 15.0
+                                                                                              ),
+                                                                                            ),
+                                                                                          ]
+                                                                                      )
+                                                                                    )
+
 
                                                                                   ]
                                                                               )

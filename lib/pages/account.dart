@@ -2,6 +2,7 @@
 
 import 'dart:typed_data';
 
+import 'package:cadillac/pages/renewAccount.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -97,6 +98,7 @@ class Account extends StatefulWidget {
     //late String appDocPath;
     bool isLoadedImage = false;
 
+
     late String value;
     late String currentId;
     dynamic user;
@@ -107,6 +109,7 @@ class Account extends StatefulWidget {
     initState()  {
     print('init state account');
     super.initState();
+    bool isShowWarning = false;
     //userId = '';
   }
 
@@ -196,6 +199,7 @@ class Account extends StatefulWidget {
     print('user account');
     print('load');
 print(context);
+
     // preferences.setString('userId', userId);
     //print('get data account');
     // getdata();
@@ -208,6 +212,7 @@ print(context);
     userId = Provider.of<Data>(context, listen: false).data['userId'].toString();
     print(userId);
     platform = Provider.of<Data>(context).data['platform'].toString();
+
     // print(platform);
     // print('userId from provider');
     // print(userId);
@@ -462,7 +467,7 @@ print(context);
                                                                     height: 36,
                                                                     margin: const EdgeInsets
                                                                         .only(
-                                                                      right: 18.0,),
+                                                                      right: 28.0,),
                                                                     alignment: Alignment
                                                                         .centerLeft,
                                                                     child: SvgPicture
@@ -569,14 +574,15 @@ print(context);
                                                                         padding: const EdgeInsets
                                                                             .all(
                                                                             0),
+
                                                                         iconSize: 22.0,
                                                                         icon: SvgPicture
                                                                             .asset(
 
                                                                           'assets/images/edit.svg',
                                                                           semanticsLabel: 'Icon edit',
-                                                                          height: 15.0,
-
+                                                                          height: 22.0,
+                                                                          color: Color(0xFF515569),
                                                                         ),
                                                                         onPressed: () {
                                                                           Route route = MaterialPageRoute(
@@ -984,6 +990,8 @@ print(date);
 
 checkAccount(dateExpired, context) {
   print('check account');
+  var isShowWarning;
+
   print(dateExpired);
 
   DateTime expired = new DateFormat("yyyy-MM-dd hh:mm").parse(dateExpired);
@@ -996,12 +1004,15 @@ checkAccount(dateExpired, context) {
   var difference = expired.difference(dateNow);
   print('difference');
   print(difference.inDays);
-  if(difference.inDays <= 5) {
+  if(difference.inDays <= 363 && isShowWarning == false) {
     print('invalid');
+    isShowWarning == true;
     warningDialog(context, difference.inDays);
 
   } else {
     print('valid');
+
+    isShowWarning == false;
   }
 }
 
@@ -1074,8 +1085,30 @@ Future warningDialog(context, difference) async {
           Container (
               padding: const EdgeInsets.only(left: 20, right: 20, bottom: 20),
               child: Row (
-                  mainAxisAlignment: MainAxisAlignment.end,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
+                    MaterialButton(
+                      padding: const EdgeInsets.all(14),
+                      color: const Color(0xFFE4E6FF),
+                      elevation: 0,
+                      shape: const RoundedRectangleBorder(
+                        side: BorderSide.none,
+                        borderRadius: BorderRadius.all(Radius.circular(10),
+                        ),),
+                      child: Text(
+                        'Написать'.toUpperCase(),
+                        textAlign: TextAlign.left,
+                        style: styleTextAlertDialog,
+                      ),
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                        Navigator.pushReplacement(
+                            context, MaterialPageRoute(
+                            builder: (context) =>
+                                RenewAccount()
+                        ));
+                      },
+                    ),
                     MaterialButton(
                       padding: const EdgeInsets.all(14),
                       color: const Color(0xFFE4E6FF),

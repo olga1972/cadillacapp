@@ -44,6 +44,7 @@ class _ShopState extends State<Shop> {
   @override
   Widget build(BuildContext context) {
     RouteSettings settings = ModalRoute.of(context)!.settings;
+    var width = MediaQuery.of(context).size.width - 130;
     return MaterialApp(
         theme: ThemeData(scaffoldBackgroundColor: const Color(0xFF181c33)),
         title: 'Cadillac',
@@ -85,13 +86,13 @@ class _ShopState extends State<Shop> {
                   child: Column (
                     children: [
                       Container (
-                        width: 390,
+                        width: MediaQuery.of(context).size.width,
                         margin: const EdgeInsets.only(top: 30, bottom: 20),
                         child: const TitlePage(title: 'клубная атрибутика'),
                       ),
                       Container (
                           alignment: Alignment.topCenter,
-                          width: 390,
+                          width: MediaQuery.of(context).size.width,
                           child: Column (
                             mainAxisAlignment: MainAxisAlignment.start,
                             crossAxisAlignment: CrossAxisAlignment.start,
@@ -119,8 +120,8 @@ class _ShopState extends State<Shop> {
                                     ),
 
                                     Container (
-                                      // width: MediaQuery.of(context).size.width,
-                                        width: 250,
+                                        width: width,
+                                        //width: 260,
                                         height: 200,
 
                                         //padding: EdgeInsets.only(bottom: 10),
@@ -141,7 +142,7 @@ class _ShopState extends State<Shop> {
                                             //allowImplicitScrolling: true,
                                             // duration: 3,
                                             //containerHeight: 160,
-                                            containerWidth: 280,
+                                            //containerWidth: 260,
                                             viewportFraction: 0.43,
                                             itemHeight: 200,
                                             itemWidth: 98,
@@ -280,8 +281,8 @@ class _ShopState extends State<Shop> {
                                     ),
 
                                     Container (
-                                      // width: MediaQuery.of(context).size.width,
-                                        width: 250,
+                                       width: width,
+                                        //width: 250,
                                         height: 200,
 
                                         //padding: EdgeInsets.only(bottom: 10),
@@ -302,7 +303,7 @@ class _ShopState extends State<Shop> {
                                             //allowImplicitScrolling: true,
                                             // duration: 3,
                                             //containerHeight: 160,
-                                            containerWidth: 280,
+                                            //containerWidth: 280,
                                             viewportFraction: 0.43,
                                             itemHeight: 200,
                                             itemWidth: 98,
@@ -442,7 +443,7 @@ class _ShopState extends State<Shop> {
 
                                     Container (
                                       // width: MediaQuery.of(context).size.width,
-                                        width: 250,
+                                        width: width,
                                         height: 200,
 
                                         //padding: EdgeInsets.only(bottom: 10),
@@ -463,7 +464,7 @@ class _ShopState extends State<Shop> {
                                             //allowImplicitScrolling: true,
                                             // duration: 3,
                                             //containerHeight: 160,
-                                            containerWidth: 280,
+                                            //containerWidth: 280,
                                             viewportFraction: 0.43,
                                             itemHeight: 200,
                                             itemWidth: 98,
@@ -603,7 +604,7 @@ class _ShopState extends State<Shop> {
 
                                     Container (
                                       // width: MediaQuery.of(context).size.width,
-                                        width: 250,
+                                        width: width,
                                         height: 200,
 
                                         //padding: EdgeInsets.only(bottom: 10),
@@ -624,7 +625,7 @@ class _ShopState extends State<Shop> {
                                             //allowImplicitScrolling: true,
                                             // duration: 3,
                                             //containerHeight: 160,
-                                            containerWidth: 280,
+                                            //containerWidth: 280,
                                             viewportFraction: 0.43,
                                             itemHeight: 200,
                                             itemWidth: 98,

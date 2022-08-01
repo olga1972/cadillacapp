@@ -8,6 +8,7 @@ class Data with ChangeNotifier {
   int counter = 0;
   String cookies = '';
   bool isAdmin = false;
+  bool isShowConfirmRegister = false;
 //   var _count = 0
 // int get getCounter {
 //  return _count;
@@ -27,6 +28,7 @@ class Data with ChangeNotifier {
     'isAuth': false,
     'cookies': '',
     'isAdmin': false,
+    'isShowConfirmRegister': false
     //'images' : List<PlatformFile>
   };
 
@@ -38,6 +40,11 @@ class Data with ChangeNotifier {
 
   void checkIsAdmin(value) {
     data["isAdmin"] = value;
+    notifyListeners();
+  }
+
+  void checkIsShowConfirmRegister(value) {
+    data["isShowConfirmRegister"] = value;
     notifyListeners();
   }
 
