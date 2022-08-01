@@ -211,9 +211,9 @@ class MyApp extends StatelessWidget {
 
 
         routes: {
-          //'/home': (context) => Provider.of<Data>(context).data['cookies'].toString() != ''? Account() : RegistrationPage(),
+          '/home': (context) => Provider.of<Data>(context).data['cookies'].toString() != ''? Account() : RegistrationPage(),
           //'/home': (context) => Account(),
-          '/home': (context) => MembersAdmin(),
+          //'/home': (context) => MembersAdmin(),
           //'/home': (context) => RegistrationAdmin(userId: '1aa71d78-f91c-11ec-a426-002590eb3418'),
           //'/home': (context) => Shop(),
           '/homeAdmin': (context) => const HomeAdmin(),

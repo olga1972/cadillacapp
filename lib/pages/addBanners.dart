@@ -1,18 +1,11 @@
-// import 'dart:html';
-
 import 'dart:typed_data';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:form_builder_file_picker/form_builder_file_picker.dart';
-import 'package:form_builder_image_picker/form_builder_image_picker.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
-
 import 'package:cadillac/variables.dart';
-
 import 'package:cadillac/models/banners.dart';
-
 import 'package:cadillac/widgets/titlePage.dart';
 
 import 'package:http/http.dart' as http;
@@ -20,17 +13,13 @@ import 'package:provider/provider.dart';
 import 'dart:convert';
 import 'dart:async';
 import 'dart:io';
-
 import '../NavDrawerAdmin.dart';
-import '../main.dart';
 import 'data.dart';
 import 'homeAdmin.dart';
 
 
 class AddBanners extends StatefulWidget {
   const AddBanners({Key? key}) : super(key: key);
-
-
   @override
   State<AddBanners> createState() => _AddBannersState();
 }
@@ -55,59 +44,18 @@ class _AddBannersState extends State<AddBanners> {
   late String path;
   late String platform;
   late Uint8List? bytes;
-
-  // final styleFormInput = const TextStyle(
-  //   fontSize: 14.0,
-  //   fontWeight: FontWeight.normal,
-  //   fontFamily: 'CadillacSans',
-  //   color: Colors.white,
-  // );
-
-  // final styleTitleFormInput = const TextStyle(
-  //   fontSize: 14.0,
-  //   fontWeight: FontWeight.normal,
-  //   fontFamily: 'CadillacSans',
-  //   color: Colors.white,
-  //   height: 1.5, //line-height : font-size
-  // );
-
+  
   @override
   Widget build(BuildContext context) {
     platform = Provider.of<Data>(context).data['platform'].toString();
-    print(platform);
+    debugPrint(platform);
 
     return MaterialApp(
         theme: ThemeData(scaffoldBackgroundColor: const Color(0xFF2C335E)),
         title: 'Cadillac',
         debugShowCheckedModeBanner: false,
-        routes: const {
-          // '/home': (context) => const Home(),
-          // '/account': (context) => Account(currentUser: currentUser),
-          // '/members': (context) => Members(),
-          // '/news': (context) => const News(),
-          // '/shop': (context) => const Shop(),
-          // '/partners': (context) => Partners(),
-          // '/contacts': (context) => Contacts(),
-        },
-        home: Scaffold(
-          // appBar: AppBar(
-          //   backgroundColor: const Color(0xFF181c33),
-          //   shadowColor: Colors.transparent,
-          //   elevation: 0.0,
-          //   leading: Builder(
-          //     builder: (BuildContext context) {
-          //       return IconButton(
-          //         icon: SvgPicture.asset('assets/images/burger.svg'),
-          //         onPressed: () {
-          //           Scaffold.of(context).openDrawer();
-          //         },
-          //         tooltip:
-          //         MaterialLocalizations.of(context).openAppDrawerTooltip,
-          //       );
-          //     },
-          //   ),
-          // ),
 
+        home: Scaffold(
           body: Center (
               child: Container (
                 width: 284,
@@ -169,14 +117,7 @@ class _AddBannersState extends State<AddBanners> {
                                                           color: Colors.white,
                                                         ),
                                                       ),
-                                                      // onChanged: _onChanged,
                                                       onSaved: (value) => bannerName = value!,
-                                                      // valueTransformer: (text) => num.tryParse(text),
-                                                      // validator: FormBuilderValidators.compose([
-                                                      //   // FormBuilderValidators.required(context),
-                                                      //   // FormBuilderValidators.numeric(context),
-                                                      //   // FormBuilderValidators.max(context, 70),
-                                                      // ]),
                                                       autovalidateMode: AutovalidateMode.always,
                                                       validator:
                                                       FormBuilderValidators.compose([
@@ -195,7 +136,7 @@ class _AddBannersState extends State<AddBanners> {
                                                 FormBuilderFilePicker(
                                                     name: "bannerImage",
                                                     decoration:
-                                                    InputDecoration(
+                                                    const InputDecoration(
                                                       fillColor:
                                                       Color(0xff515569),
                                                       iconColor: Colors.white,
@@ -219,7 +160,6 @@ class _AddBannersState extends State<AddBanners> {
                                                                   .center,
                                                               children: [
                                                                 Container(
-                                                                  //dding: EdgeInsets.only(bottom: 40),
                                                                   width: 284,
                                                                   height: 160,
                                                                   decoration: const BoxDecoration(
@@ -246,7 +186,7 @@ class _AddBannersState extends State<AddBanners> {
                                                                           .center,
                                                                       crossAxisAlignment:
                                                                       CrossAxisAlignment.center,
-                                                                      children: [
+                                                                      children: const [
                                                                         SizedBox(
                                                                             height: 40),
                                                                         Text(
@@ -268,12 +208,12 @@ class _AddBannersState extends State<AddBanners> {
                                                               ]),
                                                         ]),
                                                     onFileLoading: (val) {
-                                                      // print(val);
+                                                      // debugPrint(val);
                                                     },
                                                     onSaved: (value) => {
-                                                      print('value'),
-                                                      print(value
-                                                          .runtimeType),
+                                                      debugPrint('value'),
+                                                      debugPrint(value
+                                                          .runtimeType.toString()),
                                                       bannerImage = value!,
                                                     }),
 
@@ -283,7 +223,6 @@ class _AddBannersState extends State<AddBanners> {
                                                   child: MaterialButton(
                                                     padding: const EdgeInsets.all(17),
                                                     color: const Color.fromARGB(255, 255, 255, 255),
-                                                    // textColor: const Color(0xFF12141F),
                                                     child: Text(
                                                       "Добавить баннер".toUpperCase(),
                                                       style: const TextStyle(
@@ -304,20 +243,13 @@ class _AddBannersState extends State<AddBanners> {
                                                         debugPrint('banner added');
                                                         if (platform == 'android' ||
                                                             platform == 'ios') {
-                                                          print(platform);
+                                                          debugPrint(platform);
                                                           final bytes = File(bannerImage[0].path).readAsBytesSync();
-                                                          print(bytes);
-                                                          print(bytes.runtimeType);
                                                           setState(() {
                                                             encode64Banner = base64.encode(bytes);
                                                           });
-                                                          //var encode64 = base64.encode(bytes);
-                                                          print(encode64Banner);
-
-
                                                         } else {
-                                                          print(platform);
-                                                          //late Uint8List bytes;
+                                                          debugPrint(platform);
                                                           bytes = bannerImage[0].bytes;
 
                                                           setState(() {
@@ -361,20 +293,18 @@ class _AddBannersState extends State<AddBanners> {
     );
   }
 
-  getpathImage(url) async {
+  getPathImage(url) async {
     return url;
   }
 
   addBanner(AdsBanner banner) async {
     dynamic bannerName = banner.bannerName;
     dynamic path = banner.path;
-    print(bannerName);
+    debugPrint(bannerName);
 
+    String apiUrl = baseUrl + "/test/add_banner.php";
 
-    // String apiurl = "http://localhost/test/mail.php";
-    String apiurl = baseUrl + "/test/add_banner.php";
-
-    var response = await http.post(Uri.parse(apiurl), body: {
+    var response = await http.post(Uri.parse(apiUrl), body: {
       'bannerName': bannerName,
       'path': path,
 
@@ -385,26 +315,12 @@ class _AddBannersState extends State<AddBanners> {
     });
 
     if (response.statusCode == 200) {
-      print('banner added');
-      // var uuid = const Uuid();
-      // id = uuid.v1();
-
-      print(response.statusCode);
-      print(response.body);
+      debugPrint('banner added');
+      debugPrint(response.statusCode.toString());
+      debugPrint(response.body);
 
       final bannerJson = json.decode(response.body);
-
-      print('bannerJson');
-      // print(userJson);
-
       return AdsBanner.fromJson(bannerJson);
-      // return User.fromJson(jsonDecode(response.body));
-      // setState(() {
-      //   showprogress = false; //don't show progress indicator
-      //   error = true;
-      //   errormsg = jsondata["message"];
-      // });
-
     } else {
       throw Exception('Error: ${response.reasonPhrase}');
     }
@@ -418,7 +334,6 @@ Future confirmDialog(BuildContext context) async {
     barrierDismissible: false, // user must tap button for close dialog!
     builder: (BuildContext context) {
       return AlertDialog(
-        // title: Text('Подтвердите ваш заказ'),
         content: Text('Добавить баннер?'.toUpperCase(),
           textAlign: TextAlign.center,
           style: styleTextAlertDialog,
@@ -477,5 +392,3 @@ Future confirmDialog(BuildContext context) async {
     },
   );
 }
-
-void _onChanged() {}

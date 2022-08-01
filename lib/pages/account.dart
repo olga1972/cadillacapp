@@ -80,7 +80,7 @@ class _AccountState extends State<Account> {
 
     var response = getCookie();
     debugPrint('cookies account');
-    print(response);
+    debugPrint(response);
 
     user = getUser(userId, context);
 
@@ -128,14 +128,9 @@ class _AccountState extends State<Account> {
                   if (snapshot.hasData) {
                     List<Uint8List> images = [];
 
-                    //late Uint8List bytes;
                     late Uint8List bytesCar1;
                     late Uint8List bytesCar2;
                     late Uint8List bytesCar3;
-                    //var pathEncode = snapshot.data?.path;
-                    //var decode64 = base64.decode(pathEncode!);
-
-                    //bytes = decode64;
 
                     if (snapshot.data?.path != null) {
                       isLoadedImage = true;
@@ -177,7 +172,7 @@ class _AccountState extends State<Account> {
                       }
                     }
                     debugPrint('images.length');
-                    print(images.length);
+                    debugPrint(images.length.toString());
 
                     return Center(
                         child: SizedBox(
@@ -410,9 +405,9 @@ Future<User> getUser(userId, context) async {
   debugPrint('getUser');
   debugPrint('userId: $userId');
 
-  String apiurl = baseUrl + "/test/get_user.php";
+  String apiUrl = baseUrl + "/test/get_user.php";
 
-  final response = await http.post(Uri.parse(apiurl), body: {
+  final response = await http.post(Uri.parse(apiUrl), body: {
     'userId': userId
   }, headers: {
     'Accept': 'application/json, charset=utf-8',
@@ -440,10 +435,9 @@ getCookie() async {
   dio.interceptors.add(CookieManager(cookieJar));
 
   // Get cookies
-  var cookies = cookieJar.loadForRequest(Uri.parse("https://cadillacapp.ru/"));
+  //var cookies = cookieJar.loadForRequest(Uri.parse("https://cadillacapp.ru/"));
 
   // second request with the cookie
-
   var response = await dio.get("https://cadillacapp.ru/");
   if (kDebugMode) {
     print(response);
@@ -468,7 +462,7 @@ getDate(date) {
 
 checkAccount(dateExpired, context) {
   debugPrint('check account');
-  var isShowWarning;
+  dynamic isShowWarning;
 
   debugPrint(dateExpired);
 
