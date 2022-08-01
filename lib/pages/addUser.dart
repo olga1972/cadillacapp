@@ -453,10 +453,18 @@ class _AddUserState extends State<AddUser> {
                                                       keyboardType: TextInputType
                                                           .text
                                                   ),
-
-                                                  Visibility(
-                                                    visible: true,
-                                                    child: FormBuilderTextField(
+                                                  Container(
+                                                    margin: const EdgeInsets
+                                                        .only(
+                                                        top: 10, bottom: 10),
+                                                    child: Text(
+                                                      'дата окончания'
+                                                          .toUpperCase(),
+                                                      textAlign: TextAlign.left,
+                                                      style: styleTitleFormInput,
+                                                    ),
+                                                  ),
+                                                  FormBuilderTextField(
                                                         name: 'dateExpired',
                                                         cursorWidth: 1.0,
                                                         cursorColor: Colors.white,
@@ -503,7 +511,6 @@ class _AddUserState extends State<AddUser> {
                                                         keyboardType: TextInputType
                                                             .text
                                                     ),
-                                                  ),
 
 
 
