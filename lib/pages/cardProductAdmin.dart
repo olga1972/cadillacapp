@@ -76,76 +76,74 @@ class _CardProductAdminState extends State<CardProductAdmin> {
                       padding: EdgeInsets.zero,
                       margin: const EdgeInsets.only(top: 10, bottom: 30, left: 0, right: 0),
                       child: Swiper(
-                          itemCount: 2,
-                          allowImplicitScrolling: true,
-                          layout: SwiperLayout.CUSTOM,
-                          customLayoutOption: CustomLayoutOption(startIndex: -1, stateCount: 2)
-                            ..addTranslate([
-                              const Offset(0.0, 0.0),
-                              const Offset(270.0, 0.0),
-                            ]),
-                          viewportFraction: 0.8,
-                          itemHeight: 279,
-                          itemWidth: 260,
-                          outer: true,
-                          pagination: const SwiperPagination(
-                              margin: EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 0.0),
-                              builder: DotSwiperPaginationBuilder(color: Colors.white, activeColor: Color(0xFF8F97BF), size: 7.0, activeSize: 7.0)),
-                          itemBuilder: (BuildContext context, int index) {
-                            return Container(
-                                width: MediaQuery.of(context).size.width,
-                                height: 279,
-                                margin: const EdgeInsets.only(left: 0, right: 10),
-                                decoration: const BoxDecoration(
-                                  color: Colors.transparent,
-                                  borderRadius: BorderRadius.all(Radius.circular(10)),
+                        itemCount: 2,
+                        allowImplicitScrolling: true,
+                        layout: SwiperLayout.CUSTOM,
+                        customLayoutOption: CustomLayoutOption(startIndex: -1, stateCount: 2)
+                          ..addTranslate([
+                            const Offset(0.0, 0.0),
+                            const Offset(270.0, 0.0),
+                          ]),
+                        viewportFraction: 0.8,
+                        itemHeight: 279,
+                        itemWidth: 260,
+                        outer: true,
+                        pagination: const SwiperPagination(
+                            margin: EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 0.0),
+                            builder: DotSwiperPaginationBuilder(color: Colors.white, activeColor: Color(0xFF8F97BF), size: 7.0, activeSize: 7.0)),
+                        itemBuilder: (BuildContext context, int index) {
+                          return Container(
+                              width: MediaQuery.of(context).size.width,
+                              height: 279,
+                              margin: const EdgeInsets.only(left: 0, right: 10),
+                              decoration: const BoxDecoration(
+                                color: Colors.transparent,
+                                borderRadius: BorderRadius.all(Radius.circular(10)),
+                              ),
+                              child: ClipRRect(
+                                borderRadius: const BorderRadius.all(Radius.circular(10.0)),
+                                child: Image.asset(
+                                  images[index],
+                                  fit: BoxFit.contain,
                                 ),
-                                child: ClipRRect(
-                                  borderRadius: const BorderRadius.all(Radius.circular(10.0)),
-                                  child: Image.asset(
-                                    images[index],
-                                    fit: BoxFit.contain,
-                                  ),
-                                ));
-                          }),
+                              ));
+                      }),
                     ),
                     SizedBox(
-                          width: 320,
-                          height: 45,
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              Container (
-                                child: Text("Блокнот".toUpperCase(),
-                                  style: const TextStyle(
-                                      fontSize: 24,
-                                      color: Colors.white
-                                  ),
-                                  textAlign: TextAlign.left,
-                                )
-                              ),
-
-                              IconButton(
-                                padding: const EdgeInsets.all(0),
-                                iconSize: 20.0,
-                                icon: SvgPicture
-                                    .asset(
-                                  'assets/images/delete.svg',
-                                  semanticsLabel: 'Icon delete',
-                                  height: 20.0,
-                                ),
-                                onPressed: () {
-                                  confirmDialog(context);
-                                  //   Route route = MaterialPageRoute(
-                                  //       builder: (
-                                  //           context) => const Gift());
-                                  //   Navigator.push(context, route);
-                                },
-                              )
-                            ]
+                      width: 320,
+                      height: 45,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Text("Блокнот".toUpperCase(),
+                            style: const TextStyle(
+                                fontSize: 24,
+                                color: Colors.white
+                            ),
+                            textAlign: TextAlign.left,
                           ),
-                        ),
+
+                          IconButton(
+                            padding: const EdgeInsets.all(0),
+                            iconSize: 20.0,
+                            icon: SvgPicture
+                                .asset(
+                              'assets/images/delete.svg',
+                              semanticsLabel: 'Icon delete',
+                              height: 20.0,
+                            ),
+                            onPressed: () {
+                              confirmDialog(context);
+                              //   Route route = MaterialPageRoute(
+                              //       builder: (
+                              //           context) => const Gift());
+                              //   Navigator.push(context, route);
+                            },
+                          )
+                        ]
+                      ),
+                    ),
                     SizedBox(
                       width: 320,
                       child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, crossAxisAlignment: CrossAxisAlignment.center, children: [
