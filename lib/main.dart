@@ -3,6 +3,7 @@ import 'package:cadillac/pages/contacts.dart';
 import 'package:cadillac/pages/editAccount.dart';
 import 'package:cadillac/pages/editAccountAdmin.dart';
 import 'package:cadillac/pages/editAds.dart';
+import 'package:cadillac/pages/home.dart';
 import 'package:cadillac/pages/homeAdmin.dart';
 
 import 'package:cadillac/pages/data.dart';
@@ -24,15 +25,13 @@ import 'package:cadillac/pages/registrationPage.dart';
 
 
 checkPlatform() {
-  late String platform;
-
   if (defaultTargetPlatform == TargetPlatform.iOS || defaultTargetPlatform == TargetPlatform.android) {
 
-    return platform = 'android';
+    return 'android';
   }
   else if (defaultTargetPlatform == TargetPlatform.linux || defaultTargetPlatform == TargetPlatform.macOS || defaultTargetPlatform == TargetPlatform.windows) {
     // Some desktop specific code there
-    return platform = 'windows';
+    return 'windows';
   }
   else {
     // Some web specific code there
@@ -45,7 +44,7 @@ Future<void> main() async {
 class MyApp extends StatelessWidget {
   MyApp({Key? key,}) : super(key: key);
   static get platform => checkPlatform();
-  late String cookies;
+  final String cookies ='';
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider<Data> (
@@ -72,7 +71,7 @@ class MyApp extends StatelessWidget {
           //'/home': (context) => isAuth ? Account() : RegistrationPage(),
           //'/home': (context) => Test(),
           //'/home': (context) => AccountAdmin(userId:'f1c7fde2-ef1b-11ec-a426-002590eb3418'),
-          '/home': (context) => EditAdmin(),
+          '/home': (context) => Home(),
           //'/home': (context) => Account(userId:userId),
           //'/home': (context) => Members(),
           //'/home': (context) => Account(userId:'f1c7fde2-ef1b-11ec-a426-002590eb3418'),
