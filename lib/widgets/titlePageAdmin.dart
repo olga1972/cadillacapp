@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
-class TitlePage extends StatelessWidget {
-  const TitlePage({Key? key, required this.title}) : super(key: key);
+class TitlePageAdmin extends StatelessWidget {
+  const TitlePageAdmin({Key? key, required this.title}) : super(key: key);
   final String title;
-  
+
   @override
   Widget build(BuildContext context) {
     return
@@ -13,7 +13,7 @@ class TitlePage extends StatelessWidget {
             fontSize: 24.0,
             fontWeight: FontWeight.normal,
             fontFamily: 'CadillacSans',
-            color: Colors.white,
+            color: Color(0xFF8F97BF),
             height: 1.17, //line-height : font-size
           )
       );
