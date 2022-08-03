@@ -13,7 +13,7 @@ import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import 'package:cadillac/NavDrawer.dart';
-import 'package:cadillac/widgets/titlePage.dart';
+import 'package:cadillac/widgets/titlePageAdmin.dart';
 
 import 'package:cadillac/variables.dart';
 import 'package:cadillac/models/users.dart';
@@ -115,7 +115,7 @@ class _RegistrationAdminState extends State<RegistrationAdmin> {
                                 child: Column(children: [
                                   Container(
                                     margin: const EdgeInsets.only(top: 53, bottom: 40),
-                                    child: const TitlePage(title: 'регистрация администратора \nавтоклуба cadillac'),
+                                    child: const TitlePageAdmin(title: 'регистрация администратора \nавтоклуба cadillac'),
                                   ),
                                   Container(
                                     width: 284,

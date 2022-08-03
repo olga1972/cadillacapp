@@ -9,7 +9,6 @@ import 'dart:convert';
 import 'dart:async';
 import 'dart:io';
 
-
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
@@ -83,15 +82,9 @@ class _SuccessPaymentState extends State<SuccessPayment> {
   late Uint8List? bytesCar2;
   late Uint8List? bytesCar3;
 
-  var maskFormatterPhone = MaskTextInputFormatter(
-      mask: '+7 ___-___-__-__',
-      filter: {"_": RegExp(r'[0-9]')},
-      type: MaskAutoCompletionType.lazy);
+  var maskFormatterPhone = MaskTextInputFormatter(mask: '+7 ___-___-__-__', filter: {"_": RegExp(r'[0-9]')}, type: MaskAutoCompletionType.lazy);
 
-  var maskFormatterDate = MaskTextInputFormatter(
-      mask: '__.__.____',
-      filter: {"_": RegExp(r'[0-9]')},
-      type: MaskAutoCompletionType.lazy);
+  var maskFormatterDate = MaskTextInputFormatter(mask: '__.__.____', filter: {"_": RegExp(r'[0-9]')}, type: MaskAutoCompletionType.lazy);
 
   @override
   Widget build(BuildContext context) {
@@ -106,796 +99,542 @@ class _SuccessPaymentState extends State<SuccessPayment> {
         debugShowCheckedModeBanner: false,
         home: Scaffold(
           body: Center(
-            child: Column(mainAxisAlignment: MainAxisAlignment.center,
-                children: [
+            child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+              Container(
+                width: 284,
+                margin: const EdgeInsets.only(top: 10, bottom: 47),
+              ),
+              Expanded(
+                child: SingleChildScrollView(
+                    child: Column(mainAxisAlignment: MainAxisAlignment.center, crossAxisAlignment: CrossAxisAlignment.center, children: [
                   Container(
                     width: 284,
-                    margin: const EdgeInsets.only(top: 10, bottom: 47),
+                    margin: const EdgeInsets.only(top: 70, bottom: 58),
+                    child: const TitlePage(title: 'успешная оплата!'),
                   ),
-                  Expanded(
-                    child: SingleChildScrollView(
-                      child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                          Container(
-                            width: 284,
-                            margin: const EdgeInsets.only(top: 70, bottom: 58),
-                            child: const TitlePage(title: 'успешная оплата!'),
-                          ),
-                          Container(
-                            width: 284,
-                            margin: const EdgeInsets.only(bottom: 56),
-                            child: Text(
-                              'введите логин и пароль, \nотправленные на ваш email'
-                                  .toUpperCase(),
-                              textAlign: TextAlign.center,
-                              style: styleTitleFormInput,
-                            ),
-                          ),
-                          Container(
+                  Container(
+                    width: 284,
+                    margin: const EdgeInsets.only(bottom: 56),
+                    child: Text(
+                      'введите логин и пароль, \nотправленные на ваш email'.toUpperCase(),
+                      textAlign: TextAlign.center,
+                      style: styleTitleFormInput,
+                    ),
+                  ),
+                  Container(
+                      width: 284,
+                      margin: const EdgeInsets.only(bottom: 56),
+                      child: FormBuilder(
+                          key: _formKey,
+                          autovalidateMode: AutovalidateMode.always,
+                          child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: <Widget>[
+                            Container(
                               width: 284,
-                              margin: const EdgeInsets.only(bottom: 56),
-                              child: FormBuilder(
-                                  key: _formKey,
-                                  autovalidateMode: AutovalidateMode.always,
-                                  child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: <Widget>[
-                                        Container(
-                                          width: 284,
-                                          margin:
-                                              const EdgeInsets.only(bottom: 10),
-                                          child: Text(
-                                            'ваш логин'.toUpperCase(),
-                                            textAlign: TextAlign.left,
-                                            style: styleTitleFormInput,
-                                          ),
+                              margin: const EdgeInsets.only(bottom: 10),
+                              child: Text(
+                                'ваш логин'.toUpperCase(),
+                                textAlign: TextAlign.left,
+                                style: styleTitleFormInput,
+                              ),
+                            ),
+                            FormBuilderTextField(
+                                name: 'login',
+                                autofocus: true,
+                                cursorWidth: 1.0,
+                                cursorColor: Colors.white,
+                                style: styleFormInput,
+                                decoration: const InputDecoration(
+                                  contentPadding: EdgeInsets.all(16),
+                                  border: OutlineInputBorder(borderSide: BorderSide.none, borderRadius: BorderRadius.all(Radius.circular(10))),
+                                  fillColor: Color(0XFF515569),
+                                  filled: true,
+                                  hintText: "Введите ваш логин (email)",
+                                  hintStyle: TextStyle(
+                                    color: Colors.white60,
+                                  ),
+                                ),
+                                autovalidateMode: AutovalidateMode.always,
+                                keyboardType: TextInputType.emailAddress,
+                                onSaved: (value) => login = value!),
+                            Container(
+                              width: 284,
+                              margin: const EdgeInsets.only(top: 10, bottom: 10),
+                              child: Text(
+                                'ваш пароль'.toUpperCase(),
+                                textAlign: TextAlign.left,
+                                style: styleTitleFormInput,
+                              ),
+                            ),
+                            FormBuilderTextField(
+                                name: 'password',
+                                cursorWidth: 1.0,
+                                autofocus: true,
+                                cursorColor: Colors.white,
+                                style: styleFormInput,
+                                obscureText: true,
+                                decoration: const InputDecoration(
+                                  contentPadding: EdgeInsets.all(16),
+                                  border: OutlineInputBorder(borderSide: BorderSide.none, borderRadius: BorderRadius.all(Radius.circular(10))),
+                                  fillColor: Color(0XFF515569),
+                                  filled: true,
+                                  hintText: "Введите ваш password",
+                                  hintStyle: TextStyle(
+                                    color: Colors.white60,
+                                  ),
+                                ),
+                                autovalidateMode: AutovalidateMode.always,
+                                validator: FormBuilderValidators.compose([
+                                  (val) {
+                                    if (val == null) {
+                                      return 'Поле password не может быть пустым';
+                                    } else if (val.length < 10) {
+                                      return 'Минимум 10 символов';
+                                    } else {
+                                      return null;
+                                    }
+                                  }
+                                ]),
+                                onSaved: (value) => password = value!),
+                            Container(
+                              width: 284,
+                              margin: const EdgeInsets.only(top: 30, bottom: 10),
+                            ),
+                            Accordion(
+                                content: SizedBox(
+                                    width: 284,
+                                    child: Column(children: [
+                                      Container(
+                                        margin: const EdgeInsets.only(top: 53, bottom: 40),
+                                        child: const TitlePage(title: 'регистрация члена \nавтоклуба cadillac'),
+                                      ),
+                                      Container(
+                                        width: 284,
+                                        margin: const EdgeInsets.only(top: 10, bottom: 10),
+                                        child: Text(
+                                          'ваше фото'.toUpperCase(),
+                                          textAlign: TextAlign.left,
+                                          style: styleTitleFormInput,
                                         ),
-                                        FormBuilderTextField(
-                                            name: 'login',
-                                            autofocus: true,
-                                            cursorWidth: 1.0,
-                                            cursorColor: Colors.white,
-                                            style: styleFormInput,
+                                      ),
+                                      Container(
+                                        width: 130,
+                                        decoration: const BoxDecoration(borderRadius: BorderRadius.all(Radius.circular(48))),
+                                        child: FormBuilderFilePicker(
+                                            name: "photo",
                                             decoration: const InputDecoration(
-                                              contentPadding:
-                                                  EdgeInsets.all(16),
+                                              fillColor: Color(0xff515569),
+                                              iconColor: Colors.white,
+                                              contentPadding: EdgeInsets.all(0),
                                               border: OutlineInputBorder(
-                                                  borderSide: BorderSide.none,
-                                                  borderRadius:
-                                                      BorderRadius.all(
-                                                          Radius.circular(10))),
-                                              fillColor: Color(0XFF515569),
-                                              filled: true,
-                                              hintText:
-                                                  "Введите ваш логин (email)",
-                                              hintStyle: TextStyle(
-                                                color: Colors.white60,
+                                                borderSide: BorderSide.none,
+                                                //gapPadding: 40,
                                               ),
                                             ),
-                                            autovalidateMode:
-                                                AutovalidateMode.always,
-                                            keyboardType:
-                                                TextInputType.emailAddress,
-                                            onSaved: (value) => login = value!),
-                                        Container(
-                                          width: 284,
-                                          margin: const EdgeInsets.only(
-                                              top: 10, bottom: 10),
-                                          child: Text(
-                                            'ваш пароль'.toUpperCase(),
-                                            textAlign: TextAlign.left,
-                                            style: styleTitleFormInput,
+                                            maxFiles: null,
+                                            previewImages: true,
+                                            onChanged: (val) => {},
+                                            selector: Column(crossAxisAlignment: CrossAxisAlignment.center, children: [
+                                              Stack(alignment: Alignment.center, children: [
+                                                Container(
+                                                  alignment: Alignment.center,
+                                                  width: 96,
+                                                  height: 96,
+                                                  decoration:
+                                                      const BoxDecoration(color: Color(0xFF515569), borderRadius: BorderRadius.all(Radius.circular(48))),
+                                                ),
+                                                SvgPicture.asset(
+                                                  'assets/images/image.svg',
+                                                  semanticsLabel: 'Icon upload',
+                                                  height: 18.0,
+                                                ),
+                                              ]),
+                                              Row(mainAxisAlignment: MainAxisAlignment.center, crossAxisAlignment: CrossAxisAlignment.center, children: const [
+                                                SizedBox(height: 40),
+                                                Text('Загрузить фото',
+                                                    style: TextStyle(
+                                                        fontSize: 14.0,
+                                                        fontWeight: FontWeight.normal,
+                                                        fontFamily: 'CadillacSans',
+                                                        color: Color(0xFF515569),
+                                                        height: 1.4 //line-height : font-size
+                                                        ),
+                                                    textAlign: TextAlign.center),
+                                                Icon(Icons.file_upload, semanticLabel: 'Icon upload', size: 18.0, color: Color(0xFF515569)),
+                                                //)
+                                              ]),
+                                            ]),
+                                            onFileLoading: (val) {
+                                              // debugPrint(val);
+                                            },
+                                            onSaved: (value) => {
+                                                  photo = value!,
+                                                }),
+                                      ),
+                                      Container(
+                                        alignment: Alignment.topLeft,
+                                        margin: const EdgeInsets.only(top: 10, bottom: 10),
+                                        child: Text(
+                                          'ваше имя и фамилия'.toUpperCase(),
+                                          textAlign: TextAlign.left,
+                                          style: styleTitleFormInput,
+                                        ),
+                                      ),
+                                      FormBuilderTextField(
+                                          name: 'username',
+                                          autofocus: true,
+                                          cursorWidth: 1.0,
+                                          cursorColor: Colors.white,
+                                          style: styleFormInput,
+                                          decoration: const InputDecoration(
+                                            contentPadding: EdgeInsets.all(16),
+                                            border: OutlineInputBorder(borderSide: BorderSide.none, borderRadius: BorderRadius.all(Radius.circular(10))),
+                                            fillColor: Color(0XFF515569),
+                                            filled: true,
+                                            hintText: "Введите ваш имя",
+                                            hintStyle: TextStyle(
+                                              color: Colors.white60,
+                                            ),
+                                          ),
+                                          onSaved: (value) => username = value!,
+                                          autovalidateMode: AutovalidateMode.always,
+                                          validator: FormBuilderValidators.compose([
+                                            (val) {
+                                              if (val == null) {
+                                                return 'Поле name не может быть пустым';
+                                              } else if (val.length < 3) {
+                                                return 'Минимум 3 символа';
+                                              } else {
+                                                return null;
+                                              }
+                                            }
+                                          ]),
+                                          keyboardType: TextInputType.text),
+                                      Container(
+                                        alignment: Alignment.topLeft,
+                                        margin: const EdgeInsets.only(top: 10, bottom: 10),
+                                        child: Text(
+                                          'ваша дата рождения'.toUpperCase(),
+                                          textAlign: TextAlign.left,
+                                          style: styleTitleFormInput,
+                                        ),
+                                      ),
+                                      FormBuilderTextField(
+                                        name: 'birthday',
+                                        cursorWidth: 1.0,
+                                        cursorColor: Colors.white,
+                                        style: styleFormInput,
+                                        inputFormatters: [maskFormatterDate],
+                                        keyboardType: TextInputType.number,
+                                        decoration: const InputDecoration(
+                                          contentPadding: EdgeInsets.all(16),
+                                          border: OutlineInputBorder(borderSide: BorderSide.none, borderRadius: BorderRadius.all(Radius.circular(10))),
+                                          fillColor: Color(0XFF515569),
+                                          filled: true,
+                                          hintText: "__.__.____",
+                                          hintStyle: TextStyle(
+                                            color: Colors.white60,
                                           ),
                                         ),
-                                        FormBuilderTextField(
-                                            name: 'password',
-                                            cursorWidth: 1.0,
-                                            autofocus: true,
-                                            cursorColor: Colors.white,
-                                            style: styleFormInput,
-                                            obscureText: true,
-                                            decoration: const InputDecoration(
-                                              contentPadding:
-                                                  EdgeInsets.all(16),
-                                              border: OutlineInputBorder(
-                                                  borderSide: BorderSide.none,
-                                                  borderRadius:
-                                                      BorderRadius.all(
-                                                          Radius.circular(10))),
-                                              fillColor: Color(0XFF515569),
-                                              filled: true,
-                                              hintText: "Введите ваш password",
-                                              hintStyle: TextStyle(
-                                                color: Colors.white60,
+                                        onSaved: (value) => birthday = value!,
+                                      ),
+                                      Container(
+                                        alignment: Alignment.topLeft,
+                                        margin: const EdgeInsets.only(top: 10, bottom: 10),
+                                        child: Text(
+                                          'ваш номер телефона'.toUpperCase(),
+                                          textAlign: TextAlign.left,
+                                          style: styleTitleFormInput,
+                                        ),
+                                      ),
+                                      FormBuilderTextField(
+                                          name: 'phone2',
+                                          cursorWidth: 1.0,
+                                          cursorColor: Colors.white,
+                                          style: styleFormInput,
+                                          inputFormatters: [maskFormatterPhone],
+                                          decoration: const InputDecoration(
+                                            contentPadding: EdgeInsets.all(16),
+                                            border: OutlineInputBorder(borderSide: BorderSide.none, borderRadius: BorderRadius.all(Radius.circular(10))),
+                                            fillColor: Color(0XFF515569),
+                                            filled: true,
+                                            hintText: "+7 ___-___-__-__",
+                                            hintStyle: TextStyle(
+                                              color: Colors.white60,
+                                            ),
+                                          ),
+                                          keyboardType: TextInputType.text),
+                                      Container(
+                                        alignment: Alignment.topLeft,
+                                        margin: const EdgeInsets.only(top: 10, bottom: 10),
+                                        child: Text(
+                                          'ваше автомобиль'.toUpperCase(),
+                                          textAlign: TextAlign.left,
+                                          style: styleTitleFormInput,
+                                        ),
+                                      ),
+                                      FormBuilderTextField(
+                                          name: 'carname',
+                                          cursorWidth: 1.0,
+                                          cursorColor: Colors.white,
+                                          style: styleFormInput,
+                                          decoration: const InputDecoration(
+                                            contentPadding: EdgeInsets.all(16),
+                                            border: OutlineInputBorder(borderSide: BorderSide.none, borderRadius: BorderRadius.all(Radius.circular(10))),
+                                            fillColor: Color(0XFF515569),
+                                            filled: true,
+                                            hintText: "Введите название автомобиля",
+                                            hintStyle: TextStyle(
+                                              color: Colors.white60,
+                                            ),
+                                          ),
+                                          onSaved: (value) => carname = value,
+                                          keyboardType: TextInputType.text),
+                                      Container(
+                                        width: 284,
+                                        margin: const EdgeInsets.only(top: 10, bottom: 10),
+                                        child: Text(
+                                          'загрузите 3 фото вашего cadillac'.toUpperCase(),
+                                          textAlign: TextAlign.left,
+                                          style: styleTitleFormInput,
+                                        ),
+                                      ),
+                                      FormBuilderFilePicker(
+                                          name: "cars",
+                                          decoration: const InputDecoration(
+                                            fillColor: Color(0xff515569),
+                                            iconColor: Colors.white,
+                                            contentPadding: EdgeInsets.all(0),
+                                            border: OutlineInputBorder(
+                                              borderSide: BorderSide.none,
+                                              //gapPadding: 40,
+                                            ),
+                                          ),
+                                          maxFiles: null,
+                                          previewImages: true,
+                                          onChanged: (val) => {},
+                                          selector: Column(children: [
+                                            Stack(alignment: Alignment.center, children: [
+                                              Container(
+                                                width: 284,
+                                                height: 160,
+                                                decoration: const BoxDecoration(
+                                                    color: Color(0xFF515569), shape: BoxShape.rectangle, borderRadius: BorderRadius.all(Radius.circular(10))),
+                                              ),
+                                              SvgPicture.asset(
+                                                'assets/images/load.svg',
+                                                semanticsLabel: 'Icon upload',
+                                                height: 18.0,
+                                              ),
+                                              Positioned(
+                                                bottom: 0,
+                                                child: Row(
+                                                    mainAxisAlignment: MainAxisAlignment.center,
+                                                    crossAxisAlignment: CrossAxisAlignment.center,
+                                                    children: const [
+                                                      SizedBox(height: 40),
+                                                      Text('Загрузить фото',
+                                                          style: TextStyle(
+                                                              fontSize: 14.0,
+                                                              fontWeight: FontWeight.normal,
+                                                              fontFamily: 'CadillacSans',
+                                                              color: Colors.white,
+                                                              height: 1.4 //line-height : font-size
+                                                              ),
+                                                          textAlign: TextAlign.center),
+                                                      Icon(
+                                                        Icons.file_upload,
+                                                        semanticLabel: 'Icon upload',
+                                                        size: 18.0,
+                                                        color: Colors.white,
+                                                      )
+                                                    ]),
+                                              )
+                                            ]),
+                                          ]),
+                                          onFileLoading: (val) {
+                                            // debugPrint(val);
+                                          },
+                                          onSaved: (value) => {
+                                                cars = value!,
+                                              }),
+                                      Container(
+                                          width: 284,
+                                          margin: const EdgeInsets.only(top: 30, bottom: 45),
+                                          child: MaterialButton(
+                                            padding: const EdgeInsets.all(17),
+                                            color: const Color.fromARGB(255, 255, 255, 255),
+                                            child: Text(
+                                              "зарегистрироваться".toUpperCase(),
+                                              style: const TextStyle(fontSize: 14, color: Color(0xFF12141F)),
+                                            ),
+                                            shape: const RoundedRectangleBorder(
+                                              side: BorderSide.none,
+                                              borderRadius: BorderRadius.all(
+                                                Radius.circular(10),
                                               ),
                                             ),
-                                            autovalidateMode:
-                                                AutovalidateMode.always,
-                                            validator:
-                                                FormBuilderValidators.compose([
-                                              (val) {
-                                                if (val == null) {
-                                                  return 'Поле password не может быть пустым';
-                                                } else if (val.length < 10) {
-                                                  return 'Минимум 10 символов';
-                                                } else {
-                                                  return null;
+                                            onPressed: () async {
+                                              if (_formKey.currentState?.validate() == false) {
+                                                debugPrint('Invalid');
+                                                errorMessage(context);
+                                              } else {
+                                                if (_formKey.currentState?.saveAndValidate() ?? false) {
+                                                  Provider.of<Data>(context, listen: false).updateAccount(2);
+                                                  debugPrint('Valid success payment user');
+                                                  if (platform == 'android' || platform == 'ios') {
+                                                    debugPrint(platform);
+                                                    final bytes = File(photo[0].path).readAsBytesSync();
+
+                                                    setState(() {
+                                                      encode64 = base64.encode(bytes);
+                                                    });
+                                                    debugPrint('cars.length');
+                                                    debugPrint(cars.length.toString());
+                                                    if (cars.length == 2) {
+                                                      if (cars[0].path != null) {
+                                                        final bytesCar1 = File(cars[0].path).readAsBytesSync();
+                                                        car1 = base64.encode(bytesCar1);
+                                                      } else {
+                                                        car1 = '';
+                                                      }
+                                                      if (cars[1].path != null) {
+                                                        final bytesCar2 = File(cars[1].path).readAsBytesSync();
+                                                        car2 = base64.encode(bytesCar2);
+                                                      } else {
+                                                        car2 = '';
+                                                      }
+                                                      car3 = '';
+                                                    } else if (cars.length == 3) {
+                                                      if (cars[0].path != null) {
+                                                        final bytesCar1 = File(cars[0].path).readAsBytesSync();
+                                                        car1 = base64.encode(bytesCar1);
+                                                      } else {
+                                                        car1 = '';
+                                                      }
+                                                      if (cars[1].path != null) {
+                                                        final bytesCar2 = File(cars[1].path).readAsBytesSync();
+                                                        car2 = base64.encode(bytesCar2);
+                                                      } else {
+                                                        car2 = '';
+                                                      }
+                                                      if (cars[2].path != null) {
+                                                        final bytesCar3 = File(cars[2].path).readAsBytesSync();
+                                                        car3 = base64.encode(bytesCar3);
+                                                      } else {
+                                                        car3 = '';
+                                                      }
+                                                    } else {
+                                                      final bytesCar1 = File(cars[0].path).readAsBytesSync();
+                                                      car1 = base64.encode(bytesCar1);
+                                                      car2 = '';
+                                                      car3 = '';
+                                                    }
+                                                  } else {
+                                                    debugPrint(platform);
+                                                    bytes = photo[0].bytes;
+                                                    debugPrint('cars.length');
+                                                    debugPrint(cars.length.toString());
+                                                    if (cars.length == 2) {
+                                                      if (cars[0].bytes != null) {
+                                                        final bytesCar1 = cars[0].bytes;
+                                                        car1 = base64.encode(bytesCar1!);
+                                                      } else {
+                                                        car1 = '';
+                                                      }
+                                                      if (cars[1].bytes != null) {
+                                                        final bytesCar2 = cars[1].bytes;
+                                                        car2 = base64.encode(bytesCar2!);
+                                                      } else {
+                                                        car2 = '';
+                                                      }
+                                                      car3 = '';
+                                                    } else if (cars.length == 3) {
+                                                      if (cars[0].bytes != null) {
+                                                        final bytesCar1 = cars[0].bytes;
+                                                        car1 = base64.encode(bytesCar1!);
+                                                      } else {
+                                                        car1 = '';
+                                                      }
+                                                      if (cars[1].bytes != null) {
+                                                        final bytesCar2 = cars[1].bytes;
+                                                        car2 = base64.encode(bytesCar2);
+                                                      } else {
+                                                        car2 = '';
+                                                      }
+                                                      if (cars[2].bytes != null) {
+                                                        final bytesCar3 = cars[2].bytes;
+                                                        car3 = base64.encode(bytesCar3);
+                                                      } else {
+                                                        car3 = '';
+                                                      }
+                                                    } else {
+                                                      final bytesCar1 = cars[0].bytes;
+                                                      car1 = base64.encode(bytesCar1);
+                                                      car2 = '';
+                                                      car3 = '';
+                                                    }
+                                                    setState(() {
+                                                      encode64 = base64.encode(bytes!);
+                                                    });
+                                                  }
+                                                  debugPrint(userId);
+
+                                                  dynamic currentUser = User(
+                                                      id: '1',
+                                                      userId: userId,
+                                                      phone: phone,
+                                                      email: email,
+                                                      username: username,
+                                                      birthday: birthday,
+                                                      login: login,
+                                                      carname: carname,
+                                                      password: password,
+                                                      path: encode64,
+                                                      car1: car1,
+                                                      car2: car2,
+                                                      car3: car3,
+                                                      dateRegister: 'dateRegister',
+                                                      dateExpired: 'dateExpired');
+
+                                                  findingUser = await getUserByEmail(currentUser);
+                                                  user = await editUser(currentUser);
+
+                                                  debugPrint('after editUser success');
+
+                                                  Provider.of<Data>(context, listen: false).updateAccount(2);
+                                                  Navigator.of(context).pop();
+
+                                                  await Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const Account()));
                                                 }
                                               }
-                                            ]),
-                                            onSaved: (value) =>
-                                                password = value!),
-                                        Container(
-                                          width: 284,
-                                          margin: const EdgeInsets.only(
-                                              top: 30, bottom: 10),
+                                            },
+                                          )),
+                                      Container(
+                                        margin: const EdgeInsets.only(top: 0, bottom: 30),
+                                        child: GestureDetector(
+                                          onTap: _launchURL,
+                                          child: const Text.rich(
+                                            TextSpan(
+                                                text: 'Продолжая вы принимаете ',
+                                                style: TextStyle(fontSize: 10, fontWeight: FontWeight.normal, color: Color(0xFF8F97BF), height: 1.5),
+                                                children: <InlineSpan>[
+                                                  TextSpan(
+                                                    text: 'Пользовательское соглашение и конфиденциальность',
+                                                    style: TextStyle(
+                                                      decoration: TextDecoration.underline,
+                                                      decorationThickness: 2,
+                                                    ),
+                                                  )
+                                                ]),
+                                          ),
                                         ),
-
-                                        Accordion(
-                                            content: SizedBox(
-                                                width: 284,
-                                                child: Column(children: [
-                                                  Container(
-                                                    margin:
-                                                        const EdgeInsets.only(
-                                                            top: 53,
-                                                            bottom: 40),
-                                                    child: const TitlePage(
-                                                        title:
-                                                            'регистрация члена \nавтоклуба cadillac'),
-                                                  ),
-
-                                                  Container(
-                                                    width: 284,
-                                                    margin:
-                                                        const EdgeInsets.only(
-                                                            top: 10,
-                                                            bottom: 10),
-                                                    child: Text(
-                                                      'ваше фото'.toUpperCase(),
-                                                      textAlign: TextAlign.left,
-                                                      style:
-                                                          styleTitleFormInput,
-                                                    ),
-                                                  ),
-
-                                                  Container(
-                                                    width: 130,
-                                                    decoration: const BoxDecoration(
-                                                        borderRadius:
-                                                            BorderRadius.all(
-                                                                Radius.circular(
-                                                                    48))),
-                                                    child:
-                                                        FormBuilderFilePicker(
-                                                            name: "photo",
-                                                            decoration:
-                                                                const InputDecoration(
-                                                              fillColor: Color(
-                                                                  0xff515569),
-                                                              iconColor:
-                                                                  Colors.white,
-                                                              contentPadding:
-                                                                  EdgeInsets
-                                                                      .all(0),
-                                                              border:
-                                                                  OutlineInputBorder(
-                                                                borderSide:
-                                                                    BorderSide
-                                                                        .none,
-                                                                //gapPadding: 40,
-                                                              ),
-                                                            ),
-                                                            maxFiles: null,
-                                                            previewImages: true,
-                                                            onChanged: (val) =>
-                                                                {},
-                                                            selector: Column(
-                                                                crossAxisAlignment:
-                                                                    CrossAxisAlignment
-                                                                        .center,
-                                                                children: [
-                                                                  Stack(
-                                                                      alignment:
-                                                                          Alignment
-                                                                              .center,
-                                                                      children: [
-                                                                        Container(
-                                                                          alignment:
-                                                                              Alignment.center,
-                                                                          width:
-                                                                              96,
-                                                                          height:
-                                                                              96,
-                                                                          decoration: const BoxDecoration(
-                                                                              color: Color(0xFF515569),
-                                                                              borderRadius: BorderRadius.all(Radius.circular(48))),
-                                                                        ),
-                                                                        SvgPicture
-                                                                            .asset(
-                                                                          'assets/images/image.svg',
-                                                                          semanticsLabel:
-                                                                              'Icon upload',
-                                                                          height:
-                                                                              18.0,
-                                                                        ),
-                                                                      ]),
-                                                                  Row(
-                                                                      mainAxisAlignment:
-                                                                          MainAxisAlignment
-                                                                              .center,
-                                                                      crossAxisAlignment:
-                                                                          CrossAxisAlignment
-                                                                              .center,
-                                                                      children: const [
-                                                                        SizedBox(
-                                                                            height:
-                                                                                40),
-                                                                        Text(
-                                                                            'Загрузить фото',
-                                                                            style: TextStyle(
-                                                                                fontSize: 14.0,
-                                                                                fontWeight: FontWeight.normal,
-                                                                                fontFamily: 'CadillacSans',
-                                                                                color: Color(0xFF515569),
-                                                                                height: 1.4 //line-height : font-size
-                                                                                ),
-                                                                            textAlign: TextAlign.center),
-                                                                        Icon(
-                                                                            Icons
-                                                                                .file_upload,
-                                                                            semanticLabel:
-                                                                                'Icon upload',
-                                                                            size:
-                                                                                18.0,
-                                                                            color:
-                                                                                Color(0xFF515569)),
-                                                                        //)
-                                                                      ]),
-                                                                ]),
-                                                            onFileLoading:
-                                                                (val) {
-                                                              // debugPrint(val);
-                                                            },
-                                                            onSaved: (value) =>
-                                                                {
-                                                                  photo =
-                                                                      value!,
-                                                                }),
-                                                  ),
-
-                                                  Container(
-                                                    alignment:
-                                                        Alignment.topLeft,
-                                                    margin:
-                                                        const EdgeInsets.only(
-                                                            top: 10,
-                                                            bottom: 10),
-                                                    child: Text(
-                                                      'ваше имя и фамилия'
-                                                          .toUpperCase(),
-                                                      textAlign: TextAlign.left,
-                                                      style:
-                                                          styleTitleFormInput,
-                                                    ),
-                                                  ),
-                                                  FormBuilderTextField(
-                                                      name: 'username',
-                                                      autofocus: true,
-                                                      cursorWidth: 1.0,
-                                                      cursorColor: Colors.white,
-                                                      style: styleFormInput,
-                                                      decoration:
-                                                          const InputDecoration(
-                                                        contentPadding:
-                                                            EdgeInsets.all(16),
-                                                        border: OutlineInputBorder(
-                                                            borderSide:
-                                                                BorderSide.none,
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .all(Radius
-                                                                        .circular(
-                                                                            10))),
-                                                        fillColor:
-                                                            Color(0XFF515569),
-                                                        filled: true,
-                                                        hintText:
-                                                            "Введите ваш имя",
-                                                        hintStyle: TextStyle(
-                                                          color: Colors.white60,
-                                                        ),
-                                                      ),
-                                                      onSaved: (value) =>
-                                                          username = value!,
-                                                      autovalidateMode:
-                                                          AutovalidateMode
-                                                              .always,
-                                                      validator:
-                                                          FormBuilderValidators
-                                                              .compose([
-                                                        (val) {
-                                                          if (val == null) {
-                                                            return 'Поле name не может быть пустым';
-                                                          } else if (val
-                                                                  .length <
-                                                              3) {
-                                                            return 'Минимум 3 символа';
-                                                          } else {
-                                                            return null;
-                                                          }
-                                                        }
-                                                      ]),
-                                                      keyboardType:
-                                                          TextInputType.text),
-                                                  Container(
-                                                    alignment:
-                                                        Alignment.topLeft,
-                                                    margin:
-                                                        const EdgeInsets.only(
-                                                            top: 10,
-                                                            bottom: 10),
-                                                    child: Text(
-                                                      'ваша дата рождения'
-                                                          .toUpperCase(),
-                                                      textAlign: TextAlign.left,
-                                                      style:
-                                                          styleTitleFormInput,
-                                                    ),
-                                                  ),
-                                                  FormBuilderTextField(
-                                                    name: 'birthday',
-                                                    cursorWidth: 1.0,
-                                                    cursorColor: Colors.white,
-                                                    style: styleFormInput,
-                                                    inputFormatters: [
-                                                      maskFormatterDate
-                                                    ],
-                                                    keyboardType:
-                                                        TextInputType.number,
-                                                    decoration:
-                                                        const InputDecoration(
-                                                      contentPadding:
-                                                          EdgeInsets.all(16),
-                                                      border: OutlineInputBorder(
-                                                          borderSide:
-                                                              BorderSide.none,
-                                                          borderRadius:
-                                                              BorderRadius.all(
-                                                                  Radius
-                                                                      .circular(
-                                                                          10))),
-                                                      fillColor:
-                                                          Color(0XFF515569),
-                                                      filled: true,
-                                                      hintText: "__.__.____",
-                                                      hintStyle: TextStyle(
-                                                        color: Colors.white60,
-                                                      ),
-                                                    ),
-                                                    onSaved: (value) =>
-                                                        birthday = value!,
-                                                  ),
-                                                  Container(
-                                                    alignment:
-                                                        Alignment.topLeft,
-                                                    margin:
-                                                        const EdgeInsets.only(
-                                                            top: 10,
-                                                            bottom: 10),
-                                                    child: Text(
-                                                      'ваш номер телефона'
-                                                          .toUpperCase(),
-                                                      textAlign: TextAlign.left,
-                                                      style:
-                                                          styleTitleFormInput,
-                                                    ),
-                                                  ),
-
-                                                  FormBuilderTextField(
-                                                      name: 'phone2',
-                                                      cursorWidth: 1.0,
-                                                      cursorColor: Colors.white,
-                                                      style: styleFormInput,
-                                                      inputFormatters: [
-                                                        maskFormatterPhone
-                                                      ],
-                                                      decoration: const InputDecoration(
-                                                        contentPadding: EdgeInsets
-                                                            .all(16),
-                                                        border: OutlineInputBorder(
-                                                            borderSide: BorderSide
-                                                                .none,
-                                                            borderRadius: BorderRadius
-                                                                .all(
-                                                                Radius.circular(10))
-                                                        ),
-
-                                                        fillColor: Color(
-                                                            0XFF515569),
-                                                        filled: true,
-                                                        hintText: "+7 ___-___-__-__",
-                                                        hintStyle: TextStyle(
-                                                          color: Colors.white60,
-                                                        ),
-                                                      ),
-                                                      keyboardType:
-                                                          TextInputType.text),
-                                                  Container(
-                                                    alignment:
-                                                        Alignment.topLeft,
-                                                    margin:
-                                                        const EdgeInsets.only(
-                                                            top: 10,
-                                                            bottom: 10),
-                                                    child: Text(
-                                                      'ваше автомобиль'
-                                                          .toUpperCase(),
-                                                      textAlign: TextAlign.left,
-                                                      style:
-                                                          styleTitleFormInput,
-                                                    ),
-                                                  ),
-                                                  FormBuilderTextField(
-                                                      name: 'carname',
-                                                      cursorWidth: 1.0,
-                                                      cursorColor: Colors.white,
-                                                      style: styleFormInput,
-                                                      decoration:
-                                                          const InputDecoration(
-                                                        contentPadding:
-                                                            EdgeInsets.all(16),
-                                                        border: OutlineInputBorder(
-                                                            borderSide:
-                                                                BorderSide.none,
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .all(Radius
-                                                                        .circular(
-                                                                            10))),
-                                                        fillColor:
-                                                            Color(0XFF515569),
-                                                        filled: true,
-                                                        hintText:
-                                                            "Введите название автомобиля",
-                                                        hintStyle: TextStyle(
-                                                          color: Colors.white60,
-                                                        ),
-                                                      ),
-                                                      onSaved: (value) =>
-                                                          carname = value,
-                                                      keyboardType:
-                                                          TextInputType.text),
-
-                                                  Container(
-                                                    width: 284,
-                                                    margin:
-                                                        const EdgeInsets.only(
-                                                            top: 10,
-                                                            bottom: 10),
-                                                    child: Text(
-                                                      'загрузите 3 фото вашего cadillac'
-                                                          .toUpperCase(),
-                                                      textAlign: TextAlign.left,
-                                                      style:
-                                                          styleTitleFormInput,
-                                                    ),
-                                                  ),
-                                                  FormBuilderFilePicker(
-                                                      name: "cars",
-                                                      decoration:
-                                                          const InputDecoration(
-                                                        fillColor:
-                                                            Color(0xff515569),
-                                                        iconColor: Colors.white,
-                                                        contentPadding:
-                                                            EdgeInsets.all(0),
-                                                        border:
-                                                            OutlineInputBorder(
-                                                          borderSide:
-                                                              BorderSide.none,
-                                                          //gapPadding: 40,
-                                                        ),
-                                                      ),
-                                                      maxFiles: null,
-                                                      previewImages: true,
-                                                      onChanged: (val) => {},
-                                                      selector: Column(
-                                                          children: [
-                                                            Stack(
-                                                                alignment:
-                                                                    Alignment
-                                                                        .center,
-                                                                children: [
-                                                                  Container(
-                                                                    width: 284,
-                                                                    height: 160,
-                                                                    decoration: const BoxDecoration(
-                                                                        color: Color(
-                                                                            0xFF515569),
-                                                                        shape: BoxShape
-                                                                            .rectangle,
-                                                                        borderRadius:
-                                                                            BorderRadius.all(Radius.circular(10))),
-                                                                  ),
-                                                                  SvgPicture
-                                                                      .asset(
-                                                                    'assets/images/load.svg',
-                                                                    semanticsLabel:
-                                                                        'Icon upload',
-                                                                    height:
-                                                                        18.0,
-                                                                  ),
-                                                                  Positioned(
-                                                                    bottom: 0,
-                                                                    child: Row(
-                                                                        mainAxisAlignment:
-                                                                            MainAxisAlignment
-                                                                                .center,
-                                                                        crossAxisAlignment:
-                                                                            CrossAxisAlignment.center,
-                                                                        children: const [
-                                                                          SizedBox(
-                                                                              height: 40),
-                                                                          Text(
-                                                                              'Загрузить фото',
-                                                                              style: TextStyle(fontSize: 14.0, fontWeight: FontWeight.normal, fontFamily: 'CadillacSans', color: Colors.white, height: 1.4 //line-height : font-size
-                                                                                  ),
-                                                                              textAlign: TextAlign.center),
-                                                                          Icon(
-                                                                            Icons.file_upload,
-                                                                            semanticLabel:
-                                                                                'Icon upload',
-                                                                            size:
-                                                                                18.0,
-                                                                            color:
-                                                                                Colors.white,
-                                                                          )
-                                                                        ]),
-                                                                  )
-                                                                ]),
-                                                          ]),
-                                                      onFileLoading: (val) {
-                                                        // debugPrint(val);
-                                                      },
-                                                      onSaved: (value) => {
-                                                            cars = value!,
-                                                          }),
-
-                                                  Container(
-                                                      width: 284,
-                                                      margin:
-                                                          const EdgeInsets.only(
-                                                              top: 30,
-                                                              bottom: 45),
-                                                      child: MaterialButton(
-                                                        padding:
-                                                            const EdgeInsets
-                                                                .all(17),
-                                                        color: const Color
-                                                                .fromARGB(
-                                                            255, 255, 255, 255),
-                                                        child: Text(
-                                                          "зарегистрироваться"
-                                                              .toUpperCase(),
-                                                          style: const TextStyle(
-                                                              fontSize: 14,
-                                                              color: Color(
-                                                                  0xFF12141F)),
-                                                        ),
-                                                        shape:
-                                                            const RoundedRectangleBorder(
-                                                          side: BorderSide.none,
-                                                          borderRadius:
-                                                              BorderRadius.all(
-                                                            Radius.circular(10),
-                                                          ),
-                                                        ),
-                                                        onPressed: () async {
-
-                                                          if(_formKey.currentState?.validate() == false){
-                                                            debugPrint(
-                                                            'Invalid');
-                                                            errorMessage(context);
-                                                          } else {
-                                                            if (_formKey
-                                                                    .currentState
-                                                                    ?.saveAndValidate() ??
-                                                                false) {
-
-                                                              Provider.of<Data>(context, listen: false).updateAccount(2);
-                                                              debugPrint(
-                                                                  'Valid success payment user');
-                                                              if (platform == 'android' ||
-                                                                  platform == 'ios') {
-                                                                debugPrint(platform);
-                                                                final bytes = File(photo[0].path).readAsBytesSync();
-
-                                                                setState(() {
-                                                                  encode64 = base64.encode(bytes);
-                                                                });
-                                                                debugPrint('cars.length');
-                                                                debugPrint(cars.length.toString());
-                                                                if (cars.length ==  2) {
-                                                                  if (cars[0].path != null) {
-                                                                    final bytesCar1 = File(cars[0].path).readAsBytesSync();
-                                                                    car1 = base64.encode(bytesCar1);
-                                                                  } else {
-                                                                    car1 = '';
-                                                                  }
-                                                                  if (cars[1].path != null) {
-                                                                    final bytesCar2 = File(cars[1].path).readAsBytesSync();
-                                                                    car2 = base64.encode(bytesCar2);
-                                                                  } else {
-                                                                    car2 = '';
-                                                                  }
-                                                                  car3 = '';
-                                                                } else if (cars.length == 3) {
-                                                                  if (cars[0].path != null) {
-                                                                    final bytesCar1 = File(cars[0].path).readAsBytesSync();
-                                                                    car1 = base64.encode(bytesCar1);
-                                                                  } else {
-                                                                    car1 = '';
-                                                                  }
-                                                                  if (cars[1].path != null) {
-                                                                    final bytesCar2 = File(cars[1].path).readAsBytesSync();
-                                                                    car2 = base64.encode(bytesCar2);
-                                                                  } else {
-                                                                    car2 = '';
-                                                                  }
-                                                                  if (cars[2].path != null) {
-                                                                    final bytesCar3 = File(cars[2].path).readAsBytesSync();
-                                                                    car3 = base64.encode(bytesCar3);
-                                                                  } else {
-                                                                    car3 = '';
-                                                                  }
-                                                                } else {
-                                                                  final bytesCar1 = File(cars[0].path).readAsBytesSync();
-                                                                  car1 = base64.encode(bytesCar1);
-                                                                  car2 = '';
-                                                                  car3 = '';
-                                                                }
-                                                              } else {
-                                                                debugPrint(platform);
-                                                                bytes = photo[0].bytes;
-                                                                debugPrint('cars.length');
-                                                                debugPrint(cars.length.toString());
-                                                                if (cars.length ==  2) {
-                                                                  if (cars[0].bytes != null) {
-                                                                    final bytesCar1 = cars[0].bytes;
-                                                                    car1 = base64.encode(bytesCar1!);
-                                                                  } else {
-                                                                    car1 = '';
-                                                                  }
-                                                                  if (cars[1].bytes != null) {
-                                                                    final bytesCar2 = cars[1].bytes;
-                                                                    car2 = base64.encode(bytesCar2!);
-                                                                  } else {
-                                                                    car2 = '';
-                                                                  }
-                                                                  car3 = '';
-                                                                } else if (cars.length == 3) {
-                                                                  if (cars[0].bytes != null) {
-                                                                    final bytesCar1 = cars[0].bytes;
-                                                                    car1 = base64.encode(bytesCar1!);
-                                                                  } else {
-                                                                    car1 = '';
-                                                                  }
-                                                                  if (cars[1].bytes != null) {
-                                                                    final bytesCar2 = cars[1].bytes;
-                                                                    car2 = base64.encode(bytesCar2);
-                                                                  } else {
-                                                                    car2 = '';
-                                                                  }
-                                                                  if (cars[2].bytes != null) {
-                                                                    final bytesCar3 = cars[2].bytes;
-                                                                    car3 = base64.encode(bytesCar3);
-                                                                  } else {
-                                                                    car3 = '';
-                                                                  }
-                                                                } else {
-                                                                  final bytesCar1 = cars[0].bytes;
-                                                                  car1 = base64.encode(bytesCar1);
-                                                                  car2 = '';
-                                                                  car3 = '';
-                                                                }
-                                                                setState(() {
-                                                                  encode64 = base64.encode(bytes!);
-                                                                });
-                                                              }
-                                                              debugPrint(userId);
-
-                                                              dynamic
-                                                                  currentUser =
-                                                                  User(
-                                                                      id: '1',
-                                                                      userId: userId,
-                                                                      phone: phone,
-                                                                      email: email,
-                                                                      username:
-                                                                          username,
-                                                                      birthday:
-                                                                          birthday,
-                                                                      login: login,
-                                                                      carname: carname,
-                                                                      password: password,
-                                                                      path: encode64,
-                                                                      car1: car1,
-                                                                      car2: car2,
-                                                                      car3: car3,
-                                                                      dateRegister: 'dateRegister',
-                                                                      dateExpired: 'dateExpired'
-                                                              );
-
-                                                              findingUser = await getUserByEmail(currentUser);
-                                                              user =
-                                                                  await editUser(
-                                                                      currentUser);
-
-                                                              debugPrint(
-                                                                  'after editUser success');
-
-                                                              Provider.of<Data>(context, listen: false).updateAccount(2);
-                                                              Navigator.of(context).pop();
-
-                                                              await Navigator.pushReplacement(
-                                                                  context,
-                                                                  MaterialPageRoute(
-                                                                      builder:
-                                                                          (context) =>
-                                                                              const Account()));
-                                                            }
-                                                          }
-                                                        },
-                                                      )),
-
-                                                  Container(
-                                                    margin:
-                                                        const EdgeInsets.only(
-                                                            top: 0, bottom: 30),
-                                                    child: GestureDetector(
-                                                      onTap: _launchURL,
-                                                      child: const Text.rich(
-                                                        TextSpan(
-                                                            text:
-                                                                'Продолжая вы принимаете ',
-                                                            style: TextStyle(
-                                                                fontSize: 10,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .normal,
-                                                                color: Color(
-                                                                    0xFF8F97BF),
-                                                                height: 1.5),
-                                                            children: <
-                                                                InlineSpan>[
-                                                              TextSpan(
-                                                                text:
-                                                                    'Пользовательское соглашение и конфиденциальность',
-                                                                style:
-                                                                    TextStyle(
-                                                                  decoration:
-                                                                      TextDecoration
-                                                                          .underline,
-                                                                  decorationThickness:
-                                                                      2,
-                                                                ),
-                                                              )
-                                                            ]),
-                                                      ),
-                                                    ),
-                                                  ),
-                                                ]))
-                                            )
-                                      ])))
-                        ])),
-                  )
-                ]),
+                                      ),
+                                    ])))
+                          ])))
+                ])),
+              )
+            ]),
           ),
-
           drawer: const NavDrawer(),
         ));
   }
@@ -905,71 +644,67 @@ class _SuccessPaymentState extends State<SuccessPayment> {
   }
 
   getUserByEmail(User user) async {
+    debugPrint('func getUserByEmail');
 
-      debugPrint('func getUserByEmail');
+    debugPrint('user.userId');
+    dynamic login = user.login;
+    dynamic password = user.password;
+    dynamic username = user.username;
+    dynamic birthday = user.birthday;
+    dynamic carname = user.carname;
+    dynamic path = user.path;
+    dynamic car1, car2, car3;
+    if (user.car1 != 'null') car1 = user.car1;
+    if (user.car2 != 'null') car2 = user.car2;
+    if (user.car3 != 'null') car3 = user.car3;
+    dynamic dateRegister = user.dateRegister;
+    dynamic dateExpired = user.dateExpired;
 
-      debugPrint('user.userId');
-      dynamic login = user.login;
-      dynamic password  = user.password;
-      dynamic username = user.username;
-      dynamic birthday = user.birthday;
-      dynamic carname = user.carname;
-      dynamic path = user.path;
-      dynamic car1, car2, car3;
-      if (user.car1 != 'null') car1 = user.car1;
-      if (user.car2 != 'null') car2 = user.car2;
-      if (user.car3 != 'null') car3 = user.car3;
-      dynamic dateRegister = user.dateRegister;
-      dynamic dateExpired = user.dateExpired;
+    String apiUrl = baseUrl + "/test/get_user_by_email.php";
 
-      String apiUrl = baseUrl + "/test/get_user_by_email.php";
+    var response = await http.post(Uri.parse(apiUrl), body: {
+      'login': login,
+      'username': username,
+      'birthday': birthday,
+      'carname': carname,
+      'path': path,
+      'car1': car1 != '' ? car1 : '',
+      'car2': car2 != '' ? car2 : '',
+      'car3': car3 != '' ? car3 : '',
+      'password': password,
+      'dateRegister': dateRegister,
+      'dateExpired': dateExpired,
+    }, headers: {
+      'Accept': 'application/json, charset=utf-8',
+      "Access-Control-Allow-Origin": "*",
+      "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS"
+    });
+    if (response.statusCode == 200) {
+      debugPrint('success getUserByEmail');
 
-      var response = await http.post(Uri.parse(apiUrl), body: {
-        'login': login,
-        'username': username,
-        'birthday': birthday,
-        'carname': carname,
-        'path': path,
-        'car1': car1 != '' ? car1 : '',
-        'car2': car2 != '' ? car2 : '',
-        'car3': car3 != '' ? car3 : '',
-        'password': password,
-        'dateRegister': dateRegister,
-        'dateExpired': dateExpired,
-      }, headers: {
-        'Accept': 'application/json, charset=utf-8',
-        "Access-Control-Allow-Origin": "*",
-        "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS"
+      debugPrint(response.body);
+
+      final userJson = json.decode(response.body);
+
+      var data = User.fromJson(userJson);
+
+      Provider.of<Data>(context, listen: false).updateUserId(data.userId);
+
+      setState(() {
+        uuid = data.userId;
       });
-      if (response.statusCode == 200) {
-        debugPrint('success getUserByEmail');
 
-        debugPrint(response.body);
-
-
-        final userJson = json.decode(response.body);
-
-        var data = User.fromJson(userJson);
-
-        Provider.of<Data>(context, listen: false).updateUserId(data.userId);
-
-        setState(() {
-          uuid = data.userId;
-        });
-
-        //getCookie(data.userId);
-        return(data);
-
-      } else {
-        throw Exception('Error: ${response.reasonPhrase}');
-      }
-
+      //getCookie(data.userId);
+      return (data);
+    } else {
+      throw Exception('Error: ${response.reasonPhrase}');
+    }
   }
 
   editUser(User user) async {
     debugPrint('func editUser success');
     dynamic login = user.login;
-    dynamic password  = user.password;
+    dynamic password = user.password;
     dynamic username = user.username;
     dynamic birthday = user.birthday;
     dynamic carname = user.carname;
@@ -1001,7 +736,7 @@ class _SuccessPaymentState extends State<SuccessPayment> {
     if (response.statusCode == 200) {
       debugPrint('success success-payment');
 
-      if(platform == 'windows') {
+      if (platform == 'windows') {
         var cookie = response.headers['set-cookie'];
         debugPrint('cookie: $cookie');
         List<String>? cookiesList = cookie?.split(';');
@@ -1013,8 +748,7 @@ class _SuccessPaymentState extends State<SuccessPayment> {
       debugPrint(response.body);
       final userJson = json.decode(response.body);
       var data = User.fromJson(userJson);
-      return(data);
-
+      return (data);
     } else {
       throw Exception('Error: ${response.reasonPhrase}');
     }
@@ -1045,7 +779,6 @@ getCookie(cookie) async {
   // await dio.get(baseUrl);
 }
 
-
 final Uri _url = Uri.parse('https://www.google.com');
 
 void _launchURL() async {
@@ -1063,36 +796,34 @@ Future errorMessage(BuildContext context) async {
     barrierDismissible: false, // user must tap button for close dialog!
     builder: (BuildContext context) {
       return AlertDialog(
-        content: Text('Все поля формы обязательны для заполнения'.toUpperCase(),
+        content: Text(
+          'Все поля формы обязательны для заполнения'.toUpperCase(),
           textAlign: TextAlign.center,
           style: styleTextAlertDialog,
         ),
         actions: <Widget>[
-          Container (
+          Container(
               padding: const EdgeInsets.only(left: 20, right: 20, bottom: 20),
-              child: Row (
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    MaterialButton(
-                        padding: const EdgeInsets.all(14),
-                        color: const Color(0xFFE4E6FF),
-                        elevation: 0,
-                        shape: const RoundedRectangleBorder(
-                          side: BorderSide.none,
-                          borderRadius: BorderRadius.all(Radius.circular(10),
-                          ),),
-                        child: Text(
-                          'Закрыть'.toUpperCase(),
-                          textAlign: TextAlign.right,
-                          style: styleTextAlertDialog,
-                        ),
-                        onPressed: () async {
-                          Navigator.of(context).pop();
-                        }
+              child: Row(mainAxisAlignment: MainAxisAlignment.end, children: [
+                MaterialButton(
+                    padding: const EdgeInsets.all(14),
+                    color: const Color(0xFFE4E6FF),
+                    elevation: 0,
+                    shape: const RoundedRectangleBorder(
+                      side: BorderSide.none,
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(10),
+                      ),
                     ),
-                  ]
-              )
-          )
+                    child: Text(
+                      'Закрыть'.toUpperCase(),
+                      textAlign: TextAlign.right,
+                      style: styleTextAlertDialog,
+                    ),
+                    onPressed: () async {
+                      Navigator.of(context).pop();
+                    }),
+              ]))
         ],
       );
     },
