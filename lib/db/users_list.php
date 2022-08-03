@@ -1,29 +1,21 @@
-require 'db/connect.php';
-
 <?php
-include "../flutter_api/db.php";
-header('Content-Type: application/json');
-include "../db/connect.php";
 
-// global $db_name;
-// global $db_server;
-// global $db_user;
-// global $db_pass;
-//
-global $link;
-// global $result;
+header("Content-type: text/html; charset=utf-8");
+header("Content-type: text/json");
 
-//
-// $item = "";
-// $data = "";
-$sql_query = "SELECT * FROM `users_list`";
-$r = mysqli_query($link, $sql_query);
+error_reporting(-1);
+require_once 'connect.php';
+require_once 'funcs.php';
 
-$data = array();
+global $dbhost, $dbuser, $dbpassword, $dbname, $link;
+ini_set('display_errors', 1);
 
-echo (json_encode(array("users" => $data),JSON_UNESCAPED_UNICODE));
+$users_list = get_all_users_json();
+//$users_json = json_encode($users_list);
+//$users_list = users_to_obj();
 
-// $result = mysqli_query($link, "SELECT * FROM users_list");
-// $data = mysqli_fetch_all($result);
-//
-// var_dump($data);
+//print($users_json);
+echo $users_list;
+
+
+
