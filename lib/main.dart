@@ -61,10 +61,10 @@ class MyApp extends StatelessWidget {
 
 
         routes: {
-          //'/home': (context) => Provider.of<Data>(context).data['cookies'].toString() != ''? Account() : RegistrationPage(),
+          //'/home': (context) => Provider.of<Data>(context).data['cookies'].toString() != ''? const Account() : const RegistrationPage(),
           //'/home': (context) => Account(),
           //'/home': (context) => MembersAdmin(),
-          //'/home': (context) => RegistrationAdmin(userId: '1aa71d78-f91c-11ec-a426-002590eb3418'),
+          '/home': (context) => RegistrationPage(),
           //'/home': (context) => Shop(),
           '/homeAdmin': (context) => const HomeAdmin(),
           '/registrationAdmin': (context) => RegistrationAdmin(),
@@ -73,7 +73,7 @@ class MyApp extends StatelessWidget {
           //'/home': (context) => isAuth ? Account() : RegistrationPage(),
           //'/home': (context) => Test(),
           //'/home': (context) => AccountAdmin(userId:'f1c7fde2-ef1b-11ec-a426-002590eb3418'),
-          '/home': (context) => PartnersAdmin(),
+          //'/home': (context) => PartnersAdmin(),
           //'/home': (context) => Account(userId:userId),
           //'/home': (context) => Members(),
           //'/home': (context) => Account(userId:'f1c7fde2-ef1b-11ec-a426-002590eb3418'),

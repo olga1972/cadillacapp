@@ -68,6 +68,7 @@ class _AccountState extends State<Account> {
     userId = Provider.of<Data>(context, listen: false).data['userId'].toString();
     debugPrint(userId);
     platform = Provider.of<Data>(context).data['platform'].toString();
+    debugPrint(platform);
 
     List<Cookie> cookies = [Cookie("uuid", "$userId")];
 
@@ -80,7 +81,7 @@ class _AccountState extends State<Account> {
 
     var response = getCookie();
     debugPrint('cookies account');
-    debugPrint(response);
+    //debugPrint(response); error
 
     user = getUser(userId, context);
 
