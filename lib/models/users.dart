@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'dart:convert';
 
 import 'package:flutter/services.dart';
@@ -7,20 +8,11 @@ class UsersList {
   List<User> users;
   UsersList({required this.users});
 
-  factory UsersList.fromJson (Map<String, dynamic> json) {
-    print('from json userstList');
-    print(json);
-    print(json['users']);
+  factory UsersList.fromJson(Map<String, dynamic> json) {
+    debugPrint('from json usersList');
     var usersJson = json['users'] as List;
-
-    print('usersJson');
-    print(usersJson);
+    debugPrint(usersJson.toString());
     List<User> usersList = usersJson.map((i) => User.fromJson(i)).toList();
-
-    print('usersList');
-    print(usersList);
-    print(usersList.runtimeType);
-
     return UsersList(
       users: usersList,
     );
@@ -44,24 +36,22 @@ class User {
   late final dynamic dateRegister;
   late final dynamic dateExpired;
 
-  User({
-    required this.id,
-    required this.userId,
-    required this.username,
-    required this.email,
-    required this.phone,
-    required this.birthday,
-    required this.login,
-    required this.carname,
-    required this.path,
-    required this.car1,
-    required this.car2,
-    required this.car3,
-    required this.password,
-    required this.dateRegister,
-    required this.dateExpired
-    //this.photo,
-  });
+  User(
+      {required this.id,
+      required this.userId,
+      required this.username,
+      required this.email,
+      required this.phone,
+      required this.birthday,
+      required this.login,
+      required this.carname,
+      required this.path,
+      required this.car1,
+      required this.car2,
+      required this.car3,
+      required this.password,
+      required this.dateRegister,
+      required this.dateExpired});
 
   factory User.fromJson(Map<String, dynamic> json) {
     return User(
@@ -83,15 +73,12 @@ class User {
     );
   }
 
-
   Future<UsersList> getUsersList() async {
-    // const url = 'https://about.google/static/data/locations.json';
-    // const url = 'http://localhost/test/users_list.php';
     const url = 'https://cadillacapp.ru/test/users_list.php';
     final response = await http.get(Uri.parse(url));
-    print('response body user getUsersList');
-    print('response body');
-    if(response.statusCode == 200) {
+    debugPrint('response body user getUsersList');
+    debugPrint(response.body.toString());
+    if (response.statusCode == 200) {
       return UsersList.fromJson(json.decode(response.body));
     } else {
       throw Exception('Error: ${response.reasonPhrase}');
@@ -121,9 +108,5 @@ class User {
 
 Future<UsersList> readJson() async {
   final String response = await rootBundle.loadString('assets/users.json');
-  final data = await json.decode(response);
-  print('userlist readJson');
   return UsersList.fromJson(json.decode(response));
-
 }
-
