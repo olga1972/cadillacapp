@@ -4,7 +4,7 @@ import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:cadillac/utils/generate_password.dart';
 
 import 'package:cadillac/variables.dart';
-import 'package:cadillac/widgets/titlePage.dart';
+import 'package:cadillac/widgets/titlePageAdmin.dart';
 
 import 'package:http/http.dart' as http;
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
@@ -89,7 +89,7 @@ class _AddUserState extends State<AddUser> {
                   Container(
                     width: 284,
                     margin: const EdgeInsets.only(bottom: 40),
-                    child: const TitlePage(title: 'добавить нового члена клуба'),
+                    child: const TitlePageAdmin(title: 'добавить нового члена клуба'),
                   ),
                   Column(crossAxisAlignment: CrossAxisAlignment.center, children: [
                     FormBuilder(

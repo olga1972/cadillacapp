@@ -106,61 +106,61 @@ class _RegistrationPageState extends State<RegistrationPage> {
 
     // admin переход на успешная регистрация пользоавтеля, далее в аккоунт - ошибка!
     
-    // if (counter == '1') {
-    //   switch (isAdmin) {
-    //     case 'false':
-    //       Future.delayed(Duration.zero, () {
-    //         Navigator.pushReplacement(
-    //             context,
-    //             MaterialPageRoute(
-    //                 builder:
-    //                     (context) =>
-    //                     SuccessPayment()));
-    //       });
-    //
-    //       break;
-    //     case 'true':
-    //       Future.delayed(Duration.zero, () {
-    //       Navigator.pushReplacement(
-    //           context,
-    //           MaterialPageRoute(
-    //               builder:
-    //                   (context) =>
-    //                   RegistrationAdmin()));
-    //       });
-    //       break;
-    //   }
-    // } else if (counter == '2') {
-    //   switch (isAdmin) {
-    //     case 'false':
-    //       Future.delayed(Duration.zero, () {
-    //       Navigator.pushReplacement(
-    //           context,
-    //           MaterialPageRoute(
-    //               builder:
-    //                   (context) =>
-    //                   const Account()));
-    //       });
-    //       break;
-    //     case 'true':
-    //       Future.delayed(Duration.zero, () {
-    //       Navigator.pushReplacement(
-    //           context,
-    //           MaterialPageRoute(
-    //               builder:
-    //                   (context) =>
-    //                   const AccountAdmin()));
-    //   });
-    //       break;
-    //   }
-    // }
+    if (counter == '1') {
+      switch (isAdmin) {
+        case 'false':
+          Future.delayed(Duration.zero, () {
+            Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(
+                    builder:
+                        (context) =>
+                        const SuccessPayment()));
+          });
 
-      userIdFromProvider = Provider
-          .of<Data>(context, listen: false)
-          .data['userId'].toString();
-      debugPrint(Provider
-          .of<Data>(context, listen: false)
-          .data['userId'].toString());
+          break;
+        case 'true':
+          Future.delayed(Duration.zero, () {
+          Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(
+                  builder:
+                      (context) =>
+                      const RegistrationAdmin()));
+          });
+          break;
+      }
+    } else if (counter == '2') {
+      switch (isAdmin) {
+        case 'false':
+          Future.delayed(Duration.zero, () {
+          Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(
+                  builder:
+                      (context) =>
+                      const Account()));
+          });
+          break;
+        case 'true':
+          Future.delayed(Duration.zero, () {
+          Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(
+                  builder:
+                      (context) =>
+                      const AccountAdmin()));
+      });
+          break;
+      }
+    }
+
+      // userIdFromProvider = Provider
+      //     .of<Data>(context, listen: false)
+      //     .data['userId'].toString();
+      // debugPrint(Provider
+      //     .of<Data>(context, listen: false)
+      //     .data['userId'].toString());
 
       return MaterialApp(
           theme: ThemeData(scaffoldBackgroundColor: const Color(0xFF181c33)),
@@ -368,6 +368,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                                                 if (email == 'admin@admin') {
                                                   debugPrint('admin');
                                                   debugPrint(counter);
+                                                  Provider.of<Data>(context, listen: false).checkIsAdmin('true');
                                                   switch (counter) {
                                                     case '0': {
                                                         Provider.of<Data>(context, listen: false).updateAccount(1);
@@ -375,7 +376,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                                                           Navigator.pushReplacement(
                                                               context, MaterialPageRoute(
                                                               builder: (context) =>
-                                                                  RegistrationAdmin()
+                                                                  const RegistrationAdmin()
                                                           ));
                                                         });
 
@@ -391,9 +392,20 @@ class _RegistrationPageState extends State<RegistrationPage> {
                                                           ));
                                                        break;
                                                       }
+                                                    case '2':
+                                                      {
+                                                        // Provider.of<Data>(context, listen: false).updateAccount(2);
+                                                        Navigator.pushReplacement(
+                                                            context, MaterialPageRoute(
+                                                            builder: (context) =>
+                                                            const AccountAdmin()
+                                                        ));
+                                                        break;
+                                                      }
                                                   }
                                                 } else {
                                                   debugPrint('user');
+                                                  Provider.of<Data>(context, listen: false).checkIsAdmin('false');
                                                   debugPrint(isShowConfirmRegister);
 
                                                   if(isShowConfirmRegister == 'false') {
@@ -404,7 +416,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                                                     Navigator.pushReplacement(
                                                           context, MaterialPageRoute(
                                                           builder: (context) =>
-                                                              SuccessPayment()
+                                                              const SuccessPayment()
                                                       ));
 
                                                   }
@@ -518,7 +530,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                                     await Navigator.pushReplacement(
                                         context, MaterialPageRoute(
                                         builder: (context) =>
-                                            SuccessPayment()
+                                            const SuccessPayment()
                                     ));
                                     break;
                                   }
@@ -529,7 +541,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                                     await Navigator.pushReplacement(
                                         context, MaterialPageRoute(
                                         builder: (context) =>
-                                            SuccessPayment()
+                                            const SuccessPayment()
                                     ));
                                     break;
                                   }

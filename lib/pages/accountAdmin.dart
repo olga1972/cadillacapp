@@ -9,7 +9,7 @@ import 'package:cadillac/pages/newsAdmin.dart';
 import 'package:cadillac/pages/partnersAdmin.dart';
 import 'package:cadillac/pages/shopAdmin.dart';
 import 'package:cadillac/variables.dart';
-import 'package:cadillac/widgets/titlePage.dart';
+import 'package:cadillac/widgets/titlePageAdmin.dart';
 
 import 'package:card_swiper/card_swiper.dart';
 import 'package:flutter/material.dart';
@@ -201,7 +201,7 @@ class _AccountAdminState extends State<AccountAdmin> {
                                 const SizedBox(
                                   height: 20,
                                 ),
-                                const TitlePage(title: 'аккаунт члена\nавтоклуба cadillac'),
+                                const TitlePageAdmin(title: 'аккаунт члена\nавтоклуба cadillac'),
                                 Container(
                                     // height: 100,
                                     margin: const EdgeInsets.only(top: 43.0, bottom: 43.0),

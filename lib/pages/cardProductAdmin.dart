@@ -14,8 +14,9 @@ import 'package:cadillac/variables.dart';
 
 class CardProductAdmin extends StatefulWidget {
   const CardProductAdmin({
-    Key? key,
+    Key? key, required this.index
   }) : super(key: key);
+  final int index;
 
   @override
   State<CardProductAdmin> createState() => _CardProductAdminState();
@@ -24,11 +25,12 @@ class CardProductAdmin extends StatefulWidget {
 class _CardProductAdminState extends State<CardProductAdmin> {
   late Future<ProductsList> productsList;
 
-  get currentUser => null;
   List<String> images = [
-    "assets/images/notebook.png",
+    "assets/images/t-shirt.png",
+    "assets/images/hoodie.png",
     "assets/images/notebook.png",
   ];
+
 
   @override
   void initState() {
@@ -72,7 +74,7 @@ class _CardProductAdminState extends State<CardProductAdmin> {
                     ),
                     Container(
                       width: MediaQuery.of(context).size.width,
-                      height: 320,
+                      height: 330,
                       padding: EdgeInsets.zero,
                       margin: const EdgeInsets.only(top: 10, bottom: 30, left: 0, right: 0),
                       child: Swiper(
@@ -81,8 +83,8 @@ class _CardProductAdminState extends State<CardProductAdmin> {
                         layout: SwiperLayout.CUSTOM,
                         customLayoutOption: CustomLayoutOption(startIndex: -1, stateCount: 2)
                           ..addTranslate([
-                            const Offset(0.0, 0.0),
-                            const Offset(270.0, 0.0),
+                            const Offset(-50.0, 0.0),
+                            const Offset(160.0, 0.0),
                           ]),
                         viewportFraction: 0.8,
                         itemHeight: 279,

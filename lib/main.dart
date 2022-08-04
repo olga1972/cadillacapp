@@ -1,4 +1,6 @@
 import 'package:cadillac/pages/account.dart';
+import 'package:cadillac/pages/cardProduct.dart';
+import 'package:cadillac/pages/cardProductAdmin.dart';
 import 'package:cadillac/pages/contacts.dart';
 import 'package:cadillac/pages/editAccount.dart';
 import 'package:cadillac/pages/editAccountAdmin.dart';
@@ -16,6 +18,7 @@ import 'package:cadillac/pages/partnersAdmin.dart';
 import 'package:cadillac/pages/registrationAdmin.dart';
 import 'package:cadillac/pages/renewAccount.dart';
 import 'package:cadillac/pages/shop.dart';
+import 'package:cadillac/pages/shopAdmin.dart';
 import 'package:cadillac/pages/test.dart';
 import 'package:cadillac/widgets/titlePage.dart';
 import 'package:flutter/foundation.dart';
@@ -64,8 +67,8 @@ class MyApp extends StatelessWidget {
           //'/home': (context) => Provider.of<Data>(context).data['cookies'].toString() != ''? const Account() : const RegistrationPage(),
           //'/home': (context) => Account(),
           //'/home': (context) => MembersAdmin(),
-          '/home': (context) => RegistrationPage(),
-          //'/home': (context) => Shop(),
+          //'/home': (context) => RegistrationPage(),
+          '/home': (context) => CardProductAdmin(index: 0),
           '/homeAdmin': (context) => const HomeAdmin(),
           '/registrationAdmin': (context) => RegistrationAdmin(),
           //'/home': (context) => Contacts(),

@@ -8,7 +8,7 @@ import 'package:form_builder_validators/form_builder_validators.dart';
 
 import 'package:cadillac/variables.dart';
 
-import 'package:cadillac/widgets/titlePage.dart';
+import 'package:cadillac/widgets/titlePageAdmin.dart';
 
 import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
@@ -74,7 +74,7 @@ class _AddNewsState extends State<AddNews> {
                   Container(
                     width: 284,
                     margin: const EdgeInsets.only(bottom: 40),
-                    child: const TitlePage(title: 'добавить новость'),
+                    child: const TitlePageAdmin(title: 'добавить новость'),
                   ),
                   Column(crossAxisAlignment: CrossAxisAlignment.center, children: [
                     FormBuilder(

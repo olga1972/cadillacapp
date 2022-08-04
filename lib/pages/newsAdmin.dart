@@ -95,7 +95,6 @@ class _NewsAdminState extends State<NewsAdmin> {
               child: Column(crossAxisAlignment: CrossAxisAlignment.center, children: [
                 SizedBox(
                     width: 320,
-                    height: 830,
                     child: FutureBuilder<NewsList>(
                         future: newsList,
                         builder: (context, snapshot) {
@@ -111,11 +110,10 @@ class _NewsAdminState extends State<NewsAdmin> {
                             return Center(
                                 child: SizedBox(
                                     width: 320,
-                                    height: 860,
                                     child: Column(mainAxisAlignment: MainAxisAlignment.start, crossAxisAlignment: CrossAxisAlignment.center, children: [
-                                      Container(margin: const EdgeInsets.only(bottom: 20), child: const TitlePageAdmin(title: 'клубные новости')),
+                                      Container(margin: const EdgeInsets.only(bottom: 20, top: 20), child: const TitlePageAdmin(title: 'клубные новости')),
                                       SizedBox(
-                                          height: 740,
+                                          width: 320,
                                           child: ListView.builder(
                                               scrollDirection: Axis.vertical,
                                               shrinkWrap: true,

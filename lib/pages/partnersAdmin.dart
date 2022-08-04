@@ -61,8 +61,6 @@ class _PartnersAdminState extends State<PartnersAdmin> {
                 children: [
                   Center(
                     child: Column(
-                      // mainAxisAlignment: MainAxisAlignment
-                      //     .center,
                         crossAxisAlignment: CrossAxisAlignment
                             .center,
                         children: [

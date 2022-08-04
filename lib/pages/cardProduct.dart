@@ -9,8 +9,9 @@ import 'package:cadillac/models/products.dart';
 
 class CardProduct extends StatefulWidget {
   const CardProduct({
-    Key? key,
+    Key? key, required this.index
   }) : super(key: key);
+  final int index;
 
   @override
   State<CardProduct> createState() => _CardProductState();
@@ -21,7 +22,8 @@ class _CardProductState extends State<CardProduct> {
 
   get currentUser => null;
   List<String> images = [
-    "assets/images/notebook.png",
+    "assets/images/t-shirt.png",
+    "assets/images/hoodie.png",
     "assets/images/notebook.png",
   ];
 
@@ -67,7 +69,7 @@ class _CardProductState extends State<CardProduct> {
                     ),
                     Container(
                       width: MediaQuery.of(context).size.width,
-                      height: 279,
+                      height: 330,
                       padding: EdgeInsets.zero,
                       margin: const EdgeInsets.only(top: 10, bottom: 30, left: 0, right: 0),
                       transformAlignment: Alignment.centerLeft,
@@ -75,12 +77,12 @@ class _CardProductState extends State<CardProduct> {
                         itemCount: 2,
                         allowImplicitScrolling: true,
                         layout: SwiperLayout.CUSTOM,
-                        customLayoutOption: CustomLayoutOption(startIndex: -1, stateCount: 2)
+                        customLayoutOption: CustomLayoutOption(startIndex: 0, stateCount: 2)
                           ..addTranslate([
-                            const Offset(0.0, 0.0),
-                            const Offset(270.0, 0.0),
+                            const Offset(-50.0, 0.0),
+                            const Offset(160.0, 0.0),
                           ]),
-                        viewportFraction: 0.8,
+                        viewportFraction: 1,
                         itemHeight: 279,
                         itemWidth: 260,
                         outer: true,
@@ -89,7 +91,7 @@ class _CardProductState extends State<CardProduct> {
                           builder: DotSwiperPaginationBuilder(color: Colors.white, activeColor: Color(0xFF8F97BF), size: 7.0, activeSize: 7.0)),
                         itemBuilder: (BuildContext context, int index) {
                           return Container(
-                            width: MediaQuery.of(context).size.width,
+                            width: 260,
                             height: 279,
                             margin: const EdgeInsets.only(left: 0, right: 10),
                             decoration: const BoxDecoration(
