@@ -84,6 +84,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
   dynamic user;
 
   final Uri url1 = Uri.parse('https://cadillacapp.ru/test/download.php');
+  final Uri url2 = Uri.parse('https://cadillacapp.ru/test/download2.php');
 
   @override
   Widget build(BuildContext context) {
@@ -100,13 +101,16 @@ class _RegistrationPageState extends State<RegistrationPage> {
     counter = Provider
         .of<Data>(context)
         .data['counter'].toString();
+
     
-    debugPrint(counter);
-    debugPrint(isShowConfirmRegister);
+
+    // print(isShowConfirmRegister);
+    // print(isAdmin);
+    print(counter);
 
     // admin переход на успешная регистрация пользоавтеля, далее в аккоунт - ошибка!
     
-    if (counter == '1') {
+    if (counter == '2') {
       switch (isAdmin) {
         case 'false':
           Future.delayed(Duration.zero, () {
@@ -130,7 +134,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
           });
           break;
       }
-    } else if (counter == '2') {
+    } else if (counter == '3') {
       switch (isAdmin) {
         case 'false':
           Future.delayed(Duration.zero, () {
@@ -370,8 +374,8 @@ class _RegistrationPageState extends State<RegistrationPage> {
                                                   debugPrint(counter);
                                                   Provider.of<Data>(context, listen: false).checkIsAdmin('true');
                                                   switch (counter) {
-                                                    case '0': {
-                                                        Provider.of<Data>(context, listen: false).updateAccount(1);
+                                                    case '1': {
+                                                        Provider.of<Data>(context, listen: false).updateAccount(2);
                                                         Future.delayed(Duration.zero, () async {
                                                           Navigator.pushReplacement(
                                                               context, MaterialPageRoute(
@@ -382,9 +386,9 @@ class _RegistrationPageState extends State<RegistrationPage> {
 
                                                         break;
                                                       }
-                                                    case '1':
+                                                    case '2':
                                                       {
-                                                        Provider.of<Data>(context, listen: false).updateAccount(2);
+                                                        Provider.of<Data>(context, listen: false).updateAccount(3);
                                                           Navigator.pushReplacement(
                                                               context, MaterialPageRoute(
                                                               builder: (context) =>
@@ -392,9 +396,9 @@ class _RegistrationPageState extends State<RegistrationPage> {
                                                           ));
                                                        break;
                                                       }
-                                                    case '2':
+                                                    case '3':
                                                       {
-                                                        // Provider.of<Data>(context, listen: false).updateAccount(2);
+                                                        // Provider.of<Data>(context, listen: false).updateAccount(3);
                                                         Navigator.pushReplacement(
                                                             context, MaterialPageRoute(
                                                             builder: (context) =>
@@ -459,7 +463,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                                                 height: 58,
                                               ),
                                               onPressed: () {
-                                                //launchURL(url2);
+                                                launchURL(url2);
                                               },
                                             ),
 
@@ -511,9 +515,9 @@ class _RegistrationPageState extends State<RegistrationPage> {
                               debugPrint(counter);
                               debugPrint(email);
                               switch (counter) {
-                                case '0':
+                                case '1':
                                   {
-                                    debugPrint('case 0');
+                                    debugPrint('case 1');
                                     final request = Request(
                                       email: email,
                                       phone: phone,
@@ -524,20 +528,9 @@ class _RegistrationPageState extends State<RegistrationPage> {
 
                                     send(request);
 
-                                    Provider.of<Data>(context, listen: false).updateAccount(1);
+                                    Provider.of<Data>(context, listen: false).updateAccount(2);
                                     Navigator.of(context).pop();
 
-                                    await Navigator.pushReplacement(
-                                        context, MaterialPageRoute(
-                                        builder: (context) =>
-                                            const SuccessPayment()
-                                    ));
-                                    break;
-                                  }
-                                case '1':
-                                  {
-                                    debugPrint('case 1');
-                                    Provider.of<Data>(context, listen: false).updateAccount(2);
                                     await Navigator.pushReplacement(
                                         context, MaterialPageRoute(
                                         builder: (context) =>
@@ -548,6 +541,17 @@ class _RegistrationPageState extends State<RegistrationPage> {
                                 case '2':
                                   {
                                     debugPrint('case 2');
+                                    Provider.of<Data>(context, listen: false).updateAccount(3);
+                                    await Navigator.pushReplacement(
+                                        context, MaterialPageRoute(
+                                        builder: (context) =>
+                                            const SuccessPayment()
+                                    ));
+                                    break;
+                                  }
+                                case '3':
+                                  {
+                                    debugPrint('case 3');
                                     await Navigator.pushReplacement(
                                         context, MaterialPageRoute(
                                         builder: (context) =>
@@ -634,30 +638,30 @@ class _RegistrationPageState extends State<RegistrationPage> {
       );
     }
 
-    Future getUser(userId) async {
-      debugPrint('userId: $userId');
-
-      String apiUrl = baseUrl + "/test/get_user.php";
-
-      final response = await http.post(
-          Uri.parse(apiUrl), body: {'userId': userId},
-          headers: {
-            'Accept': 'application/json, charset=utf-8',
-            "Access-Control-Allow-Origin": "http://localhost:59369",
-            "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS"
-          });
-      if (response.statusCode == 200) {
-        debugPrint(response.statusCode.toString());
-        debugPrint(response.body);
-
-        final userJson = json.decode(response.body);
-        var data = User.fromJson(userJson);
-        Provider.of<Data>(context, listen: false).updateUserId(data.userId);
-        return (data);
-      } else {
-        throw Exception('Error fetching users');
-      }
-    }
+    // Future getUser(userId) async {
+    //   debugPrint('userId: $userId');
+    //
+    //   String apiUrl = baseUrl + "/test/get_user.php";
+    //
+    //   final response = await http.post(
+    //       Uri.parse(apiUrl), body: {'userId': userId},
+    //       headers: {
+    //         'Accept': 'application/json, charset=utf-8',
+    //         "Access-Control-Allow-Origin": "http://localhost:59369",
+    //         "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS"
+    //       });
+    //   if (response.statusCode == 200) {
+    //     debugPrint(response.statusCode.toString());
+    //     debugPrint(response.body);
+    //
+    //     final userJson = json.decode(response.body);
+    //     var data = User.fromJson(userJson);
+    //     Provider.of<Data>(context, listen: false).updateUserId(data.userId);
+    //     return (data);
+    //   } else {
+    //     throw Exception('Error fetching users');
+    //   }
+    // }
 
     Future send(Request request) async {
     debugPrint('send');
@@ -703,32 +707,32 @@ class Request {
   });
 }
 
-  getCookie() async {
-    debugPrint('get cookie');
-    var dio =  Dio();
-    var cookieJar=CookieJar();
-    dio.interceptors.add(CookieManager(cookieJar));
-
-    // Get cookies
-    // var cookies = cookieJar.loadForRequest(Uri.parse("https://cadillacapp.ru/"));
-    //debugPrint(cookies);
-    // second request with the cookie
-    //debugPrint(dio.get("https://cadillacapp.ru/"));
-
-    var response = await dio.get("https://cadillacapp.ru/");
-    //debugPrint(response);
-
-    return response;
-      // List<Cookie> cookies = [
-      //   new Cookie("uuid", "9265988f-e70d-11ec-af6a-00ff21c5bb0a"),
-      //   // ....
-      // ];
-
-      //Save cookies
-      //cookieJar.saveFromResponse(Uri.parse("http://localhost"), cookies);
-      //debugPrint(cookies);
-      //await dio.get(baseUrl);
-  }
+  // getCookie() async {
+  //   debugPrint('get cookie');
+  //   var dio =  Dio();
+  //   var cookieJar=CookieJar();
+  //   dio.interceptors.add(CookieManager(cookieJar));
+  //
+  //   // Get cookies
+  //   // var cookies = cookieJar.loadForRequest(Uri.parse("https://cadillacapp.ru/"));
+  //   //debugPrint(cookies);
+  //   // second request with the cookie
+  //   //debugPrint(dio.get("https://cadillacapp.ru/"));
+  //
+  //   var response = await dio.get("https://cadillacapp.ru/");
+  //   //debugPrint(response);
+  //
+  //   return response;
+  //     // List<Cookie> cookies = [
+  //     //   new Cookie("uuid", "9265988f-e70d-11ec-af6a-00ff21c5bb0a"),
+  //     //   // ....
+  //     // ];
+  //
+  //     //Save cookies
+  //     //cookieJar.saveFromResponse(Uri.parse("http://localhost"), cookies);
+  //     //debugPrint(cookies);
+  //     //await dio.get(baseUrl);
+  // }
 
 downLoadApp() async {
   debugPrint('download');

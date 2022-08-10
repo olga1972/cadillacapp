@@ -4,14 +4,14 @@ import '../main.dart';
 
 class Data with ChangeNotifier {
   bool isAuth = false;
-  int counter = 0;
-  String cookies = '';
+  int counter = 1;
+  // String cookies = '';
   bool isAdmin = false;
   bool isShowConfirmRegister = false;
 
   late final Map data = {
     'userId': '',
-    'counter': 0,
+    'counter': 1,
     'platform': checkPlatform(),
     'isAuth': false,
     'cookies': '',
@@ -19,11 +19,11 @@ class Data with ChangeNotifier {
     'isShowConfirmRegister': false
   };
 
-  void setCookie(value) {
-    debugPrint('set cookie');
-    data["cookie"] = value;
-    notifyListeners();
-  }
+  // void setCookie(value) {
+  //   debugPrint('set cookie');
+  //   data["cookie"] = value;
+  //   notifyListeners();
+  // }
 
   void checkIsAdmin(value) {
     data["isAdmin"] = value;

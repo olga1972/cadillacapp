@@ -736,14 +736,14 @@ class _SuccessPaymentState extends State<SuccessPayment> {
     if (response.statusCode == 200) {
       debugPrint('success success-payment');
 
-      if (platform == 'windows') {
-        var cookie = response.headers['set-cookie'];
-        debugPrint('cookie: $cookie');
-        List<String>? cookiesList = cookie?.split(';');
-        cookiesList?.forEach((i) => debugPrint(i.toLowerCase().trim()));
-        userId = cookiesList?[0].split('=')[1];
-        Provider.of<Data>(context).setCookie(userId);
-      }
+      // if (platform == 'windows') {
+      //   var cookie = response.headers['set-cookie'];
+      //   debugPrint('cookie: $cookie');
+      //   List<String>? cookiesList = cookie?.split(';');
+      //   cookiesList?.forEach((i) => debugPrint(i.toLowerCase().trim()));
+      //   userId = cookiesList?[0].split('=')[1];
+      //   Provider.of<Data>(context).setCookie(userId);
+      // }
 
       debugPrint(response.body);
       final userJson = json.decode(response.body);
