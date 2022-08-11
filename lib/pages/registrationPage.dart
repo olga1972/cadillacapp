@@ -373,35 +373,46 @@ class _RegistrationPageState extends State<RegistrationPage> {
                                             if (_formKey.currentState
                                               ?.saveAndValidate() ?? false) {
                                                 debugPrint('valid');
-                                              Navigator.pushReplacement(
-                                                  context, MaterialPageRoute(
-                                                  builder: (context) =>
-                                                  const RegistrationAdmin()
-                                              ));
+                                              // Navigator.pushReplacement(
+                                              //     context, MaterialPageRoute(
+                                              //     builder: (context) =>
+                                              //     const RegistrationAdmin()
+                                              // ));
                                               // debugPrint('email');
                                               // debugPrint(email);
+
+                                            if (email == 'admin@admin') {
+                                              debugPrint('admin');
+                                              Navigator.pushReplacement(
+                                              context, MaterialPageRoute(
+                                              builder: (context) =>
+                                              const RegistrationAdmin()
+                                              ));
+                                            } else {
+                                              debugPrint('user');
+
+                                             // showAlertDialog(context);
+
                                               //почему-то не работауе!
-                                            // if (email == 'admin@admin') {
-                                            //   debugPrint('admin');
-                                            //   Navigator.pushReplacement(
-                                            //   context, MaterialPageRoute(
-                                            //   builder: (context) =>
-                                            //   const RegistrationAdmin()
-                                            //   ));
-                                            // } else {
-                                            //   debugPrint('user');
-                                            //
-                                            //  // showAlertDialog(context);
-                                            //
-                                            //
-                                            //   //confirmDialog(context);
-                                            //   //_errorMessage(context);
-                                            //   Navigator.pushReplacement(
-                                            //   context, MaterialPageRoute(
-                                            //   builder: (context) =>
-                                            //   const SuccessPayment()
-                                            //   ));
-                                            //   }
+                                              // confirmDialog(context);
+                                              final request = Request(
+                                                email: email,
+                                                phone: phone,
+                                                theme: 'Запрос на регистрацию',
+                                                message: 'Хочу зарегистрироваться в приложении Cadillac',
+                                              );
+                                              debugPrint(counter);
+
+                                              if(counter == '1') {
+                                                send(request);
+                                              }
+
+                                Navigator.pushReplacement(
+                                              context, MaterialPageRoute(
+                                              builder: (context) =>
+                                              const SuccessPayment()
+                                              ));
+                                              }
 
                                               // if (_formKey.currentState
                                               //     ?.saveAndValidate() ?? false) {
@@ -519,120 +530,120 @@ class _RegistrationPageState extends State<RegistrationPage> {
       );
     }
 
-    // Future confirmDialog(BuildContext context) async {
-    //   return showDialog(
-    //     context: context,
-    //     barrierDismissible: false, // user must tap button for close dialog!
-    //     builder: (BuildContext context) {
-    //       return AlertDialog(
-    //         content: Text('Подтвердить регистрацию?'.toUpperCase(),
-    //           textAlign: TextAlign.center,
-    //           style: styleTextAlertDialog,
-    //         ),
-    //         actions: <Widget>[
-    //           Container(
-    //               padding: const EdgeInsets.only(left: 20, right: 20, bottom: 20),
-    //               child: Row(
-    //                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-    //                   children: [
-    //                     MaterialButton(
-    //                         padding: const EdgeInsets.all(14),
-    //                         color: const Color(0xFFE4E6FF),
-    //                         elevation: 0,
-    //                         shape: const RoundedRectangleBorder(
-    //                           side: BorderSide.none,
-    //                           borderRadius: BorderRadius.all(Radius.circular(10),
-    //                           ),),
-    //                         child: Text(
-    //                           'Да'.toUpperCase(),
-    //                           textAlign: TextAlign.left,
-    //                           style: styleTextAlertDialog,
-    //                         ),
-    //                         onPressed: () async {
-    //                           debugPrint('onpresssed');
-    //                           debugPrint(counter);
-    //                           debugPrint(email);
-    //                           // switch (counter) {
-    //                           //   case '1':
-    //                           //     {
-    //                           //       debugPrint('case 1');
-    //                           //       final request = Request(
-    //                           //         email: email,
-    //                           //         phone: phone,
-    //                           //         theme: 'Запрос на регистрацию',
-    //                           //         message: 'Хочу зарегистрироваться в приложении Cadillac',
-    //                           //       );
-    //                           //       debugPrint(counter);
-    //                           //
-    //                           //       send(request);
-    //                           //
-    //                           //       Provider.of<Data>(context, listen: false).updateAccount(2);
-    //                           //       Navigator.of(context).pop();
-    //                           //
-    //                                 await Navigator.pushReplacement(
-    //                                     context, MaterialPageRoute(
-    //                                     builder: (context) =>
-    //                                         const SuccessPayment()
-    //                                 ));
-    //                           //       break;
-    //                           //     }
-    //                           //   case '2':
-    //                           //     {
-    //                           //       debugPrint('case 2');
-    //                           //       Provider.of<Data>(context, listen: false).updateAccount(3);
-    //                           //       await Navigator.pushReplacement(
-    //                           //           context, MaterialPageRoute(
-    //                           //           builder: (context) =>
-    //                           //               const SuccessPayment()
-    //                           //       ));
-    //                           //       break;
-    //                           //     }
-    //                           //   case '3':
-    //                           //     {
-    //                           //       debugPrint('case 3');
-    //                           //       await Navigator.pushReplacement(
-    //                           //           context, MaterialPageRoute(
-    //                           //           builder: (context) =>
-    //                           //               const Account()
-    //                           //       ));
-    //                           //       break;
-    //                           //     }
-    //                           //   }
-    //                           _formKey.currentState?.save();
-    //                           debugPrint(
-    //                               'Request for registration send');
-    //                         }
-    //                     ),
-    //                     MaterialButton(
-    //                       padding: const EdgeInsets.all(14),
-    //                       color: const Color(0xFFE4E6FF),
-    //                       elevation: 0,
-    //                       shape: const RoundedRectangleBorder(
-    //                         side: BorderSide.none,
-    //                         borderRadius: BorderRadius.all(Radius.circular(10),
-    //                         ),),
-    //                       child: Text(
-    //                         'Нет'.toUpperCase(),
-    //                         textAlign: TextAlign.left,
-    //                         style: styleTextAlertDialog,
-    //                       ),
-    //                       onPressed: () {
-    //                         Navigator.of(context).pop();
-    //                         Navigator.pushReplacement(
-    //                             context, MaterialPageRoute(
-    //                             builder: (context) =>
-    //                                 const RegistrationPage()
-    //                         ));
-    //                       },
-    //                     )
-    //                   ]
-    //               )
-    //           )
-    //         ],
-    //       );
-    //     },
-    //   );
-    // }
+    Future confirmDialog(BuildContext context) async {
+      return showDialog(
+        context: context,
+        barrierDismissible: false, // user must tap button for close dialog!
+        builder: (BuildContext context) {
+          return AlertDialog(
+            content: Text('Подтвердить регистрацию?'.toUpperCase(),
+              textAlign: TextAlign.center,
+              style: styleTextAlertDialog,
+            ),
+            actions: <Widget>[
+              Container(
+                  padding: const EdgeInsets.only(left: 20, right: 20, bottom: 20),
+                  child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        MaterialButton(
+                            padding: const EdgeInsets.all(14),
+                            color: const Color(0xFFE4E6FF),
+                            elevation: 0,
+                            shape: const RoundedRectangleBorder(
+                              side: BorderSide.none,
+                              borderRadius: BorderRadius.all(Radius.circular(10),
+                              ),),
+                            child: Text(
+                              'Да'.toUpperCase(),
+                              textAlign: TextAlign.left,
+                              style: styleTextAlertDialog,
+                            ),
+                            onPressed: () async{
+                              debugPrint('onpresssed');
+                              debugPrint(counter);
+                              debugPrint(email);
+                              // switch (counter) {
+                              //   case '1':
+                              //     {
+                              //       debugPrint('case 1');
+                              //       final request = Request(
+                              //         email: email,
+                              //         phone: phone,
+                              //         theme: 'Запрос на регистрацию',
+                              //         message: 'Хочу зарегистрироваться в приложении Cadillac',
+                              //       );
+                              //       debugPrint(counter);
+                              //
+                              //       send(request);
+                              //
+                              //       Provider.of<Data>(context, listen: false).updateAccount(2);
+                              //       Navigator.of(context).pop();
+                              //
+                                    await Navigator.pushReplacement(
+                                        context, MaterialPageRoute(
+                                        builder: (context) =>
+                                            const SuccessPayment()
+                                    ));
+                              //       break;
+                              //     }
+                              //   case '2':
+                              //     {
+                              //       debugPrint('case 2');
+                              //       Provider.of<Data>(context, listen: false).updateAccount(3);
+                              //       await Navigator.pushReplacement(
+                              //           context, MaterialPageRoute(
+                              //           builder: (context) =>
+                              //               const SuccessPayment()
+                              //       ));
+                              //       break;
+                              //     }
+                              //   case '3':
+                              //     {
+                              //       debugPrint('case 3');
+                              //       await Navigator.pushReplacement(
+                              //           context, MaterialPageRoute(
+                              //           builder: (context) =>
+                              //               const Account()
+                              //       ));
+                              //       break;
+                              //     }
+                              //   }
+                              _formKey.currentState?.save();
+                              debugPrint(
+                                  'Request for registration send');
+                            }
+                        ),
+                        MaterialButton(
+                          padding: const EdgeInsets.all(14),
+                          color: const Color(0xFFE4E6FF),
+                          elevation: 0,
+                          shape: const RoundedRectangleBorder(
+                            side: BorderSide.none,
+                            borderRadius: BorderRadius.all(Radius.circular(10),
+                            ),),
+                          child: Text(
+                            'Нет'.toUpperCase(),
+                            textAlign: TextAlign.left,
+                            style: styleTextAlertDialog,
+                          ),
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                            Navigator.pushReplacement(
+                                context, MaterialPageRoute(
+                                builder: (context) =>
+                                    const RegistrationPage()
+                            ));
+                          },
+                        )
+                      ]
+                  )
+              )
+            ],
+          );
+        },
+      );
+    }
 
     Future _errorMessage(BuildContext context) async {
       return showDialog(
