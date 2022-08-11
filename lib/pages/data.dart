@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart' ;
 
-import '../main.dart';
+//import '../main.dart';
 
 class Data with ChangeNotifier {
   bool isAuth = false;
@@ -12,9 +12,9 @@ class Data with ChangeNotifier {
   late final Map data = {
     'userId': '',
     'counter': 1,
-    'platform': checkPlatform(),
+    //'platform': checkPlatform(),
     'isAuth': false,
-    'cookies': '',
+    // 'cookies': '',
     'isAdmin': false,
     'isShowConfirmRegister': false
   };

@@ -29,7 +29,7 @@ import 'package:url_launcher/url_launcher.dart';
 
 import 'package:cadillac/pages/accountAdmin.dart';
 
-var uuid = '';
+var uuid = '1';
 late bool isAuth;
 
 class RegistrationPage extends StatefulWidget {
@@ -45,7 +45,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
     super.initState();
 
     setState(() {
-      uuid = '';
+      uuid = '1';
       isAuth = false;
     });
   }
@@ -92,15 +92,19 @@ class _RegistrationPageState extends State<RegistrationPage> {
 
     // var cookies = getCookie();
     
-    isShowConfirmRegister = Provider
-        .of<Data>(context)
-        .data['isShowConfirmRegister'].toString();
-    isAdmin = Provider
-        .of<Data>(context)
-        .data['isAdmin'].toString();
-    counter = Provider
-        .of<Data>(context)
-        .data['counter'].toString();
+    // isShowConfirmRegister = Provider
+    //     .of<Data>(context)
+    //     .data['isShowConfirmRegister'].toString();
+    // isAdmin = Provider
+    //     .of<Data>(context)
+    //     .data['isAdmin'].toString();
+    // counter = Provider
+    //     .of<Data>(context)
+    //     .data['counter'].toString();
+
+    isShowConfirmRegister = 'false';
+    isAdmin = 'false';
+    counter = '1';
 
     
 
@@ -110,54 +114,54 @@ class _RegistrationPageState extends State<RegistrationPage> {
 
     // admin переход на успешная регистрация пользоавтеля, далее в аккоунт - ошибка!
     
-    if (counter == '2') {
-      switch (isAdmin) {
-        case 'false':
-          Future.delayed(Duration.zero, () {
-            Navigator.pushReplacement(
-                context,
-                MaterialPageRoute(
-                    builder:
-                        (context) =>
-                        const SuccessPayment()));
-          });
-
-          break;
-        case 'true':
-          Future.delayed(Duration.zero, () {
-          Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(
-                  builder:
-                      (context) =>
-                      const RegistrationAdmin()));
-          });
-          break;
-      }
-    } else if (counter == '3') {
-      switch (isAdmin) {
-        case 'false':
-          Future.delayed(Duration.zero, () {
-          Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(
-                  builder:
-                      (context) =>
-                      const Account()));
-          });
-          break;
-        case 'true':
-          Future.delayed(Duration.zero, () {
-          Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(
-                  builder:
-                      (context) =>
-                      const AccountAdmin()));
-      });
-          break;
-      }
-    }
+    // if (counter == '2') {
+    //   switch (isAdmin) {
+    //     case 'false':
+    //       Future.delayed(Duration.zero, () {
+    //         Navigator.pushReplacement(
+    //             context,
+    //             MaterialPageRoute(
+    //                 builder:
+    //                     (context) =>
+    //                     const SuccessPayment()));
+    //       });
+    //
+    //       break;
+    //     case 'true':
+    //       Future.delayed(Duration.zero, () {
+    //       Navigator.pushReplacement(
+    //           context,
+    //           MaterialPageRoute(
+    //               builder:
+    //                   (context) =>
+    //                   const RegistrationAdmin()));
+    //       });
+    //       break;
+    //   }
+    // } else if (counter == '3') {
+    //   switch (isAdmin) {
+    //     case 'false':
+    //       Future.delayed(Duration.zero, () {
+    //       Navigator.pushReplacement(
+    //           context,
+    //           MaterialPageRoute(
+    //               builder:
+    //                   (context) =>
+    //                   const Account()));
+    //       });
+    //       break;
+    //     case 'true':
+    //       Future.delayed(Duration.zero, () {
+    //       Navigator.pushReplacement(
+    //           context,
+    //           MaterialPageRoute(
+    //               builder:
+    //                   (context) =>
+    //                   const AccountAdmin()));
+    //   });
+    //       break;
+    //   }
+    // }
 
       // userIdFromProvider = Provider
       //     .of<Data>(context, listen: false)
@@ -247,6 +251,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                                                     controller: _emailController,
                                                     onSaved: (value) =>
                                                     email = value!,
+
                                                     validator: FormBuilderValidators
                                                         .compose([
                                                           (val) {
@@ -365,66 +370,99 @@ class _RegistrationPageState extends State<RegistrationPage> {
                                               debugPrint('Invalid');
                                               _errorMessage(context);
                                             } else {
-                                              if (_formKey.currentState
-                                                  ?.saveAndValidate() ?? false) {
+                                            if (_formKey.currentState
+                                              ?.saveAndValidate() ?? false) {
                                                 debugPrint('valid');
+                                              Navigator.pushReplacement(
+                                                  context, MaterialPageRoute(
+                                                  builder: (context) =>
+                                                  const RegistrationAdmin()
+                                              ));
+                                              // debugPrint('email');
+                                              // debugPrint(email);
+                                              //почему-то не работауе!
+                                            // if (email == 'admin@admin') {
+                                            //   debugPrint('admin');
+                                            //   Navigator.pushReplacement(
+                                            //   context, MaterialPageRoute(
+                                            //   builder: (context) =>
+                                            //   const RegistrationAdmin()
+                                            //   ));
+                                            // } else {
+                                            //   debugPrint('user');
+                                            //
+                                            //  // showAlertDialog(context);
+                                            //
+                                            //
+                                            //   //confirmDialog(context);
+                                            //   //_errorMessage(context);
+                                            //   Navigator.pushReplacement(
+                                            //   context, MaterialPageRoute(
+                                            //   builder: (context) =>
+                                            //   const SuccessPayment()
+                                            //   ));
+                                            //   }
 
-                                                if (email == 'admin@admin') {
-                                                  debugPrint('admin');
-                                                  debugPrint(counter);
-                                                  Provider.of<Data>(context, listen: false).checkIsAdmin('true');
-                                                  switch (counter) {
-                                                    case '1': {
-                                                        Provider.of<Data>(context, listen: false).updateAccount(2);
-                                                        Future.delayed(Duration.zero, () async {
-                                                          Navigator.pushReplacement(
-                                                              context, MaterialPageRoute(
-                                                              builder: (context) =>
-                                                                  const RegistrationAdmin()
-                                                          ));
-                                                        });
-
-                                                        break;
-                                                      }
-                                                    case '2':
-                                                      {
-                                                        Provider.of<Data>(context, listen: false).updateAccount(3);
-                                                          Navigator.pushReplacement(
-                                                              context, MaterialPageRoute(
-                                                              builder: (context) =>
-                                                              const AccountAdmin()
-                                                          ));
-                                                       break;
-                                                      }
-                                                    case '3':
-                                                      {
-                                                        // Provider.of<Data>(context, listen: false).updateAccount(3);
-                                                        Navigator.pushReplacement(
-                                                            context, MaterialPageRoute(
-                                                            builder: (context) =>
-                                                            const AccountAdmin()
-                                                        ));
-                                                        break;
-                                                      }
-                                                  }
-                                                } else {
-                                                  debugPrint('user');
-                                                  Provider.of<Data>(context, listen: false).checkIsAdmin('false');
-                                                  debugPrint(isShowConfirmRegister);
-
-                                                  if(isShowConfirmRegister == 'false') {
-                                                    Provider.of<Data>(context, listen: false).checkIsShowConfirmRegister(true);
-                                                    confirmDialog(context);
-                                                  } else {
-                                                    Provider.of<Data>(context, listen: false).updateAccount(2);
-                                                    Navigator.pushReplacement(
-                                                          context, MaterialPageRoute(
-                                                          builder: (context) =>
-                                                              const SuccessPayment()
-                                                      ));
-
-                                                  }
-                                                }
+                                              // if (_formKey.currentState
+                                              //     ?.saveAndValidate() ?? false) {
+                                              //   debugPrint('valid');
+                                              //
+                                              //   if (email == 'admin@admin') {
+                                              //     debugPrint('admin');
+                                              //     debugPrint(counter);
+                                              //     Provider.of<Data>(context, listen: false).checkIsAdmin('true');
+                                              //     switch (counter) {
+                                              //       case '1': {
+                                              //           Provider.of<Data>(context, listen: false).updateAccount(2);
+                                              //           Future.delayed(Duration.zero, () async {
+                                              //             Navigator.pushReplacement(
+                                              //                 context, MaterialPageRoute(
+                                              //                 builder: (context) =>
+                                              //                     const RegistrationAdmin()
+                                              //             ));
+                                              //           });
+                                              //
+                                              //           break;
+                                              //         }
+                                              //       case '2':
+                                              //         {
+                                              //           Provider.of<Data>(context, listen: false).updateAccount(3);
+                                              //             Navigator.pushReplacement(
+                                              //                 context, MaterialPageRoute(
+                                              //                 builder: (context) =>
+                                              //                 const AccountAdmin()
+                                              //             ));
+                                              //          break;
+                                              //         }
+                                              //       case '3':
+                                              //         {
+                                              //           // Provider.of<Data>(context, listen: false).updateAccount(3);
+                                              //           Navigator.pushReplacement(
+                                              //               context, MaterialPageRoute(
+                                              //               builder: (context) =>
+                                              //               const AccountAdmin()
+                                              //           ));
+                                              //           break;
+                                              //         }
+                                              //     }
+                                              //   } else {
+                                              //     debugPrint('user');
+                                              //     Provider.of<Data>(context, listen: false).checkIsAdmin('false');
+                                              //     debugPrint(isShowConfirmRegister);
+                                              //
+                                              //     if(isShowConfirmRegister == 'false') {
+                                              //       Provider.of<Data>(context, listen: false).checkIsShowConfirmRegister(true);
+                                              //       //confirmDialog(context);
+                                              //     } else {
+                                              //       Provider.of<Data>(context, listen: false).updateAccount(2);
+                                              //       Navigator.pushReplacement(
+                                              //             context, MaterialPageRoute(
+                                              //             builder: (context) =>
+                                              //                 const SuccessPayment()
+                                              //         ));
+                                              //
+                                              //     }
+                                              //   }
                                               }
                                             }
                                           },
@@ -481,120 +519,120 @@ class _RegistrationPageState extends State<RegistrationPage> {
       );
     }
 
-    Future confirmDialog(BuildContext context) async {
-      return showDialog(
-        context: context,
-        barrierDismissible: false, // user must tap button for close dialog!
-        builder: (BuildContext context) {
-          return AlertDialog(
-            content: Text('Подтвердить регистрацию?'.toUpperCase(),
-              textAlign: TextAlign.center,
-              style: styleTextAlertDialog,
-            ),
-            actions: <Widget>[
-              Container(
-                  padding: const EdgeInsets.only(left: 20, right: 20, bottom: 20),
-                  child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        MaterialButton(
-                            padding: const EdgeInsets.all(14),
-                            color: const Color(0xFFE4E6FF),
-                            elevation: 0,
-                            shape: const RoundedRectangleBorder(
-                              side: BorderSide.none,
-                              borderRadius: BorderRadius.all(Radius.circular(10),
-                              ),),
-                            child: Text(
-                              'Да'.toUpperCase(),
-                              textAlign: TextAlign.left,
-                              style: styleTextAlertDialog,
-                            ),
-                            onPressed: () async {
-                              debugPrint('onpresssed');
-                              debugPrint(counter);
-                              debugPrint(email);
-                              switch (counter) {
-                                case '1':
-                                  {
-                                    debugPrint('case 1');
-                                    final request = Request(
-                                      email: email,
-                                      phone: phone,
-                                      theme: 'Запрос на регистрацию',
-                                      message: 'Хочу зарегистрироваться в приложении Cadillac',
-                                    );
-                                    debugPrint(counter);
-
-                                    send(request);
-
-                                    Provider.of<Data>(context, listen: false).updateAccount(2);
-                                    Navigator.of(context).pop();
-
-                                    await Navigator.pushReplacement(
-                                        context, MaterialPageRoute(
-                                        builder: (context) =>
-                                            const SuccessPayment()
-                                    ));
-                                    break;
-                                  }
-                                case '2':
-                                  {
-                                    debugPrint('case 2');
-                                    Provider.of<Data>(context, listen: false).updateAccount(3);
-                                    await Navigator.pushReplacement(
-                                        context, MaterialPageRoute(
-                                        builder: (context) =>
-                                            const SuccessPayment()
-                                    ));
-                                    break;
-                                  }
-                                case '3':
-                                  {
-                                    debugPrint('case 3');
-                                    await Navigator.pushReplacement(
-                                        context, MaterialPageRoute(
-                                        builder: (context) =>
-                                            const Account()
-                                    ));
-                                    break;
-                                  }
-                                }
-                              _formKey.currentState?.save();
-                              debugPrint(
-                                  'Request for registration send');
-                            }
-                        ),
-                        MaterialButton(
-                          padding: const EdgeInsets.all(14),
-                          color: const Color(0xFFE4E6FF),
-                          elevation: 0,
-                          shape: const RoundedRectangleBorder(
-                            side: BorderSide.none,
-                            borderRadius: BorderRadius.all(Radius.circular(10),
-                            ),),
-                          child: Text(
-                            'Нет'.toUpperCase(),
-                            textAlign: TextAlign.left,
-                            style: styleTextAlertDialog,
-                          ),
-                          onPressed: () {
-                            Navigator.of(context).pop();
-                            Navigator.pushReplacement(
-                                context, MaterialPageRoute(
-                                builder: (context) =>
-                                    const RegistrationPage()
-                            ));
-                          },
-                        )
-                      ]
-                  )
-              )
-            ],
-          );
-        },
-      );
-    }
+    // Future confirmDialog(BuildContext context) async {
+    //   return showDialog(
+    //     context: context,
+    //     barrierDismissible: false, // user must tap button for close dialog!
+    //     builder: (BuildContext context) {
+    //       return AlertDialog(
+    //         content: Text('Подтвердить регистрацию?'.toUpperCase(),
+    //           textAlign: TextAlign.center,
+    //           style: styleTextAlertDialog,
+    //         ),
+    //         actions: <Widget>[
+    //           Container(
+    //               padding: const EdgeInsets.only(left: 20, right: 20, bottom: 20),
+    //               child: Row(
+    //                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    //                   children: [
+    //                     MaterialButton(
+    //                         padding: const EdgeInsets.all(14),
+    //                         color: const Color(0xFFE4E6FF),
+    //                         elevation: 0,
+    //                         shape: const RoundedRectangleBorder(
+    //                           side: BorderSide.none,
+    //                           borderRadius: BorderRadius.all(Radius.circular(10),
+    //                           ),),
+    //                         child: Text(
+    //                           'Да'.toUpperCase(),
+    //                           textAlign: TextAlign.left,
+    //                           style: styleTextAlertDialog,
+    //                         ),
+    //                         onPressed: () async {
+    //                           debugPrint('onpresssed');
+    //                           debugPrint(counter);
+    //                           debugPrint(email);
+    //                           // switch (counter) {
+    //                           //   case '1':
+    //                           //     {
+    //                           //       debugPrint('case 1');
+    //                           //       final request = Request(
+    //                           //         email: email,
+    //                           //         phone: phone,
+    //                           //         theme: 'Запрос на регистрацию',
+    //                           //         message: 'Хочу зарегистрироваться в приложении Cadillac',
+    //                           //       );
+    //                           //       debugPrint(counter);
+    //                           //
+    //                           //       send(request);
+    //                           //
+    //                           //       Provider.of<Data>(context, listen: false).updateAccount(2);
+    //                           //       Navigator.of(context).pop();
+    //                           //
+    //                                 await Navigator.pushReplacement(
+    //                                     context, MaterialPageRoute(
+    //                                     builder: (context) =>
+    //                                         const SuccessPayment()
+    //                                 ));
+    //                           //       break;
+    //                           //     }
+    //                           //   case '2':
+    //                           //     {
+    //                           //       debugPrint('case 2');
+    //                           //       Provider.of<Data>(context, listen: false).updateAccount(3);
+    //                           //       await Navigator.pushReplacement(
+    //                           //           context, MaterialPageRoute(
+    //                           //           builder: (context) =>
+    //                           //               const SuccessPayment()
+    //                           //       ));
+    //                           //       break;
+    //                           //     }
+    //                           //   case '3':
+    //                           //     {
+    //                           //       debugPrint('case 3');
+    //                           //       await Navigator.pushReplacement(
+    //                           //           context, MaterialPageRoute(
+    //                           //           builder: (context) =>
+    //                           //               const Account()
+    //                           //       ));
+    //                           //       break;
+    //                           //     }
+    //                           //   }
+    //                           _formKey.currentState?.save();
+    //                           debugPrint(
+    //                               'Request for registration send');
+    //                         }
+    //                     ),
+    //                     MaterialButton(
+    //                       padding: const EdgeInsets.all(14),
+    //                       color: const Color(0xFFE4E6FF),
+    //                       elevation: 0,
+    //                       shape: const RoundedRectangleBorder(
+    //                         side: BorderSide.none,
+    //                         borderRadius: BorderRadius.all(Radius.circular(10),
+    //                         ),),
+    //                       child: Text(
+    //                         'Нет'.toUpperCase(),
+    //                         textAlign: TextAlign.left,
+    //                         style: styleTextAlertDialog,
+    //                       ),
+    //                       onPressed: () {
+    //                         Navigator.of(context).pop();
+    //                         Navigator.pushReplacement(
+    //                             context, MaterialPageRoute(
+    //                             builder: (context) =>
+    //                                 const RegistrationPage()
+    //                         ));
+    //                       },
+    //                     )
+    //                   ]
+    //               )
+    //           )
+    //         ],
+    //       );
+    //     },
+    //   );
+    // }
 
     Future _errorMessage(BuildContext context) async {
       return showDialog(
@@ -637,6 +675,8 @@ class _RegistrationPageState extends State<RegistrationPage> {
         },
       );
     }
+
+
 
     // Future getUser(userId) async {
     //   debugPrint('userId: $userId');
@@ -742,7 +782,7 @@ downLoadApp() async {
 
   if(response.statusCode == 200){
     debugPrint('success download');
-    debugPrint(response.statusCode.toString());
+    // debugPrint(response.statusCode.toString());
     return true;
   }else{
     debugPrint('error');

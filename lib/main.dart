@@ -49,7 +49,7 @@ Future<void> main() async {
 class MyApp extends StatelessWidget {
   MyApp({Key? key,}) : super(key: key);
   static get platform => checkPlatform();
-  final String cookies ='';
+  //final String cookies ='';
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider<Data> (
