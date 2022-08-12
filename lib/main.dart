@@ -64,10 +64,10 @@ class MyApp extends StatelessWidget {
 
 
         routes: {
-          //'/home': (context) => Provider.of<Data>(context).data['cookies'].toString() != ''? const Account() : const RegistrationPage(),
+          '/home': (context) => Provider.of<Data>(context, listen: false).data['userId'].toString() != ''? const Account() : const RegistrationPage(),
           //'/home': (context) => Account(),
           //'/home': (context) => MembersAdmin(),
-          '/home': (context) => RegistrationPage(),
+          //'/home': (context) => RegistrationPage(),
           //'/home': (context) => CardProductAdmin(index: 0),
           '/homeAdmin': (context) => const HomeAdmin(),
           '/registrationAdmin': (context) => RegistrationAdmin(),

@@ -70,6 +70,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
   
   late String cookie;
   late String counter;
+  late String platform;
   late String isAdmin;
   late String isShowConfirmRegister;
 
@@ -98,77 +99,91 @@ class _RegistrationPageState extends State<RegistrationPage> {
     // isAdmin = Provider
     //     .of<Data>(context)
     //     .data['isAdmin'].toString();
-    // counter = Provider
-    //     .of<Data>(context)
-    //     .data['counter'].toString();
+    counter = Provider
+        .of<Data>(context, listen: false)
+        .data['counter'].toString();
 
     isShowConfirmRegister = 'false';
     isAdmin = 'false';
-    counter = '1';
+    //counter = '1';
 
-    
+    platform = Provider
+        .of<Data>(context, listen: false)
+        .data['platform'].toString();
 
     // print(isShowConfirmRegister);
     // print(isAdmin);
     print(counter);
+    print(platform);
+
+    // if(counter == '3') {
+    //   Navigator.pushReplacement(
+    //       context,
+    //       MaterialPageRoute(
+    //           builder:
+    //               (context) =>
+    //               const Account()));
+    //
+    // }
 
     // admin переход на успешная регистрация пользоавтеля, далее в аккоунт - ошибка!
     
-    // if (counter == '2') {
-    //   switch (isAdmin) {
-    //     case 'false':
-    //       Future.delayed(Duration.zero, () {
-    //         Navigator.pushReplacement(
-    //             context,
-    //             MaterialPageRoute(
-    //                 builder:
-    //                     (context) =>
-    //                     const SuccessPayment()));
-    //       });
-    //
-    //       break;
-    //     case 'true':
-    //       Future.delayed(Duration.zero, () {
-    //       Navigator.pushReplacement(
-    //           context,
-    //           MaterialPageRoute(
-    //               builder:
-    //                   (context) =>
-    //                   const RegistrationAdmin()));
-    //       });
-    //       break;
-    //   }
-    // } else if (counter == '3') {
-    //   switch (isAdmin) {
-    //     case 'false':
-    //       Future.delayed(Duration.zero, () {
-    //       Navigator.pushReplacement(
-    //           context,
-    //           MaterialPageRoute(
-    //               builder:
-    //                   (context) =>
-    //                   const Account()));
-    //       });
-    //       break;
-    //     case 'true':
-    //       Future.delayed(Duration.zero, () {
-    //       Navigator.pushReplacement(
-    //           context,
-    //           MaterialPageRoute(
-    //               builder:
-    //                   (context) =>
-    //                   const AccountAdmin()));
-    //   });
-    //       break;
-    //   }
-    // }
+    if (counter == '2') {
+      switch (isAdmin) {
+        case 'false':
+          Future.delayed(Duration.zero, () {
+            Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(
+                    builder:
+                        (context) =>
+                        const SuccessPayment()));
+          });
 
-      // userIdFromProvider = Provider
-      //     .of<Data>(context, listen: false)
-      //     .data['userId'].toString();
-      // debugPrint(Provider
-      //     .of<Data>(context, listen: false)
-      //     .data['userId'].toString());
+          break;
+        case 'true':
+          Future.delayed(Duration.zero, () {
+          Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(
+                  builder:
+                      (context) =>
+                      const RegistrationAdmin()));
+          });
+          break;
+      }
+    } else if (counter == '3') {
+      switch (isAdmin) {
+        case 'false':
+          Future.delayed(Duration.zero, () {
+          Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(
+                  builder:
+                      (context) =>
+                      const Account()));
+          });
+          break;
+        case 'true':
+          Future.delayed(Duration.zero, () {
+          Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(
+                  builder:
+                      (context) =>
+                      const AccountAdmin()));
+      });
+          break;
+      }
+    }
+
+      userIdFromProvider = Provider
+          .of<Data>(context, listen: false)
+          .data['userId'].toString();
+      debugPrint(Provider
+          .of<Data>(context, listen: false)
+          .data['userId'].toString());
+
 
       return MaterialApp(
           theme: ThemeData(scaffoldBackgroundColor: const Color(0xFF181c33)),
@@ -405,9 +420,14 @@ class _RegistrationPageState extends State<RegistrationPage> {
 
                                               if(counter == '1') {
                                                 send(request);
+                                                Provider.of<Data>(context, listen: false).updateAccount(2);
                                               }
+                                              debugPrint('after request');
+                                              debugPrint(Provider
+                                                  .of<Data>(context, listen: false)
+                                                  .data['counter'].toString());
 
-                                Navigator.pushReplacement(
+                                              Navigator.pushReplacement(
                                               context, MaterialPageRoute(
                                               builder: (context) =>
                                               const SuccessPayment()

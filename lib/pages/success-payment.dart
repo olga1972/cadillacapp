@@ -88,8 +88,8 @@ class _SuccessPaymentState extends State<SuccessPayment> {
 
   @override
   Widget build(BuildContext context) {
-    userId = Provider.of<Data>(context).data['userId'].toString();
-    platform = Provider.of<Data>(context).data['platform'].toString();
+    userId = Provider.of<Data>(context, listen: false).data['userId'].toString();
+    platform = Provider.of<Data>(context, listen: false).data['platform'].toString();
     debugPrint(platform);
     debugPrint(userId);
 
@@ -601,7 +601,7 @@ class _SuccessPaymentState extends State<SuccessPayment> {
 
                                                   debugPrint('after editUser success');
 
-                                                  Provider.of<Data>(context, listen: false).updateAccount(2);
+                                                  Provider.of<Data>(context, listen: false).updateAccount(3);
                                                   Navigator.of(context).pop();
 
                                                   await Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const Account()));
