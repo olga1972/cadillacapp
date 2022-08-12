@@ -64,6 +64,9 @@ class _AccountState extends State<Account> {
   @override
   Widget build(BuildContext context) {
     debugPrint('user account');
+    debugPrint(Provider
+        .of<Data>(context, listen: false)
+        .data['counter'].toString());
 
     userId = Provider.of<Data>(context, listen: false).data['userId'].toString();
     debugPrint(userId);

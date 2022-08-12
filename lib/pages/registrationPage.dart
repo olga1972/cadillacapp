@@ -29,7 +29,7 @@ import 'package:url_launcher/url_launcher.dart';
 
 import 'package:cadillac/pages/accountAdmin.dart';
 
-var uuid = '';
+var uuid = '1';
 late bool isAuth;
 
 class RegistrationPage extends StatefulWidget {
@@ -45,7 +45,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
     super.initState();
 
     setState(() {
-      uuid = '';
+      uuid = '1';
       isAuth = false;
     });
   }
@@ -70,6 +70,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
   
   late String cookie;
   late String counter;
+  late String platform;
   late String isAdmin;
   late String isShowConfirmRegister;
 
@@ -84,6 +85,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
   dynamic user;
 
   final Uri url1 = Uri.parse('https://cadillacapp.ru/test/download.php');
+  final Uri url2 = Uri.parse('https://cadillacapp.ru/test/download2.php');
 
   @override
   Widget build(BuildContext context) {
@@ -91,22 +93,42 @@ class _RegistrationPageState extends State<RegistrationPage> {
 
     // var cookies = getCookie();
     
-    isShowConfirmRegister = Provider
-        .of<Data>(context)
-        .data['isShowConfirmRegister'].toString();
-    isAdmin = Provider
-        .of<Data>(context)
-        .data['isAdmin'].toString();
+    // isShowConfirmRegister = Provider
+    //     .of<Data>(context)
+    //     .data['isShowConfirmRegister'].toString();
+    // isAdmin = Provider
+    //     .of<Data>(context)
+    //     .data['isAdmin'].toString();
     counter = Provider
-        .of<Data>(context)
+        .of<Data>(context, listen: false)
         .data['counter'].toString();
-    
-    debugPrint(counter);
-    debugPrint(isShowConfirmRegister);
+
+    isShowConfirmRegister = 'false';
+    isAdmin = 'false';
+    //counter = '1';
+
+    platform = Provider
+        .of<Data>(context, listen: false)
+        .data['platform'].toString();
+
+    // print(isShowConfirmRegister);
+    // print(isAdmin);
+    print(counter);
+    print(platform);
+
+    // if(counter == '3') {
+    //   Navigator.pushReplacement(
+    //       context,
+    //       MaterialPageRoute(
+    //           builder:
+    //               (context) =>
+    //               const Account()));
+    //
+    // }
 
     // admin переход на успешная регистрация пользоавтеля, далее в аккоунт - ошибка!
     
-    if (counter == '1') {
+    if (counter == '2') {
       switch (isAdmin) {
         case 'false':
           Future.delayed(Duration.zero, () {
@@ -130,7 +152,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
           });
           break;
       }
-    } else if (counter == '2') {
+    } else if (counter == '3') {
       switch (isAdmin) {
         case 'false':
           Future.delayed(Duration.zero, () {
@@ -155,12 +177,13 @@ class _RegistrationPageState extends State<RegistrationPage> {
       }
     }
 
-      // userIdFromProvider = Provider
-      //     .of<Data>(context, listen: false)
-      //     .data['userId'].toString();
-      // debugPrint(Provider
-      //     .of<Data>(context, listen: false)
-      //     .data['userId'].toString());
+      userIdFromProvider = Provider
+          .of<Data>(context, listen: false)
+          .data['userId'].toString();
+      debugPrint(Provider
+          .of<Data>(context, listen: false)
+          .data['userId'].toString());
+
 
       return MaterialApp(
           theme: ThemeData(scaffoldBackgroundColor: const Color(0xFF181c33)),
@@ -243,6 +266,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                                                     controller: _emailController,
                                                     onSaved: (value) =>
                                                     email = value!,
+
                                                     validator: FormBuilderValidators
                                                         .compose([
                                                           (val) {
@@ -361,66 +385,115 @@ class _RegistrationPageState extends State<RegistrationPage> {
                                               debugPrint('Invalid');
                                               _errorMessage(context);
                                             } else {
-                                              if (_formKey.currentState
-                                                  ?.saveAndValidate() ?? false) {
+                                            if (_formKey.currentState
+                                              ?.saveAndValidate() ?? false) {
                                                 debugPrint('valid');
+                                              // Navigator.pushReplacement(
+                                              //     context, MaterialPageRoute(
+                                              //     builder: (context) =>
+                                              //     const RegistrationAdmin()
+                                              // ));
+                                              // debugPrint('email');
+                                              // debugPrint(email);
 
-                                                if (email == 'admin@admin') {
-                                                  debugPrint('admin');
-                                                  debugPrint(counter);
-                                                  Provider.of<Data>(context, listen: false).checkIsAdmin('true');
-                                                  switch (counter) {
-                                                    case '0': {
-                                                        Provider.of<Data>(context, listen: false).updateAccount(1);
-                                                        Future.delayed(Duration.zero, () async {
-                                                          Navigator.pushReplacement(
-                                                              context, MaterialPageRoute(
-                                                              builder: (context) =>
-                                                                  const RegistrationAdmin()
-                                                          ));
-                                                        });
+                                            if (email == 'admin@admin') {
+                                              debugPrint('admin');
+                                              Navigator.pushReplacement(
+                                              context, MaterialPageRoute(
+                                              builder: (context) =>
+                                              const RegistrationAdmin()
+                                              ));
+                                            } else {
+                                              debugPrint('user');
 
-                                                        break;
-                                                      }
-                                                    case '1':
-                                                      {
-                                                        Provider.of<Data>(context, listen: false).updateAccount(2);
-                                                          Navigator.pushReplacement(
-                                                              context, MaterialPageRoute(
-                                                              builder: (context) =>
-                                                              const AccountAdmin()
-                                                          ));
-                                                       break;
-                                                      }
-                                                    case '2':
-                                                      {
-                                                        // Provider.of<Data>(context, listen: false).updateAccount(2);
-                                                        Navigator.pushReplacement(
-                                                            context, MaterialPageRoute(
-                                                            builder: (context) =>
-                                                            const AccountAdmin()
-                                                        ));
-                                                        break;
-                                                      }
-                                                  }
-                                                } else {
-                                                  debugPrint('user');
-                                                  Provider.of<Data>(context, listen: false).checkIsAdmin('false');
-                                                  debugPrint(isShowConfirmRegister);
+                                             // showAlertDialog(context);
 
-                                                  if(isShowConfirmRegister == 'false') {
-                                                    Provider.of<Data>(context, listen: false).checkIsShowConfirmRegister(true);
-                                                    confirmDialog(context);
-                                                  } else {
-                                                    Provider.of<Data>(context, listen: false).updateAccount(2);
-                                                    Navigator.pushReplacement(
-                                                          context, MaterialPageRoute(
-                                                          builder: (context) =>
-                                                              const SuccessPayment()
-                                                      ));
+                                              //почему-то не работауе!
+                                              // confirmDialog(context);
+                                              final request = Request(
+                                                email: email,
+                                                phone: phone,
+                                                theme: 'Запрос на регистрацию',
+                                                message: 'Хочу зарегистрироваться в приложении Cadillac',
+                                              );
+                                              debugPrint(counter);
 
-                                                  }
-                                                }
+                                              if(counter == '1') {
+                                                send(request);
+                                                Provider.of<Data>(context, listen: false).updateAccount(2);
+                                              }
+                                              debugPrint('after request');
+                                              debugPrint(Provider
+                                                  .of<Data>(context, listen: false)
+                                                  .data['counter'].toString());
+
+                                              Navigator.pushReplacement(
+                                              context, MaterialPageRoute(
+                                              builder: (context) =>
+                                              const SuccessPayment()
+                                              ));
+                                              }
+
+                                              // if (_formKey.currentState
+                                              //     ?.saveAndValidate() ?? false) {
+                                              //   debugPrint('valid');
+                                              //
+                                              //   if (email == 'admin@admin') {
+                                              //     debugPrint('admin');
+                                              //     debugPrint(counter);
+                                              //     Provider.of<Data>(context, listen: false).checkIsAdmin('true');
+                                              //     switch (counter) {
+                                              //       case '1': {
+                                              //           Provider.of<Data>(context, listen: false).updateAccount(2);
+                                              //           Future.delayed(Duration.zero, () async {
+                                              //             Navigator.pushReplacement(
+                                              //                 context, MaterialPageRoute(
+                                              //                 builder: (context) =>
+                                              //                     const RegistrationAdmin()
+                                              //             ));
+                                              //           });
+                                              //
+                                              //           break;
+                                              //         }
+                                              //       case '2':
+                                              //         {
+                                              //           Provider.of<Data>(context, listen: false).updateAccount(3);
+                                              //             Navigator.pushReplacement(
+                                              //                 context, MaterialPageRoute(
+                                              //                 builder: (context) =>
+                                              //                 const AccountAdmin()
+                                              //             ));
+                                              //          break;
+                                              //         }
+                                              //       case '3':
+                                              //         {
+                                              //           // Provider.of<Data>(context, listen: false).updateAccount(3);
+                                              //           Navigator.pushReplacement(
+                                              //               context, MaterialPageRoute(
+                                              //               builder: (context) =>
+                                              //               const AccountAdmin()
+                                              //           ));
+                                              //           break;
+                                              //         }
+                                              //     }
+                                              //   } else {
+                                              //     debugPrint('user');
+                                              //     Provider.of<Data>(context, listen: false).checkIsAdmin('false');
+                                              //     debugPrint(isShowConfirmRegister);
+                                              //
+                                              //     if(isShowConfirmRegister == 'false') {
+                                              //       Provider.of<Data>(context, listen: false).checkIsShowConfirmRegister(true);
+                                              //       //confirmDialog(context);
+                                              //     } else {
+                                              //       Provider.of<Data>(context, listen: false).updateAccount(2);
+                                              //       Navigator.pushReplacement(
+                                              //             context, MaterialPageRoute(
+                                              //             builder: (context) =>
+                                              //                 const SuccessPayment()
+                                              //         ));
+                                              //
+                                              //     }
+                                              //   }
                                               }
                                             }
                                           },
@@ -459,7 +532,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                                                 height: 58,
                                               ),
                                               onPressed: () {
-                                                //launchURL(url2);
+                                                launchURL(url2);
                                               },
                                             ),
 
@@ -506,56 +579,56 @@ class _RegistrationPageState extends State<RegistrationPage> {
                               textAlign: TextAlign.left,
                               style: styleTextAlertDialog,
                             ),
-                            onPressed: () async {
+                            onPressed: () async{
                               debugPrint('onpresssed');
                               debugPrint(counter);
                               debugPrint(email);
-                              switch (counter) {
-                                case '0':
-                                  {
-                                    debugPrint('case 0');
-                                    final request = Request(
-                                      email: email,
-                                      phone: phone,
-                                      theme: 'Запрос на регистрацию',
-                                      message: 'Хочу зарегистрироваться в приложении Cadillac',
-                                    );
-                                    debugPrint(counter);
-
-                                    send(request);
-
-                                    Provider.of<Data>(context, listen: false).updateAccount(1);
-                                    Navigator.of(context).pop();
-
+                              // switch (counter) {
+                              //   case '1':
+                              //     {
+                              //       debugPrint('case 1');
+                              //       final request = Request(
+                              //         email: email,
+                              //         phone: phone,
+                              //         theme: 'Запрос на регистрацию',
+                              //         message: 'Хочу зарегистрироваться в приложении Cadillac',
+                              //       );
+                              //       debugPrint(counter);
+                              //
+                              //       send(request);
+                              //
+                              //       Provider.of<Data>(context, listen: false).updateAccount(2);
+                              //       Navigator.of(context).pop();
+                              //
                                     await Navigator.pushReplacement(
                                         context, MaterialPageRoute(
                                         builder: (context) =>
                                             const SuccessPayment()
                                     ));
-                                    break;
-                                  }
-                                case '1':
-                                  {
-                                    debugPrint('case 1');
-                                    Provider.of<Data>(context, listen: false).updateAccount(2);
-                                    await Navigator.pushReplacement(
-                                        context, MaterialPageRoute(
-                                        builder: (context) =>
-                                            const SuccessPayment()
-                                    ));
-                                    break;
-                                  }
-                                case '2':
-                                  {
-                                    debugPrint('case 2');
-                                    await Navigator.pushReplacement(
-                                        context, MaterialPageRoute(
-                                        builder: (context) =>
-                                            const Account()
-                                    ));
-                                    break;
-                                  }
-                                }
+                              //       break;
+                              //     }
+                              //   case '2':
+                              //     {
+                              //       debugPrint('case 2');
+                              //       Provider.of<Data>(context, listen: false).updateAccount(3);
+                              //       await Navigator.pushReplacement(
+                              //           context, MaterialPageRoute(
+                              //           builder: (context) =>
+                              //               const SuccessPayment()
+                              //       ));
+                              //       break;
+                              //     }
+                              //   case '3':
+                              //     {
+                              //       debugPrint('case 3');
+                              //       await Navigator.pushReplacement(
+                              //           context, MaterialPageRoute(
+                              //           builder: (context) =>
+                              //               const Account()
+                              //       ));
+                              //       break;
+                              //     }
+                              //   }
                               _formKey.currentState?.save();
                               debugPrint(
                                   'Request for registration send');
@@ -634,30 +707,32 @@ class _RegistrationPageState extends State<RegistrationPage> {
       );
     }
 
-    Future getUser(userId) async {
-      debugPrint('userId: $userId');
 
-      String apiUrl = baseUrl + "/test/get_user.php";
 
-      final response = await http.post(
-          Uri.parse(apiUrl), body: {'userId': userId},
-          headers: {
-            'Accept': 'application/json, charset=utf-8',
-            "Access-Control-Allow-Origin": "http://localhost:59369",
-            "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS"
-          });
-      if (response.statusCode == 200) {
-        debugPrint(response.statusCode.toString());
-        debugPrint(response.body);
-
-        final userJson = json.decode(response.body);
-        var data = User.fromJson(userJson);
-        Provider.of<Data>(context, listen: false).updateUserId(data.userId);
-        return (data);
-      } else {
-        throw Exception('Error fetching users');
-      }
-    }
+    // Future getUser(userId) async {
+    //   debugPrint('userId: $userId');
+    //
+    //   String apiUrl = baseUrl + "/test/get_user.php";
+    //
+    //   final response = await http.post(
+    //       Uri.parse(apiUrl), body: {'userId': userId},
+    //       headers: {
+    //         'Accept': 'application/json, charset=utf-8',
+    //         "Access-Control-Allow-Origin": "http://localhost:59369",
+    //         "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS"
+    //       });
+    //   if (response.statusCode == 200) {
+    //     debugPrint(response.statusCode.toString());
+    //     debugPrint(response.body);
+    //
+    //     final userJson = json.decode(response.body);
+    //     var data = User.fromJson(userJson);
+    //     Provider.of<Data>(context, listen: false).updateUserId(data.userId);
+    //     return (data);
+    //   } else {
+    //     throw Exception('Error fetching users');
+    //   }
+    // }
 
     Future send(Request request) async {
     debugPrint('send');
@@ -703,32 +778,32 @@ class Request {
   });
 }
 
-  getCookie() async {
-    debugPrint('get cookie');
-    var dio =  Dio();
-    var cookieJar=CookieJar();
-    dio.interceptors.add(CookieManager(cookieJar));
-
-    // Get cookies
-    // var cookies = cookieJar.loadForRequest(Uri.parse("https://cadillacapp.ru/"));
-    //debugPrint(cookies);
-    // second request with the cookie
-    //debugPrint(dio.get("https://cadillacapp.ru/"));
-
-    var response = await dio.get("https://cadillacapp.ru/");
-    //debugPrint(response);
-
-    return response;
-      // List<Cookie> cookies = [
-      //   new Cookie("uuid", "9265988f-e70d-11ec-af6a-00ff21c5bb0a"),
-      //   // ....
-      // ];
-
-      //Save cookies
-      //cookieJar.saveFromResponse(Uri.parse("http://localhost"), cookies);
-      //debugPrint(cookies);
-      //await dio.get(baseUrl);
-  }
+  // getCookie() async {
+  //   debugPrint('get cookie');
+  //   var dio =  Dio();
+  //   var cookieJar=CookieJar();
+  //   dio.interceptors.add(CookieManager(cookieJar));
+  //
+  //   // Get cookies
+  //   // var cookies = cookieJar.loadForRequest(Uri.parse("https://cadillacapp.ru/"));
+  //   //debugPrint(cookies);
+  //   // second request with the cookie
+  //   //debugPrint(dio.get("https://cadillacapp.ru/"));
+  //
+  //   var response = await dio.get("https://cadillacapp.ru/");
+  //   //debugPrint(response);
+  //
+  //   return response;
+  //     // List<Cookie> cookies = [
+  //     //   new Cookie("uuid", "9265988f-e70d-11ec-af6a-00ff21c5bb0a"),
+  //     //   // ....
+  //     // ];
+  //
+  //     //Save cookies
+  //     //cookieJar.saveFromResponse(Uri.parse("http://localhost"), cookies);
+  //     //debugPrint(cookies);
+  //     //await dio.get(baseUrl);
+  // }
 
 downLoadApp() async {
   debugPrint('download');
@@ -738,7 +813,7 @@ downLoadApp() async {
 
   if(response.statusCode == 200){
     debugPrint('success download');
-    debugPrint(response.statusCode.toString());
+    // debugPrint(response.statusCode.toString());
     return true;
   }else{
     debugPrint('error');

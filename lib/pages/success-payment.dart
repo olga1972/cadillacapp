@@ -88,8 +88,8 @@ class _SuccessPaymentState extends State<SuccessPayment> {
 
   @override
   Widget build(BuildContext context) {
-    userId = Provider.of<Data>(context).data['userId'].toString();
-    platform = Provider.of<Data>(context).data['platform'].toString();
+    userId = Provider.of<Data>(context, listen: false).data['userId'].toString();
+    platform = Provider.of<Data>(context, listen: false).data['platform'].toString();
     debugPrint(platform);
     debugPrint(userId);
 
@@ -601,7 +601,7 @@ class _SuccessPaymentState extends State<SuccessPayment> {
 
                                                   debugPrint('after editUser success');
 
-                                                  Provider.of<Data>(context, listen: false).updateAccount(2);
+                                                  Provider.of<Data>(context, listen: false).updateAccount(3);
                                                   Navigator.of(context).pop();
 
                                                   await Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const Account()));
@@ -736,14 +736,14 @@ class _SuccessPaymentState extends State<SuccessPayment> {
     if (response.statusCode == 200) {
       debugPrint('success success-payment');
 
-      if (platform == 'windows') {
-        var cookie = response.headers['set-cookie'];
-        debugPrint('cookie: $cookie');
-        List<String>? cookiesList = cookie?.split(';');
-        cookiesList?.forEach((i) => debugPrint(i.toLowerCase().trim()));
-        userId = cookiesList?[0].split('=')[1];
-        Provider.of<Data>(context).setCookie(userId);
-      }
+      // if (platform == 'windows') {
+      //   var cookie = response.headers['set-cookie'];
+      //   debugPrint('cookie: $cookie');
+      //   List<String>? cookiesList = cookie?.split(';');
+      //   cookiesList?.forEach((i) => debugPrint(i.toLowerCase().trim()));
+      //   userId = cookiesList?[0].split('=')[1];
+      //   Provider.of<Data>(context).setCookie(userId);
+      // }
 
       debugPrint(response.body);
       final userJson = json.decode(response.body);

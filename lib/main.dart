@@ -49,7 +49,7 @@ Future<void> main() async {
 class MyApp extends StatelessWidget {
   MyApp({Key? key,}) : super(key: key);
   static get platform => checkPlatform();
-  final String cookies ='';
+  //final String cookies ='';
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider<Data> (
@@ -64,11 +64,11 @@ class MyApp extends StatelessWidget {
 
 
         routes: {
-          //'/home': (context) => Provider.of<Data>(context).data['cookies'].toString() != ''? const Account() : const RegistrationPage(),
+          '/home': (context) => Provider.of<Data>(context, listen: false).data['userId'].toString() != ''? const Account() : const RegistrationPage(),
           //'/home': (context) => Account(),
           //'/home': (context) => MembersAdmin(),
-          '/home': (context) => RegistrationPage(),
-          //'/home': (context) => CardProductAdmin(index: 0),
+          //'/home': (context) => RegistrationPage(),
+          '/home': (context) => CardProductAdmin(index: 0),
           '/homeAdmin': (context) => const HomeAdmin(),
           '/registrationAdmin': (context) => RegistrationAdmin(),
           //'/home': (context) => Contacts(),
