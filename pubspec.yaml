@@ -30,8 +30,8 @@ dependencies:
   flutter:
     sdk: flutter
 #  flutter_bloc: ^8.0.1
-  flutter_localizations:
-    sdk: flutter
+#  flutter_localizations: ^1.16.0
+#    sdk: flutter
   intl: ^0.17.0
   flutter_svg: ^0.23.0+1
 
@@ -75,6 +75,10 @@ dependencies:
 
   image_picker: ^0.8.5+3
   cross_file_image: ^0.0.1
+  firebase_core: ^1.20.1
+  cloud_firestore: ^3.4.4
+  firebase_auth: ^3.6.3
+  flutter_toastr: ^1.0.3
 
 dev_dependencies:
   #  для создания TypeAdapters
@@ -147,3 +151,5 @@ flutter:
 
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
+
+

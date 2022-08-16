@@ -121,9 +121,9 @@ class _AccountAdminState extends State<AccountAdmin> {
               ),
               onPressed: () {
                 confirmDialog(context);
-                deleteUser(userId);
-                Route route = MaterialPageRoute(builder: (context) => const MembersAdmin());
-                Navigator.push(context, route);
+                // deleteUser(userId);
+                // Route route = MaterialPageRoute(builder: (context) => const MembersAdmin());
+                // Navigator.push(context, route);
               },
             ),
           ]),
@@ -479,7 +479,7 @@ deleteUser(userId) async {
   }
 }
 
-Future confirmDialog(BuildContext context) async {
+Future confirmDialog(BuildContext context, userId) async {
   return showDialog(
     context: context,
     barrierDismissible: false, // user must tap button for close dialog!
@@ -510,6 +510,7 @@ Future confirmDialog(BuildContext context) async {
                     style: styleTextAlertDialog,
                   ),
                   onPressed: () {
+                    deleteUser(userId);
                     Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const MembersAdmin()));
                   },
                 ),
