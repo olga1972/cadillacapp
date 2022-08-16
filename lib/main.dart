@@ -73,7 +73,7 @@ class MyApp extends StatelessWidget {
           //'/home': (context) => Account(),
           //'/home': (context) => MembersAdmin(),
           //'/home': (context) => RegistrationPage(),
-          //'/home': (context) => CardProductAdmin(index: 0),
+          '/home': (context) => CardProductAdmin(index: 0),
           '/homeAdmin': (context) => const HomeAdmin(),
           '/registrationAdmin': (context) => RegistrationAdmin(),
           //'/home': (context) => Contacts(),
