@@ -12,7 +12,8 @@ class Data with ChangeNotifier {
   late final Map data = {
     'userId': '',
     'counter': 1,
-    'platform': checkPlatform(),
+    // 'platform': checkPlatform(),
+    'platform': 'android',
     'isAuth': false,
     // 'cookies': '',
     'isAdmin': false,

@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "918394593301",
+    "project_id": "cadillacapp-42c1d",
+    "storage_bucket": "cadillacapp-42c1d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:918394593301:android:9257797aefb558ba1e2e1c",
+        "android_client_info": {
+          "package_name": "com.cadillac.cadillac"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "918394593301-d0aej4gj909c6a3bpkgnnevansdtjv1t.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCjGyk8ZMeemyk_8WzxcHRTQntaj4002Wk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "918394593301-d0aej4gj909c6a3bpkgnnevansdtjv1t.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

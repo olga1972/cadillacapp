@@ -33,7 +33,7 @@ var uuid = '1';
 late bool isAuth;
 
 class RegistrationPage extends StatefulWidget {
-  const RegistrationPage({Key? key, }) : super(key: key);
+  RegistrationPage({Key? key, }) : super(key: key);
 
   @override
   State<RegistrationPage> createState() => _RegistrationPageState();
@@ -427,11 +427,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                                                   .of<Data>(context, listen: false)
                                                   .data['counter'].toString());
 
-                                              Navigator.pushReplacement(
-                                              context, MaterialPageRoute(
-                                              builder: (context) =>
-                                              const SuccessPayment()
-                                              ));
+
                                               }
 
                                               // if (_formKey.currentState
@@ -652,7 +648,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                             Navigator.pushReplacement(
                                 context, MaterialPageRoute(
                                 builder: (context) =>
-                                    const RegistrationPage()
+                                    RegistrationPage()
                             ));
                           },
                         )

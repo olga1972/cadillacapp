@@ -28,6 +28,8 @@ import 'package:cadillac/pages/data.dart';
 import 'package:cadillac/pages/editAccount.dart';
 import 'package:cadillac/pages/gift.dart';
 
+import '../services/auth.dart';
+
 //class Account extends StatelessWidget {
 class Account extends StatefulWidget {
   const Account({
@@ -39,7 +41,7 @@ class Account extends StatefulWidget {
 }
 
 class _AccountState extends State<Account> {
-  late dynamic userId;
+  late dynamic userId='5gOD8E3TlCfnjTW1Aso1VvjiG9C3';
   late Uint8List base64Path;
   late File image;
   late File car1;
@@ -64,14 +66,14 @@ class _AccountState extends State<Account> {
   @override
   Widget build(BuildContext context) {
     debugPrint('user account');
-    debugPrint(Provider
-        .of<Data>(context, listen: false)
-        .data['counter'].toString());
+    // debugPrint(Provider
+    //     .of<Data>(context, listen: false)
+    //     .data['counter'].toString());
 
-    userId = Provider.of<Data>(context, listen: false).data['userId'].toString();
-    debugPrint(userId);
-    platform = Provider.of<Data>(context).data['platform'].toString();
-    debugPrint(platform);
+    //userId = Provider.of<Data>(context, listen: false).data['userId'].toString();
+    //debugPrint(userId);
+    //platform = Provider.of<Data>(context).data['platform'].toString();
+    //debugPrint(platform);
 
     List<Cookie> cookies = [Cookie("uuid", "$userId")];
 
@@ -116,9 +118,21 @@ class _AccountState extends State<Account> {
                 );
               },
             ),
+            actions: <Widget>[
+              IconButton(
+                  onPressed: () {
+                    AuthService().logOut();
+                  },
+                  icon: const Icon(
+                    Icons.supervised_user_circle,
+                    color: Colors.white,
+                  ),
+                  )
+            ],
           ),
-          body: Consumer<Data>(builder: (context, data, child) {
-            return FutureBuilder<User>(
+          // body: Consumer<Data>(builder: (context, data, child) {
+    body: FutureBuilder<User> (
+            //return FutureBuilder<User>(
                 future: user,
                 builder: (context, snapshot) {
                   if (snapshot.connectionState != ConnectionState.done) {
@@ -398,8 +412,9 @@ class _AccountState extends State<Account> {
                             ])));
                   }
                   return const Center(child: Text('no data'));
-                });
-          }),
+                }),
+
+
           drawer: const NavDrawer(),
         ));
   }
@@ -484,7 +499,7 @@ checkAccount(dateExpired, context) {
     warningDialog(context, difference.inDays);
   } else if (difference.inDays < 0) {
     isShowWarning == false;
-    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const RegistrationPage()));
+    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => RegistrationPage()));
   } else {
     debugPrint('valid');
 

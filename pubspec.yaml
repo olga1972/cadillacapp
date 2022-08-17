@@ -61,7 +61,7 @@ dependencies:
   form_builder_validators: ^7.2.1
   form_builder_image_picker: ^2.0.0
   form_builder_asset_picker: ^1.1.0
-  form_builder_file_picker: ^2.2.0
+  form_builder_file_picker: ^2.3.0
 #  flutter_web_image_picker: ^0.0.2     don/t support null safety!
 
   mask_text_input_formatter: ^2.3.0

@@ -120,7 +120,7 @@ class _AccountAdminState extends State<AccountAdmin> {
                 height: 15.0,
               ),
               onPressed: () {
-                confirmDialog(context);
+                confirmDialog(context, userId);
                 // deleteUser(userId);
                 // Route route = MaterialPageRoute(builder: (context) => const MembersAdmin());
                 // Navigator.push(context, route);

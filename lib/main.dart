@@ -5,6 +5,7 @@ import 'package:cadillac/pages/contacts.dart';
 import 'package:cadillac/pages/editAccount.dart';
 import 'package:cadillac/pages/editAccountAdmin.dart';
 import 'package:cadillac/pages/editAds.dart';
+import 'package:cadillac/pages/entrance.dart';
 import 'package:cadillac/pages/home.dart';
 import 'package:cadillac/pages/homeAdmin.dart';
 
@@ -20,6 +21,7 @@ import 'package:cadillac/pages/renewAccount.dart';
 import 'package:cadillac/pages/shop.dart';
 import 'package:cadillac/pages/shopAdmin.dart';
 import 'package:cadillac/pages/test.dart';
+//import 'package:cadillac/services/auth.dart';
 import 'package:cadillac/widgets/titlePage.dart';
 import 'package:flutter/foundation.dart';
 
@@ -32,6 +34,8 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_toastr/flutter_toastr.dart';
+
+final FirebaseAuth _auth = FirebaseAuth.instance;
 
 
 checkPlatform() {
@@ -48,18 +52,68 @@ checkPlatform() {
   }
 }
 Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+
   runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
   MyApp({Key? key,}) : super(key: key);
   static get platform => checkPlatform();
+
+  //get user => _auth.currentUser;
+  final User? user = _auth.currentUser;
+
   //final String cookies ='';
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider<Data> (
-      create: (context) => Data(),
-      child: MaterialApp(
+    // return ChangeNotifierProvider<Data> (
+      //final auth = Provider.of(context).auth;
+      // return StreamProvider<User?>.value(
+      //     value: user,
+      //     initialData: null,
+      //   child: Entrance()
+      //
+      //       // final bool loggedIn = auth;
+      //       // if (loggedIn == true) {
+      //       //   return Contacts();
+      //       // } else {
+      //       //   return Entrance();
+      //       // }
+      //     //}
+      //     //return CircularProgressIndicator();
+      //   //},
+      // );
+   // }
+
+//       return StreamBuilder<User?>(
+//
+//         stream: FirebaseAuth.instance.authStateChanges(),
+//           Builder(builder: (BuildContext context) {
+// //5
+//             return MaterialButton(
+//               child: const Text('Sign out'),
+//               textColor: Colors.white,
+//               onPressed: () async {
+//                 final User? user = await _auth.currentUser;
+//                 if (user == null) {
+//                   debugPrint('No one has signed in.');
+//                   return;
+//                 }
+//                 await _auth.signOut();
+//                 final String uid = user.uid;
+//                 debugPrint(uid + ' has successfully signed out.');
+//
+//               },
+//             );
+//           })
+//       );
+
+          //value: user,
+      // create: (context) => Data(),
+      //initialData: null,
+      return MaterialApp(
         theme: ThemeData (
           // primarySwatch: Colors.blue,
           scaffoldBackgroundColor: const Color(0xFF181c33)),
@@ -69,13 +123,14 @@ class MyApp extends StatelessWidget {
 
 
         routes: {
-          '/home': (context) => Provider.of<Data>(context, listen: false).data['userId'].toString() != ''? const Account() : const RegistrationPage(),
+          '/home': (context) => Entrance(),
+          //'/home': (context) => Provider.of<Data>(context, listen: false).data['userId'].toString() != ''? const Account() : const RegistrationPage(),
           //'/home': (context) => Account(),
           //'/home': (context) => MembersAdmin(),
           //'/home': (context) => RegistrationPage(),
-          '/home': (context) => CardProductAdmin(index: 0),
+          //'/home': (context) => CardProductAdmin(index: 0),
           '/homeAdmin': (context) => const HomeAdmin(),
-          '/registrationAdmin': (context) => RegistrationAdmin(),
+          '/registrationAdmin': (context) => const RegistrationAdmin(),
           //'/home': (context) => Contacts(),
           //'/home': (context) =>  isAuth ? Account() : RegistrationPage(),
           //'/home': (context) => isAuth ? Account() : RegistrationPage(),
@@ -103,7 +158,7 @@ class MyApp extends StatelessWidget {
         },
 
         home: const MyHomePage(title: 'Cadillac'),
-      )
+      //)
     );
 
   }
@@ -181,7 +236,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         MaterialPageRoute(
                             builder:
                                 (context) =>
-                                const RegistrationPage()));
+                                RegistrationPage()));
                   }
             )
               ]
