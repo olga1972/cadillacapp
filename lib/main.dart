@@ -217,7 +217,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   color: const Color.fromARGB(255, 255, 255, 255),
                   // textColor: const Color(0xFF12141F),
                   child: Text(
-                    "На страницу регистрации".toUpperCase(),
+                    "Вернуться".toUpperCase(),
                     style: const TextStyle(
                     fontSize: 14,
                     color: Color(0xFF12141F)),
@@ -236,7 +236,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         MaterialPageRoute(
                             builder:
                                 (context) =>
-                                RegistrationPage()));
+                                Entrance()));
                   }
             )
               ]

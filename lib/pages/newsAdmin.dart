@@ -154,14 +154,15 @@ class _NewsAdminState extends State<NewsAdmin> {
                                                               ),
                                                               GestureDetector(
                                                                 onTap: () {
-                                                                  confirmDialog(context);
+
                                                                   setState(() {
                                                                     // устанавливаем индекс выделенного элемента
                                                                     selectedIndex = index;
                                                                   });
                                                                   debugPrint(snapshot.data?.news[selectedIndex].newsId);
                                                                   var currentNewsId = snapshot.data?.news[selectedIndex].newsId;
-                                                                  deleteNews(currentNewsId);
+                                                                  confirmDialog(context, currentNewsId);
+
                                                                 },
                                                                 child: SvgPicture.asset(
                                                                   'assets/images/delete.svg',
@@ -258,7 +259,7 @@ class _NewsAdminState extends State<NewsAdmin> {
   }
 }
 
-Future confirmDialog(BuildContext context) async {
+Future confirmDialog(BuildContext context, currentNewsId) async {
   return showDialog(
     context: context,
     barrierDismissible: false, // user must tap button for close dialog!
@@ -289,6 +290,7 @@ Future confirmDialog(BuildContext context) async {
                     style: styleTextAlertDialog,
                   ),
                   onPressed: () {
+                    deleteNews(currentNewsId);
                     Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const NewsAdmin()));
                   },
                 ),

@@ -17,18 +17,20 @@ import 'package:card_swiper/card_swiper.dart';
 import 'package:cookie_jar/cookie_jar.dart';
 import 'package:dio/dio.dart';
 import 'package:dio_cookie_manager/dio_cookie_manager.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
-import 'package:cadillac/models/users.dart';
+import 'package:cadillac/models/users.dart' as my_user;
 import 'package:cadillac/pages/data.dart';
 import 'package:cadillac/pages/editAccount.dart';
 import 'package:cadillac/pages/gift.dart';
 
 import '../services/auth.dart';
+import 'entrance.dart';
 
 //class Account extends StatelessWidget {
 class Account extends StatefulWidget {
@@ -41,7 +43,9 @@ class Account extends StatefulWidget {
 }
 
 class _AccountState extends State<Account> {
-  late dynamic userId='5gOD8E3TlCfnjTW1Aso1VvjiG9C3';
+  // late dynamic userId='5gOD8E3TlCfnjTW1Aso1VvjiG9C3';
+  late dynamic userId;
+
   late Uint8List base64Path;
   late File image;
   late File car1;
@@ -54,18 +58,24 @@ class _AccountState extends State<Account> {
 
   late String value;
   late String currentId;
-  dynamic user;
+  dynamic currentUser;
 
   late String platform;
+
+  User? user = FirebaseAuth.instance.currentUser;
 
   @override
   initState() {
     super.initState();
+
   }
 
   @override
   Widget build(BuildContext context) {
     debugPrint('user account');
+    final String? uid = user?.uid;
+    debugPrint(uid);
+    debugPrint(user?.email);
     // debugPrint(Provider
     //     .of<Data>(context, listen: false)
     //     .data['counter'].toString());
@@ -75,20 +85,20 @@ class _AccountState extends State<Account> {
     //platform = Provider.of<Data>(context).data['platform'].toString();
     //debugPrint(platform);
 
-    List<Cookie> cookies = [Cookie("uuid", "$userId")];
-
-    var dio = Dio();
-    var cookieJar = CookieJar();
-    dio.interceptors.add(CookieManager(cookieJar));
-
-    //Save cookies
-    cookieJar.saveFromResponse(Uri.parse(baseUrl), cookies);
-
-    var response = getCookie();
-    debugPrint('cookies account');
+    // List<Cookie> cookies = [Cookie("uuid", "$userId")];
+    //
+    // var dio = Dio();
+    // var cookieJar = CookieJar();
+    // dio.interceptors.add(CookieManager(cookieJar));
+    //
+    // //Save cookies
+    // cookieJar.saveFromResponse(Uri.parse(baseUrl), cookies);
+    //
+    // var response = getCookie();
+    // debugPrint('cookies account');
     //debugPrint(response); error
 
-    user = getUser(userId, context);
+    currentUser = getUser(uid, context);
 
     return MaterialApp(
         theme: ThemeData(scaffoldBackgroundColor: const Color(0xFF181c33)),
@@ -120,20 +130,26 @@ class _AccountState extends State<Account> {
             ),
             actions: <Widget>[
               IconButton(
-                  onPressed: () {
-                    AuthService().logOut();
+                  onPressed: () async{
+                    //AuthService().logOut();
+                    await FirebaseAuth.instance.signOut();
+                    Navigator.pushReplacement(
+                        context, MaterialPageRoute(
+                        builder: (context) =>
+                            Entrance()
+                    ));
                   },
                   icon: const Icon(
-                    Icons.supervised_user_circle,
+                    Icons.exit_to_app_outlined,
                     color: Colors.white,
                   ),
                   )
             ],
           ),
           // body: Consumer<Data>(builder: (context, data, child) {
-    body: FutureBuilder<User> (
+    body: FutureBuilder<my_user.User> (
             //return FutureBuilder<User>(
-                future: user,
+                future: currentUser,
                 builder: (context, snapshot) {
                   if (snapshot.connectionState != ConnectionState.done) {
                     return const Center(child: CircularProgressIndicator());
@@ -306,7 +322,7 @@ class _AccountState extends State<Account> {
                                         child: CircleAvatar(
                                             radius: 48,
                                             backgroundColor: Colors.transparent,
-                                            child: (snapshot.data?.path != null)
+                                            child: (snapshot.data?.path != null && snapshot.data?.path != '')
                                                 ? Image.memory(base64.decode(snapshot.data?.path ?? ''), fit: BoxFit.cover, width: 96, height: 96)
                                                 : const Text('no image')),
                                       ),
@@ -362,8 +378,8 @@ class _AccountState extends State<Account> {
                                   padding: EdgeInsets.zero,
                                   margin: const EdgeInsets.only(top: 10, bottom: 30, left: 0, right: 0),
                                   color: const Color(0xFF181C33),
-                                  child: images.length == 1
-                                      ? Container(
+                                  child: images.length == 1 ?
+                                      Container(
                                           decoration: const BoxDecoration(
                                             borderRadius: BorderRadius.all(Radius.circular(20)),
                                           ),
@@ -375,7 +391,17 @@ class _AccountState extends State<Account> {
                                                 height: 160,
                                                 fit: BoxFit.cover,
                                                 alignment: Alignment.centerLeft,
-                                              )))
+                                              )
+                                          ))
+                                        // : ClipRRect(
+                                        // borderRadius: const BorderRadius.all(Radius.circular(20)),
+                                        // child: Text('no image', style: TextStyle(
+                                        //   fontSize: 24.0,
+                                        //   fontWeight: FontWeight.normal,
+                                        //   fontFamily: 'CadillacSans',
+                                        //   color: Colors.white,
+                                        //   height: 1.17,)))
+
                                       : Swiper(
                                           layout: SwiperLayout.CUSTOM,
                                           customLayoutOption: CustomLayoutOption(startIndex: -1, stateCount: 2)
@@ -406,9 +432,9 @@ class _AccountState extends State<Account> {
                                           pagination: const SwiperPagination(
                                               margin: EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 15.0),
                                               builder:
-                                                  DotSwiperPaginationBuilder(color: Colors.white, activeColor: Color(0xFF8F97BF), size: 7.0, activeSize: 7.0))),
-                                ),
-                              ])))
+                                                  DotSwiperPaginationBuilder(color: Colors.white, activeColor: Color(0xFF8F97BF), size: 7.0, activeSize: 7.0)))),
+                                ]),
+                              ))
                             ])));
                   }
                   return const Center(child: Text('no data'));
@@ -420,7 +446,7 @@ class _AccountState extends State<Account> {
   }
 }
 
-Future<User> getUser(userId, context) async {
+Future<my_user.User> getUser(userId, context) async {
   debugPrint('getUser');
   debugPrint('userId: $userId');
 
@@ -436,9 +462,9 @@ Future<User> getUser(userId, context) async {
   if (response.statusCode == 200) {
     final userJson = json.decode(response.body);
 
-    checkAccount(User.fromJson(userJson).dateExpired, context);
+    checkAccount(my_user.User.fromJson(userJson).dateExpired, context);
 
-    var data = User.fromJson(userJson);
+    var data = my_user.User.fromJson(userJson);
     debugPrint(data.dateExpired);
 
     return (data);

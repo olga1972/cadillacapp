@@ -6,6 +6,8 @@ import 'package:cadillac/pages/auth.dart';
 import 'package:cadillac/pages/account.dart';
 import 'package:provider/provider.dart';
 
+import '../variables.dart';
+import 'accountAdmin.dart';
 import 'contacts.dart';
 
 //import '../services/auth.dart';
@@ -18,14 +20,16 @@ class Entrance extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
-    //final auth = Provider.of(context).auth;
-
-    //late bool isLoggedIn;
-
     User? user = FirebaseAuth.instance.currentUser;
-    // final dynamic user = Provider.of<User>(context);
+
+    // можно прислать письмо на почту для верификации
+    // if (user!= null && !user.emailVerified) {
+    //   await user.sendEmailVerification();
+    // }
+
+
     final bool isLoggedIn = user != null;
+    bool isAdmin = false;
 
     FirebaseAuth.instance
         .authStateChanges()
@@ -36,18 +40,31 @@ class Entrance extends StatelessWidget {
 
       } else {
         print('User is signed in!');
+        print(user.email);
         print(isLoggedIn);
-        // Navigator.pushReplacement(
-        //     context, MaterialPageRoute(
-        //     builder: (context) =>
-        //     const Contacts()
-        // ));
 
+        if(user.email == emailAdmin) {
+          isAdmin = true;
+          Navigator.pushReplacement(
+              context, MaterialPageRoute(
+              builder: (context) =>
+                  AccountAdmin()
+          ));
+        } else {
+          isAdmin = false;
+          Navigator.pushReplacement(
+              context, MaterialPageRoute(
+              builder: (context) =>
+                  Account()
+          ));
+        }
       }
     });
 
 
-    return isLoggedIn ? Account() : AuthorizationPage();
+    return isLoggedIn ?
+      isAdmin ? AccountAdmin() : Account()
+        : AuthorizationPage();
     //return isLoggedIn ? Account() : RegistrationPage();
   }
 }

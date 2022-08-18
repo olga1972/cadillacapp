@@ -176,8 +176,8 @@ class _RegistrationAdminState extends State<RegistrationAdmin> {
                                         (val) {
                                           if (val == null) {
                                             return 'Поле password не может быть пустым';
-                                          } else if (val.length < 10) {
-                                            return 'Минимум 10 символов';
+                                          } else if (val.length < 6) {
+                                            return 'Минимум 6 символов';
                                           } else {
                                             return null;
                                           }

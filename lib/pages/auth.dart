@@ -1,7 +1,12 @@
+import 'package:cadillac/pages/registrationPage.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:flutter_toastr/flutter_toastr.dart';
 import 'package:cadillac/domain/user.dart';
 import 'package:cadillac/services/auth.dart';
+import 'package:url_launcher/url_launcher.dart';
+
+import '../variables.dart';
 
 class AuthorizationPage extends StatefulWidget {
   AuthorizationPage({Key? key}) : super(key: key);
@@ -18,6 +23,9 @@ class _AuthorizationPageState extends State<AuthorizationPage> {
   late String _password;
   bool showLogin = true;
 
+  final Uri url1 = Uri.parse('https://cadillacapp.ru/test/download.php');
+  final Uri url2 = Uri.parse('https://cadillacapp.ru/test/download2.php');
+
   final AuthService _authService = AuthService();
 
   _showToast(String msg, {int? duration, int? position}) {
@@ -28,53 +36,89 @@ class _AuthorizationPageState extends State<AuthorizationPage> {
   Widget build(BuildContext context) {
 
     Widget _logo(){
-      return Padding(
-          padding: EdgeInsets.only(top: 100),
-          child: Container(
-              child: Align(
-                  child: Text('MAXFIT', style: TextStyle(fontSize: 45, fontWeight: FontWeight.bold, color: Colors.white,)
-                  )
-              )
-          )
+      return Container(
+        margin: const EdgeInsets.only(
+            top: 70),
+        child: SvgPicture.asset(
+          'assets/images/LOGO.svg',
+          //fit: BoxFit.fill,
+          height: 103.0,
+          color: Colors.white,
+        ),
+
       );
     }
 
     Widget _input(Icon icon, String hint, TextEditingController controller, bool obscure){
       return Container(
-        padding: EdgeInsets.only(left: 20, right: 20),
+        // padding: EdgeInsets.only(left: 20, right: 20),
         child: TextField(
           controller: controller,
           obscureText: obscure,
-          style: TextStyle(fontSize: 20, color: Colors.white),
+          style: styleFormInput,
           decoration: InputDecoration(
-              hintStyle: TextStyle(fontWeight: FontWeight.bold, fontSize: 20, color: Colors.white30),
-              hintText: hint,
-              focusedBorder: OutlineInputBorder(
-                  borderSide: BorderSide(color: Colors.white, width: 3)
-              ),
-              enabledBorder: OutlineInputBorder(
-                  borderSide: BorderSide(color: Colors.white54, width: 1)
-              ),
-              prefixIcon: Padding(
-                  padding: EdgeInsets.only(left: 10, right: 10),
-                  child: IconTheme(
-                      data: IconThemeData(color: Colors.white),
-                      child: icon
-                  )
-              )
+          contentPadding: EdgeInsets
+              .all(16),
+          border: OutlineInputBorder(
+          borderSide: BorderSide
+              .none,
+          borderRadius: BorderRadius
+              .all(
+          Radius.circular(10))
           ),
+
+          fillColor: Color(
+          0XFF515569),
+          filled: true,
+          hintText: hint,
+          hintStyle: TextStyle(
+          color: Colors.white,
+          ),
+          // prefixIcon: Padding(
+          //     padding: EdgeInsets.only(left: 10, right: 10),
+          //     child: IconTheme(
+          //         data: IconThemeData(color: Colors.white),
+          //         child: icon
+          //     )
+          // )
+          // decoration: InputDecoration(
+          //     hintStyle: TextStyle(fontWeight: FontWeight.bold, fontSize: 20, color: Colors.white30),
+          //     hintText: hint,
+          //     focusedBorder: OutlineInputBorder(
+          //         borderSide: BorderSide(color: Colors.white, width: 3)
+          //     ),
+          //     enabledBorder: OutlineInputBorder(
+          //         borderSide: BorderSide(color: Colors.white54, width: 1)
+          //     ),
+          //     prefixIcon: Padding(
+          //         padding: EdgeInsets.only(left: 10, right: 10),
+          //         child: IconTheme(
+          //             data: IconThemeData(color: Colors.white),
+          //             child: icon
+          //         )
+          //     )
+          // ),
         ),
-      );
+      ));
     }
 
-    Widget _button(String text, void func()){
+    Widget _button(String text, void Function() func){
       return MaterialButton(
-        splashColor: Theme.of(context).primaryColor,
-        highlightColor: Theme.of(context).primaryColor,
-        color: Colors.white,
+        padding: const EdgeInsets.all(17),
+        color: const Color.fromARGB(
+            255, 255, 255, 255),
         child: Text(
-            text,
-            style: TextStyle(fontWeight: FontWeight.bold, color: Theme.of(context).primaryColor, fontSize: 20)
+            text.toUpperCase(),
+            style: TextStyle(fontSize: 14,
+                fontWeight: FontWeight.w500,
+                color: Color(0xFF12141F),
+                height: 1.14)
+        ),
+        shape: const RoundedRectangleBorder(
+          side: BorderSide.none,
+          borderRadius: BorderRadius.all(
+            Radius.circular(10),
+          ),
         ),
         onPressed: (){
           func();
@@ -82,21 +126,43 @@ class _AuthorizationPageState extends State<AuthorizationPage> {
       );
     }
 
-    Widget _form(String label, void func()){
+    Widget _form(String label, void Function() func){
       return Container(
         child: Column(
+
+          crossAxisAlignment: CrossAxisAlignment
+              .start,
           children: <Widget>[
+            Container(
+              margin: const EdgeInsets.only(
+                  bottom: 10),
+              child: Text(
+                'ваш email'.toUpperCase(),
+                textAlign: TextAlign.left,
+                style: styleTitleFormInput,
+              ),
+            ),
             Padding(
                 padding: EdgeInsets.only(bottom: 20, top: 10),
-                child: _input(Icon(Icons.email), "EMAIL", _emailController, false)
+                child: _input(Icon(Icons.email), "Введите ваш email", _emailController, false)
+            ),
+            Container(
+              margin: const EdgeInsets.only(
+                  bottom: 10),
+              child: Text(
+                'ваш пароль'.toUpperCase(),
+                textAlign: TextAlign.left,
+                style: styleTitleFormInput,
+              ),
             ),
             Padding(
                 padding: EdgeInsets.only(bottom: 20),
-                child: _input(Icon(Icons.lock), "PASSWORD", _passwordController, true)
+                child: _input(Icon(Icons.lock), "Введите ваш пароль", _passwordController, true)
+
             ),
             SizedBox(height: 20,),
             Padding(
-                padding: EdgeInsets.only(left: 20, right: 20),
+                padding: EdgeInsets.only(left: 0, right: 0),
                 child: Container(
                     height: 50,
                     width: MediaQuery.of(context).size.width,
@@ -153,41 +219,40 @@ class _AuthorizationPageState extends State<AuthorizationPage> {
         _passwordController.clear();
       }
     }
-
-    // Widget _bottomWave() {
-    //   return Expanded(
-    //     child: Align(
-    //       child: ClipPath(
-    //         child: Container(
-    //           color: Colors.white,
-    //           height: 300,
-    //         ),
-    //         clipper: BottomWaveClipper(),
-    //       ),
-    //       alignment: Alignment.bottomCenter,
-    //     ),
-    //   );
-    // }
-
     return Scaffold(
-        backgroundColor: Theme.of(context).primaryColor,
-        body: Column(
-          children: <Widget>[
+        backgroundColor: Color(0xFF181c33),
+        body: Center(
+        child: Container(
+        width: 284,
+        margin: const EdgeInsets.only(top: 70),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Expanded(
+                child: SingleChildScrollView(
+                child: Column(
+                children: [
             _logo(),
             SizedBox(height: 100,),
             (
                 showLogin
                     ? Column(
                   children: <Widget>[
-                    _form('LOGIN', _loginButtonAction),
+                    _form('Войти', _loginButtonAction),
                     Padding(
                       padding: EdgeInsets.all(10),
                       child: GestureDetector(
-                          child: Text('Not registered yet? Register!', style: TextStyle(fontSize: 20, color: Colors.white)),
+                          child: Text('Не зарегистрированы еще? Отправить заявку!', style: TextStyle(fontSize: 20, color: Colors.white)),
                           onTap:() {
                             setState((){
                               showLogin = false;
                             });
+                            Navigator.pushReplacement(
+                                context, MaterialPageRoute(
+                                builder: (context) =>
+                                RegistrationPage()
+                            ));
                           }
                       ),
                     )
@@ -195,11 +260,11 @@ class _AuthorizationPageState extends State<AuthorizationPage> {
                 )
                     : Column(
                   children: <Widget>[
-                    _form('REGISTER', _registerButtonAction),
+                    _form('Зарегистрироваться', _registerButtonAction),
                     Padding(
-                      padding: EdgeInsets.all(10),
+                      padding: EdgeInsets.only(top: 10, bottom: 10),
                       child: GestureDetector(
-                          child: Text('Already registered? Login!', style: TextStyle(fontSize: 20, color: Colors.white)),
+                          child: Text('Уже зарегистрированы? Войти!', style: TextStyle(fontSize: 20, color: Colors.white)),
                           onTap:() {
                             setState((){
                               showLogin = true;
@@ -210,30 +275,57 @@ class _AuthorizationPageState extends State<AuthorizationPage> {
                   ],
                 )
             ),
-            // _bottomWave()
+                  Container(
+                    margin: const EdgeInsets.only(top: 30,
+                        bottom: 10),
+                    child: Text('Скачать'.toUpperCase(),
+                      textAlign: TextAlign.left,
+                      style: styleTitleFormInput,
+                    ),
+                  ),
+
+                  Column(
+                      mainAxisAlignment: MainAxisAlignment
+                          .spaceBetween,
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        MaterialButton(
+                            padding: const EdgeInsets.all(17),
+                            child: Image.asset(
+                              'assets/images/app1.png',
+                              fit: BoxFit.contain,
+                              height: 58,
+                            ),
+                            onPressed: () {
+                              launchURL(url1);
+                            }),
+
+                        MaterialButton(
+                          padding: const EdgeInsets.all(17),
+                          child: Image.asset(
+                            'assets/images/app2.png',
+                            fit: BoxFit.contain,
+                            height: 58,
+                          ),
+                          onPressed: () {
+                            launchURL(url2);
+                          },
+                        ),
+
+                      ]
+                  ),
 
           ],
         )
-    );
+        )
+    )
+    ]
+    ))));
   }
 }
 
-// class BottomWaveClipper extends CustomClipper<Path> {
-//   @override
-//   Path getClip(Size size) {
-//     var path = Path();
-//     path.moveTo(size.width, 0.0);
-//     path.lineTo(size.width, size.height);
-//     path.lineTo(0.0, size.height);
-//     path.lineTo(0.0, size.height + 5);
-//     var secondControlPoint = Offset(size.width - (size.width / 6), size.height);
-//     var secondEndPoint = Offset(size.width, 0.0);
-//     path.quadraticBezierTo(secondControlPoint.dx, secondControlPoint.dy,
-//         secondEndPoint.dx, secondEndPoint.dy);
-//
-//     return path;
-//   }
-//
-//   @override
-//   bool shouldReclip(CustomClipper<Path> oldClipper) => false;
-// }
+void launchURL(url) async {
+  if (!await launchUrl(url)) throw 'Could not launch $url';
+
+}
+

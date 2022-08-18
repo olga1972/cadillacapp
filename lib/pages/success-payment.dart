@@ -88,10 +88,10 @@ class _SuccessPaymentState extends State<SuccessPayment> {
 
   @override
   Widget build(BuildContext context) {
-    userId = Provider.of<Data>(context, listen: false).data['userId'].toString();
-    platform = Provider.of<Data>(context, listen: false).data['platform'].toString();
-    debugPrint(platform);
-    debugPrint(userId);
+    // userId = Provider.of<Data>(context, listen: false).data['userId'].toString();
+    // platform = Provider.of<Data>(context, listen: false).data['platform'].toString();
+    // debugPrint(platform);
+    // debugPrint(userId);
 
     return MaterialApp(
         theme: ThemeData(scaffoldBackgroundColor: const Color(0xFF181c33)),
@@ -187,8 +187,8 @@ class _SuccessPaymentState extends State<SuccessPayment> {
                                   (val) {
                                     if (val == null) {
                                       return 'Поле password не может быть пустым';
-                                    } else if (val.length < 10) {
-                                      return 'Минимум 10 символов';
+                                    } else if (val.length < 6) {
+                                      return 'Минимум 6 символов';
                                     } else {
                                       return null;
                                     }
@@ -199,264 +199,6 @@ class _SuccessPaymentState extends State<SuccessPayment> {
                               width: 284,
                               margin: const EdgeInsets.only(top: 30, bottom: 10),
                             ),
-                            Accordion(
-                                content: SizedBox(
-                                    width: 284,
-                                    child: Column(children: [
-                                      Container(
-                                        margin: const EdgeInsets.only(top: 53, bottom: 40),
-                                        child: const TitlePage(title: 'регистрация члена \nавтоклуба cadillac'),
-                                      ),
-                                      Container(
-                                        width: 284,
-                                        margin: const EdgeInsets.only(top: 10, bottom: 10),
-                                        child: Text(
-                                          'ваше фото'.toUpperCase(),
-                                          textAlign: TextAlign.left,
-                                          style: styleTitleFormInput,
-                                        ),
-                                      ),
-                                      Container(
-                                        width: 130,
-                                        decoration: const BoxDecoration(borderRadius: BorderRadius.all(Radius.circular(48))),
-                                        child: FormBuilderFilePicker(
-                                            name: "photo",
-                                            decoration: const InputDecoration(
-                                              fillColor: Color(0xff515569),
-                                              iconColor: Colors.white,
-                                              contentPadding: EdgeInsets.all(0),
-                                              border: OutlineInputBorder(
-                                                borderSide: BorderSide.none,
-                                                //gapPadding: 40,
-                                              ),
-                                            ),
-                                            maxFiles: null,
-                                            previewImages: true,
-                                            onChanged: (val) => {},
-                                            selector: Column(crossAxisAlignment: CrossAxisAlignment.center, children: [
-                                              Stack(alignment: Alignment.center, children: [
-                                                Container(
-                                                  alignment: Alignment.center,
-                                                  width: 96,
-                                                  height: 96,
-                                                  decoration:
-                                                      const BoxDecoration(color: Color(0xFF515569), borderRadius: BorderRadius.all(Radius.circular(48))),
-                                                ),
-                                                SvgPicture.asset(
-                                                  'assets/images/image.svg',
-                                                  semanticsLabel: 'Icon upload',
-                                                  height: 18.0,
-                                                ),
-                                              ]),
-                                              Row(mainAxisAlignment: MainAxisAlignment.center, crossAxisAlignment: CrossAxisAlignment.center, children: const [
-                                                SizedBox(height: 40),
-                                                Text('Загрузить фото',
-                                                    style: TextStyle(
-                                                        fontSize: 14.0,
-                                                        fontWeight: FontWeight.normal,
-                                                        fontFamily: 'CadillacSans',
-                                                        color: Color(0xFF515569),
-                                                        height: 1.4 //line-height : font-size
-                                                        ),
-                                                    textAlign: TextAlign.center),
-                                                Icon(Icons.file_upload, semanticLabel: 'Icon upload', size: 18.0, color: Color(0xFF515569)),
-                                                //)
-                                              ]),
-                                            ]),
-                                            onFileLoading: (val) {
-                                              // debugPrint(val);
-                                            },
-                                            onSaved: (value) => {
-                                                  photo = value!,
-                                                }),
-                                      ),
-                                      Container(
-                                        alignment: Alignment.topLeft,
-                                        margin: const EdgeInsets.only(top: 10, bottom: 10),
-                                        child: Text(
-                                          'ваше имя и фамилия'.toUpperCase(),
-                                          textAlign: TextAlign.left,
-                                          style: styleTitleFormInput,
-                                        ),
-                                      ),
-                                      FormBuilderTextField(
-                                          name: 'username',
-                                          autofocus: true,
-                                          cursorWidth: 1.0,
-                                          cursorColor: Colors.white,
-                                          style: styleFormInput,
-                                          decoration: const InputDecoration(
-                                            contentPadding: EdgeInsets.all(16),
-                                            border: OutlineInputBorder(borderSide: BorderSide.none, borderRadius: BorderRadius.all(Radius.circular(10))),
-                                            fillColor: Color(0XFF515569),
-                                            filled: true,
-                                            hintText: "Введите ваш имя",
-                                            hintStyle: TextStyle(
-                                              color: Colors.white60,
-                                            ),
-                                          ),
-                                          onSaved: (value) => username = value!,
-                                          autovalidateMode: AutovalidateMode.always,
-                                          validator: FormBuilderValidators.compose([
-                                            (val) {
-                                              if (val == null) {
-                                                return 'Поле name не может быть пустым';
-                                              } else if (val.length < 3) {
-                                                return 'Минимум 3 символа';
-                                              } else {
-                                                return null;
-                                              }
-                                            }
-                                          ]),
-                                          keyboardType: TextInputType.text),
-                                      Container(
-                                        alignment: Alignment.topLeft,
-                                        margin: const EdgeInsets.only(top: 10, bottom: 10),
-                                        child: Text(
-                                          'ваша дата рождения'.toUpperCase(),
-                                          textAlign: TextAlign.left,
-                                          style: styleTitleFormInput,
-                                        ),
-                                      ),
-                                      FormBuilderTextField(
-                                        name: 'birthday',
-                                        cursorWidth: 1.0,
-                                        cursorColor: Colors.white,
-                                        style: styleFormInput,
-                                        inputFormatters: [maskFormatterDate],
-                                        keyboardType: TextInputType.number,
-                                        decoration: const InputDecoration(
-                                          contentPadding: EdgeInsets.all(16),
-                                          border: OutlineInputBorder(borderSide: BorderSide.none, borderRadius: BorderRadius.all(Radius.circular(10))),
-                                          fillColor: Color(0XFF515569),
-                                          filled: true,
-                                          hintText: "__.__.____",
-                                          hintStyle: TextStyle(
-                                            color: Colors.white60,
-                                          ),
-                                        ),
-                                        onSaved: (value) => birthday = value!,
-                                      ),
-                                      Container(
-                                        alignment: Alignment.topLeft,
-                                        margin: const EdgeInsets.only(top: 10, bottom: 10),
-                                        child: Text(
-                                          'ваш номер телефона'.toUpperCase(),
-                                          textAlign: TextAlign.left,
-                                          style: styleTitleFormInput,
-                                        ),
-                                      ),
-                                      FormBuilderTextField(
-                                          name: 'phone2',
-                                          cursorWidth: 1.0,
-                                          cursorColor: Colors.white,
-                                          style: styleFormInput,
-                                          inputFormatters: [maskFormatterPhone],
-                                          decoration: const InputDecoration(
-                                            contentPadding: EdgeInsets.all(16),
-                                            border: OutlineInputBorder(borderSide: BorderSide.none, borderRadius: BorderRadius.all(Radius.circular(10))),
-                                            fillColor: Color(0XFF515569),
-                                            filled: true,
-                                            hintText: "+7 ___-___-__-__",
-                                            hintStyle: TextStyle(
-                                              color: Colors.white60,
-                                            ),
-                                          ),
-                                          keyboardType: TextInputType.text),
-                                      Container(
-                                        alignment: Alignment.topLeft,
-                                        margin: const EdgeInsets.only(top: 10, bottom: 10),
-                                        child: Text(
-                                          'ваше автомобиль'.toUpperCase(),
-                                          textAlign: TextAlign.left,
-                                          style: styleTitleFormInput,
-                                        ),
-                                      ),
-                                      FormBuilderTextField(
-                                          name: 'carname',
-                                          cursorWidth: 1.0,
-                                          cursorColor: Colors.white,
-                                          style: styleFormInput,
-                                          decoration: const InputDecoration(
-                                            contentPadding: EdgeInsets.all(16),
-                                            border: OutlineInputBorder(borderSide: BorderSide.none, borderRadius: BorderRadius.all(Radius.circular(10))),
-                                            fillColor: Color(0XFF515569),
-                                            filled: true,
-                                            hintText: "Введите название автомобиля",
-                                            hintStyle: TextStyle(
-                                              color: Colors.white60,
-                                            ),
-                                          ),
-                                          onSaved: (value) => carname = value,
-                                          keyboardType: TextInputType.text),
-                                      Container(
-                                        width: 284,
-                                        margin: const EdgeInsets.only(top: 10, bottom: 10),
-                                        child: Text(
-                                          'загрузите 3 фото вашего cadillac'.toUpperCase(),
-                                          textAlign: TextAlign.left,
-                                          style: styleTitleFormInput,
-                                        ),
-                                      ),
-                                      FormBuilderFilePicker(
-                                          name: "cars",
-                                          decoration: const InputDecoration(
-                                            fillColor: Color(0xff515569),
-                                            iconColor: Colors.white,
-                                            contentPadding: EdgeInsets.all(0),
-                                            border: OutlineInputBorder(
-                                              borderSide: BorderSide.none,
-                                              //gapPadding: 40,
-                                            ),
-                                          ),
-                                          maxFiles: null,
-                                          previewImages: true,
-                                          onChanged: (val) => {},
-                                          selector: Column(children: [
-                                            Stack(alignment: Alignment.center, children: [
-                                              Container(
-                                                width: 284,
-                                                height: 160,
-                                                decoration: const BoxDecoration(
-                                                    color: Color(0xFF515569), shape: BoxShape.rectangle, borderRadius: BorderRadius.all(Radius.circular(10))),
-                                              ),
-                                              SvgPicture.asset(
-                                                'assets/images/load.svg',
-                                                semanticsLabel: 'Icon upload',
-                                                height: 18.0,
-                                              ),
-                                              Positioned(
-                                                bottom: 0,
-                                                child: Row(
-                                                    mainAxisAlignment: MainAxisAlignment.center,
-                                                    crossAxisAlignment: CrossAxisAlignment.center,
-                                                    children: const [
-                                                      SizedBox(height: 40),
-                                                      Text('Загрузить фото',
-                                                          style: TextStyle(
-                                                              fontSize: 14.0,
-                                                              fontWeight: FontWeight.normal,
-                                                              fontFamily: 'CadillacSans',
-                                                              color: Colors.white,
-                                                              height: 1.4 //line-height : font-size
-                                                              ),
-                                                          textAlign: TextAlign.center),
-                                                      Icon(
-                                                        Icons.file_upload,
-                                                        semanticLabel: 'Icon upload',
-                                                        size: 18.0,
-                                                        color: Colors.white,
-                                                      )
-                                                    ]),
-                                              )
-                                            ]),
-                                          ]),
-                                          onFileLoading: (val) {
-                                            // debugPrint(val);
-                                          },
-                                          onSaved: (value) => {
-                                                cars = value!,
-                                              }),
                                       Container(
                                           width: 284,
                                           margin: const EdgeInsets.only(top: 30, bottom: 45),
@@ -479,120 +221,22 @@ class _SuccessPaymentState extends State<SuccessPayment> {
                                                 errorMessage(context);
                                               } else {
                                                 if (_formKey.currentState?.saveAndValidate() ?? false) {
-                                                  Provider.of<Data>(context, listen: false).updateAccount(2);
-                                                  debugPrint('Valid success payment user');
-                                                  if (platform == 'android' || platform == 'ios') {
-                                                    debugPrint(platform);
-                                                    final bytes = File(photo[0].path).readAsBytesSync();
 
-                                                    setState(() {
-                                                      encode64 = base64.encode(bytes);
-                                                    });
-                                                    debugPrint('cars.length');
-                                                    debugPrint(cars.length.toString());
-                                                    if (cars.length == 2) {
-                                                      if (cars[0].path != null) {
-                                                        final bytesCar1 = File(cars[0].path).readAsBytesSync();
-                                                        car1 = base64.encode(bytesCar1);
-                                                      } else {
-                                                        car1 = '';
-                                                      }
-                                                      if (cars[1].path != null) {
-                                                        final bytesCar2 = File(cars[1].path).readAsBytesSync();
-                                                        car2 = base64.encode(bytesCar2);
-                                                      } else {
-                                                        car2 = '';
-                                                      }
-                                                      car3 = '';
-                                                    } else if (cars.length == 3) {
-                                                      if (cars[0].path != null) {
-                                                        final bytesCar1 = File(cars[0].path).readAsBytesSync();
-                                                        car1 = base64.encode(bytesCar1);
-                                                      } else {
-                                                        car1 = '';
-                                                      }
-                                                      if (cars[1].path != null) {
-                                                        final bytesCar2 = File(cars[1].path).readAsBytesSync();
-                                                        car2 = base64.encode(bytesCar2);
-                                                      } else {
-                                                        car2 = '';
-                                                      }
-                                                      if (cars[2].path != null) {
-                                                        final bytesCar3 = File(cars[2].path).readAsBytesSync();
-                                                        car3 = base64.encode(bytesCar3);
-                                                      } else {
-                                                        car3 = '';
-                                                      }
-                                                    } else {
-                                                      final bytesCar1 = File(cars[0].path).readAsBytesSync();
-                                                      car1 = base64.encode(bytesCar1);
-                                                      car2 = '';
-                                                      car3 = '';
-                                                    }
-                                                  } else {
-                                                    debugPrint(platform);
-                                                    bytes = photo[0].bytes;
-                                                    debugPrint('cars.length');
-                                                    debugPrint(cars.length.toString());
-                                                    if (cars.length == 2) {
-                                                      if (cars[0].bytes != null) {
-                                                        final bytesCar1 = cars[0].bytes;
-                                                        car1 = base64.encode(bytesCar1!);
-                                                      } else {
-                                                        car1 = '';
-                                                      }
-                                                      if (cars[1].bytes != null) {
-                                                        final bytesCar2 = cars[1].bytes;
-                                                        car2 = base64.encode(bytesCar2!);
-                                                      } else {
-                                                        car2 = '';
-                                                      }
-                                                      car3 = '';
-                                                    } else if (cars.length == 3) {
-                                                      if (cars[0].bytes != null) {
-                                                        final bytesCar1 = cars[0].bytes;
-                                                        car1 = base64.encode(bytesCar1!);
-                                                      } else {
-                                                        car1 = '';
-                                                      }
-                                                      if (cars[1].bytes != null) {
-                                                        final bytesCar2 = cars[1].bytes;
-                                                        car2 = base64.encode(bytesCar2);
-                                                      } else {
-                                                        car2 = '';
-                                                      }
-                                                      if (cars[2].bytes != null) {
-                                                        final bytesCar3 = cars[2].bytes;
-                                                        car3 = base64.encode(bytesCar3);
-                                                      } else {
-                                                        car3 = '';
-                                                      }
-                                                    } else {
-                                                      final bytesCar1 = cars[0].bytes;
-                                                      car1 = base64.encode(bytesCar1);
-                                                      car2 = '';
-                                                      car3 = '';
-                                                    }
-                                                    setState(() {
-                                                      encode64 = base64.encode(bytes!);
-                                                    });
-                                                  }
-                                                  debugPrint(userId);
 
                                                   dynamic currentUser = User(
                                                       id: '1',
                                                       userId: userId,
                                                       phone: phone,
                                                       email: email,
-                                                      username: username,
-                                                      birthday: birthday,
-                                                      login: login,
-                                                      carname: carname,
-                                                      password: password,
-                                                      path: encode64,
-                                                      car1: car1,
-                                                      car2: car2,
-                                                      car3: car3,
+                                                      username: 'username',
+                                                      birthday: 'birthday',
+                                                      login: 'login',
+                                                      carname: 'carname',
+                                                      password: 'password',
+                                                      path: 'path',
+                                                      car1: 'car1',
+                                                      car2: 'car2',
+                                                      car3: 'car3',
                                                       dateRegister: 'dateRegister',
                                                       dateExpired: 'dateExpired');
 
@@ -600,8 +244,6 @@ class _SuccessPaymentState extends State<SuccessPayment> {
                                                   user = await editUser(currentUser);
 
                                                   debugPrint('after editUser success');
-
-                                                  Provider.of<Data>(context, listen: false).updateAccount(3);
                                                   Navigator.of(context).pop();
 
                                                   await Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const Account()));
@@ -630,11 +272,444 @@ class _SuccessPaymentState extends State<SuccessPayment> {
                                         ),
                                       ),
                                     ])))
+
+
+                            // Accordion(
+                            //     content: SizedBox(
+                            //         width: 284,
+                            //         child: Column(children: [
+                            //           Container(
+                            //             margin: const EdgeInsets.only(top: 53, bottom: 40),
+                            //             child: const TitlePage(title: 'регистрация члена \nавтоклуба cadillac'),
+                            //           ),
+                            //           Container(
+                            //             width: 284,
+                            //             margin: const EdgeInsets.only(top: 10, bottom: 10),
+                            //             child: Text(
+                            //               'ваше фото'.toUpperCase(),
+                            //               textAlign: TextAlign.left,
+                            //               style: styleTitleFormInput,
+                            //             ),
+                            //           ),
+                            //           Container(
+                            //             width: 130,
+                            //             decoration: const BoxDecoration(borderRadius: BorderRadius.all(Radius.circular(48))),
+                            //             child: FormBuilderFilePicker(
+                            //                 name: "photo",
+                            //                 decoration: const InputDecoration(
+                            //                   fillColor: Color(0xff515569),
+                            //                   iconColor: Colors.white,
+                            //                   contentPadding: EdgeInsets.all(0),
+                            //                   border: OutlineInputBorder(
+                            //                     borderSide: BorderSide.none,
+                            //                     //gapPadding: 40,
+                            //                   ),
+                            //                 ),
+                            //                 maxFiles: null,
+                            //                 previewImages: true,
+                            //                 onChanged: (val) => {},
+                            //                 selector: Column(crossAxisAlignment: CrossAxisAlignment.center, children: [
+                            //                   Stack(alignment: Alignment.center, children: [
+                            //                     Container(
+                            //                       alignment: Alignment.center,
+                            //                       width: 96,
+                            //                       height: 96,
+                            //                       decoration:
+                            //                           const BoxDecoration(color: Color(0xFF515569), borderRadius: BorderRadius.all(Radius.circular(48))),
+                            //                     ),
+                            //                     SvgPicture.asset(
+                            //                       'assets/images/image.svg',
+                            //                       semanticsLabel: 'Icon upload',
+                            //                       height: 18.0,
+                            //                     ),
+                            //                   ]),
+                            //                   Row(mainAxisAlignment: MainAxisAlignment.center, crossAxisAlignment: CrossAxisAlignment.center, children: const [
+                            //                     SizedBox(height: 40),
+                            //                     Text('Загрузить фото',
+                            //                         style: TextStyle(
+                            //                             fontSize: 14.0,
+                            //                             fontWeight: FontWeight.normal,
+                            //                             fontFamily: 'CadillacSans',
+                            //                             color: Color(0xFF515569),
+                            //                             height: 1.4 //line-height : font-size
+                            //                             ),
+                            //                         textAlign: TextAlign.center),
+                            //                     Icon(Icons.file_upload, semanticLabel: 'Icon upload', size: 18.0, color: Color(0xFF515569)),
+                            //                     //)
+                            //                   ]),
+                            //                 ]),
+                            //                 onFileLoading: (val) {
+                            //                   // debugPrint(val);
+                            //                 },
+                            //                 onSaved: (value) => {
+                            //                       photo = value!,
+                            //                     }),
+                            //           ),
+                            //           Container(
+                            //             alignment: Alignment.topLeft,
+                            //             margin: const EdgeInsets.only(top: 10, bottom: 10),
+                            //             child: Text(
+                            //               'ваше имя и фамилия'.toUpperCase(),
+                            //               textAlign: TextAlign.left,
+                            //               style: styleTitleFormInput,
+                            //             ),
+                            //           ),
+                            //           FormBuilderTextField(
+                            //               name: 'username',
+                            //               autofocus: true,
+                            //               cursorWidth: 1.0,
+                            //               cursorColor: Colors.white,
+                            //               style: styleFormInput,
+                            //               decoration: const InputDecoration(
+                            //                 contentPadding: EdgeInsets.all(16),
+                            //                 border: OutlineInputBorder(borderSide: BorderSide.none, borderRadius: BorderRadius.all(Radius.circular(10))),
+                            //                 fillColor: Color(0XFF515569),
+                            //                 filled: true,
+                            //                 hintText: "Введите ваш имя",
+                            //                 hintStyle: TextStyle(
+                            //                   color: Colors.white60,
+                            //                 ),
+                            //               ),
+                            //               onSaved: (value) => username = value!,
+                            //               autovalidateMode: AutovalidateMode.always,
+                            //               validator: FormBuilderValidators.compose([
+                            //                 (val) {
+                            //                   if (val == null) {
+                            //                     return 'Поле name не может быть пустым';
+                            //                   } else if (val.length < 3) {
+                            //                     return 'Минимум 3 символа';
+                            //                   } else {
+                            //                     return null;
+                            //                   }
+                            //                 }
+                            //               ]),
+                            //               keyboardType: TextInputType.text),
+                            //           Container(
+                            //             alignment: Alignment.topLeft,
+                            //             margin: const EdgeInsets.only(top: 10, bottom: 10),
+                            //             child: Text(
+                            //               'ваша дата рождения'.toUpperCase(),
+                            //               textAlign: TextAlign.left,
+                            //               style: styleTitleFormInput,
+                            //             ),
+                            //           ),
+                            //           FormBuilderTextField(
+                            //             name: 'birthday',
+                            //             cursorWidth: 1.0,
+                            //             cursorColor: Colors.white,
+                            //             style: styleFormInput,
+                            //             inputFormatters: [maskFormatterDate],
+                            //             keyboardType: TextInputType.number,
+                            //             decoration: const InputDecoration(
+                            //               contentPadding: EdgeInsets.all(16),
+                            //               border: OutlineInputBorder(borderSide: BorderSide.none, borderRadius: BorderRadius.all(Radius.circular(10))),
+                            //               fillColor: Color(0XFF515569),
+                            //               filled: true,
+                            //               hintText: "__.__.____",
+                            //               hintStyle: TextStyle(
+                            //                 color: Colors.white60,
+                            //               ),
+                            //             ),
+                            //             onSaved: (value) => birthday = value!,
+                            //           ),
+                            //           Container(
+                            //             alignment: Alignment.topLeft,
+                            //             margin: const EdgeInsets.only(top: 10, bottom: 10),
+                            //             child: Text(
+                            //               'ваш номер телефона'.toUpperCase(),
+                            //               textAlign: TextAlign.left,
+                            //               style: styleTitleFormInput,
+                            //             ),
+                            //           ),
+                            //           FormBuilderTextField(
+                            //               name: 'phone2',
+                            //               cursorWidth: 1.0,
+                            //               cursorColor: Colors.white,
+                            //               style: styleFormInput,
+                            //               inputFormatters: [maskFormatterPhone],
+                            //               decoration: const InputDecoration(
+                            //                 contentPadding: EdgeInsets.all(16),
+                            //                 border: OutlineInputBorder(borderSide: BorderSide.none, borderRadius: BorderRadius.all(Radius.circular(10))),
+                            //                 fillColor: Color(0XFF515569),
+                            //                 filled: true,
+                            //                 hintText: "+7 ___-___-__-__",
+                            //                 hintStyle: TextStyle(
+                            //                   color: Colors.white60,
+                            //                 ),
+                            //               ),
+                            //               keyboardType: TextInputType.text),
+                            //           Container(
+                            //             alignment: Alignment.topLeft,
+                            //             margin: const EdgeInsets.only(top: 10, bottom: 10),
+                            //             child: Text(
+                            //               'ваше автомобиль'.toUpperCase(),
+                            //               textAlign: TextAlign.left,
+                            //               style: styleTitleFormInput,
+                            //             ),
+                            //           ),
+                            //           FormBuilderTextField(
+                            //               name: 'carname',
+                            //               cursorWidth: 1.0,
+                            //               cursorColor: Colors.white,
+                            //               style: styleFormInput,
+                            //               decoration: const InputDecoration(
+                            //                 contentPadding: EdgeInsets.all(16),
+                            //                 border: OutlineInputBorder(borderSide: BorderSide.none, borderRadius: BorderRadius.all(Radius.circular(10))),
+                            //                 fillColor: Color(0XFF515569),
+                            //                 filled: true,
+                            //                 hintText: "Введите название автомобиля",
+                            //                 hintStyle: TextStyle(
+                            //                   color: Colors.white60,
+                            //                 ),
+                            //               ),
+                            //               onSaved: (value) => carname = value,
+                            //               keyboardType: TextInputType.text),
+                            //           Container(
+                            //             width: 284,
+                            //             margin: const EdgeInsets.only(top: 10, bottom: 10),
+                            //             child: Text(
+                            //               'загрузите 3 фото вашего cadillac'.toUpperCase(),
+                            //               textAlign: TextAlign.left,
+                            //               style: styleTitleFormInput,
+                            //             ),
+                            //           ),
+                            //           FormBuilderFilePicker(
+                            //               name: "cars",
+                            //               decoration: const InputDecoration(
+                            //                 fillColor: Color(0xff515569),
+                            //                 iconColor: Colors.white,
+                            //                 contentPadding: EdgeInsets.all(0),
+                            //                 border: OutlineInputBorder(
+                            //                   borderSide: BorderSide.none,
+                            //                   //gapPadding: 40,
+                            //                 ),
+                            //               ),
+                            //               maxFiles: null,
+                            //               previewImages: true,
+                            //               onChanged: (val) => {},
+                            //               selector: Column(children: [
+                            //                 Stack(alignment: Alignment.center, children: [
+                            //                   Container(
+                            //                     width: 284,
+                            //                     height: 160,
+                            //                     decoration: const BoxDecoration(
+                            //                         color: Color(0xFF515569), shape: BoxShape.rectangle, borderRadius: BorderRadius.all(Radius.circular(10))),
+                            //                   ),
+                            //                   SvgPicture.asset(
+                            //                     'assets/images/load.svg',
+                            //                     semanticsLabel: 'Icon upload',
+                            //                     height: 18.0,
+                            //                   ),
+                            //                   Positioned(
+                            //                     bottom: 0,
+                            //                     child: Row(
+                            //                         mainAxisAlignment: MainAxisAlignment.center,
+                            //                         crossAxisAlignment: CrossAxisAlignment.center,
+                            //                         children: const [
+                            //                           SizedBox(height: 40),
+                            //                           Text('Загрузить фото',
+                            //                               style: TextStyle(
+                            //                                   fontSize: 14.0,
+                            //                                   fontWeight: FontWeight.normal,
+                            //                                   fontFamily: 'CadillacSans',
+                            //                                   color: Colors.white,
+                            //                                   height: 1.4 //line-height : font-size
+                            //                                   ),
+                            //                               textAlign: TextAlign.center),
+                            //                           Icon(
+                            //                             Icons.file_upload,
+                            //                             semanticLabel: 'Icon upload',
+                            //                             size: 18.0,
+                            //                             color: Colors.white,
+                            //                           )
+                            //                         ]),
+                            //                   )
+                            //                 ]),
+                            //               ]),
+                            //               onFileLoading: (val) {
+                            //                 // debugPrint(val);
+                            //               },
+                            //               onSaved: (value) => {
+                            //                     cars = value!,
+                            //                   }),
+                            //           Container(
+                            //               width: 284,
+                            //               margin: const EdgeInsets.only(top: 30, bottom: 45),
+                            //               child: MaterialButton(
+                            //                 padding: const EdgeInsets.all(17),
+                            //                 color: const Color.fromARGB(255, 255, 255, 255),
+                            //                 child: Text(
+                            //                   "зарегистрироваться".toUpperCase(),
+                            //                   style: const TextStyle(fontSize: 14, color: Color(0xFF12141F)),
+                            //                 ),
+                            //                 shape: const RoundedRectangleBorder(
+                            //                   side: BorderSide.none,
+                            //                   borderRadius: BorderRadius.all(
+                            //                     Radius.circular(10),
+                            //                   ),
+                            //                 ),
+                            //                 onPressed: () async {
+                            //                   if (_formKey.currentState?.validate() == false) {
+                            //                     debugPrint('Invalid');
+                            //                     errorMessage(context);
+                            //                   } else {
+                            //                     if (_formKey.currentState?.saveAndValidate() ?? false) {
+                            //                       Provider.of<Data>(context, listen: false).updateAccount(2);
+                            //                       debugPrint('Valid success payment user');
+                            //                       if (platform == 'android' || platform == 'ios') {
+                            //                         debugPrint(platform);
+                            //                         final bytes = File(photo[0].path).readAsBytesSync();
+                            //
+                            //                         setState(() {
+                            //                           encode64 = base64.encode(bytes);
+                            //                         });
+                            //                         debugPrint('cars.length');
+                            //                         debugPrint(cars.length.toString());
+                            //                         if (cars.length == 2) {
+                            //                           if (cars[0].path != null) {
+                            //                             final bytesCar1 = File(cars[0].path).readAsBytesSync();
+                            //                             car1 = base64.encode(bytesCar1);
+                            //                           } else {
+                            //                             car1 = '';
+                            //                           }
+                            //                           if (cars[1].path != null) {
+                            //                             final bytesCar2 = File(cars[1].path).readAsBytesSync();
+                            //                             car2 = base64.encode(bytesCar2);
+                            //                           } else {
+                            //                             car2 = '';
+                            //                           }
+                            //                           car3 = '';
+                            //                         } else if (cars.length == 3) {
+                            //                           if (cars[0].path != null) {
+                            //                             final bytesCar1 = File(cars[0].path).readAsBytesSync();
+                            //                             car1 = base64.encode(bytesCar1);
+                            //                           } else {
+                            //                             car1 = '';
+                            //                           }
+                            //                           if (cars[1].path != null) {
+                            //                             final bytesCar2 = File(cars[1].path).readAsBytesSync();
+                            //                             car2 = base64.encode(bytesCar2);
+                            //                           } else {
+                            //                             car2 = '';
+                            //                           }
+                            //                           if (cars[2].path != null) {
+                            //                             final bytesCar3 = File(cars[2].path).readAsBytesSync();
+                            //                             car3 = base64.encode(bytesCar3);
+                            //                           } else {
+                            //                             car3 = '';
+                            //                           }
+                            //                         } else {
+                            //                           final bytesCar1 = File(cars[0].path).readAsBytesSync();
+                            //                           car1 = base64.encode(bytesCar1);
+                            //                           car2 = '';
+                            //                           car3 = '';
+                            //                         }
+                            //                       } else {
+                            //                         debugPrint(platform);
+                            //                         bytes = photo[0].bytes;
+                            //                         debugPrint('cars.length');
+                            //                         debugPrint(cars.length.toString());
+                            //                         if (cars.length == 2) {
+                            //                           if (cars[0].bytes != null) {
+                            //                             final bytesCar1 = cars[0].bytes;
+                            //                             car1 = base64.encode(bytesCar1!);
+                            //                           } else {
+                            //                             car1 = '';
+                            //                           }
+                            //                           if (cars[1].bytes != null) {
+                            //                             final bytesCar2 = cars[1].bytes;
+                            //                             car2 = base64.encode(bytesCar2!);
+                            //                           } else {
+                            //                             car2 = '';
+                            //                           }
+                            //                           car3 = '';
+                            //                         } else if (cars.length == 3) {
+                            //                           if (cars[0].bytes != null) {
+                            //                             final bytesCar1 = cars[0].bytes;
+                            //                             car1 = base64.encode(bytesCar1!);
+                            //                           } else {
+                            //                             car1 = '';
+                            //                           }
+                            //                           if (cars[1].bytes != null) {
+                            //                             final bytesCar2 = cars[1].bytes;
+                            //                             car2 = base64.encode(bytesCar2);
+                            //                           } else {
+                            //                             car2 = '';
+                            //                           }
+                            //                           if (cars[2].bytes != null) {
+                            //                             final bytesCar3 = cars[2].bytes;
+                            //                             car3 = base64.encode(bytesCar3);
+                            //                           } else {
+                            //                             car3 = '';
+                            //                           }
+                            //                         } else {
+                            //                           final bytesCar1 = cars[0].bytes;
+                            //                           car1 = base64.encode(bytesCar1);
+                            //                           car2 = '';
+                            //                           car3 = '';
+                            //                         }
+                            //                         setState(() {
+                            //                           encode64 = base64.encode(bytes!);
+                            //                         });
+                            //                       }
+                            //                       debugPrint(userId);
+                            //
+                            //                       dynamic currentUser = User(
+                            //                           id: '1',
+                            //                           userId: userId,
+                            //                           phone: phone,
+                            //                           email: email,
+                            //                           username: username,
+                            //                           birthday: birthday,
+                            //                           login: login,
+                            //                           carname: carname,
+                            //                           password: password,
+                            //                           path: encode64,
+                            //                           car1: car1,
+                            //                           car2: car2,
+                            //                           car3: car3,
+                            //                           dateRegister: 'dateRegister',
+                            //                           dateExpired: 'dateExpired');
+                            //
+                            //                       findingUser = await getUserByEmail(currentUser);
+                            //                       user = await editUser(currentUser);
+                            //
+                            //                       debugPrint('after editUser success');
+                            //
+                            //                       Provider.of<Data>(context, listen: false).updateAccount(3);
+                            //                       Navigator.of(context).pop();
+                            //
+                            //                       await Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const Account()));
+                            //                     }
+                            //                   }
+                            //                 },
+                            //               )),
+                            //           Container(
+                            //             margin: const EdgeInsets.only(top: 0, bottom: 30),
+                            //             child: GestureDetector(
+                            //               onTap: _launchURL,
+                            //               child: const Text.rich(
+                            //                 TextSpan(
+                            //                     text: 'Продолжая вы принимаете ',
+                            //                     style: TextStyle(fontSize: 10, fontWeight: FontWeight.normal, color: Color(0xFF8F97BF), height: 1.5),
+                            //                     children: <InlineSpan>[
+                            //                       TextSpan(
+                            //                         text: 'Пользовательское соглашение и конфиденциальность',
+                            //                         style: TextStyle(
+                            //                           decoration: TextDecoration.underline,
+                            //                           decorationThickness: 2,
+                            //                         ),
+                            //                       )
+                            //                     ]),
+                            //               ),
+                            //             ),
+                            //           ),
+                            //         ])))
                           ])))
-                ])),
-              )
-            ]),
-          ),
+                ]),
+
+    ),
+
           drawer: const NavDrawer(),
         ));
   }

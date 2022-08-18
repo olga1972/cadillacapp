@@ -18,11 +18,14 @@ import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
-import '../../models/users.dart';
+import '../../models/users.dart' as my_user;
 import '../NavDrawerAdmin.dart';
 import 'data.dart';
 import 'editAccountAdmin.dart';
+import 'entrance.dart';
 import 'gift.dart';
+
+import 'package:firebase_auth/firebase_auth.dart';
 
 class AccountAdmin extends StatefulWidget {
 //class Account extends StatefulWidget {
@@ -48,9 +51,11 @@ class _AccountAdminState extends State<AccountAdmin> {
 
   late String value;
   late String currentId;
-  dynamic user;
+  dynamic currentUser;
 
   late String platform;
+
+  User? user = FirebaseAuth.instance.currentUser;
 
   @override
   initState() {
@@ -61,12 +66,15 @@ class _AccountAdminState extends State<AccountAdmin> {
   @override
   Widget build(BuildContext context) {
     debugPrint('user account admin');
+    final String? uid = user?.uid;
+    userId = uid;
+    debugPrint(uid);
+    //
+    // userId = Provider.of<Data>(context).data['userId'].toString();
+    // debugPrint(userId);
+    // platform = Provider.of<Data>(context).data['platform'].toString();
 
-    userId = Provider.of<Data>(context).data['userId'].toString();
-    debugPrint(userId);
-    platform = Provider.of<Data>(context).data['platform'].toString();
-
-    user = getUser(userId);
+    currentUser = getUser(userId);
 
     return MaterialApp(
         theme: ThemeData(scaffoldBackgroundColor: const Color(0xFF2C335E)),
@@ -94,43 +102,63 @@ class _AccountAdminState extends State<AccountAdmin> {
                 );
               },
             ),
-          actions: <Widget>[
-            Container(
-              width: 160,
-              margin: const EdgeInsets.only(top: 22, right: 18.0),
-              child: const Text(
-                'Удалить аккаунт',
-                textAlign: TextAlign.right,
-                style: TextStyle(
-                  fontSize: 14.0,
-                  fontWeight: FontWeight.normal,
-                  fontFamily: 'CadillacSans',
+            actions: <Widget>[
+              IconButton(
+                onPressed: () async{
+                  //AuthService().logOut();
+                  await FirebaseAuth.instance.signOut();
+                  Navigator.pushReplacement(
+                      context, MaterialPageRoute(
+                      builder: (context) =>
+                          Entrance()
+                  ));
+                },
+                icon: const Icon(
+                  Icons.exit_to_app_outlined,
                   color: Colors.white,
-                  //height: 1.4, //line-height : font-size
                 ),
-              ),
-            ),
-            IconButton(
-              alignment: Alignment.centerLeft,
-              padding: const EdgeInsets.all(0),
-              iconSize: 22.0,
-              icon: SvgPicture.asset(
-                'assets/images/delete.svg',
-                semanticsLabel: 'Icon delete',
-                height: 15.0,
-              ),
-              onPressed: () {
-                confirmDialog(context, userId);
-                // deleteUser(userId);
-                // Route route = MaterialPageRoute(builder: (context) => const MembersAdmin());
-                // Navigator.push(context, route);
-              },
-            ),
-          ]),
-          body: Consumer<Data>(
-            builder: (context, data, child) {
-              return FutureBuilder<User>(
-                future: user,
+              )
+            ],
+          // actions: <Widget>[
+          //   Container(
+          //     width: 160,
+          //     margin: const EdgeInsets.only(top: 22, right: 18.0),
+          //     child: const Text(
+          //       'Удалить аккаунт',
+          //       textAlign: TextAlign.right,
+          //       style: TextStyle(
+          //         fontSize: 14.0,
+          //         fontWeight: FontWeight.normal,
+          //         fontFamily: 'CadillacSans',
+          //         color: Colors.white,
+          //         //height: 1.4, //line-height : font-size
+          //       ),
+          //     ),
+          //   ),
+          //   IconButton(
+          //     alignment: Alignment.centerLeft,
+          //     padding: const EdgeInsets.all(0),
+          //     iconSize: 22.0,
+          //     icon: SvgPicture.asset(
+          //       'assets/images/delete.svg',
+          //       semanticsLabel: 'Icon delete',
+          //       height: 15.0,
+          //     ),
+          //     onPressed: () {
+          //       confirmDialog(context, userId);
+          //       // deleteUser(userId);
+          //       // Route route = MaterialPageRoute(builder: (context) => const MembersAdmin());
+          //       // Navigator.push(context, route);
+          //     },
+          //   ),
+          // ]
+          ),
+          body:
+          // Consumer<Data>(
+          //   builder: (context, data, child) {
+          //     return
+                FutureBuilder<my_user.User>(
+                future: currentUser,
                 builder: (context, snapshot) {
                   if (snapshot.connectionState != ConnectionState.done) {
                     return const Center(child: CircularProgressIndicator());
@@ -415,15 +443,15 @@ class _AccountAdminState extends State<AccountAdmin> {
 
                   return const Center(child: Text('no data'));
                 },
-              );
-            },
-          ),
+              ),
+            //},
+          //),
           drawer: const NavDrawerAdmin(),
         ));
   }
 }
 
-Future<User> getUser(userId) async {
+Future<my_user.User> getUser(userId) async {
   // final SharedPreferences prefs = await SharedPreferences.getInstance();
   // dynamic userId = prefs.getString("userId");
 
@@ -448,9 +476,9 @@ Future<User> getUser(userId) async {
 
     // debugPrint(response);
     final userJson = json.decode(response.body);
-    debugPrint(User.fromJson(userJson).username);
+    debugPrint(my_user.User.fromJson(userJson).username);
 
-    var data = User.fromJson(userJson);
+    var data = my_user.User.fromJson(userJson);
     return (data);
   } else {
     throw Exception('Error fetching users');

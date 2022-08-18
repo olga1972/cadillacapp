@@ -142,14 +142,15 @@ class _PartnersAdminState extends State<PartnersAdmin> {
                                                                     margin: const EdgeInsets.only(left: 15),
                                                                     child: GestureDetector(
                                                                       onTap: () {
-                                                                        confirmDialog(context);
+
                                                                         setState(() {
                                                                           // устанавливаем индекс выделенного элемента
                                                                           selectedIndex = index;
                                                                         });
                                                                         debugPrint(snapshot.data?.partners[selectedIndex].partnerId);
                                                                         var currentPartnerId = snapshot.data?.partners[selectedIndex].partnerId;
-                                                                        deletePartner(currentPartnerId);
+                                                                        confirmDialog(context, currentPartnerId);
+
                                                                       },
                                                                       child: SvgPicture.asset(
                                                                         'assets/images/delete.svg',
@@ -229,30 +230,32 @@ class _PartnersAdminState extends State<PartnersAdmin> {
   }
 
 
-  deletePartner(partnerId) async {
-    debugPrint('delete partner admin');
-    String apiUrl = baseUrl + "/test/delete_partner.php";
 
-    var response = await http.post(Uri.parse(apiUrl), body: {
-      'partnerId': partnerId,
-    }, headers: {
-      'Accept': 'application/json, charset=utf-8',
-      "Access-Control-Allow-Origin": "*",
-      "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS"
-    });
+}
 
-    if (response.statusCode == 200) {
-      debugPrint('partner deleted');
-      debugPrint(response.statusCode.toString());
-      debugPrint(response.body);
-      return response.body;
-    } else {
-      throw Exception('Error: ${response.reasonPhrase}');
-    }
+deletePartner(partnerId) async {
+  debugPrint('delete partner admin');
+  String apiUrl = baseUrl + "/test/delete_partner.php";
+
+  var response = await http.post(Uri.parse(apiUrl), body: {
+    'partnerId': partnerId,
+  }, headers: {
+    'Accept': 'application/json, charset=utf-8',
+    "Access-Control-Allow-Origin": "*",
+    "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS"
+  });
+
+  if (response.statusCode == 200) {
+    debugPrint('partner deleted');
+    debugPrint(response.statusCode.toString());
+    debugPrint(response.body);
+    return response.body;
+  } else {
+    throw Exception('Error: ${response.reasonPhrase}');
   }
 }
 
-Future confirmDialog(BuildContext context) async {
+Future confirmDialog(BuildContext context, currentPartnerId) async {
   return showDialog(
     context: context,
     barrierDismissible: false, // user must tap button for close dialog!
@@ -282,6 +285,7 @@ Future confirmDialog(BuildContext context) async {
                         style: styleTextAlertDialog,
                       ),
                       onPressed: () {
+                        deletePartner(currentPartnerId);
                         Navigator.pushReplacement(
                             context,
                             MaterialPageRoute(

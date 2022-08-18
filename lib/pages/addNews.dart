@@ -55,358 +55,366 @@ class _AddNewsState extends State<AddNews> {
 
   @override
   Widget build(BuildContext context) {
-    platform = Provider.of<Data>(context).data['platform'].toString();
-    debugPrint(platform);
-
-    return MaterialApp(
-        theme: ThemeData(scaffoldBackgroundColor: const Color(0xFF2C335E)),
-        title: 'Cadillac',
-        debugShowCheckedModeBanner: false,
-        home: Scaffold(
-          body: Center(
-              child: Container(
-            width: 284,
-            margin: const EdgeInsets.only(top: 70),
-            child: Column(mainAxisAlignment: MainAxisAlignment.center, crossAxisAlignment: CrossAxisAlignment.center, children: [
-              Expanded(
-                child: SingleChildScrollView(
-                    child: Column(mainAxisAlignment: MainAxisAlignment.center, crossAxisAlignment: CrossAxisAlignment.center, children: [
-                  Container(
-                    width: 284,
-                    margin: const EdgeInsets.only(bottom: 40),
-                    child: const TitlePageAdmin(title: 'добавить новость'),
-                  ),
-                  Column(crossAxisAlignment: CrossAxisAlignment.center, children: [
-                    FormBuilder(
-                      key: _newsKey,
-                      autovalidateMode: AutovalidateMode.always,
-                      child: Column(crossAxisAlignment: CrossAxisAlignment.start, mainAxisAlignment: MainAxisAlignment.center, children: <Widget>[
-                        Container(
-                          //alignment: Alignment(-1,0),
-                          margin: const EdgeInsets.only(bottom: 10),
-                          child: Text(
-                            'заголовок новости'.toUpperCase(),
-                            textAlign: TextAlign.left,
-                            style: styleTitleFormInput,
-                          ),
-                        ),
-                        SizedBox(
-                          width: 284,
-                          child: FormBuilderTextField(
-                              name: 'newsName',
-                              autofocus: true,
-                              cursorWidth: 1.0,
-                              cursorColor: Colors.white,
-                              style: styleFormInput,
-                              decoration: const InputDecoration(
-                                contentPadding: EdgeInsets.all(16),
-                                border: OutlineInputBorder(borderSide: BorderSide.none, borderRadius: BorderRadius.all(Radius.circular(10))),
-                                fillColor: Color(0XFF515569),
-                                filled: true,
-                                hintText: "заголовок новости",
-                                hintStyle: TextStyle(
-                                  color: Colors.white,
-                                ),
-                              ),
-                              onSaved: (value) => newsName = value!,
-                              autovalidateMode: AutovalidateMode.always,
-                              validator: FormBuilderValidators.compose([
-                                (val) {
-                                  if (val == null) {
-                                    return 'Поле newsName не может быть пустым';
-                                  } else if (val.length < 3) {
-                                    return 'Минимум 3 символа';
-                                  } else {
-                                    return null;
-                                  }
-                                },
-                              ]),
-                              keyboardType: TextInputType.text),
-                        ),
-                        Container(
-                          margin: const EdgeInsets.only(bottom: 10),
-                          child: Text(
-                            'дата проведения'.toUpperCase(),
-                            textAlign: TextAlign.left,
-                            style: styleTitleFormInput,
-                          ),
-                        ),
-                        SizedBox(
-                          width: 284,
-                          child: FormBuilderTextField(
-                              name: 'newsDate',
-                              autofocus: true,
-                              style: styleFormInput,
-                              decoration: const InputDecoration(
-                                contentPadding: EdgeInsets.all(16),
-                                border: OutlineInputBorder(borderSide: BorderSide.none, borderRadius: BorderRadius.all(Radius.circular(10))),
-                                fillColor: Color(0XFF515569),
-                                filled: true,
-                                hintText: "дата проведения",
-                                hintStyle: TextStyle(
-                                  color: Colors.white,
-                                ),
-                              ),
-                              onSaved: (value) => newsDate = value!,
-                              validator: FormBuilderValidators.compose([
-                                (val) {
-                                  if (val == null) {
-                                    return 'Поле newsDate не может быть пустым';
-                                  } else if (val.length < 3) {
-                                    return 'Минимум 3 символа';
-                                  } else {
-                                    return null;
-                                  }
-                                },
-                              ]),
-                              keyboardType: TextInputType.text),
-                        ),
-                        SizedBox(
-                          width: 284,
-                          child: Container(
-                            margin: const EdgeInsets.only(bottom: 10),
-                            child: Text(
-                              'место проведения'.toUpperCase(),
-                              textAlign: TextAlign.left,
-                              style: styleTitleFormInput,
+    return ChangeNotifierProvider<Data> (
+        create: (context) => Data(),
+    builder: (context, child) {
+      return MaterialApp(
+          theme: ThemeData(scaffoldBackgroundColor: const Color(0xFF2C335E)),
+          title: 'Cadillac',
+          debugShowCheckedModeBanner: false,
+          home: Scaffold(
+            body: Center(
+                child: Container(
+                  width: 284,
+                  margin: const EdgeInsets.only(top: 70),
+                  child: Column(mainAxisAlignment: MainAxisAlignment.center, crossAxisAlignment: CrossAxisAlignment.center, children: [
+                    Expanded(
+                      child: SingleChildScrollView(
+                          child: Column(mainAxisAlignment: MainAxisAlignment.center, crossAxisAlignment: CrossAxisAlignment.center, children: [
+                            Container(
+                              width: 284,
+                              margin: const EdgeInsets.only(bottom: 40),
+                              child: const TitlePageAdmin(title: 'добавить новость'),
                             ),
-                          ),
-                        ),
-                        SizedBox(
-                          width: 284,
-                          child: FormBuilderTextField(
-                              name: 'newsLocation',
-                              autofocus: true,
-                              style: styleFormInput,
-                              decoration: const InputDecoration(
-                                contentPadding: EdgeInsets.all(16),
-                                border: OutlineInputBorder(borderSide: BorderSide.none, borderRadius: BorderRadius.all(Radius.circular(10))),
-                                fillColor: Color(0XFF515569),
-                                filled: true,
-                                hintText: "место проведения",
-                                hintStyle: TextStyle(
-                                  color: Colors.white,
-                                ),
-                              ),
-                              onSaved: (value) => newsLocation = value!,
-                              validator: FormBuilderValidators.compose([
-                                (val) {
-                                  if (val == null) {
-                                    return 'Поле newsLocation не может быть пустым';
-                                  } else if (val.length < 3) {
-                                    return 'Минимум 3 символа';
-                                  } else {
-                                    return null;
-                                  }
-                                },
-                              ]),
-                              keyboardType: TextInputType.text),
-                        ),
-                        Container(
-                          margin: const EdgeInsets.only(top: 17, bottom: 10),
-                          child: Text(
-                            'описание'.toUpperCase(),
-                            textAlign: TextAlign.left,
-                            style: styleTitleFormInput,
-                          ),
-                        ),
-                        FormBuilderTextField(
-                          name: 'newsDescr',
-                          autofocus: true,
-                          style: styleFormInput,
-                          decoration: const InputDecoration(
-                            contentPadding: EdgeInsets.all(16),
-                            border: OutlineInputBorder(borderSide: BorderSide.none, borderRadius: BorderRadius.all(Radius.circular(10))),
-                            fillColor: Color(0XFF515569),
-                            filled: true,
-                            hintText: "Введите описание",
-                            hintStyle: TextStyle(
-                              color: Colors.white,
-                            ),
-                          ),
-                          // onChanged: _onChanged,
-                          onSaved: (value) => newsDescr = value!,
-                          // valueTransformer: (text) => num.tryParse(text),
-                          // validator: FormBuilderValidators.compose([
-                          //   // FormBuilderValidators.required(context),
-                          //   // FormBuilderValidators.numeric(context),
-                          //   // FormBuilderValidators.max(context, 70),
-                          // ]),
-                          validator: FormBuilderValidators.compose([
-                            (val) {
-                              if (val == null) {
-                                return 'Поле newsDescr не может быть пустым';
-                              } else if (val.length < 5) {
-                                // return 'Invalid email address';
-                                return 'Минимум 5 символа';
-                              } else {
-                                return null;
-                              }
-                            },
-                          ]),
-                          minLines: 6, // any number you need (It works as the rows for the textarea)
-                          keyboardType: TextInputType.multiline,
-                          maxLines: null,
-                        ),
-                        const SizedBox(height: 20),
-                        FormBuilderFilePicker(
-                            name: "newsImage",
-                            decoration: const InputDecoration(
-                              fillColor: Color(0xff515569),
-                              iconColor: Colors.white,
-                              contentPadding: EdgeInsets.all(0),
-                              border: OutlineInputBorder(
-                                borderSide: BorderSide.none,
-                                //gapPadding: 40,
-                              ),
-                            ),
-                            maxFiles: null,
-                            previewImages: true,
-                            onChanged: (val) => {},
-                            selector: Column(children: [
-                              Stack(alignment: Alignment.center, children: [
-                                Container(
-                                  width: 284,
-                                  height: 160,
-                                  decoration: const BoxDecoration(
-                                      color: Color(0xFF515569), shape: BoxShape.rectangle, borderRadius: BorderRadius.all(Radius.circular(10))),
-                                ),
-                                SvgPicture.asset(
-                                  'assets/images/load.svg',
-                                  semanticsLabel: 'Icon upload',
-                                  height: 18.0,
-                                ),
-                                Positioned(
-                                  bottom: 0,
-                                  child: Row(mainAxisAlignment: MainAxisAlignment.center, crossAxisAlignment: CrossAxisAlignment.center, children: const [
-                                    SizedBox(height: 40),
-                                    Text('Загрузить фото',
-                                        style: TextStyle(
-                                            fontSize: 14.0,
-                                            fontWeight: FontWeight.normal,
-                                            fontFamily: 'CadillacSans',
+                            Column(crossAxisAlignment: CrossAxisAlignment.center, children: [
+                              FormBuilder(
+                                key: _newsKey,
+                                autovalidateMode: AutovalidateMode.always,
+                                child: Column(crossAxisAlignment: CrossAxisAlignment.start, mainAxisAlignment: MainAxisAlignment.center, children: <Widget>[
+                                  Container(
+                                    //alignment: Alignment(-1,0),
+                                    margin: const EdgeInsets.only(bottom: 10),
+                                    child: Text(
+                                      'заголовок новости'.toUpperCase(),
+                                      textAlign: TextAlign.left,
+                                      style: styleTitleFormInput,
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    width: 284,
+                                    child: FormBuilderTextField(
+                                        name: 'newsName',
+                                        autofocus: true,
+                                        cursorWidth: 1.0,
+                                        cursorColor: Colors.white,
+                                        style: styleFormInput,
+                                        decoration: const InputDecoration(
+                                          contentPadding: EdgeInsets.all(16),
+                                          border: OutlineInputBorder(borderSide: BorderSide.none, borderRadius: BorderRadius.all(Radius.circular(10))),
+                                          fillColor: Color(0XFF515569),
+                                          filled: true,
+                                          hintText: "заголовок новости",
+                                          hintStyle: TextStyle(
                                             color: Colors.white,
-                                            height: 1.4 //line-height : font-size
-                                            ),
-                                        textAlign: TextAlign.center),
-                                    Icon(
-                                      Icons.file_upload,
-                                      semanticLabel: 'Icon upload',
-                                      size: 18.0,
-                                      color: Colors.white,
-                                    )
-                                  ]),
-                                )
-                              ]),
+                                          ),
+                                        ),
+                                        onSaved: (value) => newsName = value!,
+                                        autovalidateMode: AutovalidateMode.always,
+                                        validator: FormBuilderValidators.compose([
+                                              (val) {
+                                            if (val == null) {
+                                              return 'Поле newsName не может быть пустым';
+                                            } else if (val.length < 3) {
+                                              return 'Минимум 3 символа';
+                                            } else {
+                                              return null;
+                                            }
+                                          },
+                                        ]),
+                                        keyboardType: TextInputType.text),
+                                  ),
+                                  Container(
+                                    margin: const EdgeInsets.only(bottom: 10),
+                                    child: Text(
+                                      'дата проведения'.toUpperCase(),
+                                      textAlign: TextAlign.left,
+                                      style: styleTitleFormInput,
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    width: 284,
+                                    child: FormBuilderTextField(
+                                        name: 'newsDate',
+                                        autofocus: true,
+                                        style: styleFormInput,
+                                        decoration: const InputDecoration(
+                                          contentPadding: EdgeInsets.all(16),
+                                          border: OutlineInputBorder(borderSide: BorderSide.none, borderRadius: BorderRadius.all(Radius.circular(10))),
+                                          fillColor: Color(0XFF515569),
+                                          filled: true,
+                                          hintText: "дата проведения",
+                                          hintStyle: TextStyle(
+                                            color: Colors.white,
+                                          ),
+                                        ),
+                                        onSaved: (value) => newsDate = value!,
+                                        validator: FormBuilderValidators.compose([
+                                              (val) {
+                                            if (val == null) {
+                                              return 'Поле newsDate не может быть пустым';
+                                            } else if (val.length < 3) {
+                                              return 'Минимум 3 символа';
+                                            } else {
+                                              return null;
+                                            }
+                                          },
+                                        ]),
+                                        keyboardType: TextInputType.text),
+                                  ),
+                                  SizedBox(
+                                    width: 284,
+                                    child: Container(
+                                      margin: const EdgeInsets.only(bottom: 10),
+                                      child: Text(
+                                        'место проведения'.toUpperCase(),
+                                        textAlign: TextAlign.left,
+                                        style: styleTitleFormInput,
+                                      ),
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    width: 284,
+                                    child: FormBuilderTextField(
+                                        name: 'newsLocation',
+                                        autofocus: true,
+                                        style: styleFormInput,
+                                        decoration: const InputDecoration(
+                                          contentPadding: EdgeInsets.all(16),
+                                          border: OutlineInputBorder(borderSide: BorderSide.none, borderRadius: BorderRadius.all(Radius.circular(10))),
+                                          fillColor: Color(0XFF515569),
+                                          filled: true,
+                                          hintText: "место проведения",
+                                          hintStyle: TextStyle(
+                                            color: Colors.white,
+                                          ),
+                                        ),
+                                        onSaved: (value) => newsLocation = value!,
+                                        validator: FormBuilderValidators.compose([
+                                              (val) {
+                                            if (val == null) {
+                                              return 'Поле newsLocation не может быть пустым';
+                                            } else if (val.length < 3) {
+                                              return 'Минимум 3 символа';
+                                            } else {
+                                              return null;
+                                            }
+                                          },
+                                        ]),
+                                        keyboardType: TextInputType.text),
+                                  ),
+                                  Container(
+                                    margin: const EdgeInsets.only(top: 17, bottom: 10),
+                                    child: Text(
+                                      'описание'.toUpperCase(),
+                                      textAlign: TextAlign.left,
+                                      style: styleTitleFormInput,
+                                    ),
+                                  ),
+                                  FormBuilderTextField(
+                                    name: 'newsDescr',
+                                    autofocus: true,
+                                    style: styleFormInput,
+                                    decoration: const InputDecoration(
+                                      contentPadding: EdgeInsets.all(16),
+                                      border: OutlineInputBorder(borderSide: BorderSide.none, borderRadius: BorderRadius.all(Radius.circular(10))),
+                                      fillColor: Color(0XFF515569),
+                                      filled: true,
+                                      hintText: "Введите описание",
+                                      hintStyle: TextStyle(
+                                        color: Colors.white,
+                                      ),
+                                    ),
+                                    // onChanged: _onChanged,
+                                    onSaved: (value) => newsDescr = value!,
+                                    // valueTransformer: (text) => num.tryParse(text),
+                                    // validator: FormBuilderValidators.compose([
+                                    //   // FormBuilderValidators.required(context),
+                                    //   // FormBuilderValidators.numeric(context),
+                                    //   // FormBuilderValidators.max(context, 70),
+                                    // ]),
+                                    validator: FormBuilderValidators.compose([
+                                          (val) {
+                                        if (val == null) {
+                                          return 'Поле newsDescr не может быть пустым';
+                                        } else if (val.length < 5) {
+                                          // return 'Invalid email address';
+                                          return 'Минимум 5 символа';
+                                        } else {
+                                          return null;
+                                        }
+                                      },
+                                    ]),
+                                    minLines: 6,
+                                    // any number you need (It works as the rows for the textarea)
+                                    keyboardType: TextInputType.multiline,
+                                    maxLines: null,
+                                  ),
+                                  const SizedBox(height: 20),
+                                  FormBuilderFilePicker(
+                                      name: "newsImage",
+                                      decoration: const InputDecoration(
+                                        fillColor: Color(0xff515569),
+                                        iconColor: Colors.white,
+                                        contentPadding: EdgeInsets.all(0),
+                                        border: OutlineInputBorder(
+                                          borderSide: BorderSide.none,
+                                          //gapPadding: 40,
+                                        ),
+                                      ),
+                                      maxFiles: null,
+                                      previewImages: true,
+                                      onChanged: (val) => {},
+                                      selector: Column(children: [
+                                        Stack(alignment: Alignment.center, children: [
+                                          Container(
+                                            width: 284,
+                                            height: 160,
+                                            decoration: const BoxDecoration(
+                                                color: Color(0xFF515569), shape: BoxShape.rectangle, borderRadius: BorderRadius.all(Radius.circular(10))),
+                                          ),
+                                          SvgPicture.asset(
+                                            'assets/images/load.svg',
+                                            semanticsLabel: 'Icon upload',
+                                            height: 18.0,
+                                          ),
+                                          Positioned(
+                                            bottom: 0,
+                                            child: Row(
+                                                mainAxisAlignment: MainAxisAlignment.center, crossAxisAlignment: CrossAxisAlignment.center, children: const [
+                                              SizedBox(height: 40),
+                                              Text('Загрузить фото',
+                                                  style: TextStyle(
+                                                      fontSize: 14.0,
+                                                      fontWeight: FontWeight.normal,
+                                                      fontFamily: 'CadillacSans',
+                                                      color: Colors.white,
+                                                      height: 1.4 //line-height : font-size
+                                                  ),
+                                                  textAlign: TextAlign.center),
+                                              Icon(
+                                                Icons.file_upload,
+                                                semanticLabel: 'Icon upload',
+                                                size: 18.0,
+                                                color: Colors.white,
+                                              )
+                                            ]),
+                                          )
+                                        ]),
+                                      ]),
+                                      onFileLoading: (val) {
+                                        // debugPrint(val);
+                                      },
+                                      onSaved: (value) =>
+                                      {
+                                        debugPrint('value'),
+                                        debugPrint(value.runtimeType.toString()),
+                                        newsImage = value!,
+                                      }),
+                                  Container(
+                                    width: 284,
+                                    margin: const EdgeInsets.only(top: 30, bottom: 45),
+                                    child: MaterialButton(
+                                      padding: const EdgeInsets.all(17),
+                                      color: const Color.fromARGB(255, 255, 255, 255),
+                                      child: Text(
+                                        "Создать".toUpperCase(),
+                                        style: const TextStyle(fontSize: 14, color: Color(0xFF12141F)),
+                                      ),
+                                      shape: const RoundedRectangleBorder(
+                                        side: BorderSide.none,
+                                        borderRadius: BorderRadius.all(
+                                          Radius.circular(10),
+                                        ),
+                                      ),
+                                      onPressed: () {
+                                        platform = Provider
+                                            .of<Data>(context, listen: false)
+                                            .data['platform'].toString();
+                                        debugPrint(platform);
+                                        if (_newsKey.currentState?.saveAndValidate() ?? false) {
+                                          debugPrint('News added');
+                                          if (platform == 'android' || platform == 'ios') {
+                                            debugPrint(platform);
+                                            final bytes = File(newsImage[0].path).readAsBytesSync();
+
+                                            debugPrint(bytes.runtimeType.toString());
+                                            setState(() {
+                                              encode64News = base64.encode(bytes);
+                                            });
+                                          } else {
+                                            debugPrint(platform);
+                                            bytes = newsImage[0].bytes;
+
+                                            setState(() {
+                                              encode64News = base64.encode(bytes!);
+                                            });
+                                          }
+                                          final news = New(
+                                              id: id,
+                                              newsId: newsId,
+                                              newsName: newsName,
+                                              newsDate: newsDate,
+                                              newsLocation: newsLocation,
+                                              newsDescr: newsDescr,
+                                              path: encode64News);
+                                          confirmDialog(context, news);
+
+                                        } else {
+                                          debugPrint('Error');
+                                        }
+                                      },
+                                    ),
+                                  ),
+                                ]),
+                              )
                             ]),
-                            onFileLoading: (val) {
-                              // debugPrint(val);
-                            },
-                            onSaved: (value) => {
-                                  debugPrint('value'),
-                                  debugPrint(value.runtimeType.toString()),
-                                  newsImage = value!,
-                                }),
-                        Container(
-                          width: 284,
-                          margin: const EdgeInsets.only(top: 30, bottom: 45),
-                          child: MaterialButton(
-                            padding: const EdgeInsets.all(17),
-                            color: const Color.fromARGB(255, 255, 255, 255),
-                            child: Text(
-                              "Создать".toUpperCase(),
-                              style: const TextStyle(fontSize: 14, color: Color(0xFF12141F)),
-                            ),
-                            shape: const RoundedRectangleBorder(
-                              side: BorderSide.none,
-                              borderRadius: BorderRadius.all(
-                                Radius.circular(10),
-                              ),
-                            ),
-                            onPressed: () {
-                              confirmDialog(context);
-
-                              if (_newsKey.currentState?.saveAndValidate() ?? false) {
-                                debugPrint('News added');
-                                if (platform == 'android' || platform == 'ios') {
-                                  debugPrint(platform);
-                                  final bytes = File(newsImage[0].path).readAsBytesSync();
-
-                                  debugPrint(bytes.runtimeType.toString());
-                                  setState(() {
-                                    encode64News = base64.encode(bytes);
-                                  });
-                                } else {
-                                  debugPrint(platform);
-                                  bytes = newsImage[0].bytes;
-
-                                  setState(() {
-                                    encode64News = base64.encode(bytes!);
-                                  });
-                                }
-                                final news = New(
-                                    id: id,
-                                    newsId: newsId,
-                                    newsName: newsName,
-                                    newsDate: newsDate,
-                                    newsLocation: newsLocation,
-                                    newsDescr: newsDescr,
-                                    path: encode64News);
-
-                                addNews(news);
-                              } else {
-                                debugPrint('Error');
-                              }
-                            },
-                          ),
-                        ),
-                      ]),
-                    )
+                          ])),
+                    ),
                   ]),
-                ])),
-              ),
-            ]),
-          )),
-          drawer: const NavDrawerAdmin(),
-        ));
+                )),
+            drawer: const NavDrawerAdmin(),
+          ));
+    });
   }
 
-  addNews(New news) async {
-    dynamic newsName = news.newsName;
-    dynamic newsDate = news.newsDate;
-    dynamic newsLocation = news.newsLocation;
-    dynamic newsDescr = news.newsDescr;
-    dynamic path = news.path;
 
-    String apiUrl = baseUrl + "/test/add_news.php";
+}
 
-    var response = await http.post(Uri.parse(apiUrl), body: {
-      'newsName': newsName,
-      'newsDate': newsDate,
-      'newsLocation': newsLocation,
-      'newsDescr': newsDescr,
-      'path': path
-    }, headers: {
-      'Accept': 'application/json, charset=utf-8',
-      "Access-Control-Allow-Origin": "*",
-      "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS"
-    });
+addNews(New news) async {
+  dynamic newsName = news.newsName;
+  dynamic newsDate = news.newsDate;
+  dynamic newsLocation = news.newsLocation;
+  dynamic newsDescr = news.newsDescr;
+  dynamic path = news.path;
 
-    if (response.statusCode == 200) {
-      debugPrint('news added');
+  String apiUrl = baseUrl + "/test/add_news.php";
 
-      debugPrint(response.statusCode.toString());
-      debugPrint(response.body);
+  var response = await http.post(Uri.parse(apiUrl), body: {
+    'newsName': newsName,
+    'newsDate': newsDate,
+    'newsLocation': newsLocation,
+    'newsDescr': newsDescr,
+    'path': path
+  }, headers: {
+    'Accept': 'application/json, charset=utf-8',
+    "Access-Control-Allow-Origin": "*",
+    "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS"
+  });
 
-      final newJson = json.decode(response.body);
-      return New.fromJson(newJson);
-    } else {
-      throw Exception('Error: ${response.reasonPhrase}');
-    }
+  if (response.statusCode == 200) {
+    debugPrint('news added');
+
+    debugPrint(response.statusCode.toString());
+    debugPrint(response.body);
+
+    final newJson = json.decode(response.body);
+    return New.fromJson(newJson);
+  } else {
+    throw Exception('Error: ${response.reasonPhrase}');
   }
 }
 
-Future confirmDialog(BuildContext context) async {
+Future confirmDialog(BuildContext context, news) async {
   return showDialog(
     context: context,
     barrierDismissible: false, // user must tap button for close dialog!
@@ -437,7 +445,9 @@ Future confirmDialog(BuildContext context) async {
                     style: styleTextAlertDialog,
                   ),
                   onPressed: () {
+                    addNews(news);
                     Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const NewsAdmin()));
+
                   },
                 ),
                 MaterialButton(
