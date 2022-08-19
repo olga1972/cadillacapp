@@ -242,42 +242,47 @@ class _EditAdminState extends State<EditAdmin> {
                                                               maxFiles: null,
                                                               previewImages: true,
                                                               onChanged: (val) => {},
-                                                              selector: Column(crossAxisAlignment: CrossAxisAlignment.center, children: [
-                                                                Stack(alignment: Alignment.center, children: [
-                                                                  Container(
-                                                                    alignment: Alignment.center,
-                                                                    width: 96,
-                                                                    height: 96,
-                                                                    decoration:
-                                                                    const BoxDecoration(
-                                                                        color: Color(0xFF515569), borderRadius: BorderRadius.all(Radius.circular(48))),
-                                                                  ),
-                                                                  SvgPicture.asset(
-                                                                    'assets/images/image.svg',
-                                                                    semanticsLabel: 'Icon upload',
-                                                                    height: 18.0,
-                                                                  ),
-                                                                ]),
-                                                                Row(
-                                                                    mainAxisAlignment: MainAxisAlignment.center,
-                                                                    crossAxisAlignment: CrossAxisAlignment.center,
-                                                                    children: const [
-                                                                      SizedBox(height: 40),
-                                                                      Text('Загрузить фото',
-                                                                          style: TextStyle(
-                                                                              fontSize: 14.0,
-                                                                              fontWeight: FontWeight.normal,
-                                                                              fontFamily: 'CadillacSans',
-                                                                              color: Color(0xFF515569),
-                                                                              height: 1.4 //line-height : font-size
-                                                                          ),
-                                                                          textAlign: TextAlign.center),
-                                                                      Icon(Icons.file_upload, semanticLabel: 'Icon upload',
-                                                                          size: 18.0,
-                                                                          color: Color(0xFF515569)),
-                                                                      //)
+                                                              typeSelectors: [
+                                                                TypeSelector(
+                                                                  type: FileType.any,
+                                                                  selector:
+                                                                  Column(crossAxisAlignment: CrossAxisAlignment.center, children: [
+                                                                    Stack(alignment: Alignment.center, children: [
+                                                                      Container(
+                                                                        alignment: Alignment.center,
+                                                                        width: 96,
+                                                                        height: 96,
+                                                                        decoration:
+                                                                        const BoxDecoration(color: Color(0xFF515569), borderRadius: BorderRadius.all(Radius.circular(48))),
+                                                                      ),
+                                                                      SvgPicture.asset(
+                                                                        'assets/images/image.svg',
+                                                                        semanticsLabel: 'Icon upload',
+                                                                        height: 18.0,
+                                                                      ),
                                                                     ]),
-                                                              ]),
+                                                                    Row(
+                                                                        mainAxisAlignment: MainAxisAlignment.center,
+                                                                        crossAxisAlignment: CrossAxisAlignment.center,
+                                                                        children: const [
+                                                                          SizedBox(height: 40),
+                                                                          Text('Загрузить фото',
+                                                                              style: TextStyle(
+                                                                                  fontSize: 14.0,
+                                                                                  fontWeight: FontWeight.normal,
+                                                                                  fontFamily: 'CadillacSans',
+                                                                                  color: Color(0xFF515569),
+                                                                                  height: 1.4 //line-height : font-size
+                                                                              ),
+                                                                              textAlign: TextAlign.center),
+                                                                          Icon(Icons.file_upload, semanticLabel: 'Icon upload', size: 18.0, color: Color(0xFF515569)),
+                                                                          //)
+                                                                        ]),
+                                                                  ]),
+
+                                                                ),
+
+                                                              ],
                                                               onFileLoading: (val) {
                                                                 // debugPrint(val);
                                                               },
@@ -439,48 +444,53 @@ class _EditAdminState extends State<EditAdmin> {
                                                             maxFiles: null,
                                                             previewImages: true,
                                                             onChanged: (val) => {},
-                                                            selector: Column(children: [
-                                                              Stack(alignment: Alignment.center, children: [
-                                                                Container(
-                                                                  //dding: EdgeInsets.only(bottom: 40),
-                                                                  width: 284,
-                                                                  height: 160,
-                                                                  decoration: const BoxDecoration(
-                                                                      color: Color(0xFF515569),
-                                                                      shape: BoxShape.rectangle,
-                                                                      borderRadius: BorderRadius.all(Radius.circular(10))),
-                                                                ),
-                                                                SvgPicture.asset(
-                                                                  'assets/images/load.svg',
-                                                                  semanticsLabel: 'Icon upload',
-                                                                  height: 18.0,
-                                                                ),
-                                                                Positioned(
-                                                                  bottom: 0,
-                                                                  child: Row(
-                                                                      mainAxisAlignment: MainAxisAlignment.center,
-                                                                      crossAxisAlignment: CrossAxisAlignment.center,
-                                                                      children: const [
-                                                                        SizedBox(height: 40),
-                                                                        Text('Загрузить фото',
-                                                                            style: TextStyle(
-                                                                                fontSize: 14.0,
-                                                                                fontWeight: FontWeight.normal,
-                                                                                fontFamily: 'CadillacSans',
-                                                                                color: Colors.white,
-                                                                                height: 1.4 //line-height : font-size
-                                                                            ),
-                                                                            textAlign: TextAlign.center),
-                                                                        Icon(
-                                                                          Icons.file_upload,
-                                                                          semanticLabel: 'Icon upload',
-                                                                          size: 18.0,
-                                                                          color: Colors.white,
-                                                                        )
-                                                                      ]),
-                                                                )
-                                                              ]),
-                                                            ]),
+                                                            typeSelectors: [
+                                                              TypeSelector(
+                                                                type: FileType.any,
+                                                                selector: Column(children: [
+                                                                  Stack(alignment: Alignment.center, children: [
+                                                                    Container(
+                                                                      width: 284,
+                                                                      height: 160,
+                                                                      decoration: const BoxDecoration(
+                                                                          color: Color(0xFF515569),
+                                                                          shape: BoxShape.rectangle,
+                                                                          borderRadius: BorderRadius.all(Radius.circular(10))),
+                                                                    ),
+                                                                    SvgPicture.asset(
+                                                                      'assets/images/load.svg',
+                                                                      semanticsLabel: 'Icon upload',
+                                                                      height: 18.0,
+                                                                    ),
+                                                                    Positioned(
+                                                                      bottom: 0,
+                                                                      child: Row(
+                                                                          mainAxisAlignment: MainAxisAlignment.center,
+                                                                          crossAxisAlignment: CrossAxisAlignment.center,
+                                                                          children: const [
+                                                                            SizedBox(height: 40),
+                                                                            Text('Загрузить фото',
+                                                                                style: TextStyle(
+                                                                                    fontSize: 14.0,
+                                                                                    fontWeight: FontWeight.normal,
+                                                                                    fontFamily: 'CadillacSans',
+                                                                                    color: Colors.white,
+                                                                                    height: 1.4 //line-height : font-size
+                                                                                ),
+                                                                                textAlign: TextAlign.center),
+                                                                            Icon(
+                                                                              Icons.file_upload,
+                                                                              semanticLabel: 'Icon upload',
+                                                                              size: 18.0,
+                                                                              color: Colors.white,
+                                                                            )
+                                                                          ]),
+                                                                    )
+                                                                  ]),
+                                                                ]),
+                                                              ),
+
+                                                            ],
                                                             onFileLoading: (val) {
                                                               // debugPrint(val);
                                                             },

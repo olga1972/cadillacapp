@@ -338,7 +338,9 @@ class _AccountAdminState extends State<AccountAdmin> {
                                             backgroundColor: Colors.transparent,
                                             child: (snapshot.data?.path != null)
                                                 ? Image.memory(base64.decode(snapshot.data?.path ?? ''), fit: BoxFit.cover, width: 96, height: 96)
-                                                : const Text('no image')),
+                                                : Image.asset(
+                                            'assets/images/no-image.jpg',
+                                            fit: BoxFit.cover, width: 96, height: 96),),
                                       ),
                                     ])),
                                 Text('ваш именной номер'.toUpperCase(),
@@ -386,6 +388,15 @@ class _AccountAdminState extends State<AccountAdmin> {
                                       color: Colors.white,
                                       height: 1.17,
                                     )),
+                                ClipRRect(
+                                  borderRadius: const BorderRadius.all(Radius.circular(20)),
+                                  child: snapshot.data?.car1 == '' && snapshot.data?.car2 == '' && snapshot.data?.car3 == '' ?
+                                  Image.asset(
+                                    'assets/images/no-image.jpg',
+                                    fit: BoxFit.cover,
+                                    width: 284,
+                                    height: 160,
+                                  ) : null,),
                                 Container(
                                     width: MediaQuery.of(context).size.width,
                                     height: 160,

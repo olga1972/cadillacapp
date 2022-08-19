@@ -251,42 +251,50 @@ class _EditState extends State<Edit> {
                                                   maxFiles: null,
                                                   previewImages: true,
                                                   onChanged: (val) => {},
-                                                  selector: Column(crossAxisAlignment: CrossAxisAlignment.center, children: [
-                                                    Stack(alignment: Alignment.center, children: [
-                                                      Container(
-                                                        alignment: Alignment.center,
-                                                        width: 96,
-                                                        height: 96,
-                                                        decoration:
+                                                  typeSelectors: [
+                                                    TypeSelector(
+                                                      type: FileType.any,
+                                                      selector:
+                                                      Column(crossAxisAlignment: CrossAxisAlignment.center, children: [
+                                                        Stack(alignment: Alignment.center, children: [
+                                                          Container(
+                                                            alignment: Alignment.center,
+                                                            width: 96,
+                                                            height: 96,
+                                                            decoration:
                                                             const BoxDecoration(color: Color(0xFF515569), borderRadius: BorderRadius.all(Radius.circular(48))),
-                                                      ),
-                                                      SvgPicture.asset(
-                                                        'assets/images/image.svg',
-                                                        semanticsLabel: 'Icon upload',
-                                                        height: 18.0,
-                                                      ),
-                                                    ]),
-                                                    Row(
-                                                        mainAxisAlignment: MainAxisAlignment.center,
-                                                        crossAxisAlignment: CrossAxisAlignment.center,
-                                                        children: const [
-                                                          SizedBox(height: 40),
-                                                          Text('Загрузить фото',
-                                                              style: TextStyle(
-                                                                  fontSize: 14.0,
-                                                                  fontWeight: FontWeight.normal,
-                                                                  fontFamily: 'CadillacSans',
-                                                                  color: Color(0xFF515569),
-                                                                  height: 1.4 //line-height : font-size
-                                                                  ),
-                                                              textAlign: TextAlign.center),
-                                                          Icon(Icons.file_upload, semanticLabel: 'Icon upload', size: 18.0, color: Color(0xFF515569)),
-                                                          //)
+                                                          ),
+                                                          SvgPicture.asset(
+                                                            'assets/images/image.svg',
+                                                            semanticsLabel: 'Icon upload',
+                                                            height: 18.0,
+                                                          ),
                                                         ]),
-                                                  ]),
-                                                  // onFileLoading:
-                                                  //   (val) {
-                                                  // },
+                                                        Row(
+                                                            mainAxisAlignment: MainAxisAlignment.center,
+                                                            crossAxisAlignment: CrossAxisAlignment.center,
+                                                            children: const [
+                                                              SizedBox(height: 40),
+                                                              Text('Загрузить фото',
+                                                                  style: TextStyle(
+                                                                      fontSize: 14.0,
+                                                                      fontWeight: FontWeight.normal,
+                                                                      fontFamily: 'CadillacSans',
+                                                                      color: Color(0xFF515569),
+                                                                      height: 1.4 //line-height : font-size
+                                                                  ),
+                                                                  textAlign: TextAlign.center),
+                                                              Icon(Icons.file_upload, semanticLabel: 'Icon upload', size: 18.0, color: Color(0xFF515569)),
+                                                              //)
+                                                            ]),
+                                                      ]),
+
+                                                    ),
+
+                                                  ],
+                                                  onFileLoading: (val) {
+                                                    // debugPrint(val);
+                                                  },
                                                   onSaved: (value) => {
                                                         debugPrint('value'),
                                                         debugPrint(value.runtimeType.toString()),
@@ -440,47 +448,56 @@ class _EditState extends State<Edit> {
                                                 maxFiles: null,
                                                 previewImages: true,
                                                 onChanged: (val) => {},
-                                                selector: Column(children: [
-                                                  Stack(alignment: Alignment.center, children: [
-                                                    Container(
-                                                      width: 284,
-                                                      height: 160,
-                                                      decoration: const BoxDecoration(
-                                                          color: Color(0xFF515569),
-                                                          shape: BoxShape.rectangle,
-                                                          borderRadius: BorderRadius.all(Radius.circular(10))),
-                                                    ),
-                                                    SvgPicture.asset(
-                                                      'assets/images/load.svg',
-                                                      semanticsLabel: 'Icon upload',
-                                                      height: 18.0,
-                                                    ),
-                                                    Positioned(
-                                                      bottom: 0,
-                                                      child: Row(
-                                                          mainAxisAlignment: MainAxisAlignment.center,
-                                                          crossAxisAlignment: CrossAxisAlignment.center,
-                                                          children: const [
-                                                            SizedBox(height: 40),
-                                                            Text('Загрузить фото',
-                                                                style: TextStyle(
-                                                                    fontSize: 14.0,
-                                                                    fontWeight: FontWeight.normal,
-                                                                    fontFamily: 'CadillacSans',
-                                                                    color: Colors.white,
-                                                                    height: 1.4 //line-height : font-size
+                                                typeSelectors: [
+                                                  TypeSelector(
+                                                    type: FileType.any,
+                                                    selector: Column(children: [
+                                                      Stack(alignment: Alignment.center, children: [
+                                                        Container(
+                                                          width: 284,
+                                                          height: 160,
+                                                          decoration: const BoxDecoration(
+                                                              color: Color(0xFF515569),
+                                                              shape: BoxShape.rectangle,
+                                                              borderRadius: BorderRadius.all(Radius.circular(10))),
+                                                        ),
+                                                        SvgPicture.asset(
+                                                          'assets/images/load.svg',
+                                                          semanticsLabel: 'Icon upload',
+                                                          height: 18.0,
+                                                        ),
+                                                        Positioned(
+                                                          bottom: 0,
+                                                          child: Row(
+                                                              mainAxisAlignment: MainAxisAlignment.center,
+                                                              crossAxisAlignment: CrossAxisAlignment.center,
+                                                              children: const [
+                                                                SizedBox(height: 40),
+                                                                Text('Загрузить фото',
+                                                                    style: TextStyle(
+                                                                        fontSize: 14.0,
+                                                                        fontWeight: FontWeight.normal,
+                                                                        fontFamily: 'CadillacSans',
+                                                                        color: Colors.white,
+                                                                        height: 1.4 //line-height : font-size
                                                                     ),
-                                                                textAlign: TextAlign.center),
-                                                            Icon(
-                                                              Icons.file_upload,
-                                                              semanticLabel: 'Icon upload',
-                                                              size: 18.0,
-                                                              color: Colors.white,
-                                                            )
-                                                          ]),
-                                                    )
-                                                  ]),
-                                                ]),
+                                                                    textAlign: TextAlign.center),
+                                                                Icon(
+                                                                  Icons.file_upload,
+                                                                  semanticLabel: 'Icon upload',
+                                                                  size: 18.0,
+                                                                  color: Colors.white,
+                                                                )
+                                                              ]),
+                                                        )
+                                                      ]),
+                                                    ]),
+                                                  ),
+
+                                                ],
+                                                onFileLoading: (val) {
+                                                  // debugPrint(val);
+                                                },
                                                 onSaved: (value) => {
                                                       debugPrint('value'),
                                                       debugPrint(value.runtimeType.toString()),
@@ -503,7 +520,7 @@ class _EditState extends State<Edit> {
                                                     ),
                                                   ),
                                                   onPressed: () async {
-                                                    confirmDialog(context);
+
                                                     if (_formKey.currentState?.saveAndValidate() ?? false) {
                                                       debugPrint('Valid success edit');
 
@@ -621,8 +638,8 @@ class _EditState extends State<Edit> {
                                                           dateExpired: 'dateExpired');
                                                       //currentUser = editUser(user);
                                                       // findingUser = await getUserByEmail(currentUser);
-
-                                                      user = await editUser(currentUser);
+                                                      confirmDialog(context, currentUser);
+                                                      // user = await editUser(currentUser);
                                                       debugPrint('after editUser');
 
                                                       // debugPrint("currentUser: ${currentUser.userId}");
@@ -764,7 +781,7 @@ editUser(my_user.User user) async {
   }
 }
 
-Future confirmDialog(BuildContext context) async {
+Future confirmDialog(BuildContext context, currentUser) async {
   return showDialog(
     context: context,
     barrierDismissible: false, // user must tap button for close dialog!
@@ -794,7 +811,8 @@ Future confirmDialog(BuildContext context) async {
                     textAlign: TextAlign.left,
                     style: styleTextAlertDialog,
                   ),
-                  onPressed: () {
+                  onPressed: () async {
+                    await editUser(currentUser);
                     Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const Account()));
                   },
                 ),

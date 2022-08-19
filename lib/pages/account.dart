@@ -324,8 +324,10 @@ class _AccountState extends State<Account> {
                                             backgroundColor: Colors.transparent,
                                             child: (snapshot.data?.path != null && snapshot.data?.path != '')
                                                 ? Image.memory(base64.decode(snapshot.data?.path ?? ''), fit: BoxFit.cover, width: 96, height: 96)
-                                                : const Text('no image')),
-                                      ),
+                                                : Image.asset(
+                                              'assets/images/no-image.jpg',
+                                              fit: BoxFit.cover, width: 96, height: 96),
+                                      )),
                                     ])),
                                 Text('ваш именной номер'.toUpperCase(),
                                     textAlign: TextAlign.center,
@@ -372,6 +374,19 @@ class _AccountState extends State<Account> {
                                       color: Colors.white,
                                       height: 1.17,
                                     )),
+
+
+                                ClipRRect(
+                                    borderRadius: const BorderRadius.all(Radius.circular(20)),
+                                    child: snapshot.data?.car1 == '' && snapshot.data?.car2 == '' && snapshot.data?.car3 == '' ?
+                                    Image.asset(
+                                  'assets/images/no-image.jpg',
+                                  fit: BoxFit.cover,
+                                    width: 284,
+                                    height: 160,
+                                ) : null,),
+
+
                                 Container(
                                   width: MediaQuery.of(context).size.width,
                                   height: 160,
@@ -393,14 +408,6 @@ class _AccountState extends State<Account> {
                                                 alignment: Alignment.centerLeft,
                                               )
                                           ))
-                                        // : ClipRRect(
-                                        // borderRadius: const BorderRadius.all(Radius.circular(20)),
-                                        // child: Text('no image', style: TextStyle(
-                                        //   fontSize: 24.0,
-                                        //   fontWeight: FontWeight.normal,
-                                        //   fontFamily: 'CadillacSans',
-                                        //   color: Colors.white,
-                                        //   height: 1.17,)))
 
                                       : Swiper(
                                           layout: SwiperLayout.CUSTOM,
@@ -433,6 +440,7 @@ class _AccountState extends State<Account> {
                                               margin: EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 15.0),
                                               builder:
                                                   DotSwiperPaginationBuilder(color: Colors.white, activeColor: Color(0xFF8F97BF), size: 7.0, activeSize: 7.0)))),
+
                                 ]),
                               ))
                             ])));
