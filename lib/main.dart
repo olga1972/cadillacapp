@@ -52,22 +52,38 @@ checkPlatform() {
   }
 }
 Future<void> main() async {
+  checkPlatform();
+  debugPrint(checkPlatform());
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
+  if (checkPlatform() == 'windows') {
 
+      await Firebase.initializeApp(
+          options: const FirebaseOptions(
+              apiKey: "AIzaSyAPQXgOa4JniOfVTk5OZmyjJlPObU1R5y8",
+              authDomain: "cadillacapp-42c1d.firebaseapp.com",
+              projectId: "cadillacapp-42c1d",
+              storageBucket: "cadillacapp-42c1d.appspot.com",
+              messagingSenderId: "918394593301",
+              appId: "1:918394593301:web:83e077de8e1fbfc41e2e1c"
+          )
+      );
+    } else {
+    await Firebase.initializeApp();
+  }
   runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
   MyApp({Key? key,}) : super(key: key);
   static get platform => checkPlatform();
-
+  // final FirebaseAuth _auth = FirebaseAuth.instance;
   //get user => _auth.currentUser;
-  final User? user = _auth.currentUser;
-
+  // final User? user = FirebaseAuth.instance.currentUser;
+  //final User? user = _auth.currentUser;
   //final String cookies ='';
   @override
   Widget build(BuildContext context) {
+
     // return ChangeNotifierProvider<Data> (
       //final auth = Provider.of(context).auth;
       // return StreamProvider<User?>.value(

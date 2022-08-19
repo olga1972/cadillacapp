@@ -20,30 +20,34 @@ class Entrance extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    User? user = FirebaseAuth.instance.currentUser;
+    // User? user = FirebaseAuth.instance.currentUser;
+    var currentUser = FirebaseAuth.instance.currentUser;
 
+    if (currentUser != null) {
+      print(currentUser.uid);
+    }
     // можно прислать письмо на почту для верификации
     // if (user!= null && !user.emailVerified) {
     //   await user.sendEmailVerification();
     // }
 
 
-    final bool isLoggedIn = user != null;
+    final bool isLoggedIn = currentUser != null;
     bool isAdmin = false;
 
     FirebaseAuth.instance
         .authStateChanges()
-        .listen((User? user) {
-      if (user == null) {
+        .listen((User? currentUser) {
+      if (currentUser == null) {
         print('User is currently signed out!');
         print(isLoggedIn);
 
       } else {
         print('User is signed in!');
-        print(user.email);
+        print(currentUser.email);
         print(isLoggedIn);
 
-        if(user.email == emailAdmin) {
+        if(currentUser.email == emailAdmin) {
           isAdmin = true;
           Navigator.pushReplacement(
               context, MaterialPageRoute(
@@ -62,9 +66,10 @@ class Entrance extends StatelessWidget {
     });
 
 
-    return isLoggedIn ?
-      isAdmin ? AccountAdmin() : Account()
-        : AuthorizationPage();
-    //return isLoggedIn ? Account() : RegistrationPage();
+    // return isLoggedIn ?
+    //   isAdmin ? AccountAdmin() : Account()
+    //     : AuthorizationPage();
+    // return isLoggedIn ? Account() : AuthorizationPage();
+    return AuthorizationPage();
   }
 }

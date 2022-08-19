@@ -33,26 +33,30 @@
   <link rel="manifest" href="manifest.json">
 </head>
 <body>
-<!--<link rel="manifest" href="manifest.json">-->
+<!--<link rel=""manifest" href="manifest.json">-->
 <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/eruda/2.4.1/eruda.min.js" integrity="sha512-RrQDQUon0OiQVjKQYkMuhtLgx8R/4niagIVdHltxcAJa1+cc8FJFFOhtLuK3YJAoo5mdfAFh98ZQwbDKJgFIpg==" crossorigin="anonymous"></script>-->
 <!--<script>-->
 <!--    eruda.init();-->
 <!--  </script>-->
 
-<!--firebase for web-->
-<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
 
+<script src="https://www.gstatic.com/firebasejs/8.6.1/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.6.1/firebase-auth.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.6.1/firebase-firestore.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.6.1/firebase-database.js"></script>
 <script>
-const firebaseConfig = {
-  apiKey: "AIzaSyAPQXgOa4JniOfVTk5OZmyjJlPObU1R5y8",
-  authDomain: "cadillacapp-42c1d.firebaseapp.com",
-  projectId: "cadillacapp-42c1d",
-  storageBucket: "cadillacapp-42c1d.appspot.com",
-  messagingSenderId: "918394593301",
-  appId: "1:918394593301:web:83e077de8e1fbfc41e2e1c"
-};
+  function initializeApp() {
+    const firebaseConfig = {
+      apiKey: "AIzaSyAPQXgOa4JniOfVTk5OZmyjJlPObU1R5y8",
+      authDomain: "cadillacapp-42c1d.firebaseapp.com",
+      projectId: "cadillacapp-42c1d",
+      storageBucket: "cadillacapp-42c1d.appspot.com",
+      messagingSenderId: "918394593301",
+      appId: "1:918394593301:web:83e077de8e1fbfc41e2e1c"
+    };
 
 const app = initializeApp(firebaseConfig);
+}
 </script>
 
 
