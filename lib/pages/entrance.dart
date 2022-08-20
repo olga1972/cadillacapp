@@ -1,5 +1,6 @@
 import 'package:cadillac/pages/registrationPage.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 //import 'package:cadillac/models/users.dart';
 import 'package:cadillac/pages/auth.dart';
@@ -20,56 +21,70 @@ class Entrance extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // User? user = FirebaseAuth.instance.currentUser;
-    var currentUser = FirebaseAuth.instance.currentUser;
-
-    if (currentUser != null) {
-      print(currentUser.uid);
-    }
+    User? user = FirebaseAuth.instance.currentUser;
+    //var currentUser = FirebaseAuth.instance.currentUser;
+    //
+    // if (currentUser != null) {
+    //   print(currentUser.uid);
+    // }
     // можно прислать письмо на почту для верификации
     // if (user!= null && !user.emailVerified) {
     //   await user.sendEmailVerification();
     // }
 
 
-    final bool isLoggedIn = currentUser != null;
+    //Firebase.initializeApp();  error method not found
+
+    // final bool isLoggedIn = currentUser != null;
     bool isAdmin = false;
+    bool isLoggedIn = false;
 
-    FirebaseAuth.instance
-        .authStateChanges()
-        .listen((User? currentUser) {
-      if (currentUser == null) {
-        print('User is currently signed out!');
-        print(isLoggedIn);
+    // error firebase_core is not defined
+    try {
+      debugPrint('try');
+      // FirebaseAuth.instance
+      //     .authStateChanges()
+      //     .listen((User? user) {
+      //   if (user == null) {
+      //     print('User is currently signed out!');
+      //     // print(isLoggedIn);
+      //
+      //   } else {
+      //     print('User is signed in!');
+      //     print(user.email);
+      //     // print(isLoggedIn);
+      //
+      //     if(user.email == emailAdmin) {
+      //       isAdmin = true;
+      //       Navigator.pushReplacement(
+      //           context, MaterialPageRoute(
+      //           builder: (context) =>
+      //               AccountAdmin()
+      //       ));
+      //     } else {
+      //       isAdmin = false;
+      //       Navigator.pushReplacement(
+      //           context, MaterialPageRoute(
+      //           builder: (context) =>
+      //               Account()
+      //       ));
+      //     }
+      //   }
+      // });
 
-      } else {
-        print('User is signed in!');
-        print(currentUser.email);
-        print(isLoggedIn);
+    } on FirebaseAuthException catch  (e) {
+      print('Failed with error code: ${e.code}');
+      print(e.message);
+    }
 
-        if(currentUser.email == emailAdmin) {
-          isAdmin = true;
-          Navigator.pushReplacement(
-              context, MaterialPageRoute(
-              builder: (context) =>
-                  AccountAdmin()
-          ));
-        } else {
-          isAdmin = false;
-          Navigator.pushReplacement(
-              context, MaterialPageRoute(
-              builder: (context) =>
-                  Account()
-          ));
-        }
-      }
-    });
+
 
 
     // return isLoggedIn ?
     //   isAdmin ? AccountAdmin() : Account()
     //     : AuthorizationPage();
-    // return isLoggedIn ? Account() : AuthorizationPage();
+    //return  isLoggedIn ? Account() : AuthorizationPage();
     return AuthorizationPage();
+    // return Contacts();
   }
 }

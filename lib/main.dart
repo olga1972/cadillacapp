@@ -31,33 +31,38 @@ import 'dart:async';
 import 'package:cadillac/pages/registrationPage.dart';
 
 import 'package:firebase_core/firebase_core.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
+// import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_toastr/flutter_toastr.dart';
 
-final FirebaseAuth _auth = FirebaseAuth.instance;
+
 
 
 checkPlatform() {
-  if (defaultTargetPlatform == TargetPlatform.iOS || defaultTargetPlatform == TargetPlatform.android) {
+  if ( defaultTargetPlatform == TargetPlatform.android) {
 
     return 'android';
+  } else if (defaultTargetPlatform == TargetPlatform.iOS){
+    return 'ios';
   }
   else if (defaultTargetPlatform == TargetPlatform.linux || defaultTargetPlatform == TargetPlatform.macOS || defaultTargetPlatform == TargetPlatform.windows) {
     // Some desktop specific code there
     return 'windows';
   }
   else {
+    return defaultTargetPlatform;
     // Some web specific code there
   }
 }
 Future<void> main() async {
+  // final FirebaseAuth _auth = FirebaseAuth.instance;
   checkPlatform();
   debugPrint(checkPlatform());
-  WidgetsFlutterBinding.ensureInitialized();
+  // WidgetsFlutterBinding.ensureInitialized();
   if (checkPlatform() == 'windows') {
 
       await Firebase.initializeApp(
+
           options: const FirebaseOptions(
               apiKey: "AIzaSyAPQXgOa4JniOfVTk5OZmyjJlPObU1R5y8",
               authDomain: "cadillacapp-42c1d.firebaseapp.com",
@@ -68,7 +73,9 @@ Future<void> main() async {
           )
       );
     } else {
-    await Firebase.initializeApp();
+    //если оставить строку ниже, то белый экран в мобильном браузере будет
+    //await Firebase.initializeApp();
+    debugPrint('else');
   }
   runApp(MyApp());
 }

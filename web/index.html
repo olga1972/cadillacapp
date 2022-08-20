@@ -34,16 +34,16 @@
 </head>
 <body>
 <!--<link rel=""manifest" href="manifest.json">-->
-<!--<script src="https://cdnjs.cloudflare.com/ajax/libs/eruda/2.4.1/eruda.min.js" integrity="sha512-RrQDQUon0OiQVjKQYkMuhtLgx8R/4niagIVdHltxcAJa1+cc8FJFFOhtLuK3YJAoo5mdfAFh98ZQwbDKJgFIpg==" crossorigin="anonymous"></script>-->
-<!--<script>-->
-<!--    eruda.init();-->
-<!--  </script>-->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/eruda/2.4.1/eruda.min.js" integrity="sha512-RrQDQUon0OiQVjKQYkMuhtLgx8R/4niagIVdHltxcAJa1+cc8FJFFOhtLuK3YJAoo5mdfAFh98ZQwbDKJgFIpg==" crossorigin="anonymous"></script>
+<script>
+    eruda.init();
+  </script>
 
 
-<script src="https://www.gstatic.com/firebasejs/8.6.1/firebase-app.js"></script>
-<script src="https://www.gstatic.com/firebasejs/8.6.1/firebase-auth.js"></script>
-<script src="https://www.gstatic.com/firebasejs/8.6.1/firebase-firestore.js"></script>
-<script src="https://www.gstatic.com/firebasejs/8.6.1/firebase-database.js"></script>
+<!--<script src="https://www.gstatic.com/firebasejs/9.9.3/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.9.3/firebase-auth.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.9.3/firebase-firestore.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.9.3/firebase-database.js"></script>
 <script>
   function initializeApp() {
     const firebaseConfig = {
@@ -57,6 +57,30 @@
 
 const app = initializeApp(firebaseConfig);
 }
+</script>-->
+
+<script type="module">
+  // Import the functions you need from the SDKs you need
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/9.9.3/firebase-app.js";
+  import { getAuth } from "https://www.gstatic.com/firebasejs/9.9.3/firebase-auth.js";
+  // TODO: Add SDKs for Firebase products that you want to use
+  // https://firebase.google.com/docs/web/setup#available-libraries
+
+  // Your web app's Firebase configuration
+  const firebaseConfig = {
+    apiKey: "AIzaSyAPQXgOa4JniOfVTk5OZmyjJlPObU1R5y8",
+    authDomain: "cadillacapp-42c1d.firebaseapp.com",
+    projectId: "cadillacapp-42c1d",
+    storageBucket: "cadillacapp-42c1d.appspot.com",
+    messagingSenderId: "918394593301",
+    appId: "1:918394593301:web:83e077de8e1fbfc41e2e1c"
+  };
+
+  // Initialize Firebase
+  const app = initializeApp(firebaseConfig);
+
+  // Initialize Firebase Authentication and get a reference to the service
+  const auth = getAuth(app);
 </script>
 
 
