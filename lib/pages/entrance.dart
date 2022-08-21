@@ -35,42 +35,42 @@ class Entrance extends StatelessWidget {
 
     //Firebase.initializeApp();  error method not found
 
-    // final bool isLoggedIn = currentUser != null;
+    final bool isLoggedIn = user != null;
     bool isAdmin = false;
-    bool isLoggedIn = false;
+    //bool isLoggedIn = false;
 
     // error firebase_core is not defined
     try {
       debugPrint('try');
-      // FirebaseAuth.instance
-      //     .authStateChanges()
-      //     .listen((User? user) {
-      //   if (user == null) {
-      //     print('User is currently signed out!');
-      //     // print(isLoggedIn);
-      //
-      //   } else {
-      //     print('User is signed in!');
-      //     print(user.email);
-      //     // print(isLoggedIn);
-      //
-      //     if(user.email == emailAdmin) {
-      //       isAdmin = true;
-      //       Navigator.pushReplacement(
-      //           context, MaterialPageRoute(
-      //           builder: (context) =>
-      //               AccountAdmin()
-      //       ));
-      //     } else {
-      //       isAdmin = false;
-      //       Navigator.pushReplacement(
-      //           context, MaterialPageRoute(
-      //           builder: (context) =>
-      //               Account()
-      //       ));
-      //     }
-      //   }
-      // });
+      FirebaseAuth.instance
+          .authStateChanges()
+          .listen((User? user) {
+        if (user == null) {
+          print('User is currently signed out!');
+          // print(isLoggedIn);
+      
+        } else {
+          print('User is signed in!');
+          print(user.email);
+          // print(isLoggedIn);
+      
+          if(user.email == emailAdmin) {
+            isAdmin = true;
+            Navigator.pushReplacement(
+                context, MaterialPageRoute(
+                builder: (context) =>
+                    AccountAdmin()
+            ));
+          } else {
+            isAdmin = false;
+            Navigator.pushReplacement(
+                context, MaterialPageRoute(
+                builder: (context) =>
+                    Account()
+            ));
+          }
+        }
+      });
 
     } on FirebaseAuthException catch  (e) {
       print('Failed with error code: ${e.code}');
@@ -80,11 +80,11 @@ class Entrance extends StatelessWidget {
 
 
 
-    // return isLoggedIn ?
-    //   isAdmin ? AccountAdmin() : Account()
-    //     : AuthorizationPage();
-    //return  isLoggedIn ? Account() : AuthorizationPage();
-    return AuthorizationPage();
+    return isLoggedIn ?
+      isAdmin ? AccountAdmin() : Account()
+        : AuthorizationPage();
+    // return  isLoggedIn ? Account() : AuthorizationPage();
+    // return AuthorizationPage();
     // return Contacts();
   }
 }

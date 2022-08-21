@@ -29,6 +29,13 @@
             {
               "client_id": "918394593301-d0aej4gj909c6a3bpkgnnevansdtjv1t.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "918394593301-agp2p34vkb9dmqglb77n9f26ci0jet7c.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.cadillac.cadillac"
+              }
             }
           ]
         }
