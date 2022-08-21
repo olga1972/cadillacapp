@@ -72,6 +72,17 @@ Future<void> main() async {
               appId: "1:918394593301:web:83e077de8e1fbfc41e2e1c"
           )
       );
+    } else if(checkPlatform() == 'ios') {
+      await Firebase.initializeApp(
+        options: const FirebaseOptions(
+              apiKey: "AIzaSyAPQXgOa4JniOfVTk5OZmyjJlPObU1R5y8",
+              authDomain: "cadillacapp-42c1d.firebaseapp.com",
+              projectId: "cadillacapp-42c1d",
+              storageBucket: "cadillacapp-42c1d.appspot.com",
+              messagingSenderId: "918394593301",
+              appId: "1:918394593301:web:83e077de8e1fbfc41e2e1c"
+          )
+      );
     } else {
     //если оставить строку ниже, то белый экран в мобильном браузере будет
     //await Firebase.initializeApp();
