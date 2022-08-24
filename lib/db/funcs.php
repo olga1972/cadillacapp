@@ -485,8 +485,8 @@ function add_partner() {
     extract($_POST);
 //var_dump($_POST);
 
-    mysqli_stmt_prepare($stmt, "INSERT INTO partners (partnerId, partnerName, path) VALUES(uuid(), ?, ?)");
-    mysqli_stmt_bind_param($stmt, 'ss',  $partnerName, $path);
+    mysqli_stmt_prepare($stmt, "INSERT INTO partners (partnerId, partnerName, path, partnerLink, partnerTerms) VALUES(uuid(), ?, ?, ?, ?)");
+    mysqli_stmt_bind_param($stmt, 'ssss',  $partnerName, $path, $partnerLink, $partnerTerms);
     mysqli_stmt_execute($stmt);
     mysqli_stmt_get_result($stmt);
     

@@ -44,6 +44,8 @@ class _AddPartnersState extends State<AddPartners> {
   late String id = '1';
   late String partnerId = '111';
   late String partnerName = 'name';
+  late String partnerLink = 'link';
+  late String partnerTerms = 'partnerTerms';
   late List<dynamic> partnerImage;
 
   late String path;
@@ -111,6 +113,48 @@ class _AddPartnersState extends State<AddPartners> {
                                                   (val) {
                                                 if (val == null) {
                                                   return 'Поле partnersName не может быть пустым';
+                                                } else if (val.length < 3) {
+                                                  return 'Минимум 3 символа';
+                                                } else {
+                                                  return null;
+                                                }
+                                              },
+                                            ]),
+                                            keyboardType: TextInputType.text),
+                                      ),
+                                      Container(
+                                        margin: const EdgeInsets.only(bottom: 10),
+                                        child: Text(
+                                          'ссылка на сайт пратнера'.toUpperCase(),
+                                          textAlign: TextAlign.left,
+                                          style: styleTitleFormInput,
+                                        ),
+                                      ),
+                                      Container(
+                                        width: 284,
+                                        margin: const EdgeInsets.only(bottom: 10),
+                                        child: FormBuilderTextField(
+                                            name: 'partnerLink',
+                                            autofocus: true,
+                                            cursorWidth: 1.0,
+                                            cursorColor: Colors.white,
+                                            style: styleFormInput,
+                                            decoration: const InputDecoration(
+                                              contentPadding: EdgeInsets.all(16),
+                                              border: OutlineInputBorder(borderSide: BorderSide.none, borderRadius: BorderRadius.all(Radius.circular(10))),
+                                              fillColor: Color(0XFF515569),
+                                              filled: true,
+                                              hintText: "название компании",
+                                              hintStyle: TextStyle(
+                                                color: Colors.white,
+                                              ),
+                                            ),
+                                            onSaved: (value) => partnerLink = value!,
+                                            autovalidateMode: AutovalidateMode.always,
+                                            validator: FormBuilderValidators.compose([
+                                                  (val) {
+                                                if (val == null) {
+                                                  return 'Поле partnersLink не может быть пустым';
                                                 } else if (val.length < 3) {
                                                   return 'Минимум 3 символа';
                                                 } else {
@@ -190,6 +234,51 @@ class _AddPartnersState extends State<AddPartners> {
                                             partnerImage = value!,
                                           }),
                                       Container(
+                                        margin: const EdgeInsets.only(top: 17, bottom: 10),
+                                        child: Text(
+                                          'сообщение'.toUpperCase(),
+                                          textAlign: TextAlign.left,
+                                          style: styleTitleFormInput,
+                                        ),
+                                      ),
+                                      FormBuilderTextField(
+                                        name: 'partnerTerms',
+                                        style: styleFormInput,
+                                        decoration: const InputDecoration(
+                                          contentPadding: EdgeInsets.all(16),
+                                          border: OutlineInputBorder(borderSide: BorderSide.none, borderRadius: BorderRadius.all(Radius.circular(10))),
+                                          fillColor: Color(0XFF515569),
+                                          filled: true,
+                                          hintText: "Дополнительные условия",
+                                          hintStyle: TextStyle(
+                                            color: Colors.white,
+                                          ),
+                                        ),
+                                        // onChanged: _onChanged,
+                                        onSaved: (value) => partnerTerms = value!,
+                                        // valueTransformer: (text) => num.tryParse(text),
+                                        // validator: FormBuilderValidators.compose([
+                                        //   // FormBuilderValidators.required(context),
+                                        //   // FormBuilderValidators.numeric(context),
+                                        //   // FormBuilderValidators.max(context, 70),
+                                        // ]),
+                                        validator: FormBuilderValidators.compose([
+                                              (val) {
+                                            if (val == null) {
+                                              return 'Поле partnerTerms не может быть пустым';
+                                            } else if (val.length < 5) {
+                                              // return 'Invalid email address';
+                                              return 'Минимум 5 символа';
+                                            } else {
+                                              return null;
+                                            }
+                                          },
+                                        ]),
+                                        minLines: 6, // any number you need (It works as the rows for the textarea)
+                                        keyboardType: TextInputType.multiline,
+                                        maxLines: null,
+                                      ),
+                                      Container(
                                         width: 284,
                                         margin: const EdgeInsets.only(top: 30, bottom: 45),
                                         child: MaterialButton(
@@ -236,6 +325,8 @@ class _AddPartnersState extends State<AddPartners> {
                                                 partnerId: partnerId,
                                                 partnerName: partnerName,
                                                 path: encode64Partner,
+                                                partnerLink: partnerLink,
+                                                partnerTerms: partnerTerms,
                                               );
                                               confirmDialog(context, partner);
                                             } else {
@@ -265,12 +356,16 @@ class _AddPartnersState extends State<AddPartners> {
 
 addPartner(Partner partner) async {
   dynamic partnerName = partner.partnerName;
+  dynamic partnerLink = partner.partnerLink;
+  dynamic partnerTerms = partner.partnerTerms;
   dynamic path = partner.path;
 
   String apiUrl = baseUrl + "/test/add_partner.php";
 
   var response = await http.post(Uri.parse(apiUrl), body: {
     'partnerName': partnerName,
+    'partnerLink': partnerLink,
+    'partnerTerms': partnerTerms,
     'path': path,
   }, headers: {
     'Accept': 'application/json, charset=utf-8',

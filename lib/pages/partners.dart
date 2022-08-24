@@ -6,6 +6,7 @@ import 'package:flutter_svg/svg.dart';
 import 'dart:convert';
 import 'dart:async';
 import 'package:http/http.dart' as http;
+import 'package:url_launcher/url_launcher.dart';
 
 import '../models/partners.dart';
 import '../variables.dart';
@@ -94,14 +95,23 @@ class _PartnersState extends State<Partners> {
                                                 return Container(
                                                     width: 284,
                                                     margin: const EdgeInsets.only(bottom: 30),
-                                                    child: Flex(direction: Axis.vertical, mainAxisSize: MainAxisSize.min, children: [
+                                                    child: Flex(
+                                                    direction: Axis.vertical,
+                                                    mainAxisSize: MainAxisSize.min,
+
+                                                        children: [
                                                       Flexible(
                                                           fit: FlexFit.loose,
                                                           child: isLoadedImage
-                                                              ? Image.memory(
+                                                              ? GestureDetector(
+                                                                child: Image.memory(
                                                                   base64.decode(snapshot.data?.partners[index].path ?? ''),
                                                                   fit: BoxFit.cover,
-                                                                )
+                                                                ),
+                                                              onTap: () {
+                                                                _launchURL(snapshot.data?.partners[index].partnerLink);
+                                                                },
+                                                              )
                                                               : const Text('no image',
                                                                   textAlign: TextAlign.center,
                                                                   style: TextStyle(
@@ -110,7 +120,21 @@ class _PartnersState extends State<Partners> {
                                                                     fontFamily: 'CadillacSans',
                                                                     color: Color(0xFF8F97BF),
                                                                     height: 1.7, //line-height / font-size
-                                                                  )))
+                                                                  ))),
+                                                          const SizedBox(
+                                                            height: 10,
+                                                          ),
+                                                          Flexible(
+                                                            child: Text('${snapshot.data?.partners[index].partnerTerms}',
+                                                                textAlign: TextAlign.center,
+                                                                style: const TextStyle(
+                                                                  fontSize: 18.0,
+                                                                  fontWeight: FontWeight.normal,
+                                                                  fontFamily: 'CadillacSans',
+                                                                  color: Colors.white,
+                                                                  height: 1.17,
+                                                                )),
+                                                          )
                                                     ]));
                                               })),
                                     ])),
@@ -157,6 +181,14 @@ class _PartnersState extends State<Partners> {
       return response.body;
     } else {
       throw Exception('Error: ${response.reasonPhrase}');
+    }
+  }
+  void _launchURL(_url) async {
+    if (await canLaunchUrl(Uri.parse(_url))) {
+      //проверяем наличие браузера на устройстве
+      await launchUrl(Uri.parse(_url)); //true если открываем в приложении, false открываем в браузере
+    } else {
+      throw 'Could not launch $_url';
     }
   }
 }

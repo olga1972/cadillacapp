@@ -6,6 +6,7 @@ import 'package:http/http.dart' as http;
 
 import 'package:cadillac/widgets/titlePageAdmin.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../NavDrawerAdmin.dart';
 import '../models/partners.dart';
@@ -65,7 +66,7 @@ class _PartnersAdminState extends State<PartnersAdmin> {
                             .center,
                         children: [
                           SizedBox (
-                            width: 310,
+                            width: 320,
                             child: FutureBuilder<PartnersList>(
                               future: partnersList,
                               builder: (context, snapshot) {
@@ -80,7 +81,7 @@ class _PartnersAdminState extends State<PartnersAdmin> {
                             if (snapshot.hasData) {
                                 return Center(
                                   child: SizedBox(
-                                  width: 310,
+                                  width: 320,
                                     child: Column(
                                       mainAxisAlignment: MainAxisAlignment.start,
                                       crossAxisAlignment: CrossAxisAlignment.center,
@@ -93,7 +94,7 @@ class _PartnersAdminState extends State<PartnersAdmin> {
                                         ),
 
                                         SizedBox (
-                                            width: 310,
+                                            width: 320,
                                             child: ListView.builder (
                                                 scrollDirection: Axis.vertical,
                                                 shrinkWrap: true,
@@ -106,7 +107,7 @@ class _PartnersAdminState extends State<PartnersAdmin> {
                                                   }
                                                   return
                                                       Container (
-                                                      width: 310,
+                                                      width: 320,
                                                       decoration: const BoxDecoration(
                                                         borderRadius: BorderRadius.all(Radius
                                                             .circular(10.0)),
@@ -119,56 +120,85 @@ class _PartnersAdminState extends State<PartnersAdmin> {
                                                           children: [
                                                             Flexible(
                                                                 fit: FlexFit.loose,
-                                                                child: Row(
-                                                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                                                children: [
-                                                                  isLoadedImage ? Image.memory(
-                                                                    base64.decode(snapshot.data?.partners[index].path ?? ''),
-                                                                    fit: BoxFit.cover, width: 270)
-                                                                      : const Text('no image',
-                                                                      textAlign: TextAlign
-                                                                          .center,
-                                                                      style: TextStyle(
-                                                                        fontSize: 18.0,
-                                                                        fontWeight: FontWeight
-                                                                            .normal,
-                                                                        fontFamily: 'CadillacSans',
-                                                                        color: Color(
-                                                                            0xFF8F97BF),
-                                                                        height: 1.7, //line-height / font-size
-                                                                      )),
-                                                                  Container(
-                                                                    margin: const EdgeInsets.only(left: 15),
-                                                                    child: GestureDetector(
-                                                                      onTap: () {
+                                                                child: Column(
+                                                                  children: [
+                                                                    Row(
+                                                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                                                    children: [
+                                                                      isLoadedImage ? GestureDetector(
+                                                                        child: SizedBox(
+                                                                          width: 284,
+                                                                          child: Image.memory(
+                                                                            base64.decode(snapshot.data?.partners[index].path ?? ''),
+                                                                            fit: BoxFit.cover,
+                                                                        ),
+                                                                        ),
 
-                                                                        setState(() {
-                                                                          // устанавливаем индекс выделенного элемента
-                                                                          selectedIndex = index;
-                                                                        });
-                                                                        debugPrint(snapshot.data?.partners[selectedIndex].partnerId);
-                                                                        var currentPartnerId = snapshot.data?.partners[selectedIndex].partnerId;
-                                                                        confirmDialog(context, currentPartnerId);
+                                                                        onTap: () {
+                                                                          _launchURL(snapshot.data?.partners[index].partnerLink);
+                                                                        },
+                                                                      )
 
-                                                                      },
-                                                                      child: SvgPicture.asset(
-                                                                        'assets/images/delete.svg',
-                                                                        semanticsLabel: 'Icon delete',
-                                                                        height: 20.0,
+                                                                      : ClipRRect(
+                                                                        borderRadius: const BorderRadius.all(Radius.circular(20)),
+                                                                        child: Image.asset(
+                                                                          'assets/images/no-image.jpg',
+                                                                          fit: BoxFit.cover,
+                                                                          width: 284,
+                                                                          height: 160,
+                                                                        )),
+                                                                      Container(
+                                                                        margin: const EdgeInsets.only(left: 15),
+                                                                        child: GestureDetector(
+                                                                          onTap: () {
+
+                                                                            setState(() {
+                                                                              // устанавливаем индекс выделенного элемента
+                                                                              selectedIndex = index;
+                                                                            });
+                                                                            debugPrint(snapshot.data?.partners[selectedIndex].partnerId);
+                                                                            var currentPartnerId = snapshot.data?.partners[selectedIndex].partnerId;
+                                                                            confirmDialog(context, currentPartnerId);
+
+                                                                          },
+                                                                          child: SvgPicture.asset(
+                                                                            'assets/images/delete.svg',
+                                                                            semanticsLabel: 'Icon delete',
+                                                                            height: 20.0,
+                                                                          ),
+                                                                        ),
                                                                       ),
+                                                                      Visibility(
+                                                                        visible: false,
+                                                                        child: FormBuilderTextField(
+                                                                          name: 'currentPartnerId',
+                                                                          initialValue: '${snapshot.data?.partners[selectedIndex].partnerId}',
+                                                                          onSaved: (value) => currentPartnerId = value!,
+                                                                        ),
+                                                                      ),
+                                                                    ]
+                                                            ),
+                                                                    const SizedBox(
+                                                                      height: 10,
                                                                     ),
-                                                                  ),
-                                                                  Visibility(
-                                                                    visible: false,
-                                                                    child: FormBuilderTextField(
-                                                                      name: 'currentPartnerId',
-                                                                      initialValue: '${snapshot.data?.partners[selectedIndex].partnerId}',
-                                                                      onSaved: (value) => currentPartnerId = value!,
-                                                                    ),
-                                                                  ),
-                                                                ]
-                                                            )
+                                                                    Row(
+                                                                      children: [
+                                                                        Flexible(
+                                                                          child: Text('${snapshot.data?.partners[index].partnerTerms}',
+                                                                              textAlign: TextAlign.center,
+                                                                              style: const TextStyle(
+                                                                                fontSize: 18.0,
+                                                                                fontWeight: FontWeight.normal,
+                                                                                fontFamily: 'CadillacSans',
+                                                                                color: Colors.white,
+                                                                                height: 1.17,
+                                                                              )),
+                                                                        )
+                                                                      ]
+                                                                    )
+                                                                  ],
+                                                                )
                                                             ),
                                                           ]
                                                         )
@@ -177,7 +207,7 @@ class _PartnersAdminState extends State<PartnersAdmin> {
                                             )
                                         ),
                                         Container(
-                                            width: 310,
+                                            width: 320,
                                             height: 20,
                                             margin: const EdgeInsets.only(left: 15, bottom: 20),
                                             alignment: const Alignment(1, 1),
@@ -228,7 +258,15 @@ class _PartnersAdminState extends State<PartnersAdmin> {
       throw Exception('Error: ${response.reasonPhrase}');
     }
   }
+  void _launchURL(_url) async {
 
+    if (await canLaunchUrl(Uri.parse(_url))) {
+      //проверяем наличие браузера на устройстве
+      await launchUrl(Uri.parse(_url)); //true если открываем в приложении, false открываем в браузере
+    } else {
+      throw 'Could not launch $_url';
+    }
+  }
 
 
 }
@@ -316,5 +354,6 @@ Future confirmDialog(BuildContext context, currentPartnerId) async {
       );
     },
   );
+
 }
 

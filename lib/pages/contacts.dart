@@ -90,7 +90,7 @@ class _ContactsState extends State<Contacts> {
                     ),
                     Container(
                       margin: const EdgeInsets.only(bottom: 15),
-                      child: Text('есть вопрос?'.toUpperCase(), textAlign: TextAlign.center, style: styleTitleFormInput),
+                      child: Text('есть вопрос или пожелание?'.toUpperCase(), textAlign: TextAlign.center, style: styleTitleFormInput),
                     ),
                     Container(
                       width: 284,
@@ -115,7 +115,7 @@ class _ContactsState extends State<Contacts> {
                             visible: false,
                             child: FormBuilderTextField(
                               name: 'subject',
-                              initialValue: 'заказ атрибутики',
+                              // initialValue: 'заказ атрибутики',
                               onSaved: (value) => subject = value!,
                             ),
                           ),
@@ -127,43 +127,73 @@ class _ContactsState extends State<Contacts> {
                               style: styleTitleFormInput,
                             ),
                           ),
-                          SizedBox(
-                            width: 284,
-                            child: FormBuilderTextField(
-                                name: 'theme',
-                                style: styleFormInput,
-                                initialValue: "Атрибутика",
-                                decoration: const InputDecoration(
-                                  contentPadding: EdgeInsets.all(16),
-                                  border: OutlineInputBorder(borderSide: BorderSide.none, borderRadius: BorderRadius.all(Radius.circular(10))),
-                                  fillColor: Color(0XFF515569),
-                                  filled: true,
-                                  hintText: "Атрибутика",
-                                  hintStyle: TextStyle(
+                          // DropdownButtonFormField(
+                          //   // value: 'item1',
+                          //   decoration: InputDecoration(
+                          //     suffixIconColor: Colors.white,
+                          //
+                          //     contentPadding: EdgeInsets.all(16),
+                          //     border: OutlineInputBorder(borderSide: BorderSide.none, borderRadius: BorderRadius.all(Radius.circular(10))),
+                          //     fillColor: Color(0XFF515569),
+                          //     filled: true,
+                          //     hintText: "Выберите тему сообщения",
+                          //     hintStyle: TextStyle(
+                          //       color: Colors.white,
+                          //     ),
+                          //   ),
+                          //   onChanged: (_) {},
+                          //   dropdownColor: Colors.white,
+                          //   items: [
+                          //     DropdownMenuItem(
+                          //       child: Text('item 1'),
+                          //       value: 'item1',
+                          //     ),
+                          //     DropdownMenuItem(
+                          //       child: Text('item 2'),
+                          //       value: 'item2',
+                          //     ),
+                          //   ],
+                          // ),
+                          Container(
+                            width: 284.0,
+                                child: FormBuilderDropdown(
+                                  name: 'theme',
+                                  elevation: 0,
+                                  icon: SvgPicture.asset(
+                                    'assets/images/caret-down-solid.svg',
+                                    semanticsLabel: 'Icon whatsapp',
+                                    height: 16.0,
+                                    width: 10.0,
                                     color: Colors.white,
                                   ),
+
+                                  style: const TextStyle(
+                                    fontSize: 14.0,
+                                    fontWeight: FontWeight.normal,
+                                    fontFamily: 'CadillacSans',
+                                    color: Colors.white,
+
+                                  ),
+                                  decoration: const InputDecoration(
+                                    contentPadding: EdgeInsets.all(16),
+                                    border: OutlineInputBorder(borderSide: BorderSide(width: 1, color: Colors.white), borderRadius: BorderRadius.all(Radius.circular(10))),
+                                    fillColor: Color(0XFF515569),
+                                    filled: true,
+                                    hintText: "Выберите тему сообщения",
+                                    hintStyle: TextStyle(
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                  dropdownColor: const Color(0XFF363b57),
+                                  alignment: Alignment.bottomLeft,
+                                  items: ['Атрибутика', 'Тема 2', 'Тема 1']
+                                      .map((theme) => DropdownMenuItem(
+                                      value: theme,
+                                      child: Text(theme),
+                                  )).toList(),
+                                  onSaved: (value) => theme = value!,
                                 ),
-                                // onChanged: _onChanged,
-                                onSaved: (value) => theme = value!,
-                                // valueTransformer: (text) => num.tryParse(text),
-                                // validator: FormBuilderValidators.compose([
-                                //   // FormBuilderValidators.required(context),
-                                //   // FormBuilderValidators.numeric(context),
-                                //   // FormBuilderValidators.max(context, 70),
-                                // ]),
-                                validator: FormBuilderValidators.compose([
-                                  (val) {
-                                    if (val == null) {
-                                      return 'Поле theme не может быть пустым';
-                                    } else if (val.length < 3) {
-                                      return 'Минимум 3 символа';
-                                    } else {
-                                      return null;
-                                    }
-                                  },
-                                ]),
-                                keyboardType: TextInputType.text),
-                          ),
+                              ),
                           Container(
                             margin: const EdgeInsets.only(top: 17, bottom: 10),
                             child: Text(
@@ -213,7 +243,7 @@ class _ContactsState extends State<Contacts> {
                     ),
                     Container(
                       width: 284,
-                      margin: const EdgeInsets.only(top: 30, bottom: 45),
+                      margin: const EdgeInsets.only(top: 30, bottom: 25),
                       child: MaterialButton(
                         padding: const EdgeInsets.all(17),
                         color: const Color.fromARGB(255, 255, 255, 255),
@@ -280,7 +310,8 @@ class _ContactsState extends State<Contacts> {
                                       width: 284,
                                       height: 160,
                                       decoration: const BoxDecoration(
-                                        color: Color(0XffE4E6FF),
+                                        // color: Color(0XffE4E6FF),
+                                        color: Colors.transparent,
                                         borderRadius: BorderRadius.all(Radius.circular(20.0)),
                                       ),
                                       margin: const EdgeInsets.only(bottom: 10.0, top: 10, left: 10, right: 10),
@@ -288,7 +319,7 @@ class _ContactsState extends State<Contacts> {
                                           ? ClipRRect(
                                               borderRadius: const BorderRadius.all(Radius.circular(10.0)),
                                               child: Image.memory(base64.decode(snapshot.data?.partners[index].path ?? ''),
-                                                  fit: BoxFit.cover, width: 284, height: 107))
+                                                  fit: BoxFit.contain, width: 284, height: 107))
                                           : const Text('no image',
                                               textAlign: TextAlign.center,
                                               style: TextStyle(
@@ -360,7 +391,7 @@ Future confirmDialog(BuildContext context) async {
     builder: (BuildContext context) {
       return AlertDialog(
         content: Text(
-          'Заказать атрибутику?'.toUpperCase(),
+          'Отправить сообщение?'.toUpperCase(),
           textAlign: TextAlign.center,
           style: styleTextAlertDialog,
         ),

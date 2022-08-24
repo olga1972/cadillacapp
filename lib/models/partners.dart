@@ -25,12 +25,16 @@ class Partner {
   late final String partnerId;
   late final String partnerName;
   late final String path;
+  late final String partnerLink;
+  late final String partnerTerms;
 
   Partner({
     required this.id,
     required this.partnerId,
     required this.partnerName,
     required this.path,
+    required this.partnerLink,
+    required this.partnerTerms
   });
 
   factory Partner.fromJson(Map<String, dynamic> json) {
@@ -39,6 +43,8 @@ class Partner {
       partnerId: json['partnerId'] as String,
       partnerName: json['partnerName'] as String,
       path: json['path'] as String,
+      partnerLink: json['partnerLink'] as String,
+      partnerTerms: json['partnerTerms'] as String
     );
   }
 
@@ -60,6 +66,8 @@ class Partner {
     data['partnerId'] = partnerId;
     data['partnerName'] = partnerName;
     data['path'] = path;
+    data['partnerLink'] = partnerLink;
+    data['partnerTerms'] = partnerTerms;
 
     return data;
   }
