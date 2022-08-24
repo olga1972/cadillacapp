@@ -132,102 +132,35 @@ class _MembersAdminState extends State<MembersAdmin> {
                                                     color: const Color(0xFFE4E6FF),
                                                     borderRadius: BorderRadius.circular(10),
                                                   ),
-                                                  child: Flex(direction: Axis.vertical, mainAxisSize: MainAxisSize.min, children: [
-                                                    Flexible(
-                                                        fit: FlexFit.loose,
-                                                        child: Column(children: [
+                                                  child: Column (
+                                                    mainAxisAlignment: MainAxisAlignment.start,
+                                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                                      children: [
                                                           Container(
                                                               margin: const EdgeInsets.only(bottom: 10),
-                                                              child: Row(
-                                                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                                                  children: [
-                                                                    Text('${snapshot.data?.users[index].username}'.toUpperCase(),
-                                                                        textAlign: TextAlign.right,
-                                                                        style: const TextStyle(
-                                                                          fontSize: 14.0,
-                                                                          fontWeight: FontWeight.w700,
-                                                                          fontFamily: 'CadillacSans',
-                                                                          color: Colors.black,
-                                                                          height: 1.7, //line-height / font-size
-                                                                        )),
-                                                                    Column(
-                                                                        mainAxisAlignment: MainAxisAlignment.end,
-                                                                        crossAxisAlignment: CrossAxisAlignment.end,
-                                                                        children: [
-                                                                          Text('именной номер'.toUpperCase(),
-                                                                              textAlign: TextAlign.right,
-                                                                              style: const TextStyle(
-                                                                                fontSize: 14.0,
-                                                                                fontWeight: FontWeight.normal,
-                                                                                fontFamily: 'CadillacSans',
-                                                                                color: Colors.black,
-                                                                                height: 1.7, //line-height / font-size
-                                                                              )),
-                                                                          Text('${snapshot.data?.users[index].id}'.toString().padLeft(4, '0').toUpperCase(),
-                                                                              textAlign: TextAlign.left,
-                                                                              style: const TextStyle(
-                                                                                fontSize: 14.0,
-                                                                                fontWeight: FontWeight.w700,
-                                                                                fontFamily: 'CadillacSans',
-                                                                                color: Colors.black,
-                                                                                height: 1.7, //line-height / font-size
-                                                                              )),
-                                                                        ])
-                                                                  ])),
+                                                                child: Text('${snapshot.data?.users[index].username}'.toUpperCase(),
+                                                                    style: const TextStyle(
+                                                                      fontSize: 14.0,
+                                                                      fontWeight: FontWeight.w700,
+                                                                      fontFamily: 'CadillacSans',
+                                                                      color: Colors.black,
+                                                                      height: 1.7, //line-height / font-size
+                                                                    )),
+                                                          ),
                                                           Container(
                                                             margin: const EdgeInsets.only(bottom: 10.0),
                                                             child: Row(
                                                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                               crossAxisAlignment: CrossAxisAlignment.center,
                                                               children: [
-                                                                ClipOval(
-                                                                  child: CircleAvatar(
-                                                                      radius: 48,
-                                                                      backgroundColor: Colors.transparent,
-                                                                      child: isLoadedImage
-                                                                          ? Image.memory(base64.decode(snapshot.data?.users[index].path ?? ''),
-                                                                              fit: BoxFit.cover, width: 96, height: 96)
-                                                                          : const Text('no image')),
-                                                                ),
                                                                 isLoadedCar
-                                                                    ? Image.memory(bytesCar1, fit: BoxFit.cover, width: 157, height: 79)
+                                                                    ? Image.memory(bytesCar1, fit: BoxFit.cover, width: 264, height: 149)
                                                                     : const Text('no image'),
                                                               ],
                                                             ),
                                                           ),
-                                                          Row(children: [
-                                                            const SizedBox(
-                                                              width: 106,
-                                                            ),
-                                                            SizedBox(
-                                                                width: 157,
-                                                                child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-                                                                  Flexible(
-                                                                    flex: 3,
-                                                                    child: Text(
-                                                                      '${snapshot.data?.users[index].carname}'.toUpperCase(),
-                                                                      style: const TextStyle(
-                                                                        fontSize: 14.0,
-                                                                        fontWeight: FontWeight.normal,
-                                                                        fontFamily: 'CadillacSans',
-                                                                        color: Color(0xFF12141F),
-                                                                      ),
-                                                                    ),
-                                                                  ),
-                                                                  Flexible(
-                                                                    flex: 1,
-                                                                    child: SvgPicture.asset('assets/images/cadillac.svg',
-                                                                        semanticsLabel: 'Icon car', height: 15.0),
-                                                                  ),
-                                                                ]))
-                                                          ]),
-                                                          const SizedBox(
-                                                            height: 10,
-                                                          ),
                                                           Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-                                                            Text('дата регистрации'.toUpperCase(),
-                                                                textAlign: TextAlign.right,
+                                                            Text('сфера деятельности'.toUpperCase(),
                                                                 style: const TextStyle(
                                                                   fontSize: 14.0,
                                                                   fontWeight: FontWeight.w700,
@@ -235,26 +168,32 @@ class _MembersAdminState extends State<MembersAdmin> {
                                                                   color: Colors.black,
                                                                   height: 1.7, //line-height / font-size
                                                                 )),
-                                                            Text('${snapshot.data?.users[index].dateRegister}'.toUpperCase(),
-                                                                textAlign: TextAlign.left,
-                                                                style: const TextStyle(
-                                                                  fontSize: 14.0,
-                                                                  fontWeight: FontWeight.normal,
-                                                                  fontFamily: 'CadillacSans',
-                                                                  color: Colors.black,
-                                                                  height: 1.7, //line-height / font-size
-                                                                )),
+                                                            SizedBox(
+                                                              width: 10,
+                                                            ),
+                                                            Flexible(
+                                                              child: Text('${snapshot.data?.users[index].dateRegister}' .toUpperCase(),
+                                                              textAlign: TextAlign.left,
+                                                              style: const TextStyle(
+                                                              fontSize: 14.0,
+                                                              fontWeight: FontWeight.normal,
+                                                              fontFamily: 'CadillacSans',
+                                                              color: Colors.black,
+                                                              height: 1.7, //line-height / font-size
+                                                              )),
+                                                              )
+
                                                           ]),
                                                           Visibility(
                                                             visible: false,
                                                             child: FormBuilderTextField(
-                                                              name: 'currentNewsId',
+                                                              name: 'currentUserId',
                                                               initialValue: '${snapshot.data?.users[selectedIndex].userId}',
                                                               onSaved: (value) => currentUserId = value!,
                                                             ),
                                                           ),
-                                                        ]))
-                                                  ])));
+                                                        ])
+                                                  ));
                                         }),
                                   )
                                 ])));

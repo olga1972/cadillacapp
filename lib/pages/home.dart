@@ -85,7 +85,7 @@ class _HomeState extends State<Home> {
                     width: 284,
                     margin: const EdgeInsets.only(top: 100, bottom: 100),
                     child: (Text(
-                      'Став владельцем Cadillac, \nвы не просто приобретаете \nавтомобиль класса-люкс, \nвы вступаете в элитное сообщество, единомышленников, объединённых общими ценностями и интересами.'
+                      'Став владельцем Cadillac, \nвы не просто приобретаете \nавтомобиль класса-люкс, \nвы вступаете в элитное сообщество, единомышленников'
                           .toUpperCase(),
                       style: const TextStyle(
                         fontSize: 14.0,

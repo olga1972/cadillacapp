@@ -51,19 +51,18 @@ class Socials extends StatelessWidget {
           height: 30,
           decoration: const BoxDecoration(
             color: Color(0xff868e96),
-            borderRadius: BorderRadius.all(Radius.circular(5)),
+            borderRadius: BorderRadius.all(Radius.circular(15)),
           ),
         ),
         IconButton(
-          iconSize: 27.0,
+          iconSize: 28.0,
           icon: SvgPicture.asset(
-            'assets/images/vk.svg',
-            semanticsLabel: 'Icon whatsapp',
-            height: 27.0,
-            width: 31.0,
-            color: Colors.white,
+            'assets/images/telegram.svg',
+            semanticsLabel: 'Icon telegram',
+            height: 28.0,
+            width: 28.0,
           ),
-          onPressed: () => _launchURL('https://www.vk.com'),
+          onPressed: () => _launchURL('https://www.telegram.com'),
         )
       ]),
       Stack(alignment: Alignment.center, children: [
@@ -80,7 +79,7 @@ class Socials extends StatelessWidget {
           iconSize: 27.0,
           icon: SvgPicture.asset(
             'assets/images/instagram.svg',
-            semanticsLabel: 'Icon whatsapp',
+            semanticsLabel: 'Icon instagram',
             height: 27.0,
             width: 27.0,
             color: Colors.white,
@@ -95,19 +94,21 @@ class Socials extends StatelessWidget {
           height: 30,
           decoration: const BoxDecoration(
             color: Color(0xff868e96),
-            borderRadius: BorderRadius.all(Radius.circular(15)),
+            borderRadius: BorderRadius.all(Radius.circular(5)),
           ),
         ),
         IconButton(
-          iconSize: 28.0,
+          iconSize: 27.0,
           icon: SvgPicture.asset(
-            'assets/images/telegram.svg',
-            semanticsLabel: 'Icon telegram',
-            height: 28.0,
-            width: 28.0,
+            'assets/images/vk.svg',
+            semanticsLabel: 'Icon vk',
+            height: 27.0,
+            width: 31.0,
+            color: Colors.white,
           ),
-          onPressed: () => _launchURL('https://www.telegram.com'),
+          onPressed: () => _launchURL('https://www.vk.com'),
         )
+
       ]),
     ]);
   }

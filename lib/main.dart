@@ -59,45 +59,55 @@ Future<void> main() async {
   checkPlatform();
   debugPrint(checkPlatform());
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(
-    options: const FirebaseOptions(
-      apiKey: "AIzaSyAPQXgOa4JniOfVTk5OZmyjJlPObU1R5y8",
-      authDomain: "cadillacapp-42c1d.firebaseapp.com",
-      projectId: "cadillacapp-42c1d",
-      storageBucket: "cadillacapp-42c1d.appspot.com",
-      messagingSenderId: "918394593301",
-      appId: "1:918394593301:web:83e077de8e1fbfc41e2e1c"
-  ),
-  );
-  // if (checkPlatform() == 'windows') {
-  //
-  //     await Firebase.initializeApp(
-  //
-  //         options: const FirebaseOptions(
-  //             apiKey: "AIzaSyAPQXgOa4JniOfVTk5OZmyjJlPObU1R5y8",
-  //             authDomain: "cadillacapp-42c1d.firebaseapp.com",
-  //             projectId: "cadillacapp-42c1d",
-  //             storageBucket: "cadillacapp-42c1d.appspot.com",
-  //             messagingSenderId: "918394593301",
-  //             appId: "1:918394593301:web:83e077de8e1fbfc41e2e1c"
-  //         )
-  //     );
-  //   } else if(checkPlatform() == 'ios') {
-  //     await Firebase.initializeApp(
-  //       options: const FirebaseOptions(
-  //             apiKey: "AIzaSyAPQXgOa4JniOfVTk5OZmyjJlPObU1R5y8",
-  //             authDomain: "cadillacapp-42c1d.firebaseapp.com",
-  //             projectId: "cadillacapp-42c1d",
-  //             storageBucket: "cadillacapp-42c1d.appspot.com",
-  //             messagingSenderId: "918394593301",
-  //             appId: "1:918394593301:web:83e077de8e1fbfc41e2e1c"
-  //         )
-  //     );
-  //   } else {
-  //   //если оставить строку ниже, то белый экран в мобильном браузере будет
-  //   //await Firebase.initializeApp();
-  //   debugPrint('else');
-  // }
+  // await Firebase.initializeApp();
+  // if (checkPlatform() != 'android') {
+    //await Firebase.initializeApp(
+     // options: const FirebaseOptions(
+    //       apiKey: "AIzaSyAPQXgOa4JniOfVTk5OZmyjJlPObU1R5y8",
+    //       authDomain: "cadillacapp-42c1d.firebaseapp.com",
+    //       projectId: "cadillacapp-42c1d",
+    //       storageBucket: "cadillacapp-42c1d.appspot.com",
+    //       messagingSenderId: "918394593301",
+    //       appId: "1:918394593301:web:83e077de8e1fbfc41e2e1c"
+    //   ),
+    // );
+    if (checkPlatform() == 'windows') {
+
+        await Firebase.initializeApp(
+
+            options: const FirebaseOptions(
+                apiKey: "AIzaSyAPQXgOa4JniOfVTk5OZmyjJlPObU1R5y8",
+                authDomain: "cadillacapp-42c1d.firebaseapp.com",
+                projectId: "cadillacapp-42c1d",
+                storageBucket: "cadillacapp-42c1d.appspot.com",
+                messagingSenderId: "918394593301",
+                appId: "1:918394593301:web:83e077de8e1fbfc41e2e1c"
+            )
+        );
+    //   } else if(checkPlatform() == 'ios') {
+    //     await Firebase.initializeApp(
+    //       options: const FirebaseOptions(
+    //             apiKey: "AIzaSyAPQXgOa4JniOfVTk5OZmyjJlPObU1R5y8",
+    //             authDomain: "cadillacapp-42c1d.firebaseapp.com",
+    //             projectId: "cadillacapp-42c1d",
+    //             storageBucket: "cadillacapp-42c1d.appspot.com",
+    //             messagingSenderId: "918394593301",
+    //             appId: "1:918394593301:web:83e077de8e1fbfc41e2e1c"
+    //         )
+    //     );
+    //   } else {
+    //   //если оставить строку ниже, то белый экран в мобильном браузере будет
+    //   await Firebase.initializeApp(
+    //
+    //   );
+    //   debugPrint('else');
+    //}
+
+ } else {
+      await Firebase.initializeApp();
+    }
+
+
   runApp(MyApp());
 }
 
@@ -167,8 +177,8 @@ class MyApp extends StatelessWidget {
 
 
         routes: {
-          '/home': (context) => Entrance(),
-          //'/home': (context) => Provider.of<Data>(context, listen: false).data['userId'].toString() != ''? const Account() : const RegistrationPage(),
+         //'/home': (context) => Entrance(),
+          //'/home': (context) => HomeAdmin(),
           //'/home': (context) => Account(),
           //'/home': (context) => MembersAdmin(),
           //'/home': (context) => RegistrationPage(),
@@ -182,7 +192,7 @@ class MyApp extends StatelessWidget {
           //'/home': (context) => AccountAdmin(userId:'f1c7fde2-ef1b-11ec-a426-002590eb3418'),
           //'/home': (context) => PartnersAdmin(),
           //'/home': (context) => Account(userId:userId),
-          //'/home': (context) => Members(),
+          '/home': (context) => Members(),
           //'/home': (context) => Account(userId:'f1c7fde2-ef1b-11ec-a426-002590eb3418'),
           '/account': (context) => const Account(),
           '/members': (context) => const Members(),

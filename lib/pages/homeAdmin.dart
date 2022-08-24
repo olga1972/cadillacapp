@@ -7,13 +7,13 @@ import 'package:flutter_svg/svg.dart';
 import 'package:cadillac/pages/addBanners.dart';
 
 import 'package:cadillac/widgets/titlePageAdmin.dart';
+import 'package:cadillac/widgets/socials.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 
 import '../NavDrawerAdmin.dart';
 import '../models/banners.dart';
 import '../variables.dart';
-
 import 'editAds.dart';
 
 class HomeAdmin extends StatefulWidget {
@@ -94,14 +94,15 @@ class _HomeAdminState extends State<HomeAdmin> {
                     child: Column(children: [
               Container(
                 width: 284,
-                margin: const EdgeInsets.only(bottom: 20, top: 40),
+                margin: const EdgeInsets.only(top: 50),
                 child: const TitlePageAdmin(title: 'главная'),
               ),
               Container(
                   width: 284,
-                  margin: const EdgeInsets.only(top: 80, bottom: 100),
+                  margin: const EdgeInsets.only(top: 70, bottom: 70),
                   child: (Text(
-                    'Здесь вы можете размещать \nи редактировать рекламу'.toUpperCase(),
+                    'Став владельцем Cadillac, \nвы не просто приобретаете \nавтомобиль класса-люкс, \nвы вступаете в элитное сообщество, единомышленников'
+                        .toUpperCase(),
                     style: const TextStyle(
                       fontSize: 14.0,
                       fontWeight: FontWeight.normal,
@@ -222,7 +223,12 @@ class _HomeAdminState extends State<HomeAdmin> {
                           );
                         }
                         return const Center(child: Text('no data'));
-                      }))
+                      })),
+              const SizedBox(
+                height: 20
+              ),
+              const TitlePageAdmin(title: 'мы в соцсетях'),
+              const Socials()
             ])))
           ])),
         ),

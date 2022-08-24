@@ -1,6 +1,7 @@
 import 'package:cadillac/pages/registrationPage.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 //import 'package:cadillac/models/users.dart';
 import 'package:cadillac/pages/auth.dart';
@@ -33,7 +34,7 @@ class Entrance extends StatelessWidget {
     // }
 
 
-    //Firebase.initializeApp();  error method not found
+    //Firebase.initializeApp();  // error method not found
 
     final bool isLoggedIn = user != null;
     bool isAdmin = false;
