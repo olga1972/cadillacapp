@@ -304,6 +304,9 @@ class _AddUserState extends State<AddUser> {
                                               password: password,
                                               dateRegister: dateRegister,
                                               dateExpired: dateExpired,
+                                              fieldOfActivity: 'fieldOfActivity',
+                                              numberCar: 'numberCar',
+                                              yearIssue: 'yearIssue',
                                             );
 
                                             newUser = await addUser(currentUser);
@@ -344,6 +347,9 @@ class _AddUserState extends State<AddUser> {
     dynamic dateRegister = user.dateRegister;
     dynamic dateExpired = user.dateExpired;
     dynamic userId = user.userId;
+    dynamic fieldOfActivity = user.fieldOfActivity;
+    dynamic numberCar = user.numberCar;
+    dynamic yearIssue = user.yearIssue;
 
     String apiUrl = baseUrl + "/test/create.php";
 
@@ -358,6 +364,9 @@ class _AddUserState extends State<AddUser> {
       'email': email,
       'dateRegister': dateRegister,
       'dateExpired': dateExpired,
+      'fieldOfActivity': fieldOfActivity,
+      'numberCar': numberCar,
+      'yearIssue': yearIssue,
     });
     if (response.statusCode == 200) {
       debugPrint('success add user');

@@ -186,7 +186,7 @@ class _ContactsState extends State<Contacts> {
                                   ),
                                   dropdownColor: const Color(0XFF363b57),
                                   alignment: Alignment.bottomLeft,
-                                  items: ['Атрибутика', 'Тема 2', 'Тема 1']
+                                  items: ['Мой аккаунт', 'Члены автоклуба', 'Клубные поездки и мероприятия', 'Клубная атрибутика и одежда', 'Партнеры', 'Жалобы и рекламации', 'Другое']
                                       .map((theme) => DropdownMenuItem(
                                       value: theme,
                                       child: Text(theme),

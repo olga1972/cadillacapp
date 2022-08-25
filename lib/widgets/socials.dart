@@ -40,7 +40,7 @@ class Socials extends StatelessWidget {
               color: Colors.white,
             ),
             // onPressed: () {},
-            onPressed: () => _launchURL('https://www.whatsapp.com'),
+            onPressed: () => _launchURL('https://wa.me/message/NSTHPQVELAU4I1'),
           )
         ])),
       ),
@@ -62,7 +62,7 @@ class Socials extends StatelessWidget {
             height: 28.0,
             width: 28.0,
           ),
-          onPressed: () => _launchURL('https://www.telegram.com'),
+          onPressed: () => _launchURL('https://t.me/elena_watermelonova'),
         )
       ]),
       Stack(alignment: Alignment.center, children: [
@@ -84,7 +84,7 @@ class Socials extends StatelessWidget {
             width: 27.0,
             color: Colors.white,
           ),
-          onPressed: () => _launchURL('https://www.instagram.com'),
+          onPressed: () => _launchURL('https://www.instagram.com/cadillac_family_russia/'),
         )
       ]),
       Stack(alignment: Alignment.center, children: [
@@ -106,7 +106,7 @@ class Socials extends StatelessWidget {
             width: 31.0,
             color: Colors.white,
           ),
-          onPressed: () => _launchURL('https://www.vk.com'),
+          onPressed: () => _launchURL('https://vk.com/cadillacfamilyrussia'),
         )
 
       ]),

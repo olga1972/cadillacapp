@@ -79,6 +79,10 @@ class _EditState extends State<Edit> {
   late Uint8List? bytesCar2;
   late Uint8List? bytesCar3;
 
+  late String fieldOfActivity;
+  late String numberCar;
+  late String yearIssue;
+
   var maskFormatterPhone = MaskTextInputFormatter(mask: '+7 ___-___-__-__', filter: {"_": RegExp(r'[0-9]')}, type: MaskAutoCompletionType.lazy);
 
   var maskFormatterDate = MaskTextInputFormatter(mask: '__.__.____', filter: {"_": RegExp(r'[0-9]')}, type: MaskAutoCompletionType.lazy);
@@ -399,6 +403,33 @@ class _EditState extends State<Edit> {
                                                 ),
                                                 keyboardType: TextInputType.text),
                                             Container(
+                                              width: 284,
+                                              margin: const EdgeInsets.only(top: 10, bottom: 10),
+                                              child: Text(
+                                                'сфера деятельности'.toUpperCase(),
+                                                textAlign: TextAlign.left,
+                                                style: styleTitleFormInput,
+                                              ),
+                                            ),
+                                            FormBuilderTextField(
+                                                name: 'fieldOfActivity',
+                                                initialValue: snapshot.data?.yearIssue,
+                                                cursorWidth: 1.0,
+                                                cursorColor: Colors.white,
+                                                style: styleFormInput,
+                                                decoration: const InputDecoration(
+                                                  contentPadding: EdgeInsets.all(16),
+                                                  border: OutlineInputBorder(borderSide: BorderSide.none, borderRadius: BorderRadius.all(Radius.circular(10))),
+                                                  fillColor: Color(0XFF515569),
+                                                  filled: true,
+                                                  hintText: "Введите сферу деятельности",
+                                                  hintStyle: TextStyle(
+                                                    color: Colors.white60,
+                                                  ),
+                                                ),
+                                                onSaved: (value) => fieldOfActivity = value!,
+                                                keyboardType: TextInputType.text),
+                                            Container(
                                               alignment: Alignment.topLeft,
                                               margin: const EdgeInsets.only(top: 10, bottom: 10),
                                               child: Text(
@@ -424,6 +455,114 @@ class _EditState extends State<Edit> {
                                                   ),
                                                 ),
                                                 onSaved: (value) => carname = value!,
+                                                keyboardType: TextInputType.text),
+                                            Container(
+                                              width: 284,
+                                              margin: const EdgeInsets.only(top: 10, bottom: 10),
+                                              child: Text(
+                                                'загрузите 3 фото вашего cadillac'.toUpperCase(),
+                                                textAlign: TextAlign.left,
+                                                style: styleTitleFormInput,
+                                              ),
+                                            ),
+                                            FormBuilderTextField(
+                                                name: 'carname',
+                                                initialValue: snapshot.data?.carname,
+                                                cursorWidth: 1.0,
+                                                cursorColor: Colors.white,
+                                                style: styleFormInput,
+                                                decoration: const InputDecoration(
+                                                  contentPadding: EdgeInsets.all(16),
+                                                  border: OutlineInputBorder(borderSide: BorderSide.none, borderRadius: BorderRadius.all(Radius.circular(10))),
+                                                  fillColor: Color(0XFF515569),
+                                                  filled: true,
+                                                  hintText: "Введите название автомобиля",
+                                                  hintStyle: TextStyle(
+                                                    color: Colors.white60,
+                                                  ),
+                                                ),
+                                                onSaved: (value) => carname = value!,
+                                                keyboardType: TextInputType.text),
+                                            Container(
+                                              width: 284,
+                                              margin: const EdgeInsets.only(top: 10, bottom: 10),
+                                              child: Text(
+                                                'загрузите 3 фото вашего cadillac'.toUpperCase(),
+                                                textAlign: TextAlign.left,
+                                                style: styleTitleFormInput,
+                                              ),
+                                            ),
+                                            FormBuilderTextField(
+                                                name: 'carname',
+                                                initialValue: snapshot.data?.carname,
+                                                cursorWidth: 1.0,
+                                                cursorColor: Colors.white,
+                                                style: styleFormInput,
+                                                decoration: const InputDecoration(
+                                                  contentPadding: EdgeInsets.all(16),
+                                                  border: OutlineInputBorder(borderSide: BorderSide.none, borderRadius: BorderRadius.all(Radius.circular(10))),
+                                                  fillColor: Color(0XFF515569),
+                                                  filled: true,
+                                                  hintText: "Введите название автомобиля",
+                                                  hintStyle: TextStyle(
+                                                    color: Colors.white60,
+                                                  ),
+                                                ),
+                                                onSaved: (value) => carname = value!,
+                                                keyboardType: TextInputType.text),
+                                            Container(
+                                              width: 284,
+                                              margin: const EdgeInsets.only(top: 10, bottom: 10),
+                                              child: Text(
+                                                'номер автомобиля'.toUpperCase(),
+                                                textAlign: TextAlign.left,
+                                                style: styleTitleFormInput,
+                                              ),
+                                            ),
+                                            FormBuilderTextField(
+                                                name: 'numberCar',
+                                                initialValue: snapshot.data?.numberCar,
+                                                cursorWidth: 1.0,
+                                                cursorColor: Colors.white,
+                                                style: styleFormInput,
+                                                decoration: const InputDecoration(
+                                                  contentPadding: EdgeInsets.all(16),
+                                                  border: OutlineInputBorder(borderSide: BorderSide.none, borderRadius: BorderRadius.all(Radius.circular(10))),
+                                                  fillColor: Color(0XFF515569),
+                                                  filled: true,
+                                                  hintText: "Введите гос. номер автомобиля",
+                                                  hintStyle: TextStyle(
+                                                    color: Colors.white60,
+                                                  ),
+                                                ),
+                                                onSaved: (value) => numberCar = value!,
+                                                keyboardType: TextInputType.text),
+                                            Container(
+                                              width: 284,
+                                              margin: const EdgeInsets.only(top: 10, bottom: 10),
+                                              child: Text(
+                                                'год выпуска автомобиля'.toUpperCase(),
+                                                textAlign: TextAlign.left,
+                                                style: styleTitleFormInput,
+                                              ),
+                                            ),
+                                            FormBuilderTextField(
+                                                name: 'yearIssue',
+                                                initialValue: snapshot.data?.yearIssue,
+                                                cursorWidth: 1.0,
+                                                cursorColor: Colors.white,
+                                                style: styleFormInput,
+                                                decoration: const InputDecoration(
+                                                  contentPadding: EdgeInsets.all(16),
+                                                  border: OutlineInputBorder(borderSide: BorderSide.none, borderRadius: BorderRadius.all(Radius.circular(10))),
+                                                  fillColor: Color(0XFF515569),
+                                                  filled: true,
+                                                  hintText: "Введите год выпуска авто",
+                                                  hintStyle: TextStyle(
+                                                    color: Colors.white60,
+                                                  ),
+                                                ),
+                                                onSaved: (value) => yearIssue = value!,
                                                 keyboardType: TextInputType.text),
                                             Container(
                                               width: 284,
@@ -635,7 +774,10 @@ class _EditState extends State<Edit> {
                                                           car2: car2,
                                                           car3: car3,
                                                           dateRegister: 'dateRegister',
-                                                          dateExpired: 'dateExpired');
+                                                          dateExpired: 'dateExpired',
+                                                          fieldOfActivity: fieldOfActivity,
+                                                          numberCar: numberCar,
+                                                          yearIssue: yearIssue);
                                                       //currentUser = editUser(user);
                                                       // findingUser = await getUserByEmail(currentUser);
                                                       confirmDialog(context, currentUser);
@@ -707,6 +849,9 @@ getUserByEmail(my_user.User user) async {
   if (user.car1 != 'null') car1 = user.car1;
   if (user.car2 != 'null') car2 = user.car2;
   if (user.car3 != 'null') car3 = user.car3;
+  dynamic fieldOfActivity = user.fieldOfActivity;
+  dynamic numberCar = user.numberCar;
+  dynamic yearIssue = user.yearIssue;
 
   String apiUrl = baseUrl + "/test/get_user_by_email.php";
   var response = await http.post(Uri.parse(apiUrl), body: {
@@ -718,7 +863,10 @@ getUserByEmail(my_user.User user) async {
     'car1': car1 != '' ? car1 : '',
     'car2': car2 != '' ? car2 : '',
     'car3': car3 != '' ? car3 : '',
-    'password': password
+    'password': password,
+    'fieldOfActivity': fieldOfActivity,
+    'numberCar': numberCar,
+    'yearIssue': yearIssue,
   }, headers: {
     'Accept': 'application/json, charset=utf-8',
     "Access-Control-Allow-Origin": "*",
@@ -750,6 +898,9 @@ editUser(my_user.User user) async {
   if (user.car1 != 'null') car1 = user.car1;
   if (user.car2 != 'null') car2 = user.car2;
   if (user.car3 != 'null') car3 = user.car3;
+  dynamic fieldOfActivity = user.fieldOfActivity;
+  dynamic numberCar = user.numberCar;
+  dynamic yearIssue = user.yearIssue;
 
   String apiUrl = baseUrl + "/test/edit.php";
   var response = await http.post(Uri.parse(apiUrl), body: {
@@ -762,7 +913,10 @@ editUser(my_user.User user) async {
     'car1': car1 != '' ? car1 : '',
     'car2': car2 != '' ? car2 : '',
     'car3': car3 != '' ? car3 : '',
-    'password': password
+    'password': password,
+    'fieldOfActivity': fieldOfActivity,
+    'numberCar': numberCar,
+    'yearIssue': yearIssue,
   }, headers: {
     'Accept': 'application/json, charset=utf-8',
     "Access-Control-Allow-Origin": "*",

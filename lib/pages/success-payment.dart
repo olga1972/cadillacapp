@@ -238,7 +238,10 @@ class _SuccessPaymentState extends State<SuccessPayment> {
                                                       car2: 'car2',
                                                       car3: 'car3',
                                                       dateRegister: 'dateRegister',
-                                                      dateExpired: 'dateExpired');
+                                                      dateExpired: 'dateExpired',
+                                                      fieldOfActivity: 'fieldOfActivity',
+                                                      numberCar: 'numberCar',
+                                                      yearIssue: 'yearIssue',);
 
                                                   findingUser = await getUserByEmail(currentUser);
                                                   user = await editUser(currentUser);

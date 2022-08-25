@@ -131,20 +131,8 @@ class _MembersState extends State<Members> {
                                                             height: 1.7, //line-height / font-size
                                                           )),
                                                     ),
-                                                    Container(
-                                                      margin: const EdgeInsets.only(bottom: 10.0),
-                                                      child: Row(
-                                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                        crossAxisAlignment: CrossAxisAlignment.center,
-                                                        children: [
-                                                          isLoadedCar
-                                                              ? Image.memory(bytesCar1, fit: BoxFit.cover, width: 264, height: 149)
-                                                              : const Text('no image'),
-                                                        ],
-                                                      ),
-                                                    ),
                                                     Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-                                                      Text('сфера деятельности'.toUpperCase(),
+                                                      Text('автомобиль:'.toUpperCase(),
                                                           style: const TextStyle(
                                                             fontSize: 14.0,
                                                             fontWeight: FontWeight.w700,
@@ -156,7 +144,43 @@ class _MembersState extends State<Members> {
                                                         width: 10,
                                                       ),
                                                       Flexible(
-                                                        child: Text('${snapshot.data?.users[index].dateRegister}' .toUpperCase(),
+                                                        child: Text('${snapshot.data?.users[index].carname}' .toUpperCase(),
+                                                            textAlign: TextAlign.left,
+                                                            style: const TextStyle(
+                                                              fontSize: 14.0,
+                                                              fontWeight: FontWeight.normal,
+                                                              fontFamily: 'CadillacSans',
+                                                              color: Colors.black,
+                                                              height: 1.7, //line-height / font-size
+                                                            )),
+                                                      )
+                                                    ]),
+                                                    Container(
+                                                      margin: const EdgeInsets.only(top: 5.0, bottom: 5.0),
+                                                      child: Row(
+                                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                        crossAxisAlignment: CrossAxisAlignment.center,
+                                                        children: [
+                                                          isLoadedCar
+                                                              ? Image.memory(bytesCar1, fit: BoxFit.cover, width: 264, height: 149)
+                                                              : const Text('no image'),
+                                                        ],
+                                                      ),
+                                                    ),
+                                                    Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+                                                      Text('сфера деятельности:'.toUpperCase(),
+                                                          style: const TextStyle(
+                                                            fontSize: 14.0,
+                                                            fontWeight: FontWeight.w700,
+                                                            fontFamily: 'CadillacSans',
+                                                            color: Colors.black,
+                                                            height: 1.7, //line-height / font-size
+                                                          )),
+                                                      SizedBox(
+                                                        width: 10,
+                                                      ),
+                                                      Flexible(
+                                                        child: Text('${snapshot.data?.users[index].fieldOfActivity}' .toUpperCase(),
                                                             textAlign: TextAlign.left,
                                                             style: const TextStyle(
                                                               fontSize: 14.0,

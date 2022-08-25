@@ -119,39 +119,6 @@ class _AccountAdminState extends State<AccountAdmin> {
                 ),
               )
             ],
-          // actions: <Widget>[
-          //   Container(
-          //     width: 160,
-          //     margin: const EdgeInsets.only(top: 22, right: 18.0),
-          //     child: const Text(
-          //       'Удалить аккаунт',
-          //       textAlign: TextAlign.right,
-          //       style: TextStyle(
-          //         fontSize: 14.0,
-          //         fontWeight: FontWeight.normal,
-          //         fontFamily: 'CadillacSans',
-          //         color: Colors.white,
-          //         //height: 1.4, //line-height : font-size
-          //       ),
-          //     ),
-          //   ),
-          //   IconButton(
-          //     alignment: Alignment.centerLeft,
-          //     padding: const EdgeInsets.all(0),
-          //     iconSize: 22.0,
-          //     icon: SvgPicture.asset(
-          //       'assets/images/delete.svg',
-          //       semanticsLabel: 'Icon delete',
-          //       height: 15.0,
-          //     ),
-          //     onPressed: () {
-          //       confirmDialog(context, userId);
-          //       // deleteUser(userId);
-          //       // Route route = MaterialPageRoute(builder: (context) => const MembersAdmin());
-          //       // Navigator.push(context, route);
-          //     },
-          //   ),
-          // ]
           ),
           body:
           // Consumer<Data>(
@@ -229,121 +196,154 @@ class _AccountAdminState extends State<AccountAdmin> {
                                 const SizedBox(
                                   height: 20,
                                 ),
-                                const TitlePageAdmin(title: 'аккаунт члена\nавтоклуба cadillac'),
+                                const TitlePageAdmin(title: 'аккаунт члена\nавтоклуба'),
                                 Container(
+                                    width: 284,
                                     // height: 100,
                                     margin: const EdgeInsets.only(top: 43.0, bottom: 43.0),
                                     color: Colors.transparent,
                                     child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-                                      Column(
-                                          mainAxisAlignment: MainAxisAlignment.start,
-                                          crossAxisAlignment: CrossAxisAlignment.start,
-                                          mainAxisSize: MainAxisSize.max,
-                                          children: [
-                                            Row(
-                                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                              children: [
-                                                Container(
-                                                  height: 36,
-                                                  margin: const EdgeInsets.only(
-                                                    right: 28.0,
-                                                  ),
-                                                  alignment: Alignment.centerLeft,
-                                                  child: SvgPicture.asset('assets/images/account.svg', semanticsLabel: 'Icon author', height: 22.0),
-                                                ),
-                                                Text('${snapshot.data?.username}'.toUpperCase(),
-                                                    textAlign: TextAlign.center,
-                                                    style: const TextStyle(
-                                                      fontSize: 14.0,
-                                                      fontWeight: FontWeight.normal,
-                                                      fontFamily: 'CadillacSans',
-                                                      color: Colors.white,
-                                                      height: 1.4, //line-height : font-size
-                                                    ))
-                                              ],
-                                            ),
-                                            Row(
-                                              mainAxisAlignment: MainAxisAlignment.start,
-                                              mainAxisSize: MainAxisSize.min,
-                                              children: [
-                                                Container(
+                                      Flexible(
+                                        flex: 2,
+                                        child: Column(
+                                            mainAxisAlignment: MainAxisAlignment.start,
+                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                            mainAxisSize: MainAxisSize.max,
+                                            children: [
+                                              Row(
+                                                mainAxisSize: MainAxisSize.min,
+                                                children: [
+                                                  Container(
                                                     height: 36,
+                                                    margin: const EdgeInsets.only(
+                                                      right: 28.0,
+                                                    ),
                                                     alignment: Alignment.centerLeft,
-                                                    child: IconButton(
+                                                    child: SvgPicture.asset('assets/images/account.svg', semanticsLabel: 'Icon author', height: 22.0),
+                                                  ),
+                                                  Flexible(
+                                                      fit: FlexFit.loose,
+                                                      child: Text('${snapshot.data?.username}'.toUpperCase(),
+                                                          style: const TextStyle(
+                                                            fontSize: 14.0,
+                                                            fontWeight: FontWeight.normal,
+                                                            fontFamily: 'CadillacSans',
+                                                            color: Colors.white,
+                                                            height: 1.4, //line-height : font-size
+                                                          )))
+                                                ],
+                                              ),
+                                              Row(
+                                                // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                mainAxisSize: MainAxisSize.min,
+                                                children: [
+                                                  Container(
+                                                    height: 36,
+                                                    margin: const EdgeInsets.only(
+                                                      right: 28.0,
+                                                    ),
+                                                    alignment: Alignment.centerLeft,
+                                                    child: const Icon(Icons.work_outline_outlined, size: 22, color: Colors.white),
+                                                    // child: SvgPicture.asset('assets/images/account.svg', semanticsLabel: 'Icon author', height: 22.0),
+                                                  ),
+                                                  Flexible(
+                                                      fit: FlexFit.loose,
+                                                      child: Text('${snapshot.data?.fieldOfActivity}'.toUpperCase(),
+                                                          style: const TextStyle(
+                                                            fontSize: 14.0,
+                                                            fontWeight: FontWeight.normal,
+                                                            fontFamily: 'CadillacSans',
+                                                            color: Colors.white,
+                                                            height: 1.4, //line-height : font-size
+                                                          )))
+                                                ],
+                                              ),
+                                              Row(
+                                                mainAxisAlignment: MainAxisAlignment.start,
+                                                mainAxisSize: MainAxisSize.min,
+                                                children: [
+                                                  Container(
+                                                      height: 36,
+                                                      alignment: Alignment.centerLeft,
+                                                      child: IconButton(
+                                                          alignment: Alignment.centerLeft,
+                                                          padding: const EdgeInsets.all(0),
+                                                          iconSize: 22.0,
+                                                          icon: SvgPicture.asset(
+                                                            'assets/images/gift.svg',
+                                                            semanticsLabel: 'Icon gift',
+                                                            height: 22.0,
+                                                          ),
+                                                          onPressed: () {
+                                                            if (getDate(snapshot.data?.birthday)) {
+                                                              Route route = MaterialPageRoute(builder: (context) => const Gift());
+                                                              Navigator.push(context, route);
+                                                            } else {
+                                                              alertDialog(context);
+                                                            }
+                                                          })),
+                                                  Text('${snapshot.data?.birthday}'.toUpperCase(),
+                                                      textAlign: TextAlign.left,
+                                                      style: const TextStyle(
+                                                        fontSize: 14.0,
+                                                        fontWeight: FontWeight.normal,
+                                                        fontFamily: 'CadillacSans',
+                                                        color: Colors.white,
+                                                        height: 1.4, //line-height : font-size
+                                                      ))
+                                                ],
+                                              ),
+                                              Row(
+                                                mainAxisAlignment: MainAxisAlignment.start,
+                                                children: [
+                                                  Container(
+                                                      height: 36,
+                                                      alignment: Alignment.centerLeft,
+                                                      child: IconButton(
                                                         alignment: Alignment.centerLeft,
                                                         padding: const EdgeInsets.all(0),
                                                         iconSize: 22.0,
                                                         icon: SvgPicture.asset(
-                                                          'assets/images/gift.svg',
-                                                          semanticsLabel: 'Icon gift',
+                                                          'assets/images/edit.svg',
+                                                          semanticsLabel: 'Icon edit',
                                                           height: 22.0,
+                                                          color: const Color(0xFF515569),
                                                         ),
                                                         onPressed: () {
-                                                          if (getDate(snapshot.data?.birthday)) {
-                                                            Route route = MaterialPageRoute(builder: (context) => const Gift());
-                                                            Navigator.push(context, route);
-                                                          } else {
-                                                            alertDialog(context);
-                                                          }
-                                                        })),
-                                                Text('${snapshot.data?.birthday}'.toUpperCase(),
-                                                    textAlign: TextAlign.left,
-                                                    style: const TextStyle(
+                                                          Route route = MaterialPageRoute(builder: (context) => EditAdmin());
+                                                          Navigator.push(context, route);
+                                                        },
+                                                      )),
+                                                  const Text(
+                                                    'Изменить данные',
+                                                    textAlign: TextAlign.center,
+                                                    style: TextStyle(
                                                       fontSize: 14.0,
                                                       fontWeight: FontWeight.normal,
                                                       fontFamily: 'CadillacSans',
-                                                      color: Colors.white,
+                                                      color: Color(0xFF515569),
                                                       height: 1.4, //line-height : font-size
-                                                    ))
-                                              ],
-                                            ),
-                                            Row(
-                                              mainAxisAlignment: MainAxisAlignment.start,
-                                              children: [
-                                                Container(
-                                                    height: 36,
-                                                    alignment: Alignment.centerLeft,
-                                                    child: IconButton(
-                                                      alignment: Alignment.centerLeft,
-                                                      padding: const EdgeInsets.all(0),
-                                                      iconSize: 22.0,
-                                                      icon: SvgPicture.asset(
-                                                        'assets/images/edit.svg',
-                                                        semanticsLabel: 'Icon edit',
-                                                        height: 22.0,
-                                                        color: const Color(0xFF515569),
-                                                      ),
-                                                      onPressed: () {
-                                                        Route route = MaterialPageRoute(builder: (context) => EditAdmin());
-                                                        Navigator.push(context, route);
-                                                      },
-                                                    )),
-                                                const Text(
-                                                  'Изменить данные',
-                                                  textAlign: TextAlign.center,
-                                                  style: TextStyle(
-                                                    fontSize: 14.0,
-                                                    fontWeight: FontWeight.normal,
-                                                    fontFamily: 'CadillacSans',
-                                                    color: Color(0xFF515569),
-                                                    height: 1.4, //line-height : font-size
-                                                  ),
-                                                )
-                                              ],
-                                            ),
-                                          ]),
-                                      ClipOval(
-                                        child: CircleAvatar(
-                                            radius: 48,
-                                            backgroundColor: Colors.transparent,
-                                            child: (snapshot.data?.path != null)
-                                                ? Image.memory(base64.decode(snapshot.data?.path ?? ''), fit: BoxFit.cover, width: 96, height: 96)
-                                                : Image.asset(
-                                            'assets/images/no-image.jpg',
-                                            fit: BoxFit.cover, width: 96, height: 96),),
+                                                    ),
+                                                  )
+                                                ],
+                                              ),
+                                            ]),
+                                      ),
+                                      Flexible(
+                                        flex: 1,
+                                        child: ClipOval(
+                                          child: CircleAvatar(
+                                              radius: 48,
+                                              backgroundColor: Colors.transparent,
+                                              child: (snapshot.data?.path != null)
+                                                  ? Image.memory(base64.decode(snapshot.data?.path ?? ''), fit: BoxFit.cover, width: 96, height: 96)
+                                                  : Image.asset(
+                                              'assets/images/no-image.jpg',
+                                              fit: BoxFit.cover, width: 96, height: 96),),
+                                        ),
                                       ),
                                     ])),
-                                Text('ваш именной номер'.toUpperCase(),
+                                Text('мой именной номер'.toUpperCase(),
                                     textAlign: TextAlign.center,
                                     style: const TextStyle(
                                       fontSize: 14.0,
@@ -369,7 +369,7 @@ class _AccountAdminState extends State<AccountAdmin> {
                                         color: Colors.white,
                                       )),
                                 ),
-                                Text('ваш автомобиль'.toUpperCase(),
+                                Text('мой автомобиль'.toUpperCase(),
                                     textAlign: TextAlign.center,
                                     style: const TextStyle(
                                       fontSize: 14.0,
@@ -448,6 +448,59 @@ class _AccountAdminState extends State<AccountAdmin> {
                                                 margin: EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 15.0),
                                                 builder: DotSwiperPaginationBuilder(
                                                     color: Colors.white, activeColor: Color(0xFF8F97BF), size: 7.0, activeSize: 7.0)))),
+                                Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+                                  Text('номер машины:'.toUpperCase(),
+                                      style: const TextStyle(
+                                        fontSize: 14.0,
+                                        fontWeight: FontWeight.normal,
+                                        fontFamily: 'CadillacSans',
+                                        color: Colors.white,
+                                        height: 1.5, //line-height : font-size
+                                      )),
+                                  SizedBox(
+                                    width: 10,
+                                  ),
+                                  Flexible(
+                                    child: Text('${snapshot.data?.numberCar}' .toUpperCase(),
+                                        textAlign: TextAlign.left,
+                                        style: const TextStyle(
+                                          fontSize: 14.0,
+                                          fontWeight: FontWeight.normal,
+                                          fontFamily: 'CadillacSans',
+                                          color: Colors.white,
+                                          height: 1.7, //line-height / font-size
+                                        )),
+                                  )
+
+                                ]),
+                                Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+                                  Text('год выпуска:'.toUpperCase(),
+                                      style: const TextStyle(
+                                        fontSize: 14.0,
+                                        fontWeight: FontWeight.normal,
+                                        fontFamily: 'CadillacSans',
+                                        color: Colors.white,
+                                        height: 1.5, //line-height : font-size
+                                      )),
+                                  const SizedBox(
+                                    width: 10,
+                                  ),
+                                  Flexible(
+                                    child: Text('${snapshot.data?.yearIssue}' .toUpperCase(),
+                                        textAlign: TextAlign.left,
+                                        style: const TextStyle(
+                                          fontSize: 14.0,
+                                          fontWeight: FontWeight.normal,
+                                          fontFamily: 'CadillacSans',
+                                          color: Colors.white,
+                                          height: 1.7, //line-height / font-size
+                                        )),
+                                  )
+
+                                ]),
+                                const SizedBox(
+                                  height: 10,
+                                ),
                               ])))
                             ])));
                   }
@@ -601,7 +654,7 @@ Future alertDialog(BuildContext context) async {
     barrierDismissible: false, // user must tap button for close dialog!
     builder: (BuildContext context) {
       return AlertDialog(
-        // title: Text('Подтвердите ваш заказ'),
+        // title: Text('Подтвердите мой заказ'),
         content: Text(
           'Подарок вы получите в свой день рождения!'.toUpperCase(),
           textAlign: TextAlign.center,

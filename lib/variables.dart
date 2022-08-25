@@ -54,4 +54,5 @@ const styleTextAlertDialog = TextStyle(
 //const baseUrl = 'http://localhost';
 const baseUrl = 'https://cadillacapp.ru';
 
-const emailAdmin = 'olga.sadyreva@gmail.com';
+const emailAdmin = 'elena@cadillacfamilyrussia.ru';
+const emailAdmin2 = 'olga.sadyreva@gmail.com';

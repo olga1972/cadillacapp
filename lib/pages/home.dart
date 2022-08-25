@@ -72,18 +72,15 @@ class _HomeState extends State<Home> {
               Expanded(
                   child: SingleChildScrollView(
                       child: Column(mainAxisAlignment: MainAxisAlignment.center, crossAxisAlignment: CrossAxisAlignment.center, children: [
+
                 Container(
                   width: 284,
-                  margin: const EdgeInsets.only(top: 10, bottom: 47),
-                ),
-                Container(
-                  width: 284,
-                  margin: const EdgeInsets.only(bottom: 58),
+                  margin: const EdgeInsets.only(top: 30),
                   child: const TitlePage(title: 'главная'),
                 ),
                 Container(
                     width: 284,
-                    margin: const EdgeInsets.only(top: 100, bottom: 100),
+                    margin: const EdgeInsets.only(top: 70, bottom: 70),
                     child: (Text(
                       'Став владельцем Cadillac, \nвы не просто приобретаете \nавтомобиль класса-люкс, \nвы вступаете в элитное сообщество, единомышленников'
                           .toUpperCase(),

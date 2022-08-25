@@ -35,6 +35,9 @@ class User {
   late final String password;
   late final dynamic dateRegister;
   late final dynamic dateExpired;
+  late final String fieldOfActivity;
+  late final String numberCar;
+  late final String yearIssue;
 
   User(
       {required this.id,
@@ -51,7 +54,11 @@ class User {
       required this.car3,
       required this.password,
       required this.dateRegister,
-      required this.dateExpired});
+      required this.dateExpired,
+      required this.fieldOfActivity,
+      required this.numberCar,
+      required this.yearIssue
+      });
 
   factory User.fromJson(Map<String, dynamic> json) {
     return User(
@@ -70,6 +77,9 @@ class User {
       password: json['password'] as String,
       dateRegister: json['dateRegister'] as dynamic,
       dateExpired: json['dateExpired'] as dynamic,
+      fieldOfActivity: json['fieldOfActivity'] as String,
+      numberCar: json['numberCar'] as String,
+      yearIssue: json['yearIssue'] as String,
     );
   }
 
@@ -102,6 +112,9 @@ class User {
     data['password'] = password;
     data['dateRegister'] = dateRegister;
     data['dateExpired'] = dateExpired;
+    data['fieldOfActivity'] = fieldOfActivity;
+    data['numberCar'] = numberCar;
+    data['yearIssue'] = yearIssue;
     return data;
   }
 }
