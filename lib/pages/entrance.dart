@@ -55,7 +55,7 @@ class Entrance extends StatelessWidget {
           print(user.email);
           // print(isLoggedIn);
       
-          if(user.email == emailAdmin) {
+          if(user.email == emailAdmin || user.email == emailAdmin2) {
             isAdmin = true;
             Navigator.pushReplacement(
                 context, MaterialPageRoute(

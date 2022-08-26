@@ -1,3 +1,5 @@
+import 'dart:convert';
+import 'package:http/http.dart' as http;
 import 'package:card_swiper/card_swiper.dart';
 import 'package:flutter/material.dart';
 import 'package:cadillac/pages/accountAdmin.dart';
@@ -8,6 +10,7 @@ import 'package:flutter_svg/svg.dart';
 
 import '../NavDrawerAdmin.dart';
 import '../variables.dart';
+import 'addProduct.dart';
 import 'cardProductAdmin.dart';
 
 class ShopAdmin extends StatefulWidget {
@@ -29,7 +32,7 @@ class _ShopAdminState extends State<ShopAdmin> {
   @override
   void initState() {
     super.initState();
-    productsList = readJson();
+    productsList = getProductsList();
   }
 
   int selectedIndex = 1;
@@ -69,492 +72,203 @@ class _ShopAdminState extends State<ShopAdmin> {
                 Container(
                     alignment: Alignment.topCenter,
                     width: MediaQuery.of(context).size.width,
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Row(crossAxisAlignment: CrossAxisAlignment.center, children: [
-                          Container(
-                            alignment: Alignment.centerLeft,
-                            width: 130,
-                            height: 180,
-                            child: Center(
-                              child: Text(
-                                "Футболки".toUpperCase(),
-                                style: const TextStyle(
-                                  fontSize: 14,
-                                  color: Colors.white,
-                                ),
-                                textAlign: TextAlign.center,
-                              ),
-                            ),
-                          ),
-                          Container(
-                              width: width,
-                              height: 180,
-                              margin: const EdgeInsets.only(top: 10, bottom: 10, left: 0, right: 0),
-                              child: Swiper(
-                                itemCount: 3,
-                                layout: SwiperLayout.CUSTOM,
-                                customLayoutOption: CustomLayoutOption(startIndex: 0, stateCount: 3)
-                                  ..addTranslate([const Offset(-71.0, 0.0), const Offset(40.0, 0.0), const Offset(151.0, 0.0)]),
-                                viewportFraction: 0.43,
-                                itemHeight: 180,
-                                itemWidth: 98,
-                                autoplay: MediaQuery.of(context).size.width > 920 ? true : false,
-                                outer: true,
-                                itemBuilder: (BuildContext context, int index) {
-                                  return GestureDetector(
-                                      onTap: () {
-                                    debugPrint('on long press');
-                                    setState(() {
-                                      // устанавливаем индекс выделенного элемента
-                                      selectedIndex = index;
-                                    });
-                                    debugPrint('футболки');
-                                    debugPrint(selectedIndex.toString());
-                                    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => CardProductAdmin(index: selectedIndex)));
-                                  },
-                                  child: Container(
-                                      width: 98,
-                                      height: 180,
-                                      decoration: const BoxDecoration(
-                                        color: Color(0xFFE4E4FF),
-                                        borderRadius: BorderRadius.all(Radius.circular(10)),
+                    child: FutureBuilder<ProductsList>(
+                    future: productsList,
+                    builder: (context, snapshot) {
+                      if (snapshot.connectionState != ConnectionState.done) {
+                        return const Center(child: CircularProgressIndicator());
+                      }
+
+                      if (snapshot.hasError) {
+                        return Center(child: Text(snapshot.error.toString()));
+                      }
+
+                      if (snapshot.hasData) {
+                        return Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Row(crossAxisAlignment: CrossAxisAlignment.center, children: [
+                                Container(
+                                  alignment: Alignment.centerLeft,
+                                  width: 130,
+                                  height: 180,
+                                  child: Center(
+                                    child: Text(
+                                      "Футболки".toUpperCase(),
+                                      style: const TextStyle(
+                                        fontSize: 14,
+                                        color: Colors.white,
                                       ),
-                                      child: Column(children: [
-                                        Container(
-                                            width: 98,
-                                            height: 132,
-                                            decoration: const BoxDecoration(
-                                              borderRadius: BorderRadius.all(Radius.circular(10)),
-                                            ),
-                                          child: ClipRRect(
-                                            borderRadius: const BorderRadius.all(Radius.circular(10)),
-                                            child: Image.asset(
-                                                images[0],
-                                                fit: BoxFit.fill,
-                                              ),      ),),
-                                        Container(
-                                            width: 98,
-                                            height: 30,
-                                            padding: const EdgeInsets.only(left: 7),
-                                            decoration: const BoxDecoration(
-                                              color: Color(0xffE4E6FF),
-                                              borderRadius: BorderRadius.only(
-                                                bottomLeft: Radius.circular(10.0),
-                                                bottomRight: Radius.circular(10.0),
-                                              ),
-                                            ),
-                                            child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-                                              Text(
-                                               "Футболки ".toUpperCase(),
-                                                style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 7, letterSpacing: 0, color: Color(0xFF12141F)),
-                                                textAlign: TextAlign.center,
-                                              ),
-                                              IconButton(
-                                                icon: const Icon(
-                                                  Icons.add,
-                                                  size: 10,
-                                                ),
-                                                color: const Color(0xFF12141F),
-                                                padding: EdgeInsets.zero,
-                                                onPressed: () {
-                                                  debugPrint('add');
-                                                },
-                                              ),
-                                            ])),
-                                        Container(
-                                            width: 88,
-                                            padding: const EdgeInsets.only(left: 3),
-                                            child: Row(crossAxisAlignment: CrossAxisAlignment.center, children: const [
-                                              Text(
-                                                "2500 ",
-                                                style: TextStyle(fontSize: 7, color: Color(0xFF12141F)),
-                                                textAlign: TextAlign.center,
-                                              ),
-                                              Icon(
-                                                Icons.currency_ruble,
-                                                color: Color(0xFF12141F),
-                                                size: 8,
-                                              ),
-                                            ])),
-                                      ])));
-                                },
-                              ))
-                        ]),
-                        Row(crossAxisAlignment: CrossAxisAlignment.center, children: [
-                          Container(
-                            alignment: Alignment.centerLeft,
-                            width: 130,
-                            height: 180,
-                              child: Center(
-                                child: Text(
-                                  "Худи".toUpperCase(),
-                                  style: const TextStyle(
-                                    fontSize: 14,
-                                    color: Colors.white,
+                                      textAlign: TextAlign.center,
+                                    ),
                                   ),
-                                  textAlign: TextAlign.center,
-                                ))),
-                          Container(
-                              width: width,
-                              height: 180,
-                              margin: const EdgeInsets.only(top: 10, bottom: 10, left: 0, right: 0),
-                              child: Swiper(
-                                itemCount: 3,
-                                layout: SwiperLayout.CUSTOM,
-                                customLayoutOption: CustomLayoutOption(startIndex: 0, stateCount: 3)
-                                  ..addTranslate([const Offset(-71.0, 0.0), const Offset(40.0, 0.0), const Offset(151.0, 0.0)]),
-                                viewportFraction: 0.43,
-                                itemHeight: 180,
-                                itemWidth: 98,
-                                autoplay: MediaQuery.of(context).size.width > 920 ? true : false,
-                                outer: true,
-                                itemBuilder: (BuildContext context, int index) {
-                                  return GestureDetector(
-                                      onTap: () {
-                                    debugPrint('on long press');
-                                    setState(() {
-                                      // устанавливаем индекс выделенного элемента
-                                      selectedIndex = index;
-                                    });
-                                    debugPrint(selectedIndex.toString());
-                                    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => CardProductAdmin(index: selectedIndex)));
-                                  },
-                                  child: Container(
-                                      width: 98,
-                                      height: 180,
-                                      decoration: const BoxDecoration(
-                                        color: Color(0xFFE4E4FF),
-                                        borderRadius: BorderRadius.all(Radius.circular(10)),
-                                      ),
-                                      child: Column(children: [
-                                        Container(
-                                            width: 98,
-                                            height: 132,
-                                            decoration: const BoxDecoration(
-                                              borderRadius: BorderRadius.all(Radius.circular(10)),
-                                            ),
-                                            child: ClipRRect(
-                                              borderRadius: const BorderRadius.all(Radius.circular(10)),
-                                                child: Image.asset(
-                                                  images[1],
-                                                  fit: BoxFit.fill,
-                                                ),
-                                            )),
-                                        Container(
-                                            width: 98,
-                                            height: 30,
-                                            padding: const EdgeInsets.only(left: 7),
-                                            decoration: const BoxDecoration(
-                                              color: Color(0xffE4E6FF),
-                                              borderRadius: BorderRadius.only(
-                                                bottomLeft: Radius.circular(10.0),
-                                                bottomRight: Radius.circular(10.0),
-                                              ),
-                                            ),
-                                            child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-                                              Text(
-                                                "Худи ".toUpperCase(),
-                                                style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 7, letterSpacing: 0, color: Color(0xFF12141F)),
-                                                textAlign: TextAlign.center,
-                                              ),
-                                              IconButton(
-                                                icon: const Icon(
-                                                  Icons.add,
-                                                  size: 10,
-                                                ),
-                                                //iconSize: 48,
-                                                color: const Color(0xFF12141F),
-                                                padding: EdgeInsets.zero,
-                                                onPressed: () {
-                                                  debugPrint('add');
-                                                },
-                                              ),
-                                            ])),
-                                        Container(
-                                            width: 88,
-                                            padding: const EdgeInsets.only(left: 3),
-                                            child: Row(crossAxisAlignment: CrossAxisAlignment.center, children: const [
-                                              Text(
-                                                "2500 ",
-                                                style: TextStyle(fontSize: 7, color: Color(0xFF12141F)),
-                                                textAlign: TextAlign.center,
-                                              ),
-                                              Icon(
-                                                Icons.currency_ruble,
-                                                color: Color(0xFF12141F),
-                                                size: 8,
-                                              ),
-                                            ])),
-                                      ])));
-                                },
-                              ))
-                        ]),
-                        Row(crossAxisAlignment: CrossAxisAlignment.center, children: [
-                          Container(
-                            alignment: Alignment.centerLeft,
-                            width: 130,
-                            height: 180,
-                              child: Center(
-                                child: Text(
-                              "Блокноты".toUpperCase(),
-                              style: const TextStyle(
-                                fontSize: 14,
-                                color: Colors.white,
-                              ),
-                              textAlign: TextAlign.center,
-                            )),
-                          ),
-                          Container(
-                              width: width,
-                              height: 180,
-                              margin: const EdgeInsets.only(top: 10, bottom: 10, left: 0, right: 0),
-                              child: Swiper(
-                                itemCount: 3,
-                                layout: SwiperLayout.CUSTOM,
-                                customLayoutOption: CustomLayoutOption(startIndex: 0, stateCount: 3)
-                                  ..addTranslate([const Offset(-71.0, 0.0), const Offset(40.0, 0.0), const Offset(151.0, 0.0)]),
-                                viewportFraction: 0.43,
-                                itemHeight: 180,
-                                itemWidth: 98,
-                                autoplay: MediaQuery.of(context).size.width > 920 ? true : false,
-                                outer: true,
-                                itemBuilder: (BuildContext context, int index) {
-                                  return GestureDetector(
-                                      onTap: () {
-                                    debugPrint('on long press');
-                                    setState(() {
-                                      // устанавливаем индекс выделенного элемента
-                                      selectedIndex = index;
-                                    });
-                                    debugPrint('блокноты');
-                                    debugPrint(selectedIndex.toString());
-                                    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => CardProductAdmin(index: selectedIndex)));
-                                  },
-                                  child: Container(
-                                      width: 98,
-                                      height: 180,
-                                      decoration: const BoxDecoration(
-                                        color: Color(0xFFE4E4FF),
-                                        borderRadius: BorderRadius.all(Radius.circular(10)),
-                                      ),
-                                      child: Column(children: [
-                                        Container(
-                                            width: 98,
-                                            height: 132,
-                                            decoration: const BoxDecoration(
-                                              borderRadius: BorderRadius.all(Radius.circular(10)),
-                                            ),
-                                            child: ClipRRect(
-                                              borderRadius: const BorderRadius.all(Radius.circular(10)),
-                                              child: Image.asset(
-                                                images[2],
-                                                fit: BoxFit.fill,
-                                              ),
-                                            )),
-                                        Container(
-                                            width: 98,
-                                            height: 30,
-                                            padding: const EdgeInsets.only(left: 7),
-                                            decoration: const BoxDecoration(
-                                              color: Color(0xffE4E6FF),
-                                              borderRadius: BorderRadius.only(
-                                                bottomLeft: Radius.circular(10.0),
-                                                bottomRight: Radius.circular(10.0),
-                                              ),
-                                            ),
-                                            child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-                                              Text(
-                                                "Блокноты ".toUpperCase(),
-                                                style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 7, letterSpacing: 0, color: Color(0xFF12141F)),
-                                                textAlign: TextAlign.center,
-                                              ),
-                                              IconButton(
-                                                icon: const Icon(
-                                                  Icons.add,
-                                                  size: 10,
-                                                ),
-                                                color: const Color(0xFF12141F),
-                                                padding: EdgeInsets.zero,
-                                                onPressed: () {
-                                                  debugPrint('add');
-                                                },
-                                              ),
-                                            ])),
-                                        Container(
-                                            width: 88,
-                                            padding: const EdgeInsets.only(left: 3),
-                                            child: Row(crossAxisAlignment: CrossAxisAlignment.center, children: const [
-                                              Text(
-                                                "2500 ",
-                                                style: TextStyle(fontSize: 7, color: Color(0xFF12141F)),
-                                                textAlign: TextAlign.center,
-                                              ),
-                                              Icon(
-                                                Icons.currency_ruble,
-                                                color: Color(0xFF12141F),
-                                                size: 8,
-                                              ),
-                                            ])),
-                                      ])));
-                                },
-                              ))
-                        ]),
-                        Row(crossAxisAlignment: CrossAxisAlignment.center, children: [
-                          Container(
-                            alignment: Alignment.centerLeft,
-                            width: 130,
-                            height: 180,
-                            child: Center(
-                              child: Text("Наклейки".toUpperCase(),
-                                style: const TextStyle(
-                                  fontSize: 14,
-                                  color: Colors.white,
                                 ),
-                                textAlign:TextAlign.center,
-                              )
-                            ),
-                          ),
-                          Container(
-                              width: width,
-                              height: 180,
-                              margin: const EdgeInsets.only(top: 10, bottom: 10, left: 0, right: 0),
-                              child: Swiper(
-                                itemCount: 3,
-                                layout: SwiperLayout.CUSTOM,
-                                customLayoutOption: CustomLayoutOption(startIndex: 0, stateCount: 3)
-                                  ..addTranslate([const Offset(-71.0, 0.0), const Offset(40.0, 0.0), const Offset(151.0, 0.0)]),
-                                viewportFraction: 0.43,
-                                itemHeight: 180,
-                                itemWidth: 98,
-                                autoplay: MediaQuery.of(context).size.width > 920 ? true : false,
-                                outer: true,
-                                itemBuilder: (BuildContext context, int index) {
-                                  return GestureDetector(
-                                      onTap: () {
-                                        debugPrint('on long press');
-                                        setState(() {
-                                          // устанавливаем индекс выделенного элемента
-                                          selectedIndex = index;
-                                        });
-                                        debugPrint(selectedIndex.toString());
-                                        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => CardProductAdmin(index: selectedIndex)));
-                                      },
-                                      child: Container(
-                                          width: 98,
-                                          height: 180,
-                                          decoration: const BoxDecoration(
-                                            color: Color(0xFFE4E4FF),
-                                            borderRadius: BorderRadius.all(Radius.circular(10)),
-                                          ),
-                                          child: Column(children: [
-                                            Container(
+                                Container(
+                                    width: width,
+                                    height: 180,
+                                    margin: const EdgeInsets.only(top: 10, bottom: 10, left: 0, right: 0),
+                                    child: Swiper(
+                                      itemCount: 3,
+                                      layout: SwiperLayout.CUSTOM,
+                                      customLayoutOption: CustomLayoutOption(startIndex: 0, stateCount: 3)
+                                        ..addTranslate([const Offset(-71.0, 0.0), const Offset(40.0, 0.0), const Offset(151.0, 0.0)]),
+                                      viewportFraction: 0.43,
+                                      itemHeight: 180,
+                                      itemWidth: 98,
+                                      autoplay: MediaQuery
+                                          .of(context)
+                                          .size
+                                          .width > 920 ? true : false,
+                                      outer: true,
+                                      itemBuilder: (BuildContext context, int index) {
+                                        return GestureDetector(
+                                            onTap: () {
+                                              debugPrint('on long press');
+                                              setState(() {
+                                                // устанавливаем индекс выделенного элемента
+                                                selectedIndex = index;
+                                              });
+                                              debugPrint('футболки');
+                                              debugPrint(selectedIndex.toString());
+                                              Navigator.pushReplacement(
+                                                  context, MaterialPageRoute(builder: (context) => CardProductAdmin(index: selectedIndex)));
+                                            },
+                                            child: Container(
                                                 width: 98,
-                                                height: 132,
+                                                height: 180,
                                                 decoration: const BoxDecoration(
+                                                  color: Color(0xFFE4E4FF),
                                                   borderRadius: BorderRadius.all(Radius.circular(10)),
                                                 ),
-                                                child: ClipRRect(
-                                                  borderRadius: const BorderRadius.all(Radius.circular(10)),
-                                                  child: Image.asset(
-                                                    images[3],
-                                                    fit: BoxFit.fill,
-                                                  ),
-                                                )),
-                                            Container(
-                                                width: 98,
-                                                height: 30,
-                                                padding: const EdgeInsets.only(left: 7),
-                                                decoration: const BoxDecoration(
-                                                  color: Color(0xffE4E6FF),
-                                                  borderRadius: BorderRadius.only(
-                                                    bottomLeft: Radius.circular(10.0),
-                                                    bottomRight: Radius.circular(10.0),
-                                                  ),
-                                                ),
-                                                child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-                                                  Text(
-                                                    "Наклейки ".toUpperCase(),
-                                                    style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 7, letterSpacing: 0, color: Color(0xFF12141F)),
-                                                    textAlign: TextAlign.center,
-                                                  ),
-                                                  IconButton(
-                                                    icon: const Icon(
-                                                      Icons.add,
-                                                      size: 10,
+                                                child: Column(children: [
+                                                  Container(
+                                                    width: 98,
+                                                    height: 132,
+                                                    decoration: const BoxDecoration(
+                                                      borderRadius: BorderRadius.all(Radius.circular(10)),
                                                     ),
-                                                    color: const Color(0xFF12141F),
-                                                    padding: EdgeInsets.zero,
-                                                    onPressed: () {
-                                                      debugPrint('add');
-                                                    },
-                                                  ),
-                                                ])),
-                                            Container(
-                                                width: 88,
-                                                padding: const EdgeInsets.only(left: 3),
-                                                child: Row(crossAxisAlignment: CrossAxisAlignment.center, children: const [
-                                                  Text(
-                                                    "2500 ",
-                                                    style: TextStyle(fontSize: 7, color: Color(0xFF12141F)),
-                                                    textAlign: TextAlign.center,
-                                                  ),
-                                                  Icon(
-                                                    Icons.currency_ruble,
-                                                    color: Color(0xFF12141F),
-                                                    size: 8,
-                                                  ),
-                                                ])),
-                                          ])));
-                                },
-                              ))
-                        ]),
-                        Column(children: [
-                         Container(
-                            width: 380,
-                            margin: const EdgeInsets.only(left: 15),
-                            alignment: const Alignment(-1, 1),
-                            child: IconButton(
-                              alignment: Alignment.centerLeft,
-                              padding: const EdgeInsets.all(0),
-                              iconSize: 20.0,
-                              icon: SvgPicture.asset(
-                                'assets/images/delete.svg',
-                                semanticsLabel: 'Icon delete',
-                                height: 20.0,
+                                                    child: ClipRRect(
+                                                      borderRadius: const BorderRadius.all(Radius.circular(10)),
+                                                      child: Image.asset(
+                                                        images[0],
+                                                        fit: BoxFit.fill,
+                                                      ),),),
+                                                  Container(
+                                                      width: 98,
+                                                      height: 30,
+                                                      padding: const EdgeInsets.only(left: 7),
+                                                      decoration: const BoxDecoration(
+                                                        color: Color(0xffE4E6FF),
+                                                        borderRadius: BorderRadius.only(
+                                                          bottomLeft: Radius.circular(10.0),
+                                                          bottomRight: Radius.circular(10.0),
+                                                        ),
+                                                      ),
+                                                      child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+                                                        Text(
+                                                          "Футболки ".toUpperCase(),
+                                                          style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 7, letterSpacing: 0, color: Color(
+                                                              0xFF12141F)),
+                                                          textAlign: TextAlign.center,
+                                                        ),
+                                                        IconButton(
+                                                          icon: const Icon(
+                                                            Icons.add,
+                                                            size: 10,
+                                                          ),
+                                                          color: const Color(0xFF12141F),
+                                                          padding: EdgeInsets.zero,
+                                                          onPressed: () {
+                                                            debugPrint('add');
+                                                          },
+                                                        ),
+                                                      ])),
+                                                  Container(
+                                                      width: 88,
+                                                      padding: const EdgeInsets.only(left: 3),
+                                                      child: Row(crossAxisAlignment: CrossAxisAlignment.center, children: const [
+                                                        Text(
+                                                          "2500 ",
+                                                          style: TextStyle(fontSize: 7, color: Color(0xFF12141F)),
+                                                          textAlign: TextAlign.center,
+                                                        ),
+                                                        Icon(
+                                                          Icons.currency_ruble,
+                                                          color: Color(0xFF12141F),
+                                                          size: 8,
+                                                        ),
+                                                      ])),
+                                                ])));
+                                      },
+                                    ))
+                              ]),
+
+                              Column(children: [
+                                Container(
+                                    width: 380,
+                                    margin: const EdgeInsets.only(left: 15),
+                                    alignment: const Alignment(-1, 1),
+                                    child: IconButton(
+                                      alignment: Alignment.centerLeft,
+                                      padding: const EdgeInsets.all(0),
+                                      iconSize: 20.0,
+                                      icon: SvgPicture.asset(
+                                        'assets/images/delete.svg',
+                                        semanticsLabel: 'Icon delete',
+                                        height: 20.0,
+                                      ),
+                                      onPressed: () {
+                                        confirmDialog(context);
+                                      },
+                                    )),
+
+                                Container(
+                                    width: 310,
+                                    height: 20,
+                                    margin: const EdgeInsets.only(left: 15, bottom: 20),
+                                    alignment: const Alignment(1, 1),
+                                    child: GestureDetector(
+                                      onLongPress: () {
+                                        Route route = MaterialPageRoute(builder: (context) => const AddProduct());
+                                        Navigator.push(context, route);
+                                      },
+                                      child: SvgPicture.asset(
+                                        'assets/images/add.svg',
+                                        semanticsLabel: 'Icon add',
+                                        height: 20.0,
+                                      ),
+                                    )),
+                                // Container(
+                                //     width: 380,
+                                //     margin: const EdgeInsets.only(left: 15),
+                                //     alignment: const Alignment(-1, 1),
+                                //     child: IconButton(
+                                //       alignment: Alignment.centerLeft,
+                                //       padding: const EdgeInsets.all(0),
+                                //       iconSize: 20.0,
+                                //       icon: SvgPicture.asset(
+                                //         'assets/images/add.svg',
+                                //         semanticsLabel: 'Icon add',
+                                //         height: 20.0,
+                                //       ),
+                                //       onPressed: () {
+                                //           Route route = MaterialPageRoute(
+                                //               builder: (
+                                //                   context) => const AddProduct());
+                                //           Navigator
+                                //               .push(
+                                //               context,
+                                //               route);
+                                //       },
+                                //     ))
+                              ],
                               ),
-                              onPressed: () {
-                                confirmDialog(context);
-                              },
-                            )),
-                          Container(
-                            width: 380,
-                            margin: const EdgeInsets.only(left: 15),
-                            alignment: const Alignment(-1, 1),
-                            child: IconButton(
-                              alignment: Alignment.centerLeft,
-                              padding: const EdgeInsets.all(0),
-                              iconSize: 20.0,
-                              icon: SvgPicture.asset(
-                                'assets/images/add.svg',
-                                semanticsLabel: 'Icon add',
-                                height: 20.0,
-                              ),
-                              onPressed: () {
-                                //   Route route = MaterialPageRoute(
-                                //       builder: (
-                                //           context) => const Gift());
-                                //   Navigator
-                                //       .push(
-                                //       context,
-                                //       route);
-                              },
-                            ))
-                      ],
-                    ),
-              ])
+                            ]);
+                      }
+                      return const Center(child: Text('no data'));
+                    }
+                    )
            )],
           )])),
           drawer: const NavDrawerAdmin(),
@@ -620,4 +334,16 @@ Future confirmDialog(BuildContext context) async {
       );
     },
   );
+}
+
+Future<ProductsList> getProductsList() async {
+  const url = baseUrl + '/test/products_list.php';
+  final response = await http.get(Uri.parse(url));
+  debugPrint('response members getProductLists');
+  debugPrint(response.body);
+  if (response.statusCode == 200) {
+    return ProductsList.fromJson(json.decode(response.body));
+  } else {
+    throw Exception('Error: ${response.reasonPhrase}');
+  }
 }

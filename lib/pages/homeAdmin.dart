@@ -4,17 +4,17 @@ import 'package:flutter_form_builder/flutter_form_builder.dart';
 
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:cadillac/pages/addBanners.dart';
+import 'package:cadillac/pages/addPhotos.dart';
 
 import 'package:cadillac/widgets/titlePageAdmin.dart';
 import 'package:cadillac/widgets/socials.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 
-import '../NavDrawerAdmin.dart';
-import '../models/banners.dart';
-import '../variables.dart';
-import 'editAds.dart';
+import 'package:cadillac/NavDrawerAdmin.dart';
+import 'package:cadillac/models/photos.dart';
+import 'package:cadillac/variables.dart';
+import 'package:cadillac/pages/editPhoto.dart';
 
 class HomeAdmin extends StatefulWidget {
   const HomeAdmin({Key? key}) : super(key: key);
@@ -26,15 +26,15 @@ class HomeAdmin extends StatefulWidget {
 class _HomeAdminState extends State<HomeAdmin> {
   int selectedIndex = 1;
 
-  late Future<BannersList> bannersList;
-  late String bannerId;
+  late Future<PhotosList> photosList;
+  late String photoId;
   bool isLoadedImage = false;
-  late String currentBannerId;
+  late String currentPhotoId;
 
   @override
   void initState() {
     super.initState();
-    bannersList = getBannersList();
+    photosList = getPhotosList();
   }
 
   @override
@@ -61,7 +61,7 @@ class _HomeAdminState extends State<HomeAdmin> {
                 width: 160,
                 margin: const EdgeInsets.only(top: 22, right: 18.0),
                 child: const Text(
-                  'Редактировать рекламу',
+                  'Редактировать фото',
                   textAlign: TextAlign.right,
                   style: TextStyle(
                     fontSize: 14.0,
@@ -81,7 +81,7 @@ class _HomeAdminState extends State<HomeAdmin> {
                   height: 15.0,
                 ),
                 onPressed: () {
-                  Route route = MaterialPageRoute(builder: (context) => const EditAds());
+                  Route route = MaterialPageRoute(builder: (context) => const EditPhoto());
                   Navigator.push(context, route);
                 },
               ),
@@ -101,7 +101,7 @@ class _HomeAdminState extends State<HomeAdmin> {
                   width: 284,
                   margin: const EdgeInsets.only(top: 70, bottom: 70),
                   child: (Text(
-                    'Став владельцем Cadillac, \nвы не просто приобретаете \nавтомобиль класса-люкс, \nвы вступаете в элитное сообщество, единомышленников'
+                    'Став владельцем Cadillac, \nвы не просто приобретаете \nавтомобиль класса-люкс, \nвы вступаете в элитное сообщество единомышленников'
                         .toUpperCase(),
                     style: const TextStyle(
                       fontSize: 14.0,
@@ -116,8 +116,8 @@ class _HomeAdminState extends State<HomeAdmin> {
               SizedBox(
                   width: 320,
                   height: 140,
-                  child: FutureBuilder<BannersList>(
-                      future: bannersList,
+                  child: FutureBuilder<PhotosList>(
+                      future: photosList,
                       builder: (context, snapshot) {
                         if (snapshot.connectionState != ConnectionState.done) {
                           return const Center(child: CircularProgressIndicator());
@@ -128,99 +128,118 @@ class _HomeAdminState extends State<HomeAdmin> {
                         }
 
                         if (snapshot.hasData) {
-                          int countImages = snapshot.data!.banners.length;
-                          return Swiper(
-                            containerWidth: 340,
-                            viewportFraction: 1,
-                            itemHeight: 107,
-                            itemWidth: 340,
-                            autoplay: true,
-                            itemCount: countImages,
-                            itemBuilder: (BuildContext context, int index) {
-                              if (snapshot.data?.banners[index].path != null) {
-                                isLoadedImage = true;
-                              } else {
-                                isLoadedImage = false;
-                              }
-                              return Container(
-                                  width: 320,
-                                  margin: const EdgeInsets.only(
-                                    top: 10,
-                                    bottom: 10,
+                          int countImages = snapshot.data!.photos.length;
+                          print('images');
+                          debugPrint(countImages.toString());
+                          return countImages == 0 ?
+                              Container(
+                                  decoration: const BoxDecoration(
+                                  borderRadius: BorderRadius.all(Radius.circular(20)),
                                   ),
-                                  child: Column(mainAxisAlignment: MainAxisAlignment.center, crossAxisAlignment: CrossAxisAlignment.start, children: [
-                                    Stack(alignment: Alignment.centerRight, clipBehavior: Clip.none, children: [
-                                      Container(
-                                          width: 284,
-                                          height: 100,
-                                          decoration: const BoxDecoration(
-                                            color: Color(0XffE4E6FF),
-                                            borderRadius: BorderRadius.all(Radius.circular(10.0)),
-                                          ),
-                                          margin: const EdgeInsets.only(bottom: 10.0, top: 10, left: 10, right: 40),
-                                          child: isLoadedImage
-                                              ? ClipRRect(
-                                                  borderRadius: BorderRadius.circular(10),
-                                                  child: Image.memory(base64.decode(snapshot.data?.banners[index].path ?? ''),
-                                                      fit: BoxFit.cover, width: 245, height: 107))
-                                              : const Text('no image',
-                                                  textAlign: TextAlign.center,
-                                                  style: TextStyle(
-                                                    fontSize: 18.0,
-                                                    fontWeight: FontWeight.normal,
-                                                    fontFamily: 'CadillacSans',
-                                                    color: Color(0xFF8F97BF),
-                                                    height: 1.7, //line-height / font-size
-                                                  ))),
-                                      Column(children: [
+                                  child: ClipRRect(
+                                  borderRadius: const BorderRadius.all(Radius.circular(20)),
+                                  child: Image.asset(
+                                  'assets/images/no-image.jpg',
+                                  width: 284,
+                                  height: 160,
+                                  fit: BoxFit.cover,
+                                  alignment: Alignment.centerLeft,
+                                  )
+                              ))
+                            : Swiper(
+                              containerWidth: 340,
+                              viewportFraction: 1,
+                              itemHeight: 107,
+                              itemWidth: 340,
+                              autoplay: true,
+                              itemCount: countImages,
+                              itemBuilder: (BuildContext context, int index) {
+                                if (snapshot.data?.photos[index].path != null) {
+                                  isLoadedImage = true;
+                                } else {
+                                  isLoadedImage = false;
+                                }
+                                return Container(
+                                    width: 320,
+                                    margin: const EdgeInsets.only(
+                                      top: 10,
+                                      bottom: 10,
+                                    ),
+                                    child: Column(mainAxisAlignment: MainAxisAlignment.center, crossAxisAlignment: CrossAxisAlignment.start, children: [
+                                      Stack(alignment: Alignment.centerRight, clipBehavior: Clip.none, children: [
                                         Container(
-                                          margin: const EdgeInsets.only(bottom: 30.0),
-                                          child: GestureDetector(
-                                            onTap: () {
-                                              confirmDialog(context);
-                                              setState(() {
-                                                // устанавливаем индекс выделенного элемента
-                                                selectedIndex = index;
-                                              });
-                                              debugPrint(snapshot.data?.banners[selectedIndex].bannerId);
-                                              var currentBannerId = snapshot.data?.banners[selectedIndex].bannerId;
-                                              deleteBanner(currentBannerId);
+                                            width: 284,
+                                            height: 100,
+                                            decoration: const BoxDecoration(
+                                              color: Color(0XffE4E6FF),
+                                              borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                                            ),
+                                            margin: const EdgeInsets.only(bottom: 10.0, top: 10, left: 10, right: 40),
+                                            child: isLoadedImage
+                                                ? ClipRRect(
+                                                    borderRadius: BorderRadius.circular(10),
+                                                    child: Image.memory(base64.decode(snapshot.data?.photos[index].path ?? ''),
+                                                        fit: BoxFit.cover, width: 245, height: 107))
+                                                : const Text('no image',
+                                                    textAlign: TextAlign.center,
+                                                    style: TextStyle(
+                                                      fontSize: 18.0,
+                                                      fontWeight: FontWeight.normal,
+                                                      fontFamily: 'CadillacSans',
+                                                      color: Color(0xFF8F97BF),
+                                                      height: 1.7, //line-height / font-size
+                                                    ))),
+                                        Column(children: [
+                                          Container(
+                                            margin: const EdgeInsets.only(bottom: 30.0),
+                                            child: GestureDetector(
+                                              onTap: () {
+                                                confirmDialog(context);
+                                                setState(() {
+                                                  // устанавливаем индекс выделенного элемента
+                                                  selectedIndex = index;
+                                                });
+                                                debugPrint(selectedIndex.toString());
+                                                debugPrint(snapshot.data?.photos[selectedIndex].photoId);
+                                                var currentPhotoId = snapshot.data?.photos[selectedIndex].photoId;
+                                                deletePhoto(currentPhotoId);
 
-                                              Route route = MaterialPageRoute(builder: (context) => const HomeAdmin());
+                                                Route route = MaterialPageRoute(builder: (context) => const HomeAdmin());
+                                                Navigator.push(context, route);
+                                              },
+                                              child: SvgPicture.asset(
+                                                'assets/images/delete.svg',
+                                                semanticsLabel: 'Icon delete',
+                                                height: 20.0,
+                                              ),
+                                            ),
+                                          ),
+                                          GestureDetector(
+                                            onTap: () {
+                                              Route route = MaterialPageRoute(builder: (context) => const AddPhotos());
                                               Navigator.push(context, route);
                                             },
                                             child: SvgPicture.asset(
-                                              'assets/images/delete.svg',
-                                              semanticsLabel: 'Icon delete',
+                                              'assets/images/add.svg',
+                                              semanticsLabel: 'Icon add',
                                               height: 20.0,
                                             ),
                                           ),
-                                        ),
-                                        GestureDetector(
-                                          onTap: () {
-                                            Route route = MaterialPageRoute(builder: (context) => const AddBanners());
-                                            Navigator.push(context, route);
-                                          },
-                                          child: SvgPicture.asset(
-                                            'assets/images/add.svg',
-                                            semanticsLabel: 'Icon add',
-                                            height: 20.0,
-                                          ),
-                                        ),
-                                        Visibility(
-                                          visible: false,
-                                          child: FormBuilderTextField(
-                                            name: 'currentBannerId',
-                                            initialValue: '${snapshot.data?.banners[selectedIndex].bannerId}',
-                                            onSaved: (value) => currentBannerId = value!,
-                                          ),
-                                        ),
-                                      ])
-                                    ]),
-                                  ]));
-                            },
-                            // control: SwiperControl(),
-                          );
+                                          // Visibility(
+                                          //   visible: false,
+                                          //   child: FormBuilderTextField(
+                                          //     name: 'currentPhotoId',
+                                          //     initialValue: '${snapshot.data?.photos[selectedIndex].photoId}',
+                                          //     onSaved: (value) => currentPhotoId = value!,
+                                          //   ),
+                                          // ),
+                                        ])
+                                      ]),
+
+                                    ]));
+                              },
+                              // control: SwiperControl(),
+                            );
                         }
                         return const Center(child: Text('no data'));
                       })),
@@ -245,7 +264,7 @@ Future confirmDialog(BuildContext context) async {
     builder: (BuildContext context) {
       return AlertDialog(
         content: Text(
-          'Удалить banner?'.toUpperCase(),
+          'Удалить photo?'.toUpperCase(),
           textAlign: TextAlign.center,
           style: styleTextAlertDialog,
         ),
@@ -299,24 +318,24 @@ Future confirmDialog(BuildContext context) async {
   );
 }
 
-Future<BannersList> getBannersList() async {
-  const url = baseUrl + '/test/banners_list.php';
+Future<PhotosList> getPhotosList() async {
+  const url = baseUrl + '/test/photos_list.php';
   final response = await http.get(Uri.parse(url));
-  debugPrint('response getBannerLists');
+  debugPrint('response getPhotosLists');
   debugPrint(response.body.toString());
   if (response.statusCode == 200) {
-    return BannersList.fromJson(json.decode(response.body));
+    return PhotosList.fromJson(json.decode(response.body));
   } else {
     throw Exception('Error: ${response.reasonPhrase}');
   }
 }
 
-deleteBanner(bannerId) async {
-  debugPrint('delete banner admin');
-  String apiUrl = baseUrl + "/test/delete_banner.php";
+deletePhoto(photoId) async {
+  debugPrint('delete photo admin');
+  String apiUrl = baseUrl + "/test/delete_photo.php";
 
   var response = await http.post(Uri.parse(apiUrl), body: {
-    'bannerId': bannerId,
+    'photoId': photoId,
   }, headers: {
     'Accept': 'application/json, charset=utf-8',
     "Access-Control-Allow-Origin": "*",
@@ -324,7 +343,7 @@ deleteBanner(bannerId) async {
   });
 
   if (response.statusCode == 200) {
-    debugPrint('banner deleted');
+    debugPrint('photo deleted');
     debugPrint(response.statusCode.toString());
     debugPrint(response.body);
     return response.body;

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'dart:convert';
 
-import 'package:flutter/services.dart';
+import 'package:http/http.dart' as http;
 
 class ProductsList {
   List<Product> products;
@@ -21,38 +21,59 @@ class ProductsList {
 }
 
 class Product {
-  late final int categoryId;
+  late final String categoryId;
   late final String category;
-  late final int id;
-  late final String name;
-  late final String image;
-  late final dynamic price;
-  late final int quantity;
+  late final String id;
+  late final String productId;
+  late final String productName;
+  late final String productImage;
+  late final dynamic productPrice;
 
   Product({
     required this.categoryId,
     required this.category,
     required this.id,
-    required this.name,
-    required this.image,
-    required this.price,
-    required this.quantity,
+    required this.productId,
+    required this.productName,
+    required this.productImage,
+    required this.productPrice,
   });
 
   factory Product.fromJson(Map<String, dynamic> json) {
     return Product(
-      categoryId: json['categoryId'] as int,
+      categoryId: json['categoryId'] as String,
       category: json['category'] as String,
-      id: json['id'] as int,
-      name: json['name'] as String,
-      image: json['image'] as String,
-      price: json['price'] as dynamic,
-      quantity: json['quantity'] as int,
+      id: json['id'] as String,
+      productId: json['productId'] as String,
+      productName: json['productName'] as String,
+      productImage: json['productImage'] as String,
+      productPrice: json['productPrice'] as dynamic,
     );
+  }
+
+  Future<ProductsList> getProductsList() async {
+    const url = 'https://cadillacapp.ru/test/products_list.php';
+    final response = await http.get(Uri.parse(url));
+    debugPrint('response body getProductsList');
+    if (response.statusCode == 200) {
+      return ProductsList.fromJson(json.decode(response.body));
+    } else {
+      throw Exception('Error: ${response.reasonPhrase}');
+    }
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['categoryId'] = categoryId;
+    data['category'] = category;
+    data['id'] = id;
+    data['productId'] = productId;
+    data['productName'] = productName;
+    data['productImage'] = productImage;
+    data['productPrice'] = productPrice;
+
+    return data;
   }
 }
 
-Future<ProductsList> readJson() async {
-  final String response = await rootBundle.loadString('assets/products.json');
-  return ProductsList.fromJson(json.decode(response));
-}
+

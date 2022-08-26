@@ -11,7 +11,7 @@ import 'package:cadillac/widgets/socials.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 
-import '../models/banners.dart';
+import '../models/photos.dart';
 import '../variables.dart';
 
 class Home extends StatefulWidget {
@@ -22,16 +22,16 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  late Future<BannersList> bannersList;
+  late Future<PhotosList> photosList;
 
-  late String bannerId;
+  late String photoId;
   bool isLoadedImage = false;
-  late String currentBannerId;
+  late String currentPhotoId;
 
   @override
   void initState() {
     super.initState();
-    bannersList = getBannersList();
+    photosList = getPhotosList();
   }
 
   @override
@@ -100,8 +100,8 @@ class _HomeState extends State<Home> {
                     padding: EdgeInsets.zero,
                     margin: const EdgeInsets.only(top: 10, bottom: 30, left: 0, right: 0),
                     color: const Color(0xFF181C33),
-                    child: FutureBuilder<BannersList>(
-                        future: bannersList,
+                    child: FutureBuilder<PhotosList>(
+                        future: photosList,
                         builder: (context, snapshot) {
                           if (snapshot.connectionState != ConnectionState.done) {
                             return const Center(child: CircularProgressIndicator());
@@ -112,7 +112,7 @@ class _HomeState extends State<Home> {
                           }
 
                           if (snapshot.hasData) {
-                            int countImages = snapshot.data!.banners.length;
+                            int countImages = snapshot.data!.photos.length;
                             return Swiper(
                               containerWidth: 284,
                               viewportFraction: 1,
@@ -120,7 +120,7 @@ class _HomeState extends State<Home> {
                               autoplay: true,
                               itemCount: countImages,
                               itemBuilder: (BuildContext context, int index) {
-                                if (snapshot.data?.banners[index].path != null) {
+                                if (snapshot.data?.photos[index].path != null) {
                                   isLoadedImage = true;
                                 } else {
                                   isLoadedImage = false;
@@ -136,7 +136,7 @@ class _HomeState extends State<Home> {
                                     child: isLoadedImage
                                         ? ClipRRect(
                                             borderRadius: const BorderRadius.all(Radius.circular(10.0)),
-                                            child: Image.memory(base64.decode(snapshot.data?.banners[index].path ?? ''),
+                                            child: Image.memory(base64.decode(snapshot.data?.photos[index].path ?? ''),
                                                 fit: BoxFit.cover, width: 284, height: 107))
                                         : const Text('no image',
                                             textAlign: TextAlign.center,
@@ -165,13 +165,13 @@ class _HomeState extends State<Home> {
   }
 }
 
-Future<BannersList> getBannersList() async {
-  const url = baseUrl + '/test/banners_list.php';
+Future<PhotosList> getPhotosList() async {
+  const url = baseUrl + '/test/photos_list.php';
   final response = await http.get(Uri.parse(url));
-  debugPrint('response getBannersList');
+  debugPrint('response getPhotosList');
   debugPrint(response.body);
   if (response.statusCode == 200) {
-    return BannersList.fromJson(json.decode(response.body));
+    return PhotosList.fromJson(json.decode(response.body));
   } else {
     throw Exception('Error: ${response.reasonPhrase}');
   }
