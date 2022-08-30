@@ -57,6 +57,19 @@ class _AddProductState extends State<AddProduct> {
   dynamic currentProduct;
   dynamic newUserProduct;
 
+  List<String> categoriesName = [
+    'футболки',
+    'худи с капюшоном',
+    'худи без капюшона',
+    'бейсболки',
+    'шапки',
+    'дождевики',
+    'наклейки',
+    'блокноты',
+    'зучки',
+    'авто-рамки'
+  ];
+
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider<Data> (
@@ -93,35 +106,55 @@ class _AddProductState extends State<AddProduct> {
                                             style: styleTitleFormInput,
                                           ),
                                         ),
-                                        FormBuilderTextField(
-                                            name: 'category',
-                                            autofocus: true,
-                                            cursorWidth: 1.0,
-                                            cursorColor: Colors.white,
-                                            style: styleFormInput,
-                                            decoration: const InputDecoration(
-                                              contentPadding: EdgeInsets.all(16),
-                                              border: OutlineInputBorder(borderSide: BorderSide.none, borderRadius: BorderRadius.all(Radius.circular(10))),
-                                              fillColor: Color(0XFF515569),
-                                              filled: true,
-                                              hintText: "Введите категорию",
-                                              hintStyle: TextStyle(
-                                                color: Colors.white60,
-                                              ),
+                                        FormBuilderDropdown(
+                                          name: 'category',
+                                          elevation: 0,
+                                          icon: SvgPicture.asset(
+                                            'assets/images/caret-down-solid.svg',
+                                            semanticsLabel: 'Icon whatsapp',
+                                            height: 16.0,
+                                            width: 10.0,
+                                            color: Colors.white,
+                                          ),
+                                          autofocus: true,
+                                          style: styleFormInput,
+                                          decoration: const InputDecoration(
+                                            contentPadding: EdgeInsets.all(16),
+                                            border: OutlineInputBorder(borderSide: BorderSide.none, borderRadius: BorderRadius.all(Radius.circular(10))),
+                                            fillColor: Color(0XFF515569),
+                                            filled: true,
+                                            hintText: "Введите категорию",
+                                            hintStyle: TextStyle(
+                                              color: Colors.white60,
                                             ),
-                                            valueTransformer: (text) => num.tryParse(text!),
-                                            autovalidateMode: AutovalidateMode.always,
-                                            onSaved: (value) => category = value!,
-                                            validator: FormBuilderValidators.compose([
-                                                  (val) {
-                                                if (val == '') {
-                                                  return 'Поле category не может быть пустым';
-                                                } else {
-                                                  return null;
-                                                }
+                                          ),
+                                          dropdownColor: const Color(0XFF363b57),
+                                          alignment: Alignment.bottomLeft,
+                                          items: categoriesName
+                                              .map((category) => DropdownMenuItem(
+                                            value: category,
+                                            child: Text(category),
+                                          )).toList(),
+                                          onSaved: (value) => category = value! as String,
+                                          autovalidateMode: AutovalidateMode.always,
+                                          validator: FormBuilderValidators.compose([
+                                                (val) {
+                                              if (val == '') {
+                                                return 'Поле category не может быть пустым';
+                                              } else {
+                                                return null;
                                               }
-                                            ]),
-                                            keyboardType: TextInputType.text),
+                                            }
+                                          ]),
+                                        ),
+                                        Visibility(
+                                          visible: false,
+                                          child: FormBuilderTextField(
+                                            name: 'categoryId',
+                                            initialValue: '1',
+                                            onSaved: (value) => categoryId = value!,
+                                          ),
+                                        ),
                                         Container(
                                           margin: const EdgeInsets.only(top: 10, bottom: 10),
                                           child: Text(
@@ -291,7 +324,7 @@ class _AddProductState extends State<AddProduct> {
                                                       .data['platform'].toString();
                                                   debugPrint(platform);
                                                   if (_productsKey.currentState?.saveAndValidate() ?? false) {
-                                                    debugPrint('Partner added');
+                                                    debugPrint('Product added');
                                                     if (platform == 'android' || platform == 'ios') {
                                                       debugPrint(platform);
                                                       final bytes = File(productImage[0].path).readAsBytesSync();
@@ -311,6 +344,11 @@ class _AddProductState extends State<AddProduct> {
                                                       });
                                                     }
                                                     // debugPrint(userId);
+                                                    print('category');
+                                                    print(category);
+                                                    // categoryId = categoriesName.where((o) => o == category) as String;
+                                                    categoryId = (categoriesName.indexOf(category.toString()) + 1).toString();
+                                                    print(categoryId);
 
                                                     dynamic currentProduct = Product(
                                                       id: id,

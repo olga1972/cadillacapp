@@ -15,8 +15,8 @@ function add_user() {
 //var_dump($_POST);
 
     // mysqli_stmt_prepare($stmt, "INSERT INTO users (userId, phone, email) VALUES(uuid(), ?, ?)");
-    mysqli_stmt_prepare($stmt, "INSERT INTO users (userId, phone, email, password, dateRegister, dateExpired) VALUES(?, ?, ?, ?, ?, ?)");
-    mysqli_stmt_bind_param($stmt, 'ssssss',  $userId, $phone, $email, $password, $dateRegister, $dateExpired);
+    mysqli_stmt_prepare($stmt, "INSERT INTO users (userId, phone, email, password, dateRegister, dateExpired, fieldOfActivity, numberCar, yearIssue) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)");
+    mysqli_stmt_bind_param($stmt, 'sssssssss',  $userId, $phone, $email, $password, $dateRegister, $dateExpired, $fieldOfActivity, $numberCar, $yearIssue);
     mysqli_stmt_execute($stmt);
     mysqli_stmt_get_result($stmt);
     //print(mysqli_stmt_errno($stmt));
@@ -31,8 +31,8 @@ function edit_user() {
 
     //mysqli_stmt_prepare($stmt, "INSERT INTO users (username, birthday) VALUES(?, ?)");
 
-    mysqli_stmt_prepare($stmt, "UPDATE users SET username = ?, birthday = ?, path = ?, car1 = ?, car2 = ?, car3 = ? WHERE login = ?");
-    mysqli_stmt_bind_param($stmt, 'sssssss',  $username, $birthday, $path, $car1, $car2, $car3, $login);
+    mysqli_stmt_prepare($stmt, "UPDATE users SET username = ?, birthday = ?, path = ?, car1 = ?, car2 = ?, car3 = ?, fieldOfActivity = ?, numberCar = ?, yearIssue = ? WHERE login = ?");
+    mysqli_stmt_bind_param($stmt, 'ssssssssss',  $username, $birthday, $path, $car1, $car2, $car3, $login, $fieldOfActivity, $numberCar, $yearIssue);
     mysqli_stmt_execute($stmt);
     mysqli_stmt_get_result($stmt);
     //print(mysqli_stmt_errno($stmt));
@@ -50,8 +50,9 @@ function get_user_by_login() {
     // print($path);
 
     $stmt = mysqli_stmt_init($link);
-    mysqli_stmt_prepare($stmt,"UPDATE users SET username = ?, birthday = ?, login = ?, carname = ?, path = ?, car1 = ?, car2 = ?, car3 = ?  WHERE email = ?");
-    mysqli_stmt_bind_param($stmt,'sssssssss', $username, $birthday, $login, $carname, $path, $car1, $car2, $car3, $login);
+    mysqli_stmt_prepare($stmt, "UPDATE users SET username = ?, birthday = ?, carname = ?, path = ?, car1 = ?, car2 = ?, car3 = ?, fieldOfActivity = ?, numberCar = ?, yearIssue = ? WHERE login = ?");
+ //    mysqli_stmt_prepare($stmt,"UPDATE users SET username = ?, birthday = ?, login = ?, carname = ?, path = ?, car1 = ?, car2 = ?, car3 = ?,   WHERE email = ?");
+    mysqli_stmt_bind_param($stmt,'sssssssssss', $username, $birthday, $carname, $path, $car1, $car2, $car3, $fieldOfActivity, $numberCar, $yearIssue, $login);
     mysqli_stmt_execute($stmt);
     mysqli_stmt_get_result($stmt);
 
@@ -647,4 +648,205 @@ function delete_banner() {
     mysqli_stmt_bind_param($stmt,'s', $bannerId);
     mysqli_stmt_execute($stmt);
     $mysqli_result = mysqli_stmt_get_result($stmt);
+}
+
+function add_photo() {
+    global $stmt, $link;
+    clear();
+    extract($_POST);
+//var_dump($_POST);
+
+    mysqli_stmt_prepare($stmt, "INSERT INTO photos (photoId, photoName, path) VALUES(uuid(), ?, ?)");
+    mysqli_stmt_bind_param($stmt, 'ss',  $photoName, $path);
+    mysqli_stmt_execute($stmt);
+    mysqli_stmt_get_result($stmt);
+    
+}
+
+function get_photo() {
+    global $link;
+    global $stmt;
+    clear();
+    extract($_POST);
+
+    mysqli_stmt_prepare($stmt,"SELECT * FROM photos WHERE photoName = ?");
+    mysqli_stmt_bind_param($stmt,'s', $photoName);
+    mysqli_stmt_execute($stmt);
+    $mysqli_result = mysqli_stmt_get_result($stmt);
+    //print(mysqli_stmt_errno($stmt));
+
+    $photoInfoArray = [];
+
+    if($mysqli_result){
+        $rowsCount = mysqli_num_rows($mysqli_result); // количество полученных строк
+//echo "<p>Получено объектов: $rowsCount</p>";
+
+        foreach($mysqli_result as $row){
+            $photoInfoArray[0] = $row;
+        }
+
+        // $currentNews = $newsInfoArray[0];
+        //var_dump($newsInfoArray);
+
+
+        return $photoInfoArray;
+
+   
+    }
+}
+
+function get_all_photos_json(){
+
+	global $link;
+	$query = "SELECT * FROM photos";
+	$result = mysqli_query($link, $query);
+    
+    $photos = array();
+
+    if($result){
+        $rowsCount = mysqli_num_rows($result); // количество полученных строк
+//        echo "<p>Получено объектов: $rowsCount</p>";
+
+        foreach($result as $row){
+            $photos[] = $row;
+          
+        }
+
+        $photos_obj = '{"photos": ' . json_encode($photos, JSON_UNESCAPED_SLASHES) . '}';
+ 
+        return ($photos_obj);
+
+    } else{
+        echo "Ошибка: " . mysqli_error($link);
+    }
+}
+
+function delete_photo() {
+    global $link;
+    global $stmt;
+    clear();
+    extract($_POST);
+    //var_dump($_POST);
+
+    mysqli_stmt_prepare($stmt,"DELETE FROM photos WHERE photoId = ?");
+    mysqli_stmt_bind_param($stmt,'s', $photoId);
+    mysqli_stmt_execute($stmt);
+    $mysqli_result = mysqli_stmt_get_result($stmt);
+}
+
+function add_product() {
+    global $stmt, $link;
+    clear();
+    extract($_POST);
+//var_dump($_POST);
+
+    mysqli_stmt_prepare($stmt, "INSERT INTO products (categoryId, category, productId, productName, productImage, productPrice) VALUES(?, ?, uuid(), ?, ?, ?)");
+    mysqli_stmt_bind_param($stmt, 'sssss',   $categoryId, $category, $productName, $productImage, $productPrice);
+    mysqli_stmt_execute($stmt);
+    mysqli_stmt_get_result($stmt);
+//print(mysqli_stmt_errno($stmt));
+}
+
+function get_product() {
+    global $link;
+    global $stmt;
+    clear();
+    extract($_POST);
+
+    mysqli_stmt_prepare($stmt,"SELECT * FROM products WHERE productName = ?");
+    mysqli_stmt_bind_param($stmt,'s', $productName);
+    mysqli_stmt_execute($stmt);
+    $mysqli_result = mysqli_stmt_get_result($stmt);
+
+    $productInfoArray = [];
+
+    if($mysqli_result){
+        foreach($mysqli_result as $row){
+            $productInfoArray[] = $row;
+        }
+        return $productInfoArray;
+    }
+}
+
+function get_all_products_json(){
+    global $stmt;
+    global $link;
+    $query = "SELECT * FROM products";
+    $result = mysqli_query($link, $query);
+
+    $products = array();
+
+    if($result){
+        foreach($result as $row){
+            $products[] = $row;
+        }
+        $products_obj = '{"products": ' . json_encode($products, JSON_UNESCAPED_SLASHES) . '}';
+
+        return ($products_obj);
+    } else{
+        echo "Ошибка: " . mysqli_stmt_errno($stmt);
+    }
+}
+
+function delete_product() {
+    global $link;
+    global $stmt;
+    clear();
+    extract($_POST);
+    //var_dump($_POST);
+
+    mysqli_stmt_prepare($stmt,"DELETE FROM products WHERE productId = ?");
+    mysqli_stmt_bind_param($stmt,'s', $productId);
+    mysqli_stmt_execute($stmt);
+    $mysqli_result = mysqli_stmt_get_result($stmt);
+}
+
+function get_all_categories_json(){
+    global $stmt;
+    global $link;
+    $query = "SELECT * FROM categories";
+    $result = mysqli_query($link, $query);
+
+    $categories = array();
+
+    if($result){
+        foreach($result as $row){
+            $categories[] = $row;
+        }
+        $categories_obj = '{"categories": ' . json_encode($categories, JSON_UNESCAPED_SLASHES) . '}';
+
+        return ($categories_obj);
+    } else{
+        echo "Ошибка: " . mysqli_stmt_errno($stmt);
+    }
+}
+
+function get_current_product($productId) {
+   
+    global $link;
+    global $stmt;
+    mysqli_stmt_prepare($stmt,"SELECT * FROM products WHERE productId = ?");
+    mysqli_stmt_bind_param($stmt,'s', $productId);
+    mysqli_stmt_execute($stmt);
+    $mysqli_result = mysqli_stmt_get_result($stmt);
+
+
+    $productInfoArray =[];
+
+    if($mysqli_result){
+        $rowsCount = mysqli_num_rows($mysqli_result); // количество полученных строк
+//echo "<p>Получено объектов: $rowsCount</p>";
+
+        foreach($mysqli_result as $row){
+            $productInfoArray[] = $row;
+        }
+
+        $productInfoArray[0]["id"] = strval($productInfoArray[0]["id"]);
+        
+        
+        print(json_encode($productInfoArray[0], JSON_UNESCAPED_SLASHES));
+        return $productInfoArray[0];
+    } else {
+        echo "Ошибка: " . print(mysqli_stmt_errno($stmt));
+    }
 }

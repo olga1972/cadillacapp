@@ -18,6 +18,25 @@ class ProductsList {
       products: productsList,
     );
   }
+
+
+}
+
+class CategoriesList {
+  List<Category> categories;
+  CategoriesList({required this.categories});
+
+  factory CategoriesList.fromJson(Map<String, dynamic> json) {
+    debugPrint('from json CategoriesList');
+    var categoriesJson = json['categories'] as List;
+
+    debugPrint('categoriesJson');
+    debugPrint(categoriesJson.toString());
+    List<Category> categoriesList = categoriesJson.map((i) => Category.fromJson(i)).toList();
+    return CategoriesList(
+      categories: categoriesList,
+    );
+  }
 }
 
 class Product {
@@ -51,6 +70,8 @@ class Product {
     );
   }
 
+  // get categoryName => null;
+
   Future<ProductsList> getProductsList() async {
     const url = 'https://cadillacapp.ru/test/products_list.php';
     final response = await http.get(Uri.parse(url));
@@ -72,6 +93,45 @@ class Product {
     data['productImage'] = productImage;
     data['productPrice'] = productPrice;
 
+    return data;
+  }
+}
+
+class Category {
+  late final String categoryId;
+  late final String category;
+  late final String id;
+
+  Category({
+    required this.categoryId,
+    required this.category,
+    required this.id,
+  });
+
+  factory Category.fromJson(Map<String, dynamic> json) {
+    return Category(
+      categoryId: json['categoryId'] as String,
+      category: json['category'] as String,
+      id: json['id'] as String,
+    );
+  }
+
+  Future<CategoriesList> getCategoriesList() async {
+    const url = 'https://cadillacapp.ru/test/categories_list.php';
+    final response = await http.get(Uri.parse(url));
+    debugPrint('response body getCategoriesList');
+    if (response.statusCode == 200) {
+      return CategoriesList.fromJson(json.decode(response.body));
+    } else {
+      throw Exception('Error: ${response.reasonPhrase}');
+    }
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['categoryId'] = categoryId;
+    data['category'] = category;
+    data['id'] = id;
     return data;
   }
 }

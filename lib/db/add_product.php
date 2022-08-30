@@ -17,7 +17,7 @@ mysqli_set_charset($link,"utf8");
 
 
 
-if(isset($_POST["name"])) {
+if(isset($_POST["productName"])) {
 
     $stmt = mysqli_stmt_init($link);
 
@@ -25,8 +25,7 @@ if(isset($_POST["name"])) {
 
      $addedProduct = get_product();
 
-     $addedProducts[0]["id"] = strval($addedProduct[0]["id"]);
-    $addedProducts[0]["categoryId"] = strval($addedProduct[0]["categoryId"]);
+     $addedProduct[0]["id"] = strval($addedProduct[0]["id"]);
 
     print(json_encode($addedProduct[0], JSON_UNESCAPED_SLASHES));
 

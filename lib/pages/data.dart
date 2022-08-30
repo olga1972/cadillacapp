@@ -17,7 +17,8 @@ class Data with ChangeNotifier {
     'isAuth': false,
     // 'cookies': '',
     'isAdmin': false,
-    'isShowConfirmRegister': false
+    'isShowConfirmRegister': false,
+    'productId': ''
   };
 
   // void setCookie(value) {
@@ -45,6 +46,12 @@ class Data with ChangeNotifier {
   void updateUserId(value) {
     debugPrint('update userId');
     data["userId"] = value;
+    notifyListeners();
+  }
+
+  void updateProductId(value) {
+    debugPrint('update productId');
+    data["productId"] = value;
     notifyListeners();
   }
 }
