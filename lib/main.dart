@@ -72,8 +72,8 @@ Future<void> main() async {
     //       appId: "1:918394593301:web:83e077de8e1fbfc41e2e1c"
     //   ),
     // );
-    if (checkPlatform() == 'windows') {
-
+    // if (checkPlatform() == 'windows') {
+    //
         await Firebase.initializeApp(
 
             options: const FirebaseOptions(
@@ -104,9 +104,9 @@ Future<void> main() async {
     //   debugPrint('else');
     //}
 
- } else {
-      await Firebase.initializeApp();
-    }
+ // } else {
+ //      await Firebase.initializeApp();
+    // }
 
 
   runApp(MyApp());

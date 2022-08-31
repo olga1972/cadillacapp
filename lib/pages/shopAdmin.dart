@@ -39,10 +39,7 @@ class _ShopAdminState extends State<ShopAdmin> {
 
   @override
   Widget build(BuildContext context) {
-    var width = MediaQuery
-        .of(context)
-        .size
-        .width - 130;
+    var width = MediaQuery.of(context).size.width - 165;
     return ChangeNotifierProvider<Data>(
         create: (context) => Data(),
         builder: (context, child) {
@@ -68,93 +65,87 @@ class _ShopAdminState extends State<ShopAdmin> {
                 ),
                 body: Consumer<Data>(builder: (context, data, child) {
                   return Center(
-                      child: ListView(children: [
-                        Column(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Container(
-                              width: MediaQuery
-                                  .of(context)
-                                  .size
-                                  .width,
-                              margin: const EdgeInsets.only(top: 30, bottom: 20),
-                              child: const TitlePageAdmin(title: 'клубная атрибутика'),
-                            ),
-                            Container(
-                                alignment: Alignment.topCenter,
-                                width: MediaQuery
-                                    .of(context)
-                                    .size
-                                    .width,
-                                child: FutureBuilder<CategoriesList>(
-                                    future: categoriesList,
-                                    builder: (context, snapshot) {
-                                      if (snapshot.connectionState != ConnectionState.done) {
-                                        return const Center(child: CircularProgressIndicator());
-                                      }
+                      child: SingleChildScrollView(
+                          child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Container(
+                        width: MediaQuery.of(context).size.width,
+                        margin: const EdgeInsets.only(top: 30, bottom: 20),
+                        child: const TitlePageAdmin(title: 'клубная атрибутика'),
+                      ),
+                      Container(
+                          alignment: Alignment.topCenter,
+                          width: MediaQuery.of(context).size.width - 25,
+                          child: FutureBuilder<CategoriesList>(
+                              future: categoriesList,
+                              builder: (context, snapshot) {
+                                if (snapshot.connectionState != ConnectionState.done) {
+                                  return const Center(child: CircularProgressIndicator());
+                                }
 
-                                      if (snapshot.hasError) {
-                                        return Center(child: Text(snapshot.error.toString()));
-                                      }
+                                if (snapshot.hasError) {
+                                  return Center(child: Text(snapshot.error.toString()));
+                                }
 
-                                      if (snapshot.hasData) {
-                                        return Column(mainAxisAlignment: MainAxisAlignment.start, crossAxisAlignment: CrossAxisAlignment.start, children: [
-                                          ListView.builder(
-                                              scrollDirection: Axis.vertical,
-                                              shrinkWrap: true,
-                                              itemCount: snapshot.data?.categories.length,
-                                              itemBuilder: (BuildContext context, int index) {
-                                                var currentCategory = snapshot.data?.categories[index].category;
-                                                return Row(crossAxisAlignment: CrossAxisAlignment.center, children: [
-                                                  Container(
-                                                    alignment: Alignment.centerLeft,
-                                                    width: 130,
-                                                    height: 180,
-                                                    child: Center(
-                                                      child: Text(
-                                                        "$currentCategory".toUpperCase(),
-                                                        style: const TextStyle(
-                                                          fontSize: 14,
-                                                          color: Colors.white,
-                                                        ),
-                                                        textAlign: TextAlign.center,
-                                                      ),
-                                                    ),
+                                if (snapshot.hasData) {
+                                  return Column(mainAxisAlignment: MainAxisAlignment.start, crossAxisAlignment: CrossAxisAlignment.start, children: [
+                                    ListView.builder(
+                                        scrollDirection: Axis.vertical,
+                                        shrinkWrap: true,
+                                        itemCount: snapshot.data?.categories.length,
+                                        itemBuilder: (BuildContext context, int index) {
+                                          var currentCategory = snapshot.data?.categories[index].category;
+                                          return Row(crossAxisAlignment: CrossAxisAlignment.center, children: [
+                                            Container(
+                                              alignment: Alignment.centerLeft,
+                                              width: 130,
+                                              height: 180,
+                                              child: Center(
+                                                child: Text(
+                                                  "$currentCategory".toUpperCase(),
+                                                  style: const TextStyle(
+                                                    fontSize: 14,
+                                                    color: Colors.white,
                                                   ),
-                                                  Container(
-                                                      width: width,
-                                                      height: 180,
-                                                      margin: const EdgeInsets.only(top: 10, bottom: 10, left: 0, right: 0),
-                                                      child: FutureBuilder<ProductsList>(
-                                                          future: productsList,
-                                                          builder: (context, snapshot) {
-                                                            if (snapshot.connectionState != ConnectionState.done) {
-                                                              return const Center(child: CircularProgressIndicator());
-                                                            }
+                                                  textAlign: TextAlign.center,
+                                                ),
+                                              ),
+                                            ),
+                                            Container(
+                                                width: width,
+                                                height: 180,
+                                                margin: const EdgeInsets.only(top: 10, bottom: 10, left: 0, right: 0),
+                                                child: FutureBuilder<ProductsList>(
+                                                    future: productsList,
+                                                    builder: (context, snapshot) {
+                                                      if (snapshot.connectionState != ConnectionState.done) {
+                                                        return const Center(child: CircularProgressIndicator());
+                                                      }
 
-                                                            if (snapshot.hasError) {
-                                                              return Center(child: Text(snapshot.error.toString()));
-                                                            }
+                                                      if (snapshot.hasError) {
+                                                        return Center(child: Text(snapshot.error.toString()));
+                                                      }
 
-                                                            if (snapshot.hasData) {
-                                                              var productsList = snapshot.data?.products;
-                                                              // print(productsList?.where((o) => o.category == currentCategory));
-                                                              productsList = productsList?.where((o) => o.category == currentCategory).toList();
-                                                              // print(productsList?.isEmpty);
+                                                      if (snapshot.hasData) {
+                                                        var productsList = snapshot.data?.products;
+                                                        // print(productsList?.where((o) => o.category == currentCategory));
+                                                        productsList = productsList?.where((o) => o.category == currentCategory).toList();
+                                                        // print(productsList?.isEmpty);
 
-                                                              dynamic itemCount;
-                                                              // bool isEmpty = true;
-                                                              if (productsList?.length != null && productsList != null) {
-                                                                itemCount = productsList.length;
-                                                                // isEmpty = false;
-                                                              } else {
-                                                                itemCount = null;
-                                                                // isEmpty = true;
-                                                              }
-                                                              print(itemCount);
-                                                              return itemCount > 0
-                                                                  ? Swiper(
+                                                        dynamic itemCount;
+                                                        // bool isEmpty = true;
+                                                        if (productsList?.length != null && productsList != null) {
+                                                          itemCount = productsList.length;
+                                                          // isEmpty = false;
+                                                        } else {
+                                                          itemCount = null;
+                                                          // isEmpty = true;
+                                                        }
+                                                        print(itemCount);
+                                                        return itemCount > 0
+                                                            ? Swiper(
                                                                 itemCount: itemCount,
                                                                 layout: SwiperLayout.CUSTOM,
                                                                 customLayoutOption: CustomLayoutOption(startIndex: 0, stateCount: 3)
@@ -163,10 +154,7 @@ class _ShopAdminState extends State<ShopAdmin> {
                                                                 itemHeight: 180,
                                                                 // itemWidth: 98,
                                                                 itemWidth: 100,
-                                                                autoplay: MediaQuery
-                                                                    .of(context)
-                                                                    .size
-                                                                    .width > 920 ? true : false,
+                                                                autoplay: MediaQuery.of(context).size.width > 920 ? true : false,
                                                                 outer: true,
                                                                 itemBuilder: (BuildContext context, int index) {
                                                                   return GestureDetector(
@@ -185,7 +173,7 @@ class _ShopAdminState extends State<ShopAdmin> {
                                                                             context, MaterialPageRoute(builder: (context) => CardProductAdmin()));
                                                                       },
                                                                       child: Container(
-                                                                        // width: 98,
+                                                                          // width: 98,
                                                                           width: 100,
                                                                           height: 180,
                                                                           decoration: const BoxDecoration(
@@ -209,7 +197,7 @@ class _ShopAdminState extends State<ShopAdmin> {
                                                                               ),
                                                                             ),
                                                                             Container(
-                                                                              // width: 98,
+                                                                                // width: 98,
                                                                                 width: 100,
                                                                                 height: 30,
                                                                                 padding: const EdgeInsets.only(left: 7),
@@ -239,9 +227,8 @@ class _ShopAdminState extends State<ShopAdmin> {
                                                                                     padding: EdgeInsets.zero,
                                                                                     onPressed: () {
                                                                                       debugPrint('add');
-                                                                                      Route route = MaterialPageRoute(
-                                                                                          builder: (
-                                                                                              context) => const OrderProduct());
+                                                                                      Route route =
+                                                                                          MaterialPageRoute(builder: (context) => const OrderProduct());
                                                                                       Navigator.push(context, route);
                                                                                     },
                                                                                   ),
@@ -264,91 +251,91 @@ class _ShopAdminState extends State<ShopAdmin> {
                                                                           ])));
                                                                 },
                                                               )
-                                                                  : Column(mainAxisAlignment: MainAxisAlignment.center, children: const [
+                                                            : Column(mainAxisAlignment: MainAxisAlignment.center, children: const [
                                                                 Flexible(
                                                                     child: Text(
-                                                                      'В этой категории товаров нет',
-                                                                      style: TextStyle(fontSize: 14, color: Colors.white),
-                                                                      textAlign: TextAlign.center,
-                                                                    ))
+                                                                  'В этой категории товаров нет',
+                                                                  style: TextStyle(fontSize: 14, color: Colors.white),
+                                                                  textAlign: TextAlign.center,
+                                                                ))
                                                               ]);
-                                                            }
-                                                            return const Center(child: CircularProgressIndicator());
-                                                          }))
-                                                ]);
-                                              }),
-                                          Column(
-                                            children: [
-                                              Container(
-                                                  width: 380,
-                                                  margin: const EdgeInsets.only(left: 15),
-                                                  alignment: const Alignment(-1, 1),
-                                                  child: IconButton(
-                                                    alignment: Alignment.centerLeft,
-                                                    padding: const EdgeInsets.all(0),
-                                                    iconSize: 20.0,
-                                                    icon: SvgPicture.asset(
-                                                      'assets/images/delete.svg',
-                                                      semanticsLabel: 'Icon delete',
-                                                      height: 20.0,
-                                                    ),
-                                                    onPressed: () {
-                                                      confirmDialog(context);
-                                                    },
-                                                  )),
+                                                      }
+                                                      return const Center(child: CircularProgressIndicator());
+                                                    }))
+                                          ]);
+                                        }),
+                                    Column(
+                                      children: [
+                                        // Container(
+                                        //     width: 380,
+                                        //     margin: const EdgeInsets.only(left: 15),
+                                        //     alignment: const Alignment(-1, 1),
+                                        //     child: IconButton(
+                                        //       alignment: Alignment.centerLeft,
+                                        //       padding: const EdgeInsets.all(0),
+                                        //       iconSize: 20.0,
+                                        //       icon: SvgPicture.asset(
+                                        //         'assets/images/delete.svg',
+                                        //         semanticsLabel: 'Icon delete',
+                                        //         height: 20.0,
+                                        //       ),
+                                        //       onPressed: () {
+                                        //         confirmDialog(context);
+                                        //       },
+                                        // )),
 
-                                              Container(
-                                                  width: 310,
-                                                  height: 20,
-                                                  margin: const EdgeInsets.only(left: 15, bottom: 20),
-                                                  alignment: const Alignment(1, 1),
-                                                  child: GestureDetector(
-                                                    onLongPress: () {
-                                                      Route route = MaterialPageRoute(builder: (context) => const AddProduct());
-                                                      Navigator.push(context, route);
-                                                    },
-                                                    child: SvgPicture.asset(
-                                                      'assets/images/add.svg',
-                                                      semanticsLabel: 'Icon add',
-                                                      height: 20.0,
-                                                    ),
-                                                  )),
-                                              // Container(
-                                              //     width: 380,
-                                              //     margin: const EdgeInsets.only(left: 15),
-                                              //     alignment: const Alignment(-1, 1),
-                                              //     child: IconButton(
-                                              //       alignment: Alignment.centerLeft,
-                                              //       padding: const EdgeInsets.all(0),
-                                              //       iconSize: 20.0,
-                                              //       icon: SvgPicture.asset(
-                                              //         'assets/images/add.svg',
-                                              //         semanticsLabel: 'Icon add',
-                                              //         height: 20.0,
-                                              //       ),
-                                              //       onPressed: () {
-                                              //           Route route = MaterialPageRoute(
-                                              //               builder: (
-                                              //                   context) => const AddProduct());
-                                              //           Navigator
-                                              //               .push(
-                                              //               context,
-                                              //               route);
-                                              //       },
-                                              //     ))
-                                            ],
-                                          )
-                                        ]);
+                                        Container(
+                                            width: 310,
+                                            height: 20,
+                                            margin: const EdgeInsets.only(left: 15, bottom: 20),
+                                            alignment: const Alignment(1, 1),
+                                            child: GestureDetector(
+                                              onLongPress: () {
+                                                Route route = MaterialPageRoute(builder: (context) => const AddProduct());
+                                                Navigator.push(context, route);
+                                              },
+                                              child: SvgPicture.asset(
+                                                'assets/images/add.svg',
+                                                semanticsLabel: 'Icon add',
+                                                height: 20.0,
+                                              ),
+                                            )),
+                                        // Container(
+                                        //     width: 380,
+                                        //     margin: const EdgeInsets.only(left: 15),
+                                        //     alignment: const Alignment(-1, 1),
+                                        //     child: IconButton(
+                                        //       alignment: Alignment.centerLeft,
+                                        //       padding: const EdgeInsets.all(0),
+                                        //       iconSize: 20.0,
+                                        //       icon: SvgPicture.asset(
+                                        //         'assets/images/add.svg',
+                                        //         semanticsLabel: 'Icon add',
+                                        //         height: 20.0,
+                                        //       ),
+                                        //       onPressed: () {
+                                        //           Route route = MaterialPageRoute(
+                                        //               builder: (
+                                        //                   context) => const AddProduct());
+                                        //           Navigator
+                                        //               .push(
+                                        //               context,
+                                        //               route);
+                                        //       },
+                                        //     ))
+                                      ],
+                                    )
+                                  ]);
 
-                                        // }}))];
-                                      }
-                                      return const Center(child: Text('no data'));
-                                    }))
-                          ],
-                        )
-                      ]
-                        //)
-                      ));
+                                  // }}))];
+                                }
+                                return const Center(child: Text('no data'));
+                              }))
+                    ],
+                  )
+
+                          //)
+                          ));
                 }),
                 drawer: const NavDrawerAdmin(),
               ));
