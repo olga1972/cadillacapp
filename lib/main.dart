@@ -178,9 +178,9 @@ class MyApp extends StatelessWidget {
 
 
         routes: {
-         //'/home': (context) => Entrance(),
+         '/home': (context) => Entrance(),
           //'/home': (context) => AddProduct(),
-          '/home': (context) => Shop(),
+          //'/home': (context) => Shop(),
           //'/home': (context) => MembersAdmin(),
           //'/home': (context) => RegistrationPage(),
           //'/home': (context) => CardProductAdmin(index: 0),

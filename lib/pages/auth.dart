@@ -38,13 +38,18 @@ class _AuthorizationPageState extends State<AuthorizationPage> {
     Widget _logo(){
       return Container(
         margin: const EdgeInsets.only(
-            top: 70),
-        child: SvgPicture.asset(
-          'assets/images/LOGO.svg',
-          //fit: BoxFit.fill,
-          height: 103.0,
-          color: Colors.white,
-        ),
+            top: 0),
+        child: Image.asset(
+          'assets/images/logo_white.png',
+          fit: BoxFit.fill,
+          //height: 103.0,
+        )
+        // child: SvgPicture.asset(
+        //   'assets/images/LOGO.svg',
+        //   //fit: BoxFit.fill,
+        //   height: 103.0,
+        //   color: Colors.white,
+        // ),
 
       );
     }
@@ -224,7 +229,7 @@ class _AuthorizationPageState extends State<AuthorizationPage> {
         body: Center(
         child: Container(
         width: 284,
-        margin: const EdgeInsets.only(top: 70),
+        margin: const EdgeInsets.only(top: 30),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
@@ -234,7 +239,7 @@ class _AuthorizationPageState extends State<AuthorizationPage> {
                 child: Column(
                 children: [
             _logo(),
-            SizedBox(height: 100,),
+            // SizedBox(height: 10,),
             (
                 showLogin
                     ? Column(

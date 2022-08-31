@@ -148,7 +148,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
             body: Center(
               child: Container(
                   width: 284,
-                  margin: const EdgeInsets.only(top: 70),
+                  margin: const EdgeInsets.only(top: 50),
                   child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.center,
@@ -158,14 +158,13 @@ class _RegistrationPageState extends State<RegistrationPage> {
                                 child: Column(
                                     children: [
                                       Container(
-                                        margin: const EdgeInsets.only(bottom: 70,
-                                            top: 70),
-                                        child: SvgPicture.asset(
-                                          'assets/images/LOGO.svg',
-                                          //fit: BoxFit.fill,
-                                          height: 103.0,
-                                          color: Colors.white,
-                                        ),
+                                        margin: const EdgeInsets.only(bottom: 10,
+                                            top: 0),
+                                          child: Image.asset(
+                                            'assets/images/logo_white.png',
+                                            fit: BoxFit.fill,
+                                            //height: 103.0,
+                                          )
 
                                       ),
 
