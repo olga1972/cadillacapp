@@ -173,7 +173,7 @@ class _PartnersAdminState extends State<PartnersAdmin> {
                                                                         visible: false,
                                                                         child: FormBuilderTextField(
                                                                           name: 'currentPartnerId',
-                                                                          initialValue: '${snapshot.data?.partners[selectedIndex].partnerId}',
+                                                                          initialValue: snapshot.data?.partners.length != 1 ? '${snapshot.data?.partners[selectedIndex].partnerId}' : '',
                                                                           onSaved: (value) => currentPartnerId = value!,
                                                                         ),
                                                                       ),
@@ -216,7 +216,7 @@ class _PartnersAdminState extends State<PartnersAdmin> {
                                                   Route route = MaterialPageRoute(
                                                       builder: (context) =>
                                                           const AddPartners());
-                                                  Navigator.push(context,route);
+                                                  Navigator.push(context,route).then((value) => setState(() {}));
                                                 },
                                                 child: SvgPicture
                                                     .asset(

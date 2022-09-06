@@ -85,7 +85,7 @@ class _NewsAdminState extends State<NewsAdmin> {
                   ),
                   onPressed: () {
                     Route route = MaterialPageRoute(builder: (context) => const EditAds());
-                    Navigator.push(context, route);
+                    Navigator.push(context, route).then((value) => setState(() {}));
                   },
                 ),
               ]),
@@ -174,7 +174,7 @@ class _NewsAdminState extends State<NewsAdmin> {
                                                                 visible: false,
                                                                 child: FormBuilderTextField(
                                                                   name: 'currentNewsId',
-                                                                  initialValue: '${snapshot.data?.news[selectedIndex].newsId}',
+                                                                  initialValue: snapshot.data?.news.length != 1 ? '${snapshot.data?.news[selectedIndex].newsId}' : '',
                                                                   onSaved: (value) => currentNewsId = value!,
                                                                 ),
                                                               ),

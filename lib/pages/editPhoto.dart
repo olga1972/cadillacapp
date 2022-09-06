@@ -163,7 +163,7 @@ class _EditPhotoState extends State<EditPhoto> {
                                                                       deletePhoto(currentPhotoId);
 
                                                                       Route route = MaterialPageRoute(builder: (context) => const HomeAdmin());
-                                                                      Navigator.push(context, route);
+                                                                      Navigator.push(context, route).then((value) => setState(() {}));
                                                                     },
                                                                     child: SvgPicture.asset(
                                                                       'assets/images/delete.svg',
@@ -176,7 +176,7 @@ class _EditPhotoState extends State<EditPhoto> {
                                                               visible: false,
                                                               child: FormBuilderTextField(
                                                                 name: 'currentPhotoId',
-                                                                initialValue: '${snapshot.data?.photos[selectedIndex].photoId}',
+                                                                initialValue: snapshot.data?.photos.length != 1 ? '${snapshot.data?.photos[selectedIndex].photoId}' : '',
                                                                 onSaved: (value) => currentPhotoId = value!,
                                                               ),
                                                             ),

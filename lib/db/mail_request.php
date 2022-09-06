@@ -34,7 +34,7 @@ $mail = new PHPMailer\PHPMailer\PHPMailer();
 //    $mail->SMTPSecure = 'ssl';
 //    $mail->Port       = 465;
     //$mail->Port = 465: 587;
-    $email = 'olga.sadyreva@gmail.com';  // письмо отправляется, если email действительный! 
+    //$email = 'olga.sadyreva@gmail.com';  // письмо отправляется, если email действительный! 
 
     $mail->CharSet = "UTF-8";
     //$mail->setFrom("olga.sadyreva@gmail.com", 'New user'); // Адрес самой почты и имя отправителя
@@ -43,6 +43,7 @@ $mail = new PHPMailer\PHPMailer\PHPMailer();
     // Получатель письма
     $mail->addAddress('admin@cadillac.fvds.ru');
     $mail->addAddress('olga.sadyreva@mail.ru'); // Ещё один, если нужен
+    $mail->addAddress('elena@cadillacfamilyrussia.ru');
     $mail->Subject = 'Запрос на регистрацию в приложении';
     $mail->msgHTML("<html><body>
                 <h1>Здравствуйте!</h1>

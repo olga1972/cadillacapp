@@ -44,6 +44,7 @@ $mail = new PHPMailer\PHPMailer\PHPMailer();
     // Получатель письма
     $mail->addAddress('admin@cadillac.fvds.ru');
     $mail->addAddress('olga.sadyreva@mail.ru'); // Ещё один, если нужен
+    $mail->addAddress('elena@cadillacfamilyrussia.ru');
     $mail->Subject = 'Заявка';
     $mail->msgHTML("<html><body>
                 <h1>Здравствуйте!</h1>

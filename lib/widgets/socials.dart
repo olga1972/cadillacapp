@@ -40,7 +40,9 @@ class Socials extends StatelessWidget {
               color: Colors.white,
             ),
             // onPressed: () {},
-            onPressed: () => _launchURL('https://wa.me/message/NSTHPQVELAU4I1'),
+            // onPressed: () => _launchURL('https://wa.me/message/NSTHPQVELAU4I1'),
+              onPressed: () => _launchURL('whatsapp://send?phone=79221238853&text=hello'),
+
           )
         ])),
       ),

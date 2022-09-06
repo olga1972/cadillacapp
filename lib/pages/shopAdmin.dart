@@ -292,7 +292,7 @@ class _ShopAdminState extends State<ShopAdmin> {
                                             child: GestureDetector(
                                               onLongPress: () {
                                                 Route route = MaterialPageRoute(builder: (context) => const AddProduct());
-                                                Navigator.push(context, route);
+                                                Navigator.push(context, route).then((value) => setState(() {}));
                                               },
                                               child: SvgPicture.asset(
                                                 'assets/images/add.svg',

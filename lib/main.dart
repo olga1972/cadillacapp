@@ -76,14 +76,14 @@ Future<void> main() async {
     //
         await Firebase.initializeApp(
 
-            options: const FirebaseOptions(
-                apiKey: "AIzaSyAPQXgOa4JniOfVTk5OZmyjJlPObU1R5y8",
-                authDomain: "cadillacapp-42c1d.firebaseapp.com",
-                projectId: "cadillacapp-42c1d",
-                storageBucket: "cadillacapp-42c1d.appspot.com",
-                messagingSenderId: "918394593301",
-                appId: "1:918394593301:web:83e077de8e1fbfc41e2e1c"
-            )
+            // options: const FirebaseOptions(
+            //     apiKey: "AIzaSyAPQXgOa4JniOfVTk5OZmyjJlPObU1R5y8",
+            //     authDomain: "cadillacapp-42c1d.firebaseapp.com",
+            //     projectId: "cadillacapp-42c1d",
+            //     storageBucket: "cadillacapp-42c1d.appspot.com",
+            //     messagingSenderId: "918394593301",
+            //     appId: "1:918394593301:web:83e077de8e1fbfc41e2e1c"
+            // )
         );
     //   } else if(checkPlatform() == 'ios') {
     //     await Firebase.initializeApp(
@@ -179,7 +179,7 @@ class MyApp extends StatelessWidget {
 
         routes: {
          '/home': (context) => Entrance(),
-          //'/home': (context) => AddProduct(),
+          //'/home': (context) => EditAds(),
           //'/home': (context) => Shop(),
           //'/home': (context) => MembersAdmin(),
           //'/home': (context) => RegistrationPage(),

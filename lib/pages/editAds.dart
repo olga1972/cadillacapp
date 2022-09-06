@@ -176,7 +176,7 @@ class _EditAdsState extends State<EditAds> {
                                                               visible: false,
                                                               child: FormBuilderTextField(
                                                                 name: 'currentBannerId',
-                                                                initialValue: '${snapshot.data?.banners[selectedIndex].bannerId}',
+                                                                initialValue: snapshot.data?.banners.length != 1 ? '${snapshot.data?.banners[selectedIndex].bannerId}' : '',
                                                                 onSaved: (value) => currentBannerId = value!,
                                                               ),
                                                             ),
@@ -192,7 +192,7 @@ class _EditAdsState extends State<EditAds> {
                                         child: GestureDetector(
                                           onLongPress: () {
                                             Route route = MaterialPageRoute(builder: (context) => const AddBanners());
-                                            Navigator.push(context, route);
+                                            Navigator.push(context, route).then((value) => setState(() {}));
                                           },
                                           child: SvgPicture.asset(
                                             'assets/images/add.svg',
