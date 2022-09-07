@@ -52,5 +52,10 @@
 	<true/>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>To upload photos to your personal account, the app needs access to the images on your device</string>
+	<key>LSApplicationQueriesSchemes</key>
+	<array>
+	<string>https</string>
+	<string>http</string>
+	</array>
 </dict>
 </plist>
