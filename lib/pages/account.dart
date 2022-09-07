@@ -215,7 +215,10 @@ class _AccountState extends State<Account> {
                               Expanded(
                                   child: SingleChildScrollView(
                                       child: Column(children: [
-                                const TitlePage(title: 'мой аккаунт члена\nавтоклуба'),
+                                const Padding(
+                                  padding: EdgeInsets.only(top: 30.0),
+                                  child: TitlePage(title: 'мой аккаунт члена\nавтоклуба'),
+                                ),
                                 Container(
                                     width: 284,
                                     // height: 100,

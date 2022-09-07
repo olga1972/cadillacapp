@@ -36,7 +36,7 @@ class _ShopState extends State<Shop> {
 
   @override
   Widget build(BuildContext context) {
-    var width = MediaQuery.of(context).size.width - 165;
+    var width = MediaQuery.of(context).size.width - 130;
     return ChangeNotifierProvider<Data>(
         create: (context) => Data(),
         builder: (context, child) {
@@ -71,7 +71,7 @@ class _ShopState extends State<Shop> {
                       ),
                       Container(
                           alignment: Alignment.topCenter,
-                          width: MediaQuery.of(context).size.width - 25,
+                          width: MediaQuery.of(context).size.width,
                           child: FutureBuilder<CategoriesList>(
                               future: categoriesList,
                               builder: (context, snapshot) {

@@ -7,13 +7,14 @@ class Socials extends StatelessWidget {
   const Socials({Key? key}) : super(key: key);
 
   void _launchURL(_url) async {
-    await launchUrl(Uri.parse(_url), mode: LaunchMode.externalApplication, webOnlyWindowName: "_blank");
-    // if (await canLaunchUrl(Uri.parse(_url))) {
-    //   //проверяем наличие браузера на устройстве
-    //   await launchUrl(Uri.parse(_url)); //true если открываем в приложении, false открываем в браузере
-    // } else {
-    //   throw 'Could not launch $_url';
-    // }
+    // await launchUrl(Uri.parse(_url), mode: LaunchMode.externalApplication, webOnlyWindowName: "_blank");
+    if (await canLaunchUrl(Uri.parse(_url))) {
+      //проверяем наличие браузера на устройстве
+      // await launchUrl(Uri.parse(_url)); //true если открываем в приложении, false открываем в браузере
+      await launchUrl(Uri.parse(_url), mode: LaunchMode.externalApplication, webOnlyWindowName: "_blank");
+    } else {
+      throw 'Could not launch $_url';
+    }
   }
 
   @override
