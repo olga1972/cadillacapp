@@ -95,6 +95,7 @@ class _MembersAdminState extends State<MembersAdmin> {
                                     height: 780,
                                     child: ListView.builder(
                                         scrollDirection: Axis.vertical,
+                                        controller: ScrollController(),
                                         shrinkWrap: true,
                                         // padding: const EdgeInsets.only(top: 38, bottom: 10),
                                         itemCount: snapshot.data?.users.length,

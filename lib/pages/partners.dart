@@ -83,6 +83,7 @@ class _PartnersState extends State<Partners> {
                                           width: 310,
                                           child: ListView.builder(
                                               scrollDirection: Axis.vertical,
+                                              controller: ScrollController(),
                                               shrinkWrap: true,
                                               itemCount: snapshot.data?.partners.length,
                                               itemBuilder: (BuildContext context, int index) {

@@ -93,6 +93,7 @@ class _ShopAdminState extends State<ShopAdmin> {
                                   return Column(mainAxisAlignment: MainAxisAlignment.start, crossAxisAlignment: CrossAxisAlignment.start, children: [
                                     ListView.builder(
                                         scrollDirection: Axis.vertical,
+                                        controller: ScrollController(),
                                         shrinkWrap: true,
                                         itemCount: snapshot.data?.categories.length,
                                         itemBuilder: (BuildContext context, int index) {

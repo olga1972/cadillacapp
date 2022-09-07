@@ -15,6 +15,7 @@ import 'package:cadillac/pages/data.dart';
 import 'package:cadillac/pages/members.dart';
 import 'package:cadillac/pages/membersAdmin.dart';
 import 'package:cadillac/pages/news.dart';
+import 'package:cadillac/pages/newsAdmin.dart';
 import 'package:cadillac/pages/partners.dart';
 import 'package:cadillac/pages/partnersAdmin.dart';
 import 'package:cadillac/pages/registrationAdmin.dart';
@@ -180,13 +181,13 @@ class MyApp extends StatelessWidget {
         routes: {
          '/home': (context) => Entrance(),
           //'/home': (context) => EditAds(),
-          //'/home': (context) => Shop(),
+          //'/home': (context) => NewsAdmin(),
           //'/home': (context) => MembersAdmin(),
           //'/home': (context) => RegistrationPage(),
           //'/home': (context) => CardProductAdmin(index: 0),
           '/homeAdmin': (context) => const HomeAdmin(),
           '/registrationAdmin': (context) => const RegistrationAdmin(),
-          //'/home': (context) => Contacts(),
+          //'/home': (context) => ShopAdmin(),
           //'/home': (context) =>  isAuth ? Account() : RegistrationPage(),
           //'/home': (context) => isAuth ? Account() : RegistrationPage(),
           //'/home': (context) => Test(),

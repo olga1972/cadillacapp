@@ -88,6 +88,7 @@ class _MembersState extends State<Members> {
                                     width: 284,
                                     child: ListView.builder(
                                         scrollDirection: Axis.vertical,
+                                        controller: ScrollController(),
                                         shrinkWrap: true,
                                         itemCount: snapshot.data?.users.length,
                                         itemBuilder: (context, index) {

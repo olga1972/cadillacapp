@@ -87,6 +87,7 @@ class _ShopState extends State<Shop> {
                                   return Column(mainAxisAlignment: MainAxisAlignment.start, crossAxisAlignment: CrossAxisAlignment.start, children: [
                                     ListView.builder(
                                         scrollDirection: Axis.vertical,
+                                        controller: ScrollController(),
                                         shrinkWrap: true,
                                         itemCount: snapshot.data?.categories.length,
                                         itemBuilder: (BuildContext context, int index) {
@@ -141,6 +142,7 @@ class _ShopState extends State<Shop> {
                                                         return itemCount > 0
                                                             ? Swiper(
                                                                 itemCount: itemCount,
+                                                                controller: SwiperController(),
                                                                 layout: SwiperLayout.CUSTOM,
                                                                 customLayoutOption: CustomLayoutOption(startIndex: 0, stateCount: 3)
                                                                   ..addTranslate([const Offset(-71.0, 0.0), const Offset(40.0, 0.0), const Offset(151.0, 0.0)]),

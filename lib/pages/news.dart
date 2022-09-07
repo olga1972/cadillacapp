@@ -61,7 +61,7 @@ class _NewsState extends State<News> {
                 child: const TitlePage(title: 'клубные новости'),
               ),
               SizedBox(
-                  width: 320,
+                  width: 284,
                   child: FutureBuilder<NewsList>(
                       future: newsList,
                       builder: (context, snapshot) {
@@ -76,12 +76,13 @@ class _NewsState extends State<News> {
                         if (snapshot.hasData) {
                           return Center(
                               child: SizedBox(
-                                  width: 320,
+                                  width: 284,
                                   child: Column(mainAxisAlignment: MainAxisAlignment.start, crossAxisAlignment: CrossAxisAlignment.center, children: [
                                     SizedBox(
-                                      width: 320,
+                                      width: 284,
                                       child: ListView.builder(
                                           scrollDirection: Axis.vertical,
+                                          controller: ScrollController(),
                                           shrinkWrap: true,
                                           itemCount: snapshot.data?.news.length,
                                           itemBuilder: (context, index) {
@@ -92,7 +93,7 @@ class _NewsState extends State<News> {
                                             }
 
                                             return Container(
-                                              width: 320,
+                                              width: 284,
                                               margin: const EdgeInsets.only(
                                                 top: 10,
                                                 bottom: 10,

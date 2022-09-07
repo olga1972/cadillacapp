@@ -116,6 +116,7 @@ class _NewsAdminState extends State<NewsAdmin> {
                                           width: 320,
                                           child: ListView.builder(
                                               scrollDirection: Axis.vertical,
+                                              controller: ScrollController(),
                                               shrinkWrap: true,
                                               itemCount: snapshot.data?.news.length,
                                               itemBuilder: (context, index) {
