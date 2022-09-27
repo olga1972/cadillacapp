@@ -25,6 +25,7 @@ class _AuthorizationPageState extends State<AuthorizationPage> {
 
   final Uri url1 = Uri.parse('https://cadillacapp.ru/test/download.php');
   final Uri url2 = Uri.parse('https://cadillacapp.ru/test/download2.php');
+  final Uri url3 = Uri.parse('https://cadillacapp.ru/terms_of_use.pdf');
 
   final AuthService _authService = AuthService();
 
@@ -37,6 +38,7 @@ class _AuthorizationPageState extends State<AuthorizationPage> {
 
     Widget _logo(){
       return Container(
+        width: 284,
         margin: const EdgeInsets.only(
             top: 0),
         child: Image.asset(
@@ -56,6 +58,7 @@ class _AuthorizationPageState extends State<AuthorizationPage> {
 
     Widget _input(Icon icon, String hint, TextEditingController controller, bool obscure){
       return Container(
+          width: 284,
         // padding: EdgeInsets.only(left: 20, right: 20),
         child: TextField(
           controller: controller,
@@ -109,6 +112,7 @@ class _AuthorizationPageState extends State<AuthorizationPage> {
 
     Widget _button(String text, void Function() func){
       return MaterialButton(
+
         padding: const EdgeInsets.all(17),
         color: const Color.fromARGB(
             255, 255, 255, 255),
@@ -132,9 +136,10 @@ class _AuthorizationPageState extends State<AuthorizationPage> {
     }
 
     Widget _form(String label, void Function() func){
-      return Container(
-        child: Column(
-
+      return ConstrainedBox(
+        constraints: BoxConstraints.tightFor(width: MediaQuery.of(context).size.width, height: 300),
+        child: Center(
+          child: Column(
           crossAxisAlignment: CrossAxisAlignment
               .start,
           children: <Widget>[
@@ -169,14 +174,15 @@ class _AuthorizationPageState extends State<AuthorizationPage> {
             Padding(
                 padding: EdgeInsets.only(left: 0, right: 0),
                 child: Container(
+                  width: 284,
                     height: 50,
-                    width: MediaQuery.of(context).size.width,
+                    // width: MediaQuery.of(context).size.width,
                     child: _button(label, func)
                 )
             )
           ],
         ),
-      );
+      ));
     }
 
     void _loginButtonAction() async{
@@ -213,7 +219,7 @@ class _AuthorizationPageState extends State<AuthorizationPage> {
       if(user == null)
       {
         FlutterToastr.show(
-            "Can't Register you! Please check your email/password",
+            "Невозможно вас зарегистрировать, проверьте ваш email/password",
             context,
             duration: FlutterToastr.lengthShort,
             position:  FlutterToastr.bottom
@@ -228,7 +234,8 @@ class _AuthorizationPageState extends State<AuthorizationPage> {
         backgroundColor: Color(0xFF181c33),
         body: Center(
         child: Container(
-        width: 284,
+        // width: 284,
+        // width: MediaQuery.of(context).size.width,
         margin: const EdgeInsets.only(top: 30),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -237,18 +244,24 @@ class _AuthorizationPageState extends State<AuthorizationPage> {
             Expanded(
                 child: SingleChildScrollView(
                 child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
             _logo(),
             // SizedBox(height: 10,),
             (
                 showLogin
                     ? Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: <Widget>[
-                    _form('Войти', _loginButtonAction),
+                    Align(alignment: Alignment.topCenter, child: Container(child: _form('Войти', _loginButtonAction))),
                     Padding(
                       padding: EdgeInsets.all(10),
                       child: GestureDetector(
-                          child: Text('Не зарегистрированы еще? Отправить заявку!', style: TextStyle(fontSize: 20, color: Colors.white)),
+                          child: Text('Не зарегистрированы еще? Отправить заявку!',
+                            style: TextStyle(fontSize: 20, color: Colors.white),
+                            textAlign: TextAlign.center,
+                          ),
+
                           onTap:() {
                             setState((){
                               showLogin = false;
@@ -280,6 +293,28 @@ class _AuthorizationPageState extends State<AuthorizationPage> {
                   ],
                 )
             ),
+
+                  Container(
+                    width: 284,
+                    margin: const EdgeInsets.only(top: 20, bottom: 30),
+                    child: GestureDetector(
+                      onTap: () => launchURL('https://cadillacapp.ru/terms_of_use.pdf'),
+                      child: const Text.rich(
+                        TextSpan(
+                            text: 'Продолжая вы принимаете ',
+                            style: TextStyle(fontSize: 12, fontWeight: FontWeight.normal, color: Color(0xFF8F97BF), height: 1.5),
+                            children: <InlineSpan>[
+                              TextSpan(
+                                text: 'Пользовательское соглашение и конфиденциальность',
+                                style: TextStyle(
+                                  decoration: TextDecoration.underline,
+                                  decorationThickness: 2,
+                                ),
+                              )
+                            ]),
+                      ),
+                    ),
+                  ),
                   Container(
                     margin: const EdgeInsets.only(top: 30,
                         bottom: 10),
@@ -288,7 +323,6 @@ class _AuthorizationPageState extends State<AuthorizationPage> {
                       style: styleTitleFormInput,
                     ),
                   ),
-
                   Column(
                       mainAxisAlignment: MainAxisAlignment
                           .spaceBetween,
@@ -329,8 +363,15 @@ class _AuthorizationPageState extends State<AuthorizationPage> {
   }
 }
 
-void launchURL(url) async {
-  if (!await launchUrl(url)) throw 'Could not launch $url';
-
+void launchURL(_url) async {
+  // await launchUrl(Uri.parse(_url), mode: LaunchMode.externalApplication, webOnlyWindowName: "_blank");
+  if (await canLaunchUrl(Uri.parse(_url))) {
+    //проверяем наличие браузера на устройстве
+    // await launchUrl(Uri.parse(_url)); //true если открываем в приложении, false открываем в браузере
+    await launchUrl(Uri.parse(_url), mode: LaunchMode.externalApplication, webOnlyWindowName: "_blank");
+  } else {
+    throw 'Could not launch $_url';
+  }
 }
+
 

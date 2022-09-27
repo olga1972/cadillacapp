@@ -53,11 +53,33 @@ class _AddPhotosState extends State<AddPhotos> {
               theme: ThemeData(scaffoldBackgroundColor: const Color(0xFF2C335E)),
               title: 'Cadillac',
               debugShowCheckedModeBanner: false,
-              home: Scaffold(
+              home: Scaffold(appBar: AppBar(
+                backgroundColor: const Color(0xFF2C335E),
+                shadowColor: Colors.transparent,
+                elevation: 0.0,
+                leading: Builder(
+                  builder: (BuildContext context) {
+                    return IconButton(
+                      padding: EdgeInsets.only(top: 15.0),
+                      icon: const Icon(
+                        Icons.arrow_back,
+                        color: Colors.white,
+                      ),
+                      onPressed: () {
+                        Navigator.pushReplacement(
+                            context, MaterialPageRoute(
+                            builder: (context) =>
+                                HomeAdmin()));
+                      },
+                    );
+                  },
+                ),
+
+              ),
                 body: Center(
                     child: Container(
                       width: 284,
-                      margin: const EdgeInsets.only(top: 70),
+                      margin: const EdgeInsets.only(top: 35),
                       child: Column(mainAxisAlignment: MainAxisAlignment.center, crossAxisAlignment: CrossAxisAlignment.center, children: [
                         Expanded(
                           child: SingleChildScrollView(

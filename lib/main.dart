@@ -1,5 +1,6 @@
 import 'package:cadillac/pages/account.dart';
 import 'package:cadillac/pages/addProduct.dart';
+import 'package:cadillac/pages/addUser.dart';
 import 'package:cadillac/pages/cardProduct.dart';
 import 'package:cadillac/pages/cardProductAdmin.dart';
 import 'package:cadillac/pages/contacts.dart';
@@ -180,7 +181,7 @@ class MyApp extends StatelessWidget {
 
         routes: {
          '/home': (context) => Entrance(),
-          //'/home': (context) => EditAds(),
+         //  '/home': (context) => AddUser(),
           //'/home': (context) => NewsAdmin(),
           //'/home': (context) => MembersAdmin(),
           //'/home': (context) => RegistrationPage(),
@@ -191,7 +192,7 @@ class MyApp extends StatelessWidget {
           //'/home': (context) =>  isAuth ? Account() : RegistrationPage(),
           //'/home': (context) => isAuth ? Account() : RegistrationPage(),
           //'/home': (context) => Test(),
-          //'/home': (context) => AccountAdmin(userId:'f1c7fde2-ef1b-11ec-a426-002590eb3418'),
+          //'/home': (context) => NewsAdmin(),
           //'/home': (context) => PartnersAdmin(),
           //'/home': (context) => Account(userId:userId),
           //'/home': (context) => Contacts(),

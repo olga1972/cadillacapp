@@ -588,7 +588,10 @@ class _RegistrationAdminState extends State<RegistrationAdmin> {
                                                   dateExpired: 'dateExpired',
                                                   fieldOfActivity: 'fieldOfActivity',
                                                   numberCar: 'numberCar',
-                                                  yearIssue: 'yearIssue',);
+                                                  yearIssue: 'yearIssue',
+                                                  numberCard: 'number card',
+                                                  status: 'status'
+                                              );
 
                                               findingUser = await getUserByEmail(currentUser);
                                               user = await editUser(currentUser);

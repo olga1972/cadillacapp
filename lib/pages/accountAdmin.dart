@@ -73,8 +73,9 @@ class _AccountAdminState extends State<AccountAdmin> {
     // userId = Provider.of<Data>(context).data['userId'].toString();
     // debugPrint(userId);
     // platform = Provider.of<Data>(context).data['platform'].toString();
+    late Color colorCard;
 
-    currentUser = getUser(userId);
+    currentUser = getUser(userId, context);
 
     return MaterialApp(
         theme: ThemeData(scaffoldBackgroundColor: const Color(0xFF2C335E)),
@@ -142,6 +143,8 @@ class _AccountAdminState extends State<AccountAdmin> {
                     late Uint8List bytesCar2;
                     late Uint8List bytesCar3;
 
+                    var status = snapshot.data?.status;
+
                     if (snapshot.data?.path != null) {
                       isLoadedImage = true;
                     } else {
@@ -185,6 +188,20 @@ class _AccountAdminState extends State<AccountAdmin> {
 
                     debugPrint('images.length');
                     debugPrint(images.length.toString());
+
+                    switch (snapshot.data?.status) {
+                      case 'LUXURY':
+                        colorCard = Color(0xFFFFFFFF);
+                        break;
+                      case 'PREMIUM':
+                        colorCard = Color(0xFFFFBF00);
+                        break;
+                      case 'PLATINUM':
+                        colorCard = Color(0xFFC0C0C0);
+                        break;
+                      default:
+                        colorCard = Colors.transparent;
+                    }
 
                     return Center(
                       child: SizedBox(
@@ -343,31 +360,74 @@ class _AccountAdminState extends State<AccountAdmin> {
                                         ),
                                       ),
                                     ])),
-                                Text('мой именной номер'.toUpperCase(),
+                                Text('моя карта привилегий'.toUpperCase(),
                                     textAlign: TextAlign.center,
                                     style: const TextStyle(
                                       fontSize: 14.0,
                                       fontWeight: FontWeight.normal,
                                       fontFamily: 'CadillacSans',
                                       color: Colors.white,
-                                      height: 1.4, //line-height : font-size
+                                      height: 1.4,
                                     )),
                                 Container(
                                   width: 284,
+                                  height: 150,
                                   decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(10),
-                                    color: const Color(0xFF515569),
+                                    color: colorCard,
                                   ),
                                   padding: const EdgeInsets.all(15),
                                   margin: const EdgeInsets.only(top: 10, bottom: 25),
-                                  child: Text('${snapshot.data?.id}'.toString().padLeft(4, '0').toUpperCase(),
-                                      textAlign: TextAlign.left,
-                                      style: const TextStyle(
-                                        fontSize: 16.0,
-                                        fontWeight: FontWeight.w600,
-                                        fontFamily: 'CadillacSans',
-                                        color: Colors.white,
-                                      )),
+                                  child: status != 'без статуса' ? Column(
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                        Align(
+                                          alignment: Alignment.topRight,
+                                          child: Text('${snapshot.data?.status}'.toString().toUpperCase(),
+                                              textAlign: TextAlign.right,
+                                              style: const TextStyle(
+                                                fontSize: 12.0,
+                                                fontFamily: 'CadillacSans',
+                                                color: Colors.black,
+                                              )),
+                                        ),
+                                        Container(
+                                          child: Column(
+                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                            children: [
+                                              Text('номер карты ${snapshot.data?.numberCard}'.toString().toUpperCase(),
+                                                  textAlign: TextAlign.right,
+                                                  style: const TextStyle(
+                                                    fontSize: 16.0,
+                                                    fontFamily: 'CadillacSans',
+                                                    color: Colors.black,
+                                                  )),
+                                              Text('id ${snapshot.data?.id}'.toString().padLeft(4, '0').toUpperCase(),
+                                                  textAlign: TextAlign.left,
+                                                  style: const TextStyle(
+                                                    fontSize: 16.0,
+                                                    fontFamily: 'CadillacSans',
+                                                    color: Colors.black,
+                                                  )),
+                                            ],
+                                          ),
+                                        ),
+
+                                      ]
+                                  )
+                                      : Container(
+                                    child: Text('отсутствует'.toString().toUpperCase(),
+                                        textAlign: TextAlign.center,
+                                        style: const TextStyle(
+                                          fontSize: 12.0,
+                                          fontFamily: 'CadillacSans',
+                                          color: Colors.white,
+                                        )),
+
+
+                                  ),
                                 ),
                                 Text('мой автомобиль'.toUpperCase(),
                                     textAlign: TextAlign.center,
@@ -461,7 +521,7 @@ class _AccountAdminState extends State<AccountAdmin> {
                                     width: 10,
                                   ),
                                   Flexible(
-                                    child: Text('${snapshot.data?.numberCar}' .toUpperCase(),
+                                    child: Text('${snapshot.data?.numberCar}'.toUpperCase(),
                                         textAlign: TextAlign.left,
                                         style: const TextStyle(
                                           fontSize: 14.0,
@@ -515,7 +575,7 @@ class _AccountAdminState extends State<AccountAdmin> {
   }
 }
 
-Future<my_user.User> getUser(userId) async {
+Future<my_user.User> getUser(userId, context) async {
   // final SharedPreferences prefs = await SharedPreferences.getInstance();
   // dynamic userId = prefs.getString("userId");
 
@@ -540,7 +600,7 @@ Future<my_user.User> getUser(userId) async {
 
     // debugPrint(response);
     final userJson = json.decode(response.body);
-    debugPrint(my_user.User.fromJson(userJson).username);
+    debugPrint(my_user.User.fromJson(userJson).numberCard);
 
     var data = my_user.User.fromJson(userJson);
     return (data);

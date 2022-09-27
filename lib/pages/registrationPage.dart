@@ -30,6 +30,8 @@ import 'package:url_launcher/url_launcher.dart';
 
 import 'package:cadillac/pages/accountAdmin.dart';
 
+import 'auth.dart';
+
 var uuid = '1';
 late bool isAuth;
 
@@ -87,6 +89,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
 
   final Uri url1 = Uri.parse('https://cadillacapp.ru/test/download.php');
   final Uri url2 = Uri.parse('https://cadillacapp.ru/test/download2.php');
+  final Uri url3 = Uri.parse('https://cadillacapp.ru/terms_of_use.pdf');
 
   @override
   Widget build(BuildContext context) {
@@ -145,9 +148,32 @@ class _RegistrationPageState extends State<RegistrationPage> {
           debugShowCheckedModeBanner: false,
 
           home: Scaffold(
+            appBar: AppBar(
+              backgroundColor: const Color(0xFF181c33),
+              shadowColor: Colors.transparent,
+              elevation: 0.0,
+              leading: Builder(
+                builder: (BuildContext context) {
+                  return IconButton(
+                    padding: EdgeInsets.only(top: 15.0),
+                    icon: const Icon(
+                      Icons.arrow_back,
+                      color: Colors.white,
+                    ),
+                    onPressed: () {
+                      Navigator.pushReplacement(
+                          context, MaterialPageRoute(
+                          builder: (context) =>
+                              AuthorizationPage()));
+                    },
+                  );
+                },
+              ),
+
+            ),
             body: Center(
               child: Container(
-                  width: 284,
+                  width: MediaQuery.of(context).size.width,
                   margin: const EdgeInsets.only(top: 50),
                   child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -158,6 +184,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                                 child: Column(
                                     children: [
                                       Container(
+                                        width: 284,
                                         margin: const EdgeInsets.only(bottom: 10,
                                             top: 0),
                                           child: Image.asset(
@@ -168,139 +195,150 @@ class _RegistrationPageState extends State<RegistrationPage> {
 
                                       ),
 
-                                      FormBuilder(
-                                          key: _formKey,
-                                          autovalidateMode: AutovalidateMode
-                                              .always,
-                                          child: Column(
-                                              crossAxisAlignment: CrossAxisAlignment
-                                                  .start,
-                                              children: <Widget>[
-                                                Container(
-                                                  margin: const EdgeInsets.only(
-                                                      bottom: 10),
-                                                  child: Text(
-                                                    'ваш email'.toUpperCase(),
-                                                    textAlign: TextAlign.left,
-                                                    style: styleTitleFormInput,
-                                                  ),
-                                                ),
-
-                                                FormBuilderTextField(
-                                                    name: 'email',
-                                                    autofocus: true,
-                                                    cursorWidth: 1.0,
-                                                    cursorColor: Colors.white,
-                                                    style: styleFormInput,
-                                                    decoration: const InputDecoration(
-                                                      contentPadding: EdgeInsets
-                                                          .all(16),
-                                                      border: OutlineInputBorder(
-                                                          borderSide: BorderSide
-                                                              .none,
-                                                          borderRadius: BorderRadius
-                                                              .all(
-                                                              Radius.circular(10))
-                                                      ),
-
-                                                      fillColor: Color(
-                                                          0XFF515569),
-                                                      filled: true,
-                                                      hintText: "Введите ваш email",
-                                                      hintStyle: TextStyle(
-                                                        color: Colors.white60,
-                                                      ),
+                                    ConstrainedBox(
+                                        constraints: BoxConstraints.tightFor(width: MediaQuery.of(context).size.width, height: 250),
+                                        child: Center(
+                                          child:  Container(
+                                            width: 284,
+                                            child: FormBuilder(
+                                            key: _formKey,
+                                            autovalidateMode: AutovalidateMode
+                                                .always,
+                                            child: Column(
+                                                crossAxisAlignment: CrossAxisAlignment
+                                                    .center,
+                                                children: <Widget>[
+                                                  Container(
+                                                    width: 284,
+                                                    margin: const EdgeInsets.only(
+                                                        bottom: 10),
+                                                    child: Text(
+                                                      'ваш email'.toUpperCase(),
+                                                      textAlign: TextAlign.left,
+                                                      style: styleTitleFormInput,
                                                     ),
-
-                                                    valueTransformer: (text) =>
-                                                        num.tryParse(text!),
-                                                    autovalidateMode: AutovalidateMode
-                                                        .always,
-                                                    controller: _emailController,
-                                                    onSaved: (value) =>
-                                                    email = value!,
-
-                                                    validator: FormBuilderValidators
-                                                        .compose([
-                                                          (val) {
-                                                        if (val == '') {
-                                                          return 'Поле email не может быть пустым';
-                                                        } else if (!_emailController.text
-                                                            .contains('@')) {
-                                                          // return 'Invalid email address';
-                                                          return 'Неверный email адрес';
-                                                        } else {
-                                                          return null;
-                                                        }
-                                                      }
-                                                    ]),
-                                                    keyboardType: TextInputType
-                                                        .emailAddress
-                                                ),
-
-                                                Container(
-                                                  margin: const EdgeInsets.only(
-                                                      top: 10, bottom: 10),
-                                                  child: Text('ваш номер телефона'
-                                                      .toUpperCase(),
-                                                    textAlign: TextAlign.left,
-                                                    style: styleTitleFormInput,
                                                   ),
-                                                ),
 
-                                                FormBuilderTextField(
-                                                    name: 'phone',
-                                                    cursorWidth: 1.0,
-                                                    cursorColor: Colors.white,
-                                                    style: styleFormInput,
-                                                    inputFormatters: [
-                                                      maskFormatterPhone
-                                                    ],
-                                                    autovalidateMode: AutovalidateMode
-                                                        .always,
-                                                    decoration: const InputDecoration(
-                                                      contentPadding: EdgeInsets
-                                                          .all(16),
-                                                      border: OutlineInputBorder(
-                                                          borderSide: BorderSide
-                                                              .none,
-                                                          borderRadius: BorderRadius
-                                                              .all(
-                                                              Radius.circular(10))
+                                                  FormBuilderTextField(
+                                                      name: 'email',
+                                                      autofocus: true,
+                                                      cursorWidth: 1.0,
+                                                      cursorColor: Colors.white,
+                                                      style: styleFormInput,
+                                                      decoration: const InputDecoration(
+                                                        contentPadding: EdgeInsets
+                                                            .all(16),
+                                                        border: OutlineInputBorder(
+                                                            borderSide: BorderSide
+                                                                .none,
+                                                            borderRadius: BorderRadius
+                                                                .all(
+                                                                Radius.circular(10))
+                                                        ),
+
+                                                        fillColor: Color(
+                                                            0XFF515569),
+                                                        filled: true,
+                                                        hintText: "Введите ваш email",
+                                                        hintStyle: TextStyle(
+                                                          color: Colors.white60,
+                                                        ),
                                                       ),
 
-                                                      fillColor: Color(
-                                                          0XFF515569),
-                                                      filled: true,
-                                                      hintText: "+7 ___-___-__-__",
-                                                      hintStyle: TextStyle(
-                                                        color: Colors.white60,
-                                                      ),
-                                                    ),
+                                                      valueTransformer: (text) =>
+                                                          num.tryParse(text!),
+                                                      autovalidateMode: AutovalidateMode
+                                                          .always,
+                                                      controller: _emailController,
+                                                      onSaved: (value) =>
+                                                      email = value!,
 
-                                                    validator: FormBuilderValidators
-                                                        .compose([
-                                                          (val) {
-                                                        if (val == null) {
-                                                          return 'Поле phone не может быть пустым';
-                                                        } else {
-                                                          return null;
+                                                      validator: FormBuilderValidators
+                                                          .compose([
+                                                            (val) {
+                                                          if (val == '') {
+                                                            return 'Поле email не может быть пустым';
+                                                          } else if (!_emailController.text
+                                                              .contains('@')) {
+                                                            // return 'Invalid email address';
+                                                            return 'Неверный email адрес';
+                                                          } else {
+                                                            return null;
+                                                          }
                                                         }
-                                                      }
-                                                    ]),
-                                                    onSaved: (value) =>
-                                                    phone = value!,
-                                                    keyboardType: TextInputType
-                                                        .phone
-                                                ),
-                                              ]
+                                                      ]),
+                                                      keyboardType: TextInputType
+                                                          .emailAddress
+                                                  ),
+
+                                                  Container(
+                                                    width: 284,
+                                                    margin: const EdgeInsets.only(
+                                                        top: 10, bottom: 10),
+                                                    child: Text('ваш номер телефона'
+                                                        .toUpperCase(),
+                                                      textAlign: TextAlign.left,
+                                                      style: styleTitleFormInput,
+                                                    ),
+                                                  ),
+
+                                                  FormBuilderTextField(
+                                                      name: 'phone',
+                                                      cursorWidth: 1.0,
+                                                      cursorColor: Colors.white,
+                                                      style: styleFormInput,
+                                                      inputFormatters: [
+                                                        maskFormatterPhone
+                                                      ],
+                                                      autovalidateMode: AutovalidateMode
+                                                          .always,
+                                                      decoration: const InputDecoration(
+                                                        contentPadding: EdgeInsets
+                                                            .all(16),
+                                                        border: OutlineInputBorder(
+                                                            borderSide: BorderSide
+                                                                .none,
+                                                            borderRadius: BorderRadius
+                                                                .all(
+                                                                Radius.circular(10))
+                                                        ),
+
+                                                        fillColor: Color(
+                                                            0XFF515569),
+                                                        filled: true,
+                                                        hintText: "+7 ___-___-__-__",
+                                                        hintStyle: TextStyle(
+                                                          color: Colors.white60,
+                                                        ),
+                                                      ),
+
+                                                      validator: FormBuilderValidators
+                                                          .compose([
+                                                            (val) {
+                                                          if (val == null) {
+                                                            return 'Поле phone не может быть пустым';
+                                                          } else {
+                                                            return null;
+                                                          }
+                                                        }
+                                                      ]),
+                                                      onSaved: (value) =>
+                                                      phone = value!,
+                                                      keyboardType: TextInputType
+                                                          .phone
+                                                  ),
+                                                ]
+                                            )
+                                            ),
                                           )
+                                        )
                                       ),
                                       Container(
                                         width: 284,
                                         margin: const EdgeInsets.only(top: 30,
                                             bottom: 45),
                                         child: MaterialButton(
+                                          height: 60,
                                           padding: const EdgeInsets.all(17),
                                           color: const Color.fromARGB(
                                               255, 255, 255, 255),
@@ -385,6 +423,26 @@ class _RegistrationPageState extends State<RegistrationPage> {
                                           },
                                         ),
                                       ),
+                                      // Container(
+                                      //   margin: const EdgeInsets.only(top: 0, bottom: 30),
+                                      //   child: GestureDetector(
+                                      //     onTap: getTermsOfUse(url3),
+                                      //     child: const Text.rich(
+                                      //       TextSpan(
+                                      //           text: 'Продолжая вы принимаете ',
+                                      //           style: TextStyle(fontSize: 10, fontWeight: FontWeight.normal, color: Color(0xFF8F97BF), height: 1.5),
+                                      //           children: <InlineSpan>[
+                                      //             TextSpan(
+                                      //               text: 'Пользовательское соглашение и конфиденциальность',
+                                      //               style: TextStyle(
+                                      //                 decoration: TextDecoration.underline,
+                                      //                 decorationThickness: 2,
+                                      //               ),
+                                      //             )
+                                      //           ]),
+                                      //     ),
+                                      //   ),
+                                      // ),
                                       Container(
                                         margin: const EdgeInsets.only(top: 10,
                                             bottom: 10),
@@ -668,5 +726,8 @@ downLoadApp() async {
 
 void launchURL(url) async {
   if (!await launchUrl(url)) throw 'Could not launch $url';
-
 }
+
+// getTermsOfUse(url) async {
+//   if (!await launchUrl(url)) throw 'Could not launch $url';
+// }

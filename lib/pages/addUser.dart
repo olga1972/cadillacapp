@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:cadillac/utils/generate_password.dart';
 
@@ -56,6 +57,8 @@ class _AddUserState extends State<AddUser> {
   late String dateNowRegister;
   late String dateExpired;
   late String dateYearExpired;
+  late String numberCard;
+  late String status;
 
   dynamic currentUser;
   dynamic newUser;
@@ -82,10 +85,33 @@ class _AddUserState extends State<AddUser> {
         title: 'Cadillac',
         debugShowCheckedModeBanner: false,
         home: Scaffold(
+          appBar: AppBar(
+            backgroundColor: const Color(0xFF2C335E),
+            shadowColor: Colors.transparent,
+            elevation: 0.0,
+            leading: Builder(
+              builder: (BuildContext context) {
+                return IconButton(
+                  padding: EdgeInsets.only(top: 15.0),
+                  icon: const Icon(
+                  Icons.arrow_back,
+                  color: Colors.white,
+                ),
+                  onPressed: () {
+                    Navigator.pushReplacement(
+                    context, MaterialPageRoute(
+                    builder: (context) =>
+                    MembersAdmin()));
+                  },
+                );
+              },
+            ),
+
+          ),
           body: Center(
               child: Container(
                 width: 284,
-                margin: const EdgeInsets.only(top: 70),
+                margin: const EdgeInsets.only(top: 35),
                 child: Column(mainAxisAlignment: MainAxisAlignment.center, crossAxisAlignment: CrossAxisAlignment.center, children: [
                   Expanded(
                     child: SingleChildScrollView(
@@ -202,6 +228,89 @@ class _AddUserState extends State<AddUser> {
                                   Container(
                                     margin: const EdgeInsets.only(top: 10, bottom: 10),
                                     child: Text(
+                                      'статус'.toUpperCase(),
+                                      textAlign: TextAlign.left,
+                                      style: styleTitleFormInput,
+                                    ),
+                                  ),
+                                  Container(
+                                    width: 284.0,
+                                    child: FormBuilderDropdown(
+                                      name: 'status',
+                                      elevation: 0,
+                                      icon: SvgPicture.asset(
+                                        'assets/images/caret-down-solid.svg',
+                                        semanticsLabel: 'Icon dropdown',
+                                        height: 16.0,
+                                        width: 10.0,
+                                        color: Colors.white,
+                                      ),
+
+                                      style: const TextStyle(
+                                        fontSize: 14.0,
+                                        fontWeight: FontWeight.normal,
+                                        fontFamily: 'CadillacSans',
+                                        color: Colors.white,
+
+                                      ),
+                                      decoration: const InputDecoration(
+                                        contentPadding: EdgeInsets.all(16),
+                                        border: OutlineInputBorder(borderSide: BorderSide(width: 1, color: Colors.white), borderRadius: BorderRadius.all(Radius.circular(10))),
+                                        fillColor: Color(0XFF515569),
+                                        filled: true,
+                                        hintText: "Выберите статус",
+                                        hintStyle: TextStyle(
+                                          color: Colors.white,
+                                        ),
+                                      ),
+                                      dropdownColor: const Color(0XFF363b57),
+                                      alignment: Alignment.bottomLeft,
+                                      items: ['без статуса', 'LUXURY', 'PREMIUM', 'PLATINUM']
+                                          .map((theme) => DropdownMenuItem(
+                                        value: theme,
+                                        child: Text(theme),
+                                      )).toList(),
+                                      onSaved: (value) => status = value.toString()!,
+                                    ),
+                                  ),
+                                  Container(
+                                    margin: const EdgeInsets.only(top: 10, bottom: 10),
+                                    child: Text(
+                                      'номер карты'.toUpperCase(),
+                                      textAlign: TextAlign.left,
+                                      style: styleTitleFormInput,
+                                    ),
+                                  ),
+                                  FormBuilderTextField(
+                                      name: 'numberCard',
+                                      cursorWidth: 1.0,
+                                      cursorColor: Colors.white,
+                                      style: styleFormInput,
+                                      autovalidateMode: AutovalidateMode.always,
+                                      decoration: const InputDecoration(
+                                        contentPadding: EdgeInsets.all(16),
+                                        border: OutlineInputBorder(borderSide: BorderSide.none, borderRadius: BorderRadius.all(Radius.circular(10))),
+                                        fillColor: Color(0XFF515569),
+                                        filled: true,
+                                        hintText: "133 133 133",
+                                        hintStyle: TextStyle(
+                                          color: Colors.white60,
+                                        ),
+                                      ),
+                                      validator: FormBuilderValidators.compose([
+                                            (val) {
+                                          if (val == null) {
+                                            return 'Поле number Card не может быть пустым';
+                                          } else {
+                                            return null;
+                                          }
+                                        }
+                                      ]),
+                                      onSaved: (value) => numberCard = value!,
+                                      keyboardType: TextInputType.text),
+                                  Container(
+                                    margin: const EdgeInsets.only(top: 10, bottom: 10),
+                                    child: Text(
                                       'дата регистрации'.toUpperCase(),
                                       textAlign: TextAlign.left,
                                       style: styleTitleFormInput,
@@ -307,6 +416,8 @@ class _AddUserState extends State<AddUser> {
                                               fieldOfActivity: 'fieldOfActivity',
                                               numberCar: 'numberCar',
                                               yearIssue: 'yearIssue',
+                                              numberCard: numberCard,
+                                              status: status,
                                             );
 
                                             newUser = await addUser(currentUser);
@@ -350,6 +461,10 @@ class _AddUserState extends State<AddUser> {
     dynamic fieldOfActivity = user.fieldOfActivity;
     dynamic numberCar = user.numberCar;
     dynamic yearIssue = user.yearIssue;
+    dynamic numberCard = user.numberCard;
+    dynamic status = user.status;
+    debugPrint('status');
+    debugPrint(status);
 
     String apiUrl = baseUrl + "/test/create.php";
 
@@ -367,6 +482,8 @@ class _AddUserState extends State<AddUser> {
       'fieldOfActivity': fieldOfActivity,
       'numberCar': numberCar,
       'yearIssue': yearIssue,
+      'numberCard': numberCard,
+      'status': status,
     });
     if (response.statusCode == 200) {
       debugPrint('success add user');

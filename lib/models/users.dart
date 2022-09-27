@@ -38,6 +38,8 @@ class User {
   late final String fieldOfActivity;
   late final String numberCar;
   late final String yearIssue;
+  late final String status;
+  late final String numberCard;
 
   User(
       {required this.id,
@@ -57,7 +59,9 @@ class User {
       required this.dateExpired,
       required this.fieldOfActivity,
       required this.numberCar,
-      required this.yearIssue
+      required this.yearIssue,
+      required this.status,
+      required this.numberCard
       });
 
   factory User.fromJson(Map<String, dynamic> json) {
@@ -80,6 +84,8 @@ class User {
       fieldOfActivity: json['fieldOfActivity'] as String,
       numberCar: json['numberCar'] as String,
       yearIssue: json['yearIssue'] as String,
+      status: json['status'] as String,
+      numberCard: json['numberCard'] as String,
     );
   }
 
@@ -115,6 +121,8 @@ class User {
     data['fieldOfActivity'] = fieldOfActivity;
     data['numberCar'] = numberCar;
     data['yearIssue'] = yearIssue;
+    data['status'] = status;
+    data['numberCard'] = numberCard;
     return data;
   }
 }

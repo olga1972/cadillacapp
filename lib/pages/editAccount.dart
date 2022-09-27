@@ -51,7 +51,8 @@ class _EditState extends State<Edit> {
     final String? uid = user?.uid;
     debugPrint(uid);
     userId = uid;
-
+    print('userId');
+    print(userId);
     currentUser = getUser(userId, context);
   }
 
@@ -82,6 +83,8 @@ class _EditState extends State<Edit> {
   late String fieldOfActivity;
   late String numberCar;
   late String yearIssue;
+  late String status;
+  late String numberCard;
 
   var maskFormatterPhone = MaskTextInputFormatter(mask: '+7 ___-___-__-__', filter: {"_": RegExp(r'[0-9]')}, type: MaskAutoCompletionType.lazy);
 
@@ -115,6 +118,28 @@ class _EditState extends State<Edit> {
         title: 'Cadillac',
         debugShowCheckedModeBanner: false,
         home: Scaffold(
+            appBar: AppBar(
+              backgroundColor: const Color(0xFF2C335E),
+              shadowColor: Colors.transparent,
+              elevation: 0.0,
+              leading: Builder(
+                builder: (BuildContext context) {
+                  return IconButton(
+                    padding: EdgeInsets.only(top: 15.0),
+                    icon: const Icon(
+                      Icons.arrow_back,
+                      color: Colors.white,
+                    ),
+                    onPressed: () {
+                      Navigator.pushReplacement(
+                          context, MaterialPageRoute(
+                          builder: (context) =>
+                              Account()));
+                    },
+                  );
+                },
+              ),
+            ),
             body: FutureBuilder<my_user.User>(
                 //return FutureBuilder<User>(
                 future: currentUser,
@@ -128,6 +153,9 @@ class _EditState extends State<Edit> {
                   }
 
                   if (snapshot.hasData) {
+                    debugPrint('snapshot.data?.numberCard');
+                    debugPrint(snapshot.data?.numberCard);
+
                     platform = Provider.of<Data>(context).data['platform'].toString();
                     return SafeArea(
                       child: Center(
@@ -155,7 +183,7 @@ class _EditState extends State<Edit> {
                                         width: 284,
                                         margin: const EdgeInsets.only(bottom: 10),
                                         child: Text(
-                                          'ваш логин'.toUpperCase(),
+                                          'мой логин'.toUpperCase(),
                                           textAlign: TextAlign.left,
                                           style: styleTitleFormInput,
                                         ),
@@ -184,7 +212,7 @@ class _EditState extends State<Edit> {
                                         width: 284,
                                         margin: const EdgeInsets.only(top: 10, bottom: 10),
                                         child: Text(
-                                          'ваш пароль'.toUpperCase(),
+                                          'мой пароль'.toUpperCase(),
                                           textAlign: TextAlign.left,
                                           style: styleTitleFormInput,
                                         ),
@@ -233,7 +261,7 @@ class _EditState extends State<Edit> {
                                               width: 284,
                                               margin: const EdgeInsets.only(top: 10, bottom: 10),
                                               child: Text(
-                                                'ваше фото'.toUpperCase(),
+                                                'мое фото'.toUpperCase(),
                                                 textAlign: TextAlign.left,
                                                 style: styleTitleFormInput,
                                               ),
@@ -309,7 +337,7 @@ class _EditState extends State<Edit> {
                                               alignment: Alignment.topLeft,
                                               margin: const EdgeInsets.only(top: 10, bottom: 10),
                                               child: Text(
-                                                'ваше имя и фамилия'.toUpperCase(),
+                                                'мои имя и фамилия'.toUpperCase(),
                                                 textAlign: TextAlign.left,
                                                 style: styleTitleFormInput,
                                               ),
@@ -350,7 +378,7 @@ class _EditState extends State<Edit> {
                                               alignment: Alignment.topLeft,
                                               margin: const EdgeInsets.only(top: 10, bottom: 10),
                                               child: Text(
-                                                'ваша дата рождения'.toUpperCase(),
+                                                'моя дата рождения'.toUpperCase(),
                                                 textAlign: TextAlign.left,
                                                 style: styleTitleFormInput,
                                               ),
@@ -379,7 +407,7 @@ class _EditState extends State<Edit> {
                                               alignment: Alignment.topLeft,
                                               margin: const EdgeInsets.only(top: 10, bottom: 10),
                                               child: Text(
-                                                'ваш номер телефона'.toUpperCase(),
+                                                'мой номер телефона'.toUpperCase(),
                                                 textAlign: TextAlign.left,
                                                 style: styleTitleFormInput,
                                               ),
@@ -402,6 +430,86 @@ class _EditState extends State<Edit> {
                                                   ),
                                                 ),
                                                 keyboardType: TextInputType.text),
+                                            Container(
+                                              alignment: Alignment.topLeft,
+                                              margin: const EdgeInsets.only(top: 10, bottom: 10),
+                                              child: Text(
+                                                'мой статус'.toUpperCase(),
+                                                textAlign: TextAlign.left,
+                                                style: styleTitleFormInput,
+                                              ),
+                                            ),
+                                            FormBuilderTextField(
+                                                name: 'status',
+                                                initialValue: '${snapshot.data?.status}',
+                                                cursorWidth: 1.0,
+                                                enabled: false,
+                                                cursorColor: Colors.white,
+                                                style: styleFormInput,
+                                                decoration: const InputDecoration(
+                                                  contentPadding: EdgeInsets.all(16),
+                                                  border: OutlineInputBorder(borderSide: BorderSide.none, borderRadius: BorderRadius.all(Radius.circular(10))),
+                                                  fillColor: Color(0XFF515569),
+                                                  filled: true,
+                                                  hintText: "",
+                                                  hintStyle: TextStyle(
+                                                    color: Colors.white60,
+                                                  ),
+                                                ),
+                                                autovalidateMode: AutovalidateMode.always,
+                                                validator: FormBuilderValidators.compose([
+                                                      (val) {
+                                                    if (val == null) {
+                                                      return 'Поле status не может быть пустым';
+                                                    } else if (val.length < 6) {
+                                                      // return 'Invalid email address';
+                                                      return 'Минимум 6 символов';
+                                                    } else {
+                                                      return null;
+                                                    }
+                                                  }
+                                                ]),
+                                                onSaved: (value) => status = value!),
+                                            Container(
+                                              alignment: Alignment.topLeft,
+                                              margin: const EdgeInsets.only(top: 10, bottom: 10),
+                                              child: Text(
+                                                'моя карта привелегий'.toUpperCase(),
+                                                textAlign: TextAlign.left,
+                                                style: styleTitleFormInput,
+                                              ),
+                                            ),
+                                            FormBuilderTextField(
+                                                name: 'numberCard',
+                                                initialValue: '${snapshot.data?.numberCard}',
+                                                cursorWidth: 1.0,
+                                                enabled: false,
+                                                cursorColor: Colors.white,
+                                                style: styleFormInput,
+                                                decoration: const InputDecoration(
+                                                  contentPadding: EdgeInsets.all(16),
+                                                  border: OutlineInputBorder(borderSide: BorderSide.none, borderRadius: BorderRadius.all(Radius.circular(10))),
+                                                  fillColor: Color(0XFF515569),
+                                                  filled: true,
+                                                  hintText: "",
+                                                  hintStyle: TextStyle(
+                                                    color: Colors.white60,
+                                                  ),
+                                                ),
+                                                autovalidateMode: AutovalidateMode.always,
+                                                validator: FormBuilderValidators.compose([
+                                                      (val) {
+                                                    if (val == null) {
+                                                      return 'Поле numberCard не может быть пустым';
+                                                    } else if (val.length < 6) {
+                                                      // return 'Invalid email address';
+                                                      return 'Минимум 6 символов';
+                                                    } else {
+                                                      return null;
+                                                    }
+                                                  }
+                                                ]),
+                                                onSaved: (value) => numberCard = value!),
                                             Container(
                                               width: 284,
                                               margin: const EdgeInsets.only(top: 10, bottom: 10),
@@ -433,61 +541,7 @@ class _EditState extends State<Edit> {
                                               alignment: Alignment.topLeft,
                                               margin: const EdgeInsets.only(top: 10, bottom: 10),
                                               child: Text(
-                                                'ваше автомобиль'.toUpperCase(),
-                                                textAlign: TextAlign.left,
-                                                style: styleTitleFormInput,
-                                              ),
-                                            ),
-                                            FormBuilderTextField(
-                                                name: 'carname',
-                                                initialValue: snapshot.data?.carname,
-                                                cursorWidth: 1.0,
-                                                cursorColor: Colors.white,
-                                                style: styleFormInput,
-                                                decoration: const InputDecoration(
-                                                  contentPadding: EdgeInsets.all(16),
-                                                  border: OutlineInputBorder(borderSide: BorderSide.none, borderRadius: BorderRadius.all(Radius.circular(10))),
-                                                  fillColor: Color(0XFF515569),
-                                                  filled: true,
-                                                  hintText: "Введите название автомобиля",
-                                                  hintStyle: TextStyle(
-                                                    color: Colors.white60,
-                                                  ),
-                                                ),
-                                                onSaved: (value) => carname = value!,
-                                                keyboardType: TextInputType.text),
-                                            Container(
-                                              width: 284,
-                                              margin: const EdgeInsets.only(top: 10, bottom: 10),
-                                              child: Text(
-                                                'загрузите 3 фото вашего cadillac'.toUpperCase(),
-                                                textAlign: TextAlign.left,
-                                                style: styleTitleFormInput,
-                                              ),
-                                            ),
-                                            FormBuilderTextField(
-                                                name: 'carname',
-                                                initialValue: snapshot.data?.carname,
-                                                cursorWidth: 1.0,
-                                                cursorColor: Colors.white,
-                                                style: styleFormInput,
-                                                decoration: const InputDecoration(
-                                                  contentPadding: EdgeInsets.all(16),
-                                                  border: OutlineInputBorder(borderSide: BorderSide.none, borderRadius: BorderRadius.all(Radius.circular(10))),
-                                                  fillColor: Color(0XFF515569),
-                                                  filled: true,
-                                                  hintText: "Введите название автомобиля",
-                                                  hintStyle: TextStyle(
-                                                    color: Colors.white60,
-                                                  ),
-                                                ),
-                                                onSaved: (value) => carname = value!,
-                                                keyboardType: TextInputType.text),
-                                            Container(
-                                              width: 284,
-                                              margin: const EdgeInsets.only(top: 10, bottom: 10),
-                                              child: Text(
-                                                'загрузите 3 фото вашего cadillac'.toUpperCase(),
+                                                'мой автомобиль'.toUpperCase(),
                                                 textAlign: TextAlign.left,
                                                 style: styleTitleFormInput,
                                               ),
@@ -777,7 +831,10 @@ class _EditState extends State<Edit> {
                                                           dateExpired: 'dateExpired',
                                                           fieldOfActivity: fieldOfActivity,
                                                           numberCar: numberCar,
-                                                          yearIssue: yearIssue);
+                                                          yearIssue: yearIssue,
+                                                          numberCard: numberCard,
+                                                          status: status
+                                                      );
                                                       //currentUser = editUser(user);
                                                       // findingUser = await getUserByEmail(currentUser);
                                                       confirmDialog(context, currentUser);
@@ -828,7 +885,7 @@ Future<my_user.User> getUser(userId, context) async {
     //checkAccount(my_user.User.fromJson(userJson).dateExpired, context);
 
     var data = my_user.User.fromJson(userJson);
-    debugPrint(data.dateExpired);
+    debugPrint(data.numberCard);
 
     return (data);
   } else {
@@ -852,6 +909,8 @@ getUserByEmail(my_user.User user) async {
   dynamic fieldOfActivity = user.fieldOfActivity;
   dynamic numberCar = user.numberCar;
   dynamic yearIssue = user.yearIssue;
+  dynamic status = user.status;
+  dynamic numberCard = user.numberCard;
 
   String apiUrl = baseUrl + "/test/get_user_by_email.php";
   var response = await http.post(Uri.parse(apiUrl), body: {
@@ -867,6 +926,8 @@ getUserByEmail(my_user.User user) async {
     'fieldOfActivity': fieldOfActivity,
     'numberCar': numberCar,
     'yearIssue': yearIssue,
+    'status': status,
+    'numberCard': numberCard
   }, headers: {
     'Accept': 'application/json, charset=utf-8',
     "Access-Control-Allow-Origin": "*",
@@ -901,6 +962,8 @@ editUser(my_user.User user) async {
   dynamic fieldOfActivity = user.fieldOfActivity;
   dynamic numberCar = user.numberCar;
   dynamic yearIssue = user.yearIssue;
+  dynamic status = user.status;
+  dynamic numberCard = user.numberCard;
 
   String apiUrl = baseUrl + "/test/edit.php";
   var response = await http.post(Uri.parse(apiUrl), body: {
@@ -917,6 +980,8 @@ editUser(my_user.User user) async {
     'fieldOfActivity': fieldOfActivity,
     'numberCar': numberCar,
     'yearIssue': yearIssue,
+    'status': status,
+    'numberCard': numberCard,
   }, headers: {
     'Accept': 'application/json, charset=utf-8',
     "Access-Control-Allow-Origin": "*",

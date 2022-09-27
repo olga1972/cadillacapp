@@ -83,7 +83,7 @@ class _EditAdsState extends State<EditAds> {
                                   width: 320,
                                   height: 960,
                                   child: Column(mainAxisAlignment: MainAxisAlignment.start, crossAxisAlignment: CrossAxisAlignment.center, children: [
-                                    Container(margin: const EdgeInsets.only(bottom: 20), child: const TitlePageAdmin(title: 'редактирование \nрекламы')),
+                                    Container(margin: const EdgeInsets.only(bottom: 20, top: 20), child: const TitlePageAdmin(title: 'редактирование \nрекламы')),
                                     SizedBox(
                                         width: 320,
                                         child: ListView.builder(
@@ -194,11 +194,27 @@ class _EditAdsState extends State<EditAds> {
                                             Route route = MaterialPageRoute(builder: (context) => const AddBanners());
                                             Navigator.push(context, route).then((value) => setState(() {}));
                                           },
-                                          child: SvgPicture.asset(
-                                            'assets/images/add.svg',
-                                            semanticsLabel: 'Icon add',
-                                            height: 20.0,
-                                          ),
+                                          child: Row(
+                                                mainAxisAlignment: MainAxisAlignment.end,
+                                                children: [
+                                                  Text('удерживать 2 секунды!'.toUpperCase(),
+                                                      style: const TextStyle(
+                                                        fontSize: 12.0,
+                                                        fontFamily: 'CadillacSans',
+                                                        color: Colors.white,
+                                                        height: 1.7, //line-height / font-size
+                                                      )),
+                                                  Padding(
+                                                    padding: EdgeInsets.only(left: 20.0),
+                                                    child: SvgPicture.asset(
+                                                      'assets/images/add.svg',
+                                                      semanticsLabel: 'Icon add',
+                                                      height: 20.0,
+                                                    ),
+                                                  )
+
+                                                ]
+                                            )
                                         )),
                                   ])),
                             );

@@ -219,12 +219,27 @@ class _PartnersAdminState extends State<PartnersAdmin> {
                                                           const AddPartners());
                                                   Navigator.push(context,route).then((value) => setState(() {}));
                                                 },
-                                                child: SvgPicture
-                                                    .asset(
-                                                  'assets/images/add.svg',
-                                                  semanticsLabel: 'Icon add',
-                                                  height: 20.0,
-                                                ),
+                                                child: Row(
+                                                    mainAxisAlignment: MainAxisAlignment.end,
+                                                    children: [
+                                                      Text('удерживать 2 секунды!'.toUpperCase(),
+                                                          style: const TextStyle(
+                                                            fontSize: 12.0,
+                                                            fontFamily: 'CadillacSans',
+                                                            color: Colors.white,
+                                                            height: 1.7, //line-height / font-size
+                                                          )),
+                                                      Padding(
+                                                        padding: EdgeInsets.only(left: 20.0),
+                                                        child: SvgPicture.asset(
+                                                          'assets/images/add.svg',
+                                                          semanticsLabel: 'Icon add',
+                                                          height: 20.0,
+                                                        ),
+                                                      )
+
+                                                    ]
+                                                )
                                               )
                                         ),
                                       ]

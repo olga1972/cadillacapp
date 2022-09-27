@@ -81,6 +81,8 @@ class _EditAdminState extends State<EditAdmin> {
   late String fieldOfActivity;
   late String numberCar;
   late String yearIssue;
+  late String status;
+  late String numberCard;
 
   var maskFormatterPhone = MaskTextInputFormatter(mask: '+7 ___-___-__-__', filter: {"_": RegExp(r'[0-9]')}, type: MaskAutoCompletionType.lazy);
 
@@ -103,6 +105,28 @@ class _EditAdminState extends State<EditAdmin> {
               title: 'Cadillac',
               debugShowCheckedModeBanner: false,
               home: Scaffold(
+                appBar: AppBar(
+                  backgroundColor: const Color(0xFF2C335E),
+                  shadowColor: Colors.transparent,
+                  elevation: 0.0,
+                  leading: Builder(
+                    builder: (BuildContext context) {
+                      return IconButton(
+                        padding: EdgeInsets.only(top: 15.0),
+                        icon: const Icon(
+                          Icons.arrow_back,
+                          color: Colors.white,
+                        ),
+                        onPressed: () {
+                          Navigator.pushReplacement(
+                              context, MaterialPageRoute(
+                              builder: (context) =>
+                                  AccountAdmin()));
+                        },
+                      );
+                    },
+                  ),
+                ),
                 body: FutureBuilder<my_user.User>(
                   //return FutureBuilder<User>(
                     future: currentUser,
@@ -143,7 +167,7 @@ class _EditAdminState extends State<EditAdmin> {
                                                     width: 284,
                                                     margin: const EdgeInsets.only(bottom: 10),
                                                     child: Text(
-                                                      'ваш логин'.toUpperCase(),
+                                                      'мой логин'.toUpperCase(),
                                                       textAlign: TextAlign.left,
                                                       style: styleTitleFormInput,
                                                     ),
@@ -173,7 +197,7 @@ class _EditAdminState extends State<EditAdmin> {
                                                     width: 284,
                                                     margin: const EdgeInsets.only(top: 10, bottom: 10),
                                                     child: Text(
-                                                      'ваш пароль'.toUpperCase(),
+                                                      'мой пароль'.toUpperCase(),
                                                       textAlign: TextAlign.left,
                                                       style: styleTitleFormInput,
                                                     ),
@@ -224,7 +248,7 @@ class _EditAdminState extends State<EditAdmin> {
                                                           width: 284,
                                                           margin: const EdgeInsets.only(top: 10, bottom: 10),
                                                           child: Text(
-                                                            'ваше фото'.toUpperCase(),
+                                                            'мое фото'.toUpperCase(),
                                                             textAlign: TextAlign.left,
                                                             style: styleTitleFormInput,
                                                           ),
@@ -301,7 +325,7 @@ class _EditAdminState extends State<EditAdmin> {
                                                           alignment: Alignment.topLeft,
                                                           margin: const EdgeInsets.only(top: 10, bottom: 10),
                                                           child: Text(
-                                                            'ваше имя и фамилия'.toUpperCase(),
+                                                            'мои имя и фамилия'.toUpperCase(),
                                                             textAlign: TextAlign.left,
                                                             style: styleTitleFormInput,
                                                           ),
@@ -343,7 +367,7 @@ class _EditAdminState extends State<EditAdmin> {
                                                           alignment: Alignment.topLeft,
                                                           margin: const EdgeInsets.only(top: 10, bottom: 10),
                                                           child: Text(
-                                                            'ваша дата рождения'.toUpperCase(),
+                                                            'моя дата рождения'.toUpperCase(),
                                                             textAlign: TextAlign.left,
                                                             style: styleTitleFormInput,
                                                           ),
@@ -373,7 +397,7 @@ class _EditAdminState extends State<EditAdmin> {
                                                           alignment: Alignment.topLeft,
                                                           margin: const EdgeInsets.only(top: 10, bottom: 10),
                                                           child: Text(
-                                                            'ваш номер телефона'.toUpperCase(),
+                                                            'мой номер телефона'.toUpperCase(),
                                                             textAlign: TextAlign.left,
                                                             style: styleTitleFormInput,
                                                           ),
@@ -397,6 +421,86 @@ class _EditAdminState extends State<EditAdmin> {
                                                               ),
                                                             ),
                                                             keyboardType: TextInputType.text),
+                                                        Container(
+                                                          alignment: Alignment.topLeft,
+                                                          margin: const EdgeInsets.only(top: 10, bottom: 10),
+                                                          child: Text(
+                                                            'мой статус'.toUpperCase(),
+                                                            textAlign: TextAlign.left,
+                                                            style: styleTitleFormInput,
+                                                          ),
+                                                        ),
+                                                        FormBuilderTextField(
+                                                            name: 'status',
+                                                            initialValue: '${snapshot.data?.status}',
+                                                            cursorWidth: 1.0,
+                                                            enabled: false,
+                                                            cursorColor: Colors.white,
+                                                            style: styleFormInput,
+                                                            decoration: const InputDecoration(
+                                                              contentPadding: EdgeInsets.all(16),
+                                                              border: OutlineInputBorder(borderSide: BorderSide.none, borderRadius: BorderRadius.all(Radius.circular(10))),
+                                                              fillColor: Color(0XFF515569),
+                                                              filled: true,
+                                                              hintText: "",
+                                                              hintStyle: TextStyle(
+                                                                color: Colors.white60,
+                                                              ),
+                                                            ),
+                                                            autovalidateMode: AutovalidateMode.always,
+                                                            validator: FormBuilderValidators.compose([
+                                                                  (val) {
+                                                                if (val == null) {
+                                                                  return 'Поле status не может быть пустым';
+                                                                } else if (val.length < 6) {
+                                                                  // return 'Invalid email address';
+                                                                  return 'Минимум 6 символов';
+                                                                } else {
+                                                                  return null;
+                                                                }
+                                                              }
+                                                            ]),
+                                                            onSaved: (value) => status = value!),
+                                                        Container(
+                                                          alignment: Alignment.topLeft,
+                                                          margin: const EdgeInsets.only(top: 10, bottom: 10),
+                                                          child: Text(
+                                                            'моя карта привелегий'.toUpperCase(),
+                                                            textAlign: TextAlign.left,
+                                                            style: styleTitleFormInput,
+                                                          ),
+                                                        ),
+                                                        FormBuilderTextField(
+                                                            name: 'numberCard',
+                                                            initialValue: '${snapshot.data?.numberCard}',
+                                                            cursorWidth: 1.0,
+                                                            enabled: false,
+                                                            cursorColor: Colors.white,
+                                                            style: styleFormInput,
+                                                            decoration: const InputDecoration(
+                                                              contentPadding: EdgeInsets.all(16),
+                                                              border: OutlineInputBorder(borderSide: BorderSide.none, borderRadius: BorderRadius.all(Radius.circular(10))),
+                                                              fillColor: Color(0XFF515569),
+                                                              filled: true,
+                                                              hintText: "",
+                                                              hintStyle: TextStyle(
+                                                                color: Colors.white60,
+                                                              ),
+                                                            ),
+                                                            autovalidateMode: AutovalidateMode.always,
+                                                            validator: FormBuilderValidators.compose([
+                                                                  (val) {
+                                                                if (val == null) {
+                                                                  return 'Поле numberCard не может быть пустым';
+                                                                } else if (val.length < 6) {
+                                                                  // return 'Invalid email address';
+                                                                  return 'Минимум 6 символов';
+                                                                } else {
+                                                                  return null;
+                                                                }
+                                                              }
+                                                            ]),
+                                                            onSaved: (value) => numberCard = value!),
                                                         Container(
                                                           width: 284,
                                                           margin: const EdgeInsets.only(top: 10, bottom: 10),
@@ -428,7 +532,7 @@ class _EditAdminState extends State<EditAdmin> {
                                                           alignment: Alignment.topLeft,
                                                           margin: const EdgeInsets.only(top: 10, bottom: 10),
                                                           child: Text(
-                                                            'ваше автомобиль'.toUpperCase(),
+                                                            'мой автомобиль'.toUpperCase(),
                                                             textAlign: TextAlign.left,
                                                             style: styleTitleFormInput,
                                                           ),
@@ -723,7 +827,10 @@ class _EditAdminState extends State<EditAdmin> {
                                                                       dateExpired: 'dateExpired',
                                                                       fieldOfActivity: fieldOfActivity,
                                                                       numberCar: numberCar,
-                                                                      yearIssue: yearIssue);
+                                                                      yearIssue: yearIssue,
+                                                                      numberCard: numberCard,
+                                                                      status: status
+                                                                  );
 
                                                                   findingUser = await getUserByEmail(currentUser);
 
@@ -795,6 +902,8 @@ class _EditAdminState extends State<EditAdmin> {
     dynamic fieldOfActivity = user.fieldOfActivity;
     dynamic numberCar = user.numberCar;
     dynamic yearIssue = user.yearIssue;
+    dynamic status = user.status;
+    dynamic numberCard = user.numberCard;
 
     String apiUrl = baseUrl + "/test/get_user_by_email.php";
     var response = await http.post(Uri.parse(apiUrl), body: {
@@ -810,6 +919,8 @@ class _EditAdminState extends State<EditAdmin> {
       'fieldOfActivity': fieldOfActivity,
       'numberCar': numberCar,
       'yearIssue': yearIssue,
+      'status': status,
+      'numberCard': numberCard
     }, headers: {
       'Accept': 'application/json, charset=utf-8',
       "Access-Control-Allow-Origin": "*",
@@ -845,6 +956,8 @@ class _EditAdminState extends State<EditAdmin> {
     dynamic fieldOfActivity = user.fieldOfActivity;
     dynamic numberCar = user.numberCar;
     dynamic yearIssue = user.yearIssue;
+    dynamic status = user.status;
+    dynamic numberCard = user.numberCard;
 
     String apiUrl = baseUrl + "/test/edit.php";
 
@@ -862,6 +975,8 @@ class _EditAdminState extends State<EditAdmin> {
       'fieldOfActivity': fieldOfActivity,
       'numberCar': numberCar,
       'yearIssue': yearIssue,
+      'status': status,
+      'numberCard': numberCard,
     }, headers: {
       'Accept': 'application/json, charset=utf-8',
       "Access-Control-Allow-Origin": "*",

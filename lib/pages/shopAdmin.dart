@@ -288,18 +288,32 @@ class _ShopAdminState extends State<ShopAdmin> {
                                         Container(
                                             width: 310,
                                             height: 20,
-                                            margin: const EdgeInsets.only(left: 15, bottom: 20),
-                                            alignment: const Alignment(1, 1),
+                                            margin: const EdgeInsets.only(left: 0, bottom: 20),
                                             child: GestureDetector(
                                               onLongPress: () {
                                                 Route route = MaterialPageRoute(builder: (context) => const AddProduct());
                                                 Navigator.push(context, route).then((value) => setState(() {}));
                                               },
-                                              child: SvgPicture.asset(
-                                                'assets/images/add.svg',
-                                                semanticsLabel: 'Icon add',
-                                                height: 20.0,
-                                              ),
+                                                child: Row(
+                                                    mainAxisAlignment: MainAxisAlignment.end,
+                                                    children: [
+                                                      Text('удерживать 2 секунды!'.toUpperCase(),
+                                                          style: const TextStyle(
+                                                            fontSize: 12.0,
+                                                            fontFamily: 'CadillacSans',
+                                                            color: Colors.white,
+                                                            height: 1.7, //line-height / font-size
+                                                          )),
+                                                      Padding(
+                                                        padding: EdgeInsets.only(left: 20.0),
+                                                        child: SvgPicture.asset(
+                                                          'assets/images/add.svg',
+                                                          semanticsLabel: 'Icon add',
+                                                          height: 20.0,
+                                                        ),
+                                                      )
+                                                    ]
+                                                )
                                             )),
                                         // Container(
                                         //     width: 380,
