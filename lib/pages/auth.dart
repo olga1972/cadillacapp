@@ -315,44 +315,44 @@ class _AuthorizationPageState extends State<AuthorizationPage> {
                       ),
                     ),
                   ),
-                  Container(
-                    margin: const EdgeInsets.only(top: 30,
-                        bottom: 10),
-                    child: Text('Скачать'.toUpperCase(),
-                      textAlign: TextAlign.left,
-                      style: styleTitleFormInput,
-                    ),
-                  ),
-                  Column(
-                      mainAxisAlignment: MainAxisAlignment
-                          .spaceBetween,
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        MaterialButton(
-                            padding: const EdgeInsets.all(17),
-                            child: Image.asset(
-                              'assets/images/app1.png',
-                              fit: BoxFit.contain,
-                              height: 58,
-                            ),
-                            onPressed: () {
-                              launchURL(url1);
-                            }),
-
-                        MaterialButton(
-                          padding: const EdgeInsets.all(17),
-                          child: Image.asset(
-                            'assets/images/app2.png',
-                            fit: BoxFit.contain,
-                            height: 58,
-                          ),
-                          onPressed: () {
-                            launchURL(url2);
-                          },
-                        ),
-
-                      ]
-                  ),
+                  // Container(
+                  //   margin: const EdgeInsets.only(top: 30,
+                  //       bottom: 10),
+                  //   child: Text('Скачать'.toUpperCase(),
+                  //     textAlign: TextAlign.left,
+                  //     style: styleTitleFormInput,
+                  //   ),
+                  // ),
+                  // Column(
+                  //     mainAxisAlignment: MainAxisAlignment
+                  //         .spaceBetween,
+                  //     mainAxisSize: MainAxisSize.min,
+                  //     children: [
+                  //       MaterialButton(
+                  //           padding: const EdgeInsets.all(17),
+                  //           child: Image.asset(
+                  //             'assets/images/app1.png',
+                  //             fit: BoxFit.contain,
+                  //             height: 58,
+                  //           ),
+                  //           onPressed: () {
+                  //             launchURL(url1);
+                  //           }),
+                  //
+                  //       MaterialButton(
+                  //         padding: const EdgeInsets.all(17),
+                  //         child: Image.asset(
+                  //           'assets/images/app2.png',
+                  //           fit: BoxFit.contain,
+                  //           height: 58,
+                  //         ),
+                  //         onPressed: () {
+                  //           launchURL(url2);
+                  //         },
+                  //       ),
+                  //
+                  //     ]
+                  // ),
 
           ],
         )
