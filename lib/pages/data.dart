@@ -8,6 +8,7 @@ class Data with ChangeNotifier {
   // String cookies = '';
   bool isAdmin = false;
   bool isShowConfirmRegister = false;
+  String currentUserEmail = '111';
 
   late final Map data = {
     'userId': '',
@@ -18,7 +19,8 @@ class Data with ChangeNotifier {
     // 'cookies': '',
     'isAdmin': false,
     'isShowConfirmRegister': false,
-    'productId': ''
+    'productId': '',
+    'currentUserEmail': ''
   };
 
   // void setCookie(value) {
@@ -52,6 +54,13 @@ class Data with ChangeNotifier {
   void updateProductId(value) {
     debugPrint('update productId');
     data["productId"] = value;
+    notifyListeners();
+  }
+
+  void getUserEmail(value) {
+    debugPrint('get user email for change status');
+    data["currentUserEmail"] = value;
+    debugPrint(value);
     notifyListeners();
   }
 }

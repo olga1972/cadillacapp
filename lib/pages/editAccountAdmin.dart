@@ -434,7 +434,6 @@ class _EditAdminState extends State<EditAdmin> {
                                                             name: 'status',
                                                             initialValue: '${snapshot.data?.status}',
                                                             cursorWidth: 1.0,
-                                                            enabled: false,
                                                             cursorColor: Colors.white,
                                                             style: styleFormInput,
                                                             decoration: const InputDecoration(

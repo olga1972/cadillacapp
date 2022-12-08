@@ -15,8 +15,8 @@ function add_user() {
 //var_dump($_POST);
 
     // mysqli_stmt_prepare($stmt, "INSERT INTO users (userId, phone, email) VALUES(uuid(), ?, ?)");
-    mysqli_stmt_prepare($stmt, "INSERT INTO users (userId, phone, email, password, dateRegister, dateExpired, fieldOfActivity, numberCar, yearIssue) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)");
-    mysqli_stmt_bind_param($stmt, 'sssssssss',  $userId, $phone, $email, $password, $dateRegister, $dateExpired, $fieldOfActivity, $numberCar, $yearIssue);
+    mysqli_stmt_prepare($stmt, "INSERT INTO users (userId, phone, email, password, dateRegister, dateExpired, fieldOfActivity, numberCar, yearIssue, status, numberCard) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+    mysqli_stmt_bind_param($stmt, 'sssssssssss',  $userId, $phone, $email, $password, $dateRegister, $dateExpired, $fieldOfActivity, $numberCar, $yearIssue, $status, $numberCard);
     mysqli_stmt_execute($stmt);
     mysqli_stmt_get_result($stmt);
     //print(mysqli_stmt_errno($stmt));
@@ -50,9 +50,9 @@ function get_user_by_login() {
     // print($path);
 
     $stmt = mysqli_stmt_init($link);
-    mysqli_stmt_prepare($stmt, "UPDATE users SET username = ?, birthday = ?, carname = ?, path = ?, car1 = ?, car2 = ?, car3 = ?, fieldOfActivity = ?, numberCar = ?, yearIssue = ? WHERE login = ?");
+    mysqli_stmt_prepare($stmt, "UPDATE users SET username = ?, birthday = ?, carname = ?, path = ?, car1 = ?, car2 = ?, car3 = ?, fieldOfActivity = ?, numberCar = ?, yearIssue = ?, status = ?, numberCard = ?  WHERE login = ?");
  //    mysqli_stmt_prepare($stmt,"UPDATE users SET username = ?, birthday = ?, login = ?, carname = ?, path = ?, car1 = ?, car2 = ?, car3 = ?,   WHERE email = ?");
-    mysqli_stmt_bind_param($stmt,'sssssssssss', $username, $birthday, $carname, $path, $car1, $car2, $car3, $fieldOfActivity, $numberCar, $yearIssue, $login);
+    mysqli_stmt_bind_param($stmt,'sssssssssssss', $username, $birthday, $carname, $path, $car1, $car2, $car3, $fieldOfActivity, $numberCar, $yearIssue, $status, $numberCard, $login);
     mysqli_stmt_execute($stmt);
     mysqli_stmt_get_result($stmt);
 
@@ -142,7 +142,7 @@ function get_user_all() {
 //          echo $_COOKIE["TestCookie"];
         }
 
-
+        var_dump($userInfoArray);
 //        unset($userInfoArray[0]['id']);
 //        echo(json_encode($userInfoArray[0]));
         $userInfoArray[0]["id"] = strval($userInfoArray[0]["id"]);
@@ -849,4 +849,24 @@ function get_current_product($productId) {
     } else {
         echo "Ошибка: " . print(mysqli_stmt_errno($stmt));
     }
+}
+
+//функция обновления status и numberCard по email
+function change_status() {
+    //эта функция ничего не возвращает
+
+    extract($_POST);
+
+    global $link;
+    global $stmt;
+    // $path = file_get_contents($path);
+    // print($path);
+
+    $stmt = mysqli_stmt_init($link);
+    mysqli_stmt_prepare($stmt, "UPDATE users SET status = ?, numberCard = ?  WHERE email = ?");
+    mysqli_stmt_bind_param($stmt,'sss', $status, $numberCard, $email);
+    mysqli_stmt_execute($stmt);
+    mysqli_stmt_get_result($stmt);
+
+
 }

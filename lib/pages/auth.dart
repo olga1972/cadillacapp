@@ -236,7 +236,7 @@ class _AuthorizationPageState extends State<AuthorizationPage> {
         child: Container(
         // width: 284,
         // width: MediaQuery.of(context).size.width,
-        margin: const EdgeInsets.only(top: 30),
+        margin: const EdgeInsets.only(top: 20),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
@@ -296,7 +296,7 @@ class _AuthorizationPageState extends State<AuthorizationPage> {
 
                   Container(
                     width: 284,
-                    margin: const EdgeInsets.only(top: 20, bottom: 30),
+                    margin: const EdgeInsets.only(top: 15, bottom: 10),
                     child: GestureDetector(
                       onTap: () => launchURL('https://cadillacapp.ru/terms_of_use.pdf'),
                       child: const Text.rich(
@@ -306,6 +306,27 @@ class _AuthorizationPageState extends State<AuthorizationPage> {
                             children: <InlineSpan>[
                               TextSpan(
                                 text: 'Пользовательское соглашение и конфиденциальность',
+                                style: TextStyle(
+                                  decoration: TextDecoration.underline,
+                                  decorationThickness: 2,
+                                ),
+                              )
+                            ]),
+                      ),
+                    ),
+                  ),
+                  Container(
+                    width: 284,
+                    margin: const EdgeInsets.only(top: 15, bottom: 20),
+                    child: GestureDetector(
+                      onTap: () => launchURL('https://cadillacapp.ru/oferta.pdf'),
+                      child: const Text.rich(
+                        TextSpan(
+                            text: 'Ознакомьтесь с ',
+                            style: TextStyle(fontSize: 12, fontWeight: FontWeight.normal, color: Color(0xFF8F97BF), height: 1.5),
+                            children: <InlineSpan>[
+                              TextSpan(
+                                text: 'Договором на оказание услуг',
                                 style: TextStyle(
                                   decoration: TextDecoration.underline,
                                   decorationThickness: 2,

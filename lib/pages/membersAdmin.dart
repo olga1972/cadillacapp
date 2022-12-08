@@ -10,11 +10,14 @@ import 'package:cadillac/models/users.dart';
 import 'dart:convert';
 import 'dart:async';
 import 'package:http/http.dart' as http;
+import 'package:provider/provider.dart';
 
 import '../NavDrawerAdmin.dart';
 import '../variables.dart';
 import 'accountAdmin.dart';
 import 'addUser.dart';
+import 'data.dart';
+import 'editStatus.dart';
 
 class MembersAdmin extends StatefulWidget {
   const MembersAdmin({Key? key}) : super(key: key);
@@ -43,8 +46,10 @@ class _MembersAdminState extends State<MembersAdmin> {
   String path = "assets/images/avatar.png";
 
   @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
+  Widget build(BuildContext context) {return ChangeNotifierProvider<Data>(
+      create: (context) => Data(),
+      child:
+       MaterialApp(
         theme: ThemeData(scaffoldBackgroundColor: const Color(0xFF2C335E)),
         title: 'Cadillac',
         debugShowCheckedModeBanner: false,
@@ -122,7 +127,9 @@ class _MembersAdminState extends State<MembersAdmin> {
                                                   // устанавливаем индекс выделенного элемента
                                                   selectedIndex = index;
                                                 });
-                                                Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const AccountAdmin()));
+                                                debugPrint(snapshot.data?.users[selectedIndex].email.toString());
+                                                Provider.of<Data>(context, listen: false).getUserEmail(snapshot.data?.users[selectedIndex].email);
+                                                Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => EditStatus()));
                                               },
                                               child: Container(
                                                   width: 284,
@@ -315,7 +322,7 @@ class _MembersAdminState extends State<MembersAdmin> {
             ]))
           ])),
           drawer: const NavDrawerAdmin(),
-        ));
+        )));
   }
 }
 
