@@ -473,7 +473,6 @@ class _EditAdminState extends State<EditAdmin> {
                                                             name: 'numberCard',
                                                             initialValue: '${snapshot.data?.numberCard}',
                                                             cursorWidth: 1.0,
-                                                            enabled: false,
                                                             cursorColor: Colors.white,
                                                             style: styleFormInput,
                                                             decoration: const InputDecoration(

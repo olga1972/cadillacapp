@@ -33,10 +33,11 @@ class _AddNewsState extends State<AddNews> {
 
   @override
   void initState() {
+    debugPrint('init state add news');
     super.initState();
     encode64News = '';
   }
-
+  //
   final _newsKey = GlobalKey<FormBuilderState>();
 
   late dynamic news;
@@ -47,7 +48,7 @@ class _AddNewsState extends State<AddNews> {
   late String newsDate = 'date';
   late String newsLocation = 'location';
   late String newsDescr = 'descr';
-  late String path;
+  late String path = 'path';
 
   late List<dynamic> newsImage;
   late String platform;
@@ -79,7 +80,7 @@ class _AddNewsState extends State<AddNews> {
                       Navigator.pushReplacement(
                           context, MaterialPageRoute(
                           builder: (context) =>
-                              NewsAdmin()));
+                              const NewsAdmin()));
                     },
                   );
                 },
@@ -246,14 +247,9 @@ class _AddNewsState extends State<AddNews> {
                                         color: Colors.white,
                                       ),
                                     ),
-                                    // onChanged: _onChanged,
+
                                     onSaved: (value) => newsDescr = value!,
-                                    // valueTransformer: (text) => num.tryParse(text),
-                                    // validator: FormBuilderValidators.compose([
-                                    //   // FormBuilderValidators.required(context),
-                                    //   // FormBuilderValidators.numeric(context),
-                                    //   // FormBuilderValidators.max(context, 70),
-                                    // ]),
+
                                     validator: FormBuilderValidators.compose([
                                           (val) {
                                         if (val == null) {
@@ -272,18 +268,22 @@ class _AddNewsState extends State<AddNews> {
                                     maxLines: null,
                                   ),
                                   const SizedBox(height: 20),
+
                                   FormBuilderFilePicker(
                                       name: "newsImage",
                                       decoration: const InputDecoration(
+                                        isCollapsed: true,
                                         fillColor: Color(0xff515569),
                                         iconColor: Colors.white,
                                         contentPadding: EdgeInsets.all(0),
+                                        prefix: null,
+                                        prefixIcon: null,
                                         border: OutlineInputBorder(
                                           borderSide: BorderSide.none,
                                           //gapPadding: 40,
                                         ),
                                       ),
-                                      maxFiles: null,
+                                      maxFiles: 3,
                                       previewImages: true,
                                       onChanged: (val) => {},
                                       typeSelectors: [
@@ -333,15 +333,19 @@ class _AddNewsState extends State<AddNews> {
                                         ),
 
                                       ],
-                                      onFileLoading: (val) {
-                                        // debugPrint(val);
-                                      },
+                                      // onFileLoading: (val) {
+                                      //   // print(val);
+                                      // },
+
                                       onSaved: (value) =>
                                       {
-                                        debugPrint('value'),
-                                        debugPrint(value.runtimeType.toString()),
+                                        print('value'),
+                                        print(value),
                                         newsImage = value!,
-                                      }),
+
+                                      }
+                                  ),
+
                                   Container(
                                     width: 284,
                                     margin: const EdgeInsets.only(top: 30, bottom: 45),
@@ -382,15 +386,16 @@ class _AddNewsState extends State<AddNews> {
                                             });
                                           }
                                           final news = New(
-                                              id: id,
-                                              newsId: newsId,
-                                              newsName: newsName,
-                                              newsDate: newsDate,
-                                              newsLocation: newsLocation,
-                                              newsDescr: newsDescr,
-                                              path: encode64News);
-                                          confirmDialog(context, news);
-
+                                            id: id,
+                                            newsId: newsId,
+                                            newsName: newsName,
+                                            newsDate: newsDate,
+                                            newsLocation: newsLocation,
+                                            newsDescr: newsDescr,
+                                            path: encode64News);
+                                            //confirmDialog(context, news);
+                                            addNews(news);
+                                            Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const NewsAdmin()));
                                         } else {
                                           debugPrint('Error');
                                         }
