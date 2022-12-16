@@ -700,7 +700,7 @@ class _EditState extends State<Edit> {
                                                 width: 284,
                                                 margin: const EdgeInsets.only(top: 30, bottom: 45),
                                                 child: MaterialButton(
-                                                  padding: const EdgeInsets.all(17),
+                                                  padding: const EdgeInsets.symmetric(horizontal: 17, vertical: 21),
                                                   color: const Color.fromARGB(255, 255, 255, 255),
                                                   child: Text(
                                                     "сохранить".toUpperCase(),
@@ -713,13 +713,16 @@ class _EditState extends State<Edit> {
                                                     ),
                                                   ),
                                                   onPressed: () async {
-
+                                                    confirmDialog(context);
                                                     if (_formKey.currentState?.saveAndValidate() ?? false) {
-                                                      debugPrint('Valid success edit');
+                                                      debugPrint('Valid success edit admin');
+                                                      // Provider.of<Data>(context, listen: false).updateAccount(2);
 
                                                       if (platform == 'android' || platform == 'ios') {
                                                         debugPrint(platform);
-                                                        final bytes = File(photo[0].path).readAsBytesSync();
+                                                        final bytes = photo[0].bytes; //для сборки приложения под мобильный браузер
+
+                                                        //final bytes = File(photo[0].path).readAsBytesSync(); //для сборки приложения под андроид
                                                         setState(() {
                                                           encode64 = base64.encode(bytes);
                                                         });
@@ -728,13 +731,15 @@ class _EditState extends State<Edit> {
                                                         debugPrint(cars.length.toString());
                                                         if (cars.length == 2) {
                                                           if (cars[0].path != null) {
-                                                            final bytesCar1 = File(cars[0].path).readAsBytesSync();
+                                                            final bytesCar1 = cars[0].bytes;
+                                                            // final bytesCar1 = File(cars[0].path).readAsBytesSync();
                                                             car1 = base64.encode(bytesCar1);
                                                           } else {
                                                             car1 = '';
                                                           }
                                                           if (cars[1].path != null) {
-                                                            final bytesCar2 = File(cars[1].path).readAsBytesSync();
+                                                            final bytesCar2 = cars[1].bytes;
+                                                            // final bytesCar2 = File(cars[1].path).readAsBytesSync();
                                                             car2 = base64.encode(bytesCar2);
                                                           } else {
                                                             car2 = '';
@@ -742,25 +747,29 @@ class _EditState extends State<Edit> {
                                                           car3 = '';
                                                         } else if (cars.length == 3) {
                                                           if (cars[0].path != null) {
-                                                            final bytesCar1 = File(cars[0].path).readAsBytesSync();
+                                                            final bytesCar1 = cars[0].bytes;
+                                                            // final bytesCar1 = File(cars[0].path).readAsBytesSync();
                                                             car1 = base64.encode(bytesCar1);
                                                           } else {
                                                             car1 = '';
                                                           }
                                                           if (cars[1].path != null) {
-                                                            final bytesCar2 = File(cars[1].path).readAsBytesSync();
+                                                            final bytesCar2 = cars[1].bytes;
+                                                            // final bytesCar2 = File(cars[1].path).readAsBytesSync();
                                                             car2 = base64.encode(bytesCar2);
                                                           } else {
                                                             car2 = '';
                                                           }
                                                           if (cars[2].path != null) {
-                                                            final bytesCar3 = File(cars[2].path).readAsBytesSync();
+                                                            final bytesCar3 = cars[2].bytes;
+                                                            // final bytesCar3 = File(cars[2].path).readAsBytesSync();
                                                             car3 = base64.encode(bytesCar3);
                                                           } else {
                                                             car3 = '';
                                                           }
                                                         } else {
-                                                          final bytesCar1 = File(cars[0].path).readAsBytesSync();
+                                                          final bytesCar1 = cars[0].bytes;
+                                                          // final bytesCar1 = File(cars[0].path).readAsBytesSync();
                                                           car1 = base64.encode(bytesCar1);
                                                           car2 = '';
                                                           car3 = '';
@@ -813,6 +822,9 @@ class _EditState extends State<Edit> {
                                                           encode64 = base64.encode(bytes!);
                                                         });
                                                       }
+
+                                                      debugPrint(userId);
+
                                                       dynamic currentUser = my_user.User(
                                                           id: '1',
                                                           userId: userId,
@@ -833,17 +845,13 @@ class _EditState extends State<Edit> {
                                                           numberCar: numberCar,
                                                           yearIssue: yearIssue,
                                                           numberCard: numberCard,
-                                                          status: status
+                                                          status: status.toUpperCase()
                                                       );
-                                                      //currentUser = editUser(user);
-                                                      // findingUser = await getUserByEmail(currentUser);
-                                                      confirmDialog(context, currentUser);
-                                                      // user = await editUser(currentUser);
-                                                      debugPrint('after editUser');
 
-                                                      // debugPrint("currentUser: ${currentUser.userId}");
-                                                      // userId = uuid;
-                                                      debugPrint(_formKey.currentState?.value.toString());
+                                                      findingUser = await getUserByEmail(currentUser);
+
+                                                      user = await editUser(currentUser);
+                                                      debugPrint('after editUser');
                                                     } else {
                                                       debugPrint('Invalid');
                                                     }
@@ -1000,7 +1008,7 @@ editUser(my_user.User user) async {
   }
 }
 
-Future confirmDialog(BuildContext context, currentUser) async {
+Future confirmDialog(BuildContext context) async {
   return showDialog(
     context: context,
     barrierDismissible: false, // user must tap button for close dialog!
@@ -1031,7 +1039,6 @@ Future confirmDialog(BuildContext context, currentUser) async {
                     style: styleTextAlertDialog,
                   ),
                   onPressed: () async {
-                    await editUser(currentUser);
                     Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const Account()));
                   },
                 ),

@@ -430,9 +430,10 @@ class _EditAdminState extends State<EditAdmin> {
                                                             style: styleTitleFormInput,
                                                           ),
                                                         ),
+
                                                         FormBuilderTextField(
                                                             name: 'status',
-                                                            initialValue: '${snapshot.data?.status}',
+                                                            initialValue: '${snapshot.data?.status}'.toUpperCase(),
                                                             cursorWidth: 1.0,
                                                             cursorColor: Colors.white,
                                                             style: styleFormInput,
@@ -459,7 +460,7 @@ class _EditAdminState extends State<EditAdmin> {
                                                                 }
                                                               }
                                                             ]),
-                                                            onSaved: (value) => status = value!),
+                                                            onSaved: (value) => status = value!.toUpperCase()),
                                                         Container(
                                                           alignment: Alignment.topLeft,
                                                           margin: const EdgeInsets.only(top: 10, bottom: 10),
@@ -691,7 +692,7 @@ class _EditAdminState extends State<EditAdmin> {
                                                             width: 284,
                                                             margin: const EdgeInsets.only(top: 30, bottom: 45),
                                                             child: MaterialButton(
-                                                              padding: const EdgeInsets.all(17),
+                                                              padding: const EdgeInsets.symmetric(horizontal: 17, vertical: 21),
                                                               color: const Color.fromARGB(255, 255, 255, 255),
                                                               child: Text(
                                                                 "сохранить".toUpperCase(),
@@ -711,21 +712,26 @@ class _EditAdminState extends State<EditAdmin> {
 
                                                                   if (platform == 'android' || platform == 'ios') {
                                                                     debugPrint(platform);
-                                                                    final bytes = File(photo[0].path).readAsBytesSync();
+                                                                    final bytes = photo[0].bytes; //для сборки приложения под мобильный браузер
+
+                                                                    //final bytes = File(photo[0].path).readAsBytesSync(); //для сборки приложения под андроид
                                                                     setState(() {
                                                                       encode64 = base64.encode(bytes);
                                                                     });
+
                                                                     debugPrint('cars.length');
                                                                     debugPrint(cars.length.toString());
                                                                     if (cars.length == 2) {
                                                                       if (cars[0].path != null) {
-                                                                        final bytesCar1 = File(cars[0].path).readAsBytesSync();
+                                                                        final bytesCar1 = cars[0].bytes;
+                                                                        // final bytesCar1 = File(cars[0].path).readAsBytesSync();
                                                                         car1 = base64.encode(bytesCar1);
                                                                       } else {
                                                                         car1 = '';
                                                                       }
                                                                       if (cars[1].path != null) {
-                                                                        final bytesCar2 = File(cars[1].path).readAsBytesSync();
+                                                                        final bytesCar2 = cars[1].bytes;
+                                                                        // final bytesCar2 = File(cars[1].path).readAsBytesSync();
                                                                         car2 = base64.encode(bytesCar2);
                                                                       } else {
                                                                         car2 = '';
@@ -733,25 +739,29 @@ class _EditAdminState extends State<EditAdmin> {
                                                                       car3 = '';
                                                                     } else if (cars.length == 3) {
                                                                       if (cars[0].path != null) {
-                                                                        final bytesCar1 = File(cars[0].path).readAsBytesSync();
+                                                                        final bytesCar1 = cars[0].bytes;
+                                                                        // final bytesCar1 = File(cars[0].path).readAsBytesSync();
                                                                         car1 = base64.encode(bytesCar1);
                                                                       } else {
                                                                         car1 = '';
                                                                       }
                                                                       if (cars[1].path != null) {
-                                                                        final bytesCar2 = File(cars[1].path).readAsBytesSync();
+                                                                        final bytesCar2 = cars[1].bytes;
+                                                                        // final bytesCar2 = File(cars[1].path).readAsBytesSync();
                                                                         car2 = base64.encode(bytesCar2);
                                                                       } else {
                                                                         car2 = '';
                                                                       }
                                                                       if (cars[2].path != null) {
-                                                                        final bytesCar3 = File(cars[2].path).readAsBytesSync();
+                                                                        final bytesCar3 = cars[2].bytes;
+                                                                        // final bytesCar3 = File(cars[2].path).readAsBytesSync();
                                                                         car3 = base64.encode(bytesCar3);
                                                                       } else {
                                                                         car3 = '';
                                                                       }
                                                                     } else {
-                                                                      final bytesCar1 = File(cars[0].path).readAsBytesSync();
+                                                                      final bytesCar1 = cars[0].bytes;
+                                                                      // final bytesCar1 = File(cars[0].path).readAsBytesSync();
                                                                       car1 = base64.encode(bytesCar1);
                                                                       car2 = '';
                                                                       car3 = '';
@@ -827,7 +837,7 @@ class _EditAdminState extends State<EditAdmin> {
                                                                       numberCar: numberCar,
                                                                       yearIssue: yearIssue,
                                                                       numberCard: numberCard,
-                                                                      status: status
+                                                                      status: status.toUpperCase()
                                                                   );
 
                                                                   findingUser = await getUserByEmail(currentUser);
@@ -903,6 +913,7 @@ class _EditAdminState extends State<EditAdmin> {
     dynamic status = user.status;
     dynamic numberCard = user.numberCard;
 
+
     String apiUrl = baseUrl + "/test/get_user_by_email.php";
     var response = await http.post(Uri.parse(apiUrl), body: {
       'login': login,
@@ -956,7 +967,7 @@ class _EditAdminState extends State<EditAdmin> {
     dynamic yearIssue = user.yearIssue;
     dynamic status = user.status;
     dynamic numberCard = user.numberCard;
-
+    debugPrint(status);
     String apiUrl = baseUrl + "/test/edit.php";
 
     var response = await http.post(Uri.parse(apiUrl), body: {

@@ -211,7 +211,7 @@ class _AddPhotosState extends State<AddPhotos> {
                                         width: 284,
                                         margin: const EdgeInsets.only(top: 30, bottom: 45),
                                         child: MaterialButton(
-                                          padding: const EdgeInsets.all(17),
+                                          padding: const EdgeInsets.symmetric(horizontal: 17, vertical: 21),
                                           color: const Color.fromARGB(255, 255, 255, 255),
                                           child: Text(
                                             "Добавить фото".toUpperCase(),
@@ -234,7 +234,8 @@ class _AddPhotosState extends State<AddPhotos> {
 
                                               if (platform == 'android' || platform == 'ios') {
                                                 debugPrint(platform);
-                                                final bytes = File(photoImage[0].path).readAsBytesSync();
+                                                final bytes = photoImage[0].bytes;
+                                                // final bytes = File(photoImage[0].path).readAsBytesSync();
                                                 setState(() {
                                                   encode64Photo = base64.encode(bytes);
                                                 });

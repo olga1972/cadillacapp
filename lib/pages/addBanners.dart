@@ -211,7 +211,7 @@ class _AddBannersState extends State<AddBanners> {
                                         width: 284,
                                         margin: const EdgeInsets.only(top: 30, bottom: 45),
                                         child: MaterialButton(
-                                          padding: const EdgeInsets.all(17),
+                                          padding: const EdgeInsets.symmetric(horizontal: 17, vertical: 21),
                                           color: const Color.fromARGB(255, 255, 255, 255),
                                           child: Text(
                                             "Добавить баннер".toUpperCase(),
@@ -234,7 +234,8 @@ class _AddBannersState extends State<AddBanners> {
 
                                               if (platform == 'android' || platform == 'ios') {
                                                 debugPrint(platform);
-                                                final bytes = File(bannerImage[0].path).readAsBytesSync();
+                                                final bytes = bannerImage[0].bytes;
+                                                // final bytes = File(bannerImage[0].path).readAsBytesSync();
                                                 setState(() {
                                                   encode64Banner = base64.encode(bytes);
                                                 });

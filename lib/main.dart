@@ -178,13 +178,11 @@ class MyApp extends StatelessWidget {
         title: 'Cadillac',
         debugShowCheckedModeBanner: false,
         initialRoute: '/home',
-
-
         routes: {
-         // '/home': (context) => Entrance(),
+         '/home': (context) => Entrance(),
          //  '/home': (context) => AddUser(),
-          '/home': (context) => const AddNews(),
-          //'/home': (context) => MembersAdmin(),
+         //  '/home': (context) => const AddNews(),
+          //'/home': (context) => EditAdmin(),
           //'/home': (context) => RegistrationPage(),
           //'/home': (context) => CardProductAdmin(index: 0),
           '/homeAdmin': (context) => const HomeAdmin(),

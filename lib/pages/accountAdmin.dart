@@ -236,8 +236,29 @@ class _AccountAdminState extends State<AccountAdmin> {
                                                       right: 28.0,
                                                     ),
                                                     alignment: Alignment.centerLeft,
-                                                    child: SvgPicture.asset('assets/images/account.svg', semanticsLabel: 'Icon author', height: 22.0),
-                                                  ),
+                                                    child: GestureDetector(
+                                                      onTap: () {},
+                                                            child: SvgPicture.asset(
+                                                              'assets/images/account.svg',
+                                                              // 'assets/images/delete.svg',
+                                                              semanticsLabel: 'Icon author',
+                                                              height: 22.0,
+                                                            ),
+                                                            )),
+                                                  //   child: Container(
+                                                  //     height: 50,
+                                                  //     width: 50,
+                                                  //     alignment: Alignment.center, // <---- The magic
+                                                  //     padding: const EdgeInsets.all(5),
+                                                  //     child: SvgPicture.asset(
+                                                  //       'assets/images/account.svg',
+                                                  //       semanticsLabel: 'Icon author',
+                                                  //       // height: 22.0,
+                                                  //       // width: 19.1,
+                                                  //       fit: BoxFit.fill
+                                                  //     ),
+                                                  //   ),
+                                                  //),
                                                   Flexible(
                                                       fit: FlexFit.loose,
                                                       child: Text('${snapshot.data?.username}'.toUpperCase(),
@@ -254,6 +275,7 @@ class _AccountAdminState extends State<AccountAdmin> {
                                                 // mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                 mainAxisSize: MainAxisSize.min,
                                                 children: [
+
                                                   Container(
                                                     height: 36,
                                                     margin: const EdgeInsets.only(
@@ -315,21 +337,29 @@ class _AccountAdminState extends State<AccountAdmin> {
                                                 children: [
                                                   Container(
                                                       height: 36,
-                                                      alignment: Alignment.centerLeft,
-                                                      child: IconButton(
-                                                        alignment: Alignment.centerLeft,
-                                                        padding: const EdgeInsets.all(0),
-                                                        iconSize: 22.0,
-                                                        icon: SvgPicture.asset(
+                                                      margin: const EdgeInsets.only(
+                                                        right: 28.0,
+                                                      ),
+                                                      alignment: Alignment.topLeft,
+                                                    child: GestureDetector(
+                                                        onTap: () {
+                                                          Route route = MaterialPageRoute(builder: (context) => EditAdmin());
+                                                          Navigator.push(context, route);
+                                                        },
+                                                      onLongPress: () {
+                                                        Route route = MaterialPageRoute(builder: (context) => EditAdmin());
+                                                        Navigator.push(context, route);
+                                                      },
+                                                      child: SvgPicture.asset(
                                                           'assets/images/edit.svg',
                                                           semanticsLabel: 'Icon edit',
                                                           height: 22.0,
                                                           color: const Color(0xFF515569),
                                                         ),
-                                                        onPressed: () {
-                                                          Route route = MaterialPageRoute(builder: (context) => EditAdmin());
-                                                          Navigator.push(context, route);
-                                                        },
+                                                        // onPressed: () {
+                                                        //   Route route = MaterialPageRoute(builder: (context) => EditAdmin());
+                                                        //   Navigator.push(context, route);
+                                                        // },
                                                       )),
                                                   const Text(
                                                     'Изменить данные',

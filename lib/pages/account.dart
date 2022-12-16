@@ -257,7 +257,11 @@ class _AccountState extends State<Account> {
                                                       right: 28.0,
                                                     ),
                                                     alignment: Alignment.centerLeft,
-                                                    child: SvgPicture.asset('assets/images/account.svg', semanticsLabel: 'Icon author', height: 22.0),
+                                                    child: Container(
+                                                      height: 22.0,
+                                                      width: 19.06,
+                                                      color: Colors.transparent,
+                                                      child: SvgPicture.asset('assets/images/account.svg', semanticsLabel: 'Icon author')),
                                                   ),
                                                   Flexible(
                                                     fit: FlexFit.loose,
@@ -337,22 +341,30 @@ class _AccountState extends State<Account> {
                                                 children: [
                                                   Container(
                                                       height: 36,
-                                                      alignment: Alignment.centerLeft,
-                                                      child: IconButton(
-                                                        alignment: Alignment.centerLeft,
-                                                        padding: const EdgeInsets.all(0),
-                                                        iconSize: 22.0,
-                                                        icon: SvgPicture.asset(
-                                                          'assets/images/edit.svg',
-                                                          semanticsLabel: 'Icon edit',
-                                                          height: 22.0,
-                                                          color: const Color(0xFF515569),
-                                                        ),
-                                                        onPressed: () {
-                                                          Route route = MaterialPageRoute(builder: (context) => Edit());
-                                                          Navigator.push(context, route);
-                                                        },
-                                                      )),
+                                                      margin: const EdgeInsets.only(
+                                                        right: 28.0,
+                                                      ),
+                                                      alignment: Alignment.topLeft,
+                                                  child: GestureDetector(
+                                                    onTap: () {
+                                                      Route route = MaterialPageRoute(builder: (context) => Edit());
+                                                      Navigator.push(context, route);
+                                                    },
+                                                    onLongPress: () {
+                                                      Route route = MaterialPageRoute(builder: (context) => Edit());
+                                                      Navigator.push(context, route);
+                                                    },
+                                                    child: SvgPicture.asset(
+                                                      'assets/images/edit.svg',
+                                                      semanticsLabel: 'Icon edit',
+                                                      height: 22.0,
+                                                      color: const Color(0xFF515569),
+                                                    ),
+                                                    // onPressed: () {
+                                                    //   Route route = MaterialPageRoute(builder: (context) => Edit());
+                                                    //   Navigator.push(context, route);
+                                                    // },
+                                                  )),
                                                   const Text(
                                                     'Изменить данные',
                                                     textAlign: TextAlign.center,

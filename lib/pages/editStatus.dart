@@ -335,7 +335,7 @@ class _EditStatusState extends State<EditStatus> {
     dynamic numberCar = user.numberCar;
     dynamic yearIssue = user.yearIssue;
     dynamic numberCard = user.numberCard;
-    dynamic status = user.status;
+    dynamic status = user.status.toUpperCase();
     debugPrint('status');
     debugPrint(status);
 

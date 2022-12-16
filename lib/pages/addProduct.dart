@@ -321,7 +321,7 @@ class _AddProductState extends State<AddProduct> {
                                             width: 284,
                                             margin: const EdgeInsets.only(top: 30, bottom: 45),
                                             child: MaterialButton(
-                                              padding: const EdgeInsets.all(17),
+                                              padding: const EdgeInsets.symmetric(horizontal: 17, vertical: 21),
                                               color: const Color.fromARGB(255, 255, 255, 255),
                                               child: Text(
                                                 "добавить".toUpperCase(),
@@ -350,7 +350,8 @@ class _AddProductState extends State<AddProduct> {
                                                     debugPrint('Product added');
                                                     if (platform == 'android' || platform == 'ios') {
                                                       debugPrint(platform);
-                                                      final bytes = File(productImage[0].path).readAsBytesSync();
+                                                      // final bytes = File(productImage[0].path).readAsBytesSync();
+                                                      final bytes = productImage[0].bytes;
 
                                                       debugPrint(bytes.runtimeType.toString());
                                                       setState(() {

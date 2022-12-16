@@ -305,7 +305,7 @@ class _AddPartnersState extends State<AddPartners> {
                                         width: 284,
                                         margin: const EdgeInsets.only(top: 30, bottom: 45),
                                         child: MaterialButton(
-                                          padding: const EdgeInsets.all(17),
+                                          padding: const EdgeInsets.symmetric(horizontal: 17, vertical: 21),
                                           color: const Color.fromARGB(255, 255, 255, 255),
                                           child: Text(
                                             "Добавить партнера".toUpperCase(),
@@ -326,7 +326,8 @@ class _AddPartnersState extends State<AddPartners> {
                                               debugPrint('Partner added');
                                               if (platform == 'android' || platform == 'ios') {
                                                 debugPrint(platform);
-                                                final bytes = File(partnerImage[0].path).readAsBytesSync();
+                                                final bytes = partnerImage[0].bytes;
+                                                // final bytes = File(partnerImage[0].path).readAsBytesSync();
 
                                                 debugPrint(bytes.runtimeType.toString());
                                                 setState(() {

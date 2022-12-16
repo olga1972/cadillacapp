@@ -216,7 +216,7 @@ class _OrderProductState extends State<OrderProduct> {
                           width: 284,
                           margin: const EdgeInsets.only(top: 30, bottom: 25),
                           child: MaterialButton(
-                            padding: const EdgeInsets.all(17),
+                            padding: const EdgeInsets.symmetric(horizontal: 17, vertical: 21),
                             color: const Color.fromARGB(255, 255, 255, 255),
                             child: Text(
                               "отправить".toUpperCase(),

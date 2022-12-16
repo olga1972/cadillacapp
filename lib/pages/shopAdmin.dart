@@ -159,7 +159,8 @@ class _ShopAdminState extends State<ShopAdmin> {
                                                                 outer: true,
                                                                 itemBuilder: (BuildContext context, int index) {
                                                                   return GestureDetector(
-                                                                      onTap: () {
+                                                                      onLongPress: () {
+                                                                      // onTap: () {
                                                                         debugPrint('on long press');
                                                                         setState(() {
                                                                           // устанавливаем индекс выделенного элемента
@@ -421,8 +422,8 @@ Future confirmDialog(BuildContext context) async {
 Future<ProductsList> getProductsList() async {
   const url = baseUrl + '/test/products_list.php';
   final response = await http.get(Uri.parse(url));
-  debugPrint('response members getProductLists');
-  debugPrint(response.body);
+  // debugPrint('response members getProductLists');
+  // debugPrint(response.body);
   if (response.statusCode == 200) {
     return ProductsList.fromJson(json.decode(response.body));
   } else {
@@ -433,8 +434,8 @@ Future<ProductsList> getProductsList() async {
 Future<CategoriesList> getCategoriesList() async {
   const url = baseUrl + '/test/categories_list.php';
   final response = await http.get(Uri.parse(url));
-  debugPrint('response getCategoriesLists');
-  debugPrint(response.body);
+  // debugPrint('response getCategoriesLists');
+  // debugPrint(response.body);
   if (response.statusCode == 200) {
     return CategoriesList.fromJson(json.decode(response.body));
   } else {

@@ -19,6 +19,7 @@ import 'dart:io';
 import '../NavDrawerAdmin.dart';
 import '../models/news.dart';
 import 'data.dart';
+import 'entrance.dart';
 import 'newsAdmin.dart';
 
 class AddNews extends StatefulWidget {
@@ -30,12 +31,15 @@ class AddNews extends StatefulWidget {
 
 class _AddNewsState extends State<AddNews> {
   late String encode64News;
+  late String errorMessage;
+  late dynamic androidValue;
 
   @override
   void initState() {
-    debugPrint('init state add news');
     super.initState();
     encode64News = '';
+    errorMessage = '';
+    androidValue = '';
   }
   //
   final _newsKey = GlobalKey<FormBuilderState>();
@@ -100,6 +104,41 @@ class _AddNewsState extends State<AddNews> {
                               child: const TitlePageAdmin(title: 'добавить новость'),
                             ),
                             Column(crossAxisAlignment: CrossAxisAlignment.center, children: [
+                              // Container(
+                              //     width: 284,
+                              //     margin: const EdgeInsets.only(top: 30, bottom: 45),
+                              //     child: errorMessage != '' ? Text(errorMessage,
+                              //         style: TextStyle(
+                              //             fontSize: 14.0,
+                              //             fontWeight: FontWeight.normal,
+                              //             fontFamily: 'CadillacSans',
+                              //             color: Colors.white,
+                              //             height: 1.4 //line-height : font-size
+                              //         ),
+                              //         textAlign: TextAlign.center)
+                              //         : const Text('ошибок нет',style: TextStyle(
+                              //           fontSize: 14.0,
+                              //           fontWeight: FontWeight.normal,
+                              //           fontFamily: 'CadillacSans',
+                              //           color: Colors.white,
+                              //           height: 1.4 //line-height : font-size
+                              //       ),
+                              //     ),
+                              // ),
+                              //         Container(
+                              //             width: 284,
+                              //             margin: const EdgeInsets.only(top: 30, bottom: 45),
+                              //             child: errorMessage != 'error' ? Text('encode64News: $androidValue',
+                              //                 style: TextStyle(
+                              //                     fontSize: 14.0,
+                              //                     fontWeight: FontWeight.normal,
+                              //                     fontFamily: 'CadillacSans',
+                              //                     color: Colors.white,
+                              //                     height: 1.4 //line-height : font-size
+                              //                 ),
+                              //                 textAlign: TextAlign.center)
+                              //                 : null
+                              // ),
                               FormBuilder(
                                 key: _newsKey,
                                 autovalidateMode: AutovalidateMode.always,
@@ -283,7 +322,7 @@ class _AddNewsState extends State<AddNews> {
                                           //gapPadding: 40,
                                         ),
                                       ),
-                                      maxFiles: 3,
+                                      maxFiles: null,
                                       previewImages: true,
                                       onChanged: (val) => {},
                                       typeSelectors: [
@@ -343,6 +382,10 @@ class _AddNewsState extends State<AddNews> {
                                         print(value),
                                         newsImage = value!,
 
+                                        setState(() {
+                                          androidValue = newsImage;
+                                        })
+
                                       }
                                   ),
 
@@ -350,7 +393,7 @@ class _AddNewsState extends State<AddNews> {
                                     width: 284,
                                     margin: const EdgeInsets.only(top: 30, bottom: 45),
                                     child: MaterialButton(
-                                      padding: const EdgeInsets.all(17),
+                                      padding: const EdgeInsets.symmetric(horizontal: 17, vertical: 21),
                                       color: const Color.fromARGB(255, 255, 255, 255),
                                       child: Text(
                                         "Создать".toUpperCase(),
@@ -366,24 +409,44 @@ class _AddNewsState extends State<AddNews> {
                                         platform = Provider
                                             .of<Data>(context, listen: false)
                                             .data['platform'].toString();
-                                        debugPrint(platform);
+
                                         if (_newsKey.currentState?.saveAndValidate() ?? false) {
-                                          debugPrint('News added');
                                           if (platform == 'android' || platform == 'ios') {
                                             debugPrint(platform);
-                                            final bytes = File(newsImage[0].path).readAsBytesSync();
+                                            try {
+                                              final bytes = newsImage[0].bytes;
+                                              // final bytes = File(newsImage[0].path).readAsBytesSync();
+                                              setState(() {
+                                                encode64News = base64.encode(bytes!);
+                                              });
 
-                                            debugPrint(bytes.runtimeType.toString());
-                                            setState(() {
-                                              encode64News = base64.encode(bytes);
-                                            });
+                                              setState(() {
+                                                encode64News = base64.encode(bytes);
+                                              });
+                                            } catch (error, stack) {
+                                              setState(() {
+                                                errorMessage = 'Error: $error, stack: $stack';
+                                              });
+
+                                              throw Exception('Error: $error, stack: $stack');
+                                            }
+
                                           } else {
                                             debugPrint(platform);
-                                            bytes = newsImage[0].bytes;
+                                            // bytes = newsImage[0].bytes;
+                                            try {
+                                              bytes = newsImage[0].bytes;
+                                              setState(() {
+                                                encode64News = base64.encode(bytes!);
+                                              });
+                                            } catch (error, stack) {
+                                              setState(() {
+                                                errorMessage = 'Error: $error, stack: $stack';
+                                              });
 
-                                            setState(() {
-                                              encode64News = base64.encode(bytes!);
-                                            });
+                                              throw Exception('Error: $error, stack: $stack');
+                                            }
+
                                           }
                                           final news = New(
                                             id: id,
@@ -393,9 +456,11 @@ class _AddNewsState extends State<AddNews> {
                                             newsLocation: newsLocation,
                                             newsDescr: newsDescr,
                                             path: encode64News);
-                                            //confirmDialog(context, news);
-                                            addNews(news);
-                                            Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const NewsAdmin()));
+                                            confirmDialog(context, news);
+                                            //addNews(news);
+
+                                          //Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const NewsAdmin()));
+
                                         } else {
                                           debugPrint('Error');
                                         }
@@ -403,7 +468,22 @@ class _AddNewsState extends State<AddNews> {
                                     ),
                                   ),
                                 ]),
-                              )
+                              ),
+
+                              // Container(
+                              //     width: 284,
+                              //     margin: const EdgeInsets.only(top: 30, bottom: 45),
+                              //     child: errorMessage != '' ? Text(errorMessage,
+                              //     style: TextStyle(
+                              //         fontSize: 14.0,
+                              //         fontWeight: FontWeight.normal,
+                              //         fontFamily: 'CadillacSans',
+                              //         color: Colors.white,
+                              //         height: 1.4 //line-height : font-size
+                              //     ),
+                              //     textAlign: TextAlign.center)
+                              // : null
+                              // ),
                             ]),
                           ])),
                     ),
@@ -441,8 +521,8 @@ addNews(New news) async {
   if (response.statusCode == 200) {
     debugPrint('news added');
 
-    debugPrint(response.statusCode.toString());
-    debugPrint(response.body);
+    // debugPrint(response.statusCode.toString());
+    // debugPrint(response.body);
 
     final newJson = json.decode(response.body);
     return New.fromJson(newJson);

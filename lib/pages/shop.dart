@@ -154,7 +154,7 @@ class _ShopState extends State<Shop> {
                                                                 outer: true,
                                                                 itemBuilder: (BuildContext context, int index) {
                                                                   return GestureDetector(
-                                                                      onTap: () {
+                                                                      onLongPress: () {
                                                                         debugPrint('on long press');
                                                                         setState(() {
                                                                           // устанавливаем индекс выделенного элемента
