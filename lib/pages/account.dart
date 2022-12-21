@@ -64,11 +64,12 @@ class _AccountState extends State<Account> {
   late Color colorCard;
 
   User? user = FirebaseAuth.instance.currentUser;
+  late String errorMessage;
 
   @override
   initState() {
     super.initState();
-
+    errorMessage = '';
   }
 
   @override

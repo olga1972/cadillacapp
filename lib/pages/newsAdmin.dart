@@ -153,24 +153,7 @@ class _NewsAdminState extends State<NewsAdmin> {
                                                                       height: 1.7, //line-height / font-size
                                                                     )),
                                                               ),
-                                                              GestureDetector(
-                                                                onTap: () {
 
-                                                                  setState(() {
-                                                                    // устанавливаем индекс выделенного элемента
-                                                                    selectedIndex = index;
-                                                                  });
-                                                                  debugPrint(snapshot.data?.news[selectedIndex].newsId);
-                                                                  var currentNewsId = snapshot.data?.news[selectedIndex].newsId;
-                                                                  confirmDialog(context, currentNewsId);
-
-                                                                },
-                                                                child: SvgPicture.asset(
-                                                                  'assets/images/delete.svg',
-                                                                  semanticsLabel: 'Icon delete',
-                                                                  height: 20.0,
-                                                                ),
-                                                              ),
                                                               Visibility(
                                                                 visible: false,
                                                                 child: FormBuilderTextField(
@@ -199,39 +182,88 @@ class _NewsAdminState extends State<NewsAdmin> {
                                                                       ]),
                                                                 ),
                                                               ),
-                                                              GestureDetector(
-                                                                onTap: () {
-                                                                  Route route = MaterialPageRoute(builder: (context) => const AddNews());
-                                                                  Navigator.push(context, route);
-                                                                },
-                                                                child: SvgPicture.asset(
-                                                                  'assets/images/add.svg',
-                                                                  semanticsLabel: 'Icon add',
-                                                                  height: 20.0,
-                                                                ),
-                                                              )
+
                                                             ]),
                                                           ]),
-                                                          Container(
-                                                              width: 284,
-                                                              height: 160,
-                                                              decoration: const BoxDecoration(
-                                                                color: Color(0XffE4E6FF),
-                                                                borderRadius: BorderRadius.all(Radius.circular(20.0)),
-                                                              ),
-                                                              margin: const EdgeInsets.only(bottom: 10.0, top: 10),
-                                                              child: isLoadedImage
-                                                                  ? Image.memory(base64.decode(snapshot.data?.news[index].path ?? ''),
-                                                                      fit: BoxFit.cover, width: 284, height: 160)
-                                                                  : const Text('no image',
-                                                                      textAlign: TextAlign.center,
-                                                                      style: TextStyle(
-                                                                        fontSize: 18.0,
-                                                                        fontWeight: FontWeight.normal,
-                                                                        fontFamily: 'CadillacSans',
-                                                                        color: Color(0xFF8F97BF),
-                                                                        height: 1.7, //line-height / font-size
-                                                                      ))),
+                                                          Row(
+                                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                                            children: [
+                                                              Container(
+                                                                  width: 284,
+                                                                  height: 160,
+                                                                  decoration: const BoxDecoration(
+                                                                    color: Color(0XffE4E6FF),
+                                                                    borderRadius: BorderRadius.all(Radius.circular(20.0)),
+                                                                  ),
+                                                                  margin: const EdgeInsets.only(bottom: 10.0, top: 10),
+                                                                  child: isLoadedImage
+                                                                      ? Image.memory(base64.decode(snapshot.data?.news[index].path ?? ''),
+                                                                          fit: BoxFit.cover, width: 284, height: 160)
+                                                                      : const Text('no image',
+                                                                          textAlign: TextAlign.center,
+                                                                          style: TextStyle(
+                                                                            fontSize: 18.0,
+                                                                            fontWeight: FontWeight.normal,
+                                                                            fontFamily: 'CadillacSans',
+                                                                            color: Color(0xFF8F97BF),
+                                                                            height: 1.7, //line-height / font-size
+                                                                          ))),
+                                                              Column(
+                                                                  mainAxisAlignment: MainAxisAlignment.start,
+                                                                children: [
+                                                                  Padding(
+                                                                    padding: const EdgeInsets.only(top: 40.0, bottom: 40.0),
+                                                                    child: GestureDetector(
+                                                                      onLongPress: () {
+                                                                        setState(() {
+                                                                          // устанавливаем индекс выделенного элемента
+                                                                          selectedIndex = index;
+                                                                        });
+                                                                        debugPrint(snapshot.data?.news[selectedIndex].newsId);
+                                                                        var currentNewsId = snapshot.data?.news[selectedIndex].newsId;
+                                                                        confirmDialog(context, currentNewsId);
+
+                                                                      },
+                                                                      onTap: () {
+                                                                        setState(() {
+                                                                          // устанавливаем индекс выделенного элемента
+                                                                          selectedIndex = index;
+                                                                        });
+                                                                        debugPrint(snapshot.data?.news[selectedIndex].newsId);
+                                                                        var currentNewsId = snapshot.data?.news[selectedIndex].newsId;
+                                                                        confirmDialog(context, currentNewsId);
+
+                                                                      },
+                                                                      child: SvgPicture.asset(
+                                                                        'assets/images/delete.svg',
+                                                                        semanticsLabel: 'Icon delete',
+                                                                        height: 20.0,
+                                                                      ),
+                                                                    ),
+                                                                  ),
+                                                                  Padding(
+                                                                    padding: const EdgeInsets.only(top: 20.0,),
+                                                                    child: GestureDetector(
+                                                                      onLongPress: () {
+                                                                        Route route = MaterialPageRoute(builder: (context) => const AddNews());
+                                                                        Navigator.push(context, route);
+                                                                      },
+                                                                      onTap: () {
+                                                                        Route route = MaterialPageRoute(builder: (context) => const AddNews());
+                                                                        Navigator.push(context, route);
+                                                                      },
+                                                                      child: SvgPicture.asset(
+                                                                        'assets/images/add.svg',
+                                                                        semanticsLabel: 'Icon add',
+                                                                        height: 20.0,
+                                                                      ),
+                                                                    ),
+                                                                  )
+                                                                ]
+                                                              )
+                                                            ],
+                                                          ),
                                                           Container(
                                                             margin: const EdgeInsets.only(
                                                               bottom: 10,

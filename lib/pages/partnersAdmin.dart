@@ -153,7 +153,6 @@ class _PartnersAdminState extends State<PartnersAdmin> {
                                                                         margin: const EdgeInsets.only(left: 15),
                                                                         child: GestureDetector(
                                                                           onTap: () {
-
                                                                             setState(() {
                                                                               // устанавливаем индекс выделенного элемента
                                                                               selectedIndex = index;
@@ -161,7 +160,15 @@ class _PartnersAdminState extends State<PartnersAdmin> {
                                                                             debugPrint(snapshot.data?.partners[selectedIndex].partnerId);
                                                                             var currentPartnerId = snapshot.data?.partners[selectedIndex].partnerId;
                                                                             confirmDialog(context, currentPartnerId);
-
+                                                                          },
+                                                                          onLongPress: () {
+                                                                            setState(() {
+                                                                              // устанавливаем индекс выделенного элемента
+                                                                              selectedIndex = index;
+                                                                            });
+                                                                            debugPrint(snapshot.data?.partners[selectedIndex].partnerId);
+                                                                            var currentPartnerId = snapshot.data?.partners[selectedIndex].partnerId;
+                                                                            confirmDialog(context, currentPartnerId);
                                                                           },
                                                                           child: SvgPicture.asset(
                                                                             'assets/images/delete.svg',

@@ -15,8 +15,8 @@ function add_user() {
 //var_dump($_POST);
 
     // mysqli_stmt_prepare($stmt, "INSERT INTO users (userId, phone, email) VALUES(uuid(), ?, ?)");
-    mysqli_stmt_prepare($stmt, "INSERT INTO users (userId, phone, email, password, dateRegister, dateExpired, fieldOfActivity, numberCar, yearIssue, status, numberCard) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-    mysqli_stmt_bind_param($stmt, 'sssssssssss',  $userId, $phone, $email, $password, $dateRegister, $dateExpired, $fieldOfActivity, $numberCar, $yearIssue, $status, $numberCard);
+    mysqli_stmt_prepare($stmt, "INSERT INTO users (userId, phone, email, password, dateRegister, dateExpired, fieldOfActivity, numberCar, yearIssue, status, numberCard, login) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+    mysqli_stmt_bind_param($stmt, 'ssssssssssss',  $userId, $phone, $email, $password, $dateRegister, $dateExpired, $fieldOfActivity, $numberCar, $yearIssue, $status, $numberCard, $email);
     mysqli_stmt_execute($stmt);
     mysqli_stmt_get_result($stmt);
     //print(mysqli_stmt_errno($stmt));
@@ -115,21 +115,23 @@ function get_user_by_email() {
 //Выбор всех полей по  email
 function get_user_all() {
 
-    extract($_POST); // only login
-//var_dump($_POST);
-
+    extract($_POST);
+    
+//    print('post'); // only login
     global $link;
     global $stmt;
-    //mysqli_stmt_prepare($stmt,"SELECT * FROM users WHERE email = ?");
-    mysqli_stmt_prepare($stmt,"SELECT * FROM users WHERE login = ?");
+    mysqli_stmt_prepare($stmt,"SELECT * FROM users WHERE email = ?");
+    // в базе данных у нового юзера есть только email и нет login строка ниже не работает поэтому
+    //mysqli_stmt_prepare($stmt,"SELECT * FROM users WHERE login = ?");
     mysqli_stmt_bind_param($stmt,'s', $login);
     mysqli_stmt_execute($stmt);
     $mysqli_result = mysqli_stmt_get_result($stmt);
 
 //print(mysqli_stmt_errno($stmt));
+//var_dump($mysqli_result);
 //    $newUser = mysqli_fetch_all($mysqli_result);
 
-//    var_dump($newUser);
+//   var_dump($newUser);
 
     $userInfoArray =[];
 
@@ -142,7 +144,7 @@ function get_user_all() {
 //          echo $_COOKIE["TestCookie"];
         }
 
-        var_dump($userInfoArray);
+      //  var_dump($userInfoArray);
 //        unset($userInfoArray[0]['id']);
 //        echo(json_encode($userInfoArray[0]));
         $userInfoArray[0]["id"] = strval($userInfoArray[0]["id"]);

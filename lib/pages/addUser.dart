@@ -455,6 +455,7 @@ class _AddUserState extends State<AddUser> {
     dynamic phone = user.phone;
     dynamic email = user.email;
     dynamic password = user.password;
+    dynamic login = user.login;
     dynamic dateRegister = user.dateRegister;
     dynamic dateExpired = user.dateExpired;
     dynamic userId = user.userId;
@@ -477,6 +478,7 @@ class _AddUserState extends State<AddUser> {
       'password': password,
       'phone': phone,
       'email': email,
+      'login': login,
       'dateRegister': dateRegister,
       'dateExpired': dateExpired,
       'fieldOfActivity': fieldOfActivity,

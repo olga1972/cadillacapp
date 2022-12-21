@@ -38,6 +38,7 @@ class Edit extends StatefulWidget {
 
 class _EditState extends State<Edit> {
   late String encode64;
+  late String errorMessage;
 
   dynamic currentUser;
   dynamic findingUser;
@@ -54,6 +55,7 @@ class _EditState extends State<Edit> {
     print('userId');
     print(userId);
     currentUser = getUser(userId, context);
+    errorMessage = '';
   }
 
   final _formKey = GlobalKey<FormBuilderState>();
@@ -66,7 +68,7 @@ class _EditState extends State<Edit> {
   late dynamic birthday;
   late dynamic type;
   late dynamic carname;
-  late String path;
+  late String path = "assets/images/avatar.png";
   late dynamic car1;
   late dynamic car2;
   late dynamic car3;
@@ -172,6 +174,20 @@ class _EditState extends State<Edit> {
                               margin: const EdgeInsets.only(bottom: 58),
                               child: const TitlePage(title: 'изменение данных'),
                             ),
+                                    Container(
+                                        width: 284,
+                                        margin: const EdgeInsets.only(top: 30, bottom: 45),
+                                        child: errorMessage != '' ? Text(errorMessage,
+                                            style: TextStyle(
+                                                fontSize: 14.0,
+                                                fontWeight: FontWeight.normal,
+                                                fontFamily: 'CadillacSans',
+                                                color: Colors.white,
+                                                height: 1.4 //line-height : font-size
+                                            ),
+                                            textAlign: TextAlign.center)
+                                            : null
+                                    ),
                             Container(
                                 width: 284,
                                 margin: const EdgeInsets.only(bottom: 56),
@@ -501,9 +517,9 @@ class _EditState extends State<Edit> {
                                                       (val) {
                                                     if (val == null) {
                                                       return 'Поле numberCard не может быть пустым';
-                                                    } else if (val.length < 6) {
+                                                    } else if (val.length < 1) {
                                                       // return 'Invalid email address';
-                                                      return 'Минимум 6 символов';
+                                                      return 'Минимум 1 символов';
                                                     } else {
                                                       return null;
                                                     }
@@ -818,9 +834,23 @@ class _EditState extends State<Edit> {
                                                           car2 = '';
                                                           car3 = '';
                                                         }
-                                                        setState(() {
-                                                          encode64 = base64.encode(bytes!);
-                                                        });
+
+
+                                                        try {
+                                                          bytes = photo[0].bytes;
+                                                          setState(() {
+                                                            encode64 = base64.encode(bytes!);
+                                                          });
+                                                        } catch (error, stack) {
+                                                          setState(() {
+                                                            errorMessage = 'Error: $error, stack: $stack';
+                                                          });
+
+                                                          throw Exception('Error: $error, stack: $stack');
+                                                        }
+                                                        // setState(() {
+                                                        //   encode64 = base64.encode(bytes!);
+                                                        // });
                                                       }
 
                                                       debugPrint(userId);
@@ -845,7 +875,7 @@ class _EditState extends State<Edit> {
                                                           numberCar: numberCar,
                                                           yearIssue: yearIssue,
                                                           numberCard: numberCard,
-                                                          status: status.toUpperCase()
+                                                          status: status
                                                       );
 
                                                       findingUser = await getUserByEmail(currentUser);
@@ -903,7 +933,7 @@ Future<my_user.User> getUser(userId, context) async {
 
 getUserByEmail(my_user.User user) async {
   debugPrint('func getUserByEmail');
-  debugPrint(user.username);
+
   dynamic login = user.login;
   dynamic password = user.password;
   dynamic username = user.username;
@@ -943,6 +973,17 @@ getUserByEmail(my_user.User user) async {
   });
   if (response.statusCode == 200) {
     debugPrint('success getUserByEmail');
+    debugPrint(response.body);
+    /*try {
+      final userJson = json.decode(response.body);
+
+    } catch (error, stack) {
+
+        debugPrint('Error: $error, stack: $stack');
+
+      throw Exception('Error: $error, stack: $stack');
+    }*/
+
     final userJson = json.decode(response.body);
     var data = my_user.User.fromJson(userJson);
 

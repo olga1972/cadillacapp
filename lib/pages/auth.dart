@@ -319,7 +319,7 @@ class _AuthorizationPageState extends State<AuthorizationPage> {
                     width: 284,
                     margin: const EdgeInsets.only(top: 15, bottom: 20),
                     child: GestureDetector(
-                      onTap: () => launchURL('https://cadillacapp.ru/oferta.pdf'),
+                      onTap: () => launchURL('https://cadillacapp.ru/oferta.jpg'),
                       child: const Text.rich(
                         TextSpan(
                             text: 'Ознакомьтесь с ',

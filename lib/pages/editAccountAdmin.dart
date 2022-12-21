@@ -491,7 +491,7 @@ class _EditAdminState extends State<EditAdmin> {
                                                                   (val) {
                                                                 if (val == null) {
                                                                   return 'Поле numberCard не может быть пустым';
-                                                                } else if (val.length < 6) {
+                                                                } else if (val.length < 1) {
                                                                   // return 'Invalid email address';
                                                                   return 'Минимум 6 символов';
                                                                 } else {
